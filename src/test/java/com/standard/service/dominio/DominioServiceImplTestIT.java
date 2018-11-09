@@ -1,7 +1,7 @@
 package com.standard.service.dominio;
 
+import com.standard.BaseTest;
 import com.standard.domain.Dominio;
-import com.standard.entity.DominioEntity;
 import com.standard.repository.DominioRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,22 +17,23 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest(showSql = true)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class DominioServiceImplTestIT {
+public class DominioServiceImplTestIT extends BaseTest {
 
     @Autowired
     private DominioRepository repository;
 
     private DominioService service;
 
-    Dominio obj = null;
+    private Dominio obj = null;
 
     @Before
     public void setUp() {
         service = new DominioServiceImpl(repository);
         obj = new Dominio();
-        obj.setNome("nome");
-        obj.setDescricao("Descriçao");
+        obj.setNome(NOME);
+        obj.setDescricao(DESCRIÇAO);
         obj = service.incluir(obj);
+        obj.setChecked(true);
     }
 
     @Test
@@ -44,19 +45,22 @@ public class DominioServiceImplTestIT {
         Assert.assertEquals(found.getCodigo(), saved.getCodigo());
         Assert.assertEquals(found.getNome(), saved.getNome());
         Assert.assertEquals(found.getDescricao(), saved.getDescricao());
+        Assert.assertEquals(found.isChecked(), saved.isChecked());
     }
 
     @Test
     public void alterar() {
         Dominio update = service.consultarByCodigo(obj.getCodigo());
         Assert.assertNotNull(update);
-        update.setNome("nomeUpdate");
-        update.setDescricao("descricaoUpdate");
+        update.setNome(NOME_UPDATE);
+        update.setDescricao(DESCRICAO_UPDATE);
+        update.setChecked(false);
 
         Dominio updated = service.alterar(update.getCodigo(), update);
         Assert.assertEquals(update.getCodigo(), updated.getCodigo());
         Assert.assertEquals(update.getNome(), updated.getNome());
         Assert.assertEquals(update.getDescricao(), updated.getDescricao());
+        Assert.assertEquals(update.isChecked(), updated.isChecked());
     }
 
     @Test
