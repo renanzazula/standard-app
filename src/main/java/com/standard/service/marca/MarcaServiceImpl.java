@@ -1,15 +1,14 @@
 package com.standard.service.marca;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.standard.domain.Marca;
+import com.standard.entity.MarcaEntity;
+import com.standard.function.JpaFunctions;
+import com.standard.repository.MarcaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.standard.entity.MarcaEntity;
-import com.standard.function.JpaFunctions;
-import com.standard.domain.Marca;
-import com.standard.repository.MarcaRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MarcaServiceImpl implements MarcaService {
@@ -55,7 +54,7 @@ public class MarcaServiceImpl implements MarcaService {
 	@Override
 	@Transactional(readOnly = true)
 	public Marca consultarByCodigo(Integer codigo) {
-		return JpaFunctions.marcaToMarcaEntity.apply(repository.getOne(codigo));
+		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 
 }

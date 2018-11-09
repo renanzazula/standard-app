@@ -1,8 +1,12 @@
-package com.standard.service.FormaDePagamento;
+package com.standard.service.categoria;
 
 import com.standard.BaseTest;
-import com.standard.domain.FormasDePagamento;
-import com.standard.repository.FormaDePagamentoRepository;
+import com.standard.domain.Categoria;
+import com.standard.domain.SubCategoria;
+import com.standard.repository.CategoriaRepository;
+import com.standard.repository.SubCategoriaRepository;
+import com.standard.service.subCategoria.SubCategoriaService;
+import com.standard.service.subCategoria.SubCategoriaServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,82 +16,93 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest(showSql = true)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class FormaDePagamentoServiceImplTestIT extends BaseTest {
+public class CategoriaServiceImplTestIT extends BaseTest {
 
     @Autowired
-    private FormaDePagamentoRepository repository;
+    private CategoriaRepository repository;
 
-    private FormaDePagamentoService service;
+    @Autowired
+    private SubCategoriaRepository subCategoriaRepository;
 
-    private FormasDePagamento obj = null;
+    private CategoriaService service;
+    private SubCategoriaService subCategoriaService;
+
+    private Categoria obj = null;
+    private SubCategoria subCategoria = null;
+    private List<SubCategoria> subCategorias = null;
 
     @Before
     public void setUp() {
-        service = new FormaDePagamentoServiceImpl(repository);
-        obj = new FormasDePagamento();
+        service = new CategoriaServiceImpl(repository, subCategoriaRepository);
+        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
+
+        subCategorias = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            subCategoria = new SubCategoria();
+            subCategoria.setNome(NOME + "_" + i);
+            subCategoria.setDescricao(DESCRICAO + "_" + i);
+            subCategorias.add(subCategoriaService.incluir(subCategoria));
+        }
+
+        obj = new Categoria();
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
-        obj.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
+        obj.setSubCategorias(subCategorias);
         obj = service.incluir(obj);
     }
 
     @Test
     public void incluir() {
-        FormasDePagamento saved = service.incluir(obj);
+        Categoria saved = service.incluir(obj);
         Assert.assertNotNull(saved);
 
-        FormasDePagamento found = service.consultarByCodigo(saved.getCodigo());
+        Categoria found = service.consultarByCodigo(saved.getCodigo());
         Assert.assertEquals(found.getCodigo(), saved.getCodigo());
         Assert.assertEquals(found.getNome(), saved.getNome());
         Assert.assertEquals(found.getDescricao(), saved.getDescricao());
-        Assert.assertEquals(found.getPorcentagemDesconto(), saved.getPorcentagemDesconto());
     }
 
     @Test
     public void alterar() {
-        FormasDePagamento update = service.consultarByCodigo(obj.getCodigo());
+        Categoria update = service.consultarByCodigo(obj.getCodigo());
         Assert.assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
-        update.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
 
-        FormasDePagamento updated = service.alterar(update.getCodigo(), update);
+        Categoria updated = service.alterar(update.getCodigo(), update);
         Assert.assertEquals(update.getCodigo(), updated.getCodigo());
         Assert.assertEquals(update.getNome(), updated.getNome());
         Assert.assertEquals(update.getDescricao(), updated.getDescricao());
-        Assert.assertEquals(update.getPorcentagemDesconto(), updated.getPorcentagemDesconto());
     }
 
     @Test
     public void consultar() {
-        List<FormasDePagamento> found = service.consultar();
+        List<Categoria> found = service.consultar();
         Assert.assertNotNull(found);
     }
 
     @Test
     public void consultarByCodigo() {
-        FormasDePagamento found = service.consultarByCodigo(obj.getCodigo());
+        Categoria found = service.consultarByCodigo(obj.getCodigo());
         Assert.assertNotNull(found);
         Assert.assertEquals(found.getCodigo(), obj.getCodigo());
     }
 
     @Test
     public void excluir() {
-
-        FormasDePagamento delete = service.consultarByCodigo(obj.getCodigo());
+        Categoria delete = service.consultarByCodigo(obj.getCodigo());
         Assert.assertNotNull(delete);
-
         service.excluir(delete.getCodigo());
 
-        FormasDePagamento found = service.consultarByCodigo(obj.getCodigo());
+        Categoria found = service.consultarByCodigo(obj.getCodigo());
         Assert.assertNull(found.getCodigo());
         Assert.assertNull(found.getNome());
         Assert.assertNull(found.getDescricao());
-        Assert.assertNull(found.getPorcentagemDesconto());
     }
 }

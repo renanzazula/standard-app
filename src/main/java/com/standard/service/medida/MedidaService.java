@@ -1,9 +1,9 @@
 package com.standard.service.medida;
 
-import java.util.List;
-
 import com.standard.domain.Medida;
 import com.standard.domain.Produto;
+
+import java.util.List;
 
 public interface MedidaService {
 
@@ -17,7 +17,7 @@ public interface MedidaService {
 
 	Medida consultarByCodigo(Integer codigo);
 
-	List<Medida> consultarByProdutoAndValor(Produto produto);
+
 
 	List<Medida> consultarByCategoriaSubCategoriaMarca(Produto produto);
 

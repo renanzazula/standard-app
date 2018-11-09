@@ -1,55 +1,59 @@
 package com.standard.service.fornecedor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
+import com.standard.domain.Fornecedor;
 import com.standard.entity.FornecedorEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.domain.Fornecedor;
 import com.standard.repository.FornecedorRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FornecedorServiceImpl implements FornecedorService {
 
+    private FornecedorRepository repository;
 
-	private FornecedorRepository repository;
+    public FornecedorServiceImpl(FornecedorRepository repository) {
+        this.repository = repository;
+    }
 
-	public FornecedorServiceImpl(FornecedorRepository repository) {
-		this.repository = repository;
-	}
+    @Override
+    @Transactional
+    public Fornecedor incluir(Fornecedor entity) {
+        FornecedorEntity fornecedorDB = new FornecedorEntity();
+        fornecedorDB.setDescricao(entity.getDescricao());
+        fornecedorDB.setNome(entity.getNome());
+        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
+    }
 
-	@Override
-	public Fornecedor incluir(Fornecedor entity) {
-		FornecedorEntity fornecedorDB = new FornecedorEntity();
-		fornecedorDB.setDescricao(entity.getDescricao());
-		fornecedorDB.setNome(entity.getNome());
-		return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
-	}
+    @Override
+    @Transactional
+    public Fornecedor alterar(Integer codigo, Fornecedor entity) {
+        FornecedorEntity fornecedorDB = repository.getOne(codigo);
+        fornecedorDB.setDescricao(entity.getDescricao());
+        fornecedorDB.setNome(entity.getNome());
+        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
+    }
 
-	@Override
-	public Fornecedor alterar(Integer codigo, Fornecedor entity) {
-		FornecedorEntity fornecedorDB = repository.getOne(codigo);
-	 	fornecedorDB.setDescricao(entity.getDescricao());
-		fornecedorDB.setNome(entity.getNome());
-		return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
-	}
+    @Override
+    @Transactional
+    public void excluir(Integer codigo) {
+        FornecedorEntity fornecedorDB = repository.getOne(codigo);
+        repository.delete(fornecedorDB);
+    }
 
-	@Override
-	public void excluir(Integer codigo) {
-		FornecedorEntity fornecedorDB = repository.getOne(codigo);
-		repository.delete(fornecedorDB);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Fornecedor> consultar() {
+        return repository.findAll().stream().map(JpaFunctions.fornecedortoFornecedorEntity).collect(Collectors.toList());
+    }
 
-	@Override
-	public List<Fornecedor> consultar() {
-		return repository.findAll().stream().map(JpaFunctions.fornecedortoFornecedorEntity).collect(Collectors.toList());
-	}
-
-	@Override
-	public Fornecedor consultarByCodigo(Integer codigo) {
-		return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.getOne(codigo));
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Fornecedor consultarByCodigo(Integer codigo) {
+        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElse(null));
+    }
 
 }

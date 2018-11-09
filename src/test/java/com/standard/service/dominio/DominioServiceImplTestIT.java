@@ -31,9 +31,9 @@ public class DominioServiceImplTestIT extends BaseTest {
         service = new DominioServiceImpl(repository);
         obj = new Dominio();
         obj.setNome(NOME);
-        obj.setDescricao(DESCRIÇAO);
-        obj = service.incluir(obj);
+        obj.setDescricao(DESCRICAO);
         obj.setChecked(true);
+        obj = service.incluir(obj);
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.standard.entity.FormaDePagamentoEntity;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.FormaDePagamentoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     }
 
     @Override
+    @Transactional
     public FormasDePagamento incluir(FormasDePagamento objct) {
         FormaDePagamentoEntity formasDePagamentoDB = new FormaDePagamentoEntity();
         formasDePagamentoDB.setNome(objct.getNome());
@@ -30,6 +32,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     }
 
     @Override
+    @Transactional
     public FormasDePagamento alterar(Integer codigo, FormasDePagamento objct) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
         formasDePagamentoDB.setNome(objct.getNome());
@@ -41,21 +44,24 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     }
 
     @Override
+    @Transactional
     public void excluir(Integer codigo) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
         formaDePagamentoRepository.delete(formasDePagamentoDB);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FormasDePagamento> consultar() {
         return formaDePagamentoRepository.findAll().stream().map(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FormasDePagamento consultarByCodigo(Integer codigo) {
         return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
-                .apply(formaDePagamentoRepository.getOne(codigo));
+                .apply(formaDePagamentoRepository.findById(codigo).orElse(null));
     }
 
 }

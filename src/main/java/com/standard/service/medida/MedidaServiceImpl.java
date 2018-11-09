@@ -1,42 +1,39 @@
 package com.standard.service.medida;
 
+import com.standard.domain.Medida;
+import com.standard.domain.Produto;
+import com.standard.entity.*;
+import com.standard.function.JpaFunctions;
+import com.standard.repository.CategoriaRepository;
+import com.standard.repository.MarcaRepository;
+import com.standard.repository.MedidaRepository;
+import com.standard.repository.SubCategoriaRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.standard.entity.CategoriaEntity;
-import com.standard.entity.ItensTipoMedidaEntity;
-import com.standard.entity.MarcaEntity;
-import com.standard.entity.MedidaEntity;
-import com.standard.entity.SubCategoriaEntity;
-import com.standard.function.JpaFunctions;
-import com.standard.domain.Medida;
-import com.standard.domain.Produto;
-import com.standard.repository.CategoriaRepository;
-import com.standard.repository.MarcaRepository;
-import com.standard.repository.MedidaRepository;
-import com.standard.repository.SubCategoriaRepository;
-
 @Service
 public class MedidaServiceImpl implements MedidaService {
 
-	@Autowired
 	private MedidaRepository medidaRepository;
-
-	@Autowired
 	private CategoriaRepository categoriaRepository;
-
-	@Autowired
 	private SubCategoriaRepository subCategoriaRepository;
-
-	@Autowired
 	private MarcaRepository marcaRepository;
 
-	@Override
+    public MedidaServiceImpl(MedidaRepository medidaRepository, CategoriaRepository categoriaRepository,
+                             SubCategoriaRepository subCategoriaRepository, MarcaRepository marcaRepository) {
+        this.medidaRepository = medidaRepository;
+        this.categoriaRepository = categoriaRepository;
+        this.subCategoriaRepository = subCategoriaRepository;
+        this.marcaRepository = marcaRepository;
+    }
+
+    @Override
+	@Transactional
 	public Medida incluir(Medida medida) {
 		MedidaEntity medidaDB = new MedidaEntity();
 		medidaDB.setDescricao(medida.getDescricao());
@@ -59,6 +56,7 @@ public class MedidaServiceImpl implements MedidaService {
 	}
 
 	@Override
+	@Transactional
 	public Medida alterar(Integer codigo, Medida medida) {
 		MedidaEntity medidaDB = medidaRepository.getOne(codigo);
 		medidaDB.setDescricao(medida.getDescricao());
@@ -82,28 +80,26 @@ public class MedidaServiceImpl implements MedidaService {
 	}
 
 	@Override
+	@Transactional
 	public void excluir(Integer codigo) {
 		MedidaEntity medidaDB = medidaRepository.getOne(codigo);
 		medidaRepository.delete(medidaDB);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Medida> consultar() {
 		return medidaRepository.findAll().stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Medida consultarByCodigo(Integer codigo) {
-		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.getOne(codigo));
+		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElse(null));
 	}
 
 	@Override
-	public List<Medida> consultarByProdutoAndValor(Produto produto) {
-
-		return null;
-	}
-
-	@Override
+	@Transactional(readOnly = true)
 	public List<Medida> consultarByCategoriaSubCategoriaMarca(Produto produto) {
 		CategoriaEntity categoria = null;
 		SubCategoriaEntity subCategoria = null;
