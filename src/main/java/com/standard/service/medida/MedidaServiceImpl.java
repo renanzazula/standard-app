@@ -40,16 +40,7 @@ public class MedidaServiceImpl implements MedidaService {
 		medidaDB.setNome(medida.getNome());
 		if (medida.getItensTipoMedida() != null) {
 			Set<ItensTipoMedidaEntity> itensSet = new HashSet<>();
-			medida.getItensTipoMedida().forEach(itensMedida -> {
-				ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
-				itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
-				itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubCategoria().getCodigo()));
-				if (medida.getMarca() != null) {
-					itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
-				}
-				itens.setValor(itensMedida.getValor());
-				itensSet.add(itens);
-			});
+			itensMedidaBuild(medida, itensSet);
 			medidaDB.setItensTipoMedida(itensSet);
 		}
 		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.saveAndFlush(medidaDB));
@@ -64,19 +55,23 @@ public class MedidaServiceImpl implements MedidaService {
 		medidaDB.getItensTipoMedida().clear();
 		if (medida.getItensTipoMedida() != null) {
 			Set<ItensTipoMedidaEntity> itensSet = new HashSet<>();
-			medida.getItensTipoMedida().forEach(itensMedida -> {
-				ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
-				itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
-				itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubCategoria().getCodigo()));
-				if (medida.getMarca() != null) {
-					itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
-				}
-				itens.setValor(itensMedida.getValor());
-				itensSet.add(itens);
-			});
+			itensMedidaBuild(medida, itensSet);
 			medidaDB.getItensTipoMedida().addAll(itensSet);
 		}
 		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.saveAndFlush(medidaDB));
+	}
+
+	private void itensMedidaBuild(Medida medida, Set<ItensTipoMedidaEntity> itensSet) {
+		medida.getItensTipoMedida().forEach(itensMedida -> {
+			ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
+			itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
+			itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubCategoria().getCodigo()));
+			if (medida.getMarca() != null) {
+				itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
+			}
+			itens.setValor(itensMedida.getValor());
+			itensSet.add(itens);
+		});
 	}
 
 	@Override
