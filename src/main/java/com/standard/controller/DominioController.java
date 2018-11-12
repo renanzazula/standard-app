@@ -4,15 +4,15 @@ package com.standard.controller;
 import com.standard.domain.Dominio;
 import com.standard.service.dominio.DominioService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/dominio")
+@RestController
+@RequestMapping(DominioController.BASE_URL)
 public class DominioController {
+
+	public static final String BASE_URL = "/api/v1/dominio";
 
 	private final DominioService dominioService;
 
@@ -21,29 +21,33 @@ public class DominioController {
 	}
 
 	@GetMapping({"/all"})
-	public  ResponseEntity<List<Dominio>> consultar(){
-        return new ResponseEntity<>(dominioService.consultar(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+	public List<Dominio> consultar(){
+        return dominioService.consultar();
 	}
 
 	@GetMapping({"/{id}"})
-	public ResponseEntity<Dominio> consultarByCodigo(@PathVariable Integer id){
-	 return new ResponseEntity<>(dominioService.consultarByCodigo(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Dominio  consultarByCodigo(@PathVariable Integer id){
+	 return dominioService.consultarByCodigo(id);
 	}
 
 	@PostMapping
-	public ResponseEntity<Dominio> incluir(@RequestBody Dominio dominio){
-		return new ResponseEntity<>(dominioService.incluir(dominio), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+	public Dominio incluir(@RequestBody Dominio dominio){
+		return dominioService.incluir(dominio);
 	}
 
 	@DeleteMapping({"/{id}"})
-	public ResponseEntity<Dominio> delete(@PathVariable Integer id){
+    @ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable Integer id){
 		dominioService.excluir(id);
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping({"/{id}"})
-	public ResponseEntity<Dominio> alterar(@PathVariable Integer id, @RequestBody Dominio dominio){
-		return new ResponseEntity<>(dominioService.alterar(id, dominio), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+	public Dominio alterar(@PathVariable Integer id, @RequestBody Dominio dominio){
+		return dominioService.alterar(id, dominio);
 	}
 
 //	@RequestMapping(value = "/abrirDominio", method = { RequestMethod.GET, RequestMethod.POST })

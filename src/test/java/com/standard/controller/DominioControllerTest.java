@@ -1,84 +1,92 @@
 package com.standard.controller;
 
-import com.standard.BaseTest;
 import com.standard.domain.Dominio;
 import com.standard.service.dominio.DominioService;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DominioControllerTest extends BaseTest {
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = {DominioController.class})
+public class DominioControllerTest extends AbstractRestControllerTest {
 
-
-
-    @Mock
+    @MockBean
     DominioService service;
 
-    @InjectMocks
-    DominioController controller;
-
+    @Autowired
     MockMvc mockMvc;
+
+    Dominio obj = null;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        obj = new Dominio();
+        obj.setCodigo(1);
+        obj.setNome(NOME);
+        obj.setDescricao(DESCRICAO);
+        obj.setChecked(true);
     }
 
     @Test
     public void testConsultar() throws Exception {
-
-        Dominio dominio = new Dominio();
-        dominio.setCodigo(1);
-        dominio.setNome(NOME);
-        dominio.setDescricao("");
-
         Dominio dominio2 = new Dominio();
         dominio2.setCodigo(2);
         dominio2.setNome("bob");
 
-        List<Dominio> dominios = Arrays.asList(dominio, dominio2);
-
+        List<Dominio> dominios = Arrays.asList(obj, dominio2);
         when(service.consultar()).thenReturn(dominios);
-
-        mockMvc.perform(get("/api/v1/dominio/all")
+        mockMvc.perform(get(DominioController.BASE_URL + "/all")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
-        //.andExpect(jsonPath("$.dominios", hasSize(2)));
     }
 
     @Test
-    public void testConsultarByCodigo() {
-
+    public void testConsultarByCodigo() throws Exception {
+        when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
+        mockMvc.perform(get(DominioController.BASE_URL + "/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome", equalTo(NOME)))
+                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
     }
 
     @Test
-    public void testIncluir() {
-
+    public void testIncluir() throws Exception {
+        when(service.incluir(obj)).thenReturn(obj);
+        mockMvc.perform(post(DominioController.BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(obj)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.nome", equalTo(NOME)))
+                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
     }
 
     @Test
-    public void testDelete() {
-
+    public void testDelete() throws Exception {
+        mockMvc.perform(delete(DominioController.BASE_URL + "/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void testAlterar() {
+    public void testAlterar() throws Exception {
 
     }
 }
