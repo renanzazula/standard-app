@@ -1,18 +1,17 @@
 package com.standard.controller;
 
 import com.standard.domain.FormasDePagamento;
-import com.standard.domain.FormasDePagamento;
 import com.standard.service.FormaDePagamento.FormaDePagamentoService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/formaDePagamento")
+@RestController
+@RequestMapping(FormaDePagamentoController.BASE_URL)
 public class FormaDePagamentoController {
+
+    public static final String BASE_URL = "/api/v1/formaDePagamento";
 
     private FormaDePagamentoService formasDePagamentoService;
 
@@ -21,28 +20,32 @@ public class FormaDePagamentoController {
     }
 
     @GetMapping({"/all"})
-    public ResponseEntity<List<FormasDePagamento>> consultar(){
-        return new ResponseEntity<>(formasDePagamentoService.consultar(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<FormasDePagamento> consultar(){
+        return formasDePagamentoService.consultar();
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<FormasDePagamento> consultarByCodigo(@PathVariable Integer id){
-        return new ResponseEntity<>(formasDePagamentoService.consultarByCodigo(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public FormasDePagamento consultarByCodigo(@PathVariable Integer id){
+        return formasDePagamentoService.consultarByCodigo(id);
     }
 
     @PostMapping
-    public ResponseEntity<FormasDePagamento> incluir(@RequestBody FormasDePagamento obj){
-        return new ResponseEntity<>(formasDePagamentoService.incluir(obj), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public FormasDePagamento incluir(@RequestBody FormasDePagamento obj){
+        return formasDePagamentoService.incluir(obj);
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<FormasDePagamento> delete(@PathVariable Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id){
         formasDePagamentoService.excluir(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<FormasDePagamento> alterar(@PathVariable Integer id, @RequestBody FormasDePagamento obj){
-        return new ResponseEntity<>(formasDePagamentoService.alterar(id, obj), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public FormasDePagamento alterar(@PathVariable Integer id, @RequestBody FormasDePagamento obj){
+        return formasDePagamentoService.alterar(id, obj);
     }
 }

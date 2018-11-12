@@ -3,15 +3,16 @@ package com.standard.controller;
 import com.standard.domain.SubCategoria;
 import com.standard.service.subCategoria.SubCategoriaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/subCategoria")
+
+@RestController
+@RequestMapping(SubCategoriaController.BASE_URL)
 public class SubCategoriaController {
+
+    public static final String BASE_URL = "/api/v1/subCategoria";
 
     private final SubCategoriaService subCategoriaService;
 
@@ -20,28 +21,31 @@ public class SubCategoriaController {
     }
 
     @GetMapping({"/all"})
-    public ResponseEntity<List<SubCategoria>> consultar() {
-        return new ResponseEntity<>(subCategoriaService.consultar(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<SubCategoria> consultar() {
+        return subCategoriaService.consultar();
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<SubCategoria> consultarByCodigo(@PathVariable Integer id) {
-        return new ResponseEntity<>(subCategoriaService.consultarByCodigo(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public SubCategoria consultarByCodigo(@PathVariable Integer id) {
+        return subCategoriaService.consultarByCodigo(id);
     }
 
     @PostMapping
-    public ResponseEntity<SubCategoria> incluir(@RequestBody SubCategoria dominio) {
-        return new ResponseEntity<>(subCategoriaService.incluir(dominio), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public SubCategoria incluir(@RequestBody SubCategoria dominio) {
+        return subCategoriaService.incluir(dominio);
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<SubCategoria> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         subCategoriaService.excluir(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<SubCategoria> alterar(@PathVariable Integer id, @RequestBody SubCategoria dominio) {
-        return new ResponseEntity<>(subCategoriaService.alterar(id, dominio), HttpStatus.OK);
+    public SubCategoria alterar(@PathVariable Integer id, @RequestBody SubCategoria dominio) {
+        return subCategoriaService.alterar(id, dominio);
     }
 }

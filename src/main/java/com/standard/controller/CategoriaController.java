@@ -3,15 +3,15 @@ package com.standard.controller;
 import com.standard.domain.Categoria;
 import com.standard.service.categoria.CategoriaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/categoria")
+@RestController
+@RequestMapping(CategoriaController.BASE_URL)
 public class CategoriaController {
+
+    public static final String BASE_URL = "/api/v1/categoria";
 
     private final CategoriaService categoriaService;
 
@@ -20,30 +20,33 @@ public class CategoriaController {
     }
 
     @GetMapping({"/all"})
-    public ResponseEntity<List<Categoria>> consultar(){
-        return new ResponseEntity<>(categoriaService.consultar(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<Categoria> consultar(){
+        return categoriaService.consultar();
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Categoria> consultarByCodigo(@PathVariable Integer id){
-        return new ResponseEntity<>(categoriaService.consultarByCodigo(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Categoria consultarByCodigo(@PathVariable Integer id){
+        return categoriaService.consultarByCodigo(id);
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> incluir(@RequestBody Categoria dominio){
-        return new ResponseEntity<>(categoriaService.incluir(dominio), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Categoria incluir(@RequestBody Categoria dominio){
+        return categoriaService.incluir(dominio);
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Categoria> delete(@PathVariable Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id){
         categoriaService.excluir(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<Categoria> alterar(@PathVariable Integer id, @RequestBody Categoria dominio){
-        return new ResponseEntity<>(categoriaService.alterar(id, dominio), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Categoria alterar(@PathVariable Integer id, @RequestBody Categoria dominio){
+        return categoriaService.alterar(id, dominio);
     }
-
 }
 

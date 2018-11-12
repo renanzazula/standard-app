@@ -6,16 +6,16 @@ import com.standard.service.categoria.CategoriaService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/medida")
+@RestController
+@RequestMapping(MedidaController.BASE_URL)
 public class MedidaController {
 
+    public static final String BASE_URL = "/api/v1/medida";
+    
     private CategoriaService categoriaService;
     private MarcaService marcaService;
     private MedidaService medidaService;
@@ -27,29 +27,34 @@ public class MedidaController {
     }
 
     @GetMapping({"/all"})
-    public  ResponseEntity<List<Medida>> consultar(){
-        return new ResponseEntity<>(medidaService.consultar(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public  List<Medida> consultar(){
+        return medidaService.consultar();
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Medida> consultarByCodigo(@PathVariable Integer id){
-        return new ResponseEntity<>(medidaService.consultarByCodigo(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Medida consultarByCodigo(@PathVariable Integer id){
+        return medidaService.consultarByCodigo(id);
     }
 
     @PostMapping
-    public ResponseEntity<Medida> incluir(@RequestBody Medida medida){
-        return new ResponseEntity<>(medidaService.incluir(medida), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Medida incluir(@RequestBody Medida medida){
+        return medidaService.incluir(medida) ;
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Medida> delete(@PathVariable Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id){
         medidaService.excluir(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<Medida> alterar(@PathVariable Integer id, @RequestBody Medida medida){
-        return new ResponseEntity<>(medidaService.alterar(id, medida), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Medida alterar(@PathVariable Integer id, @RequestBody Medida medida){
+        return medidaService.alterar(id, medida);
     }
 
     private Medida carregaMedida(Medida medida) {

@@ -3,16 +3,16 @@ package com.standard.controller;
 import com.standard.domain.Marca;
 import com.standard.service.marca.MarcaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/marca")
+@RestController
+@RequestMapping(MarcaController.BASE_URL)
 public class MarcaController {
 
+	public static final String BASE_URL = "/api/v1/marca";
+	
 	private MarcaService marcaService;
 
 	public MarcaController(MarcaService marcaService) {
@@ -20,29 +20,34 @@ public class MarcaController {
 	}
 
 	@GetMapping({"/all"})
-	public ResponseEntity<List<Marca>> consultar(){
-		return new ResponseEntity<>(marcaService.consultar(), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public List<Marca> consultar(){
+		return marcaService.consultar();
 	}
 
 	@GetMapping({"/{id}"})
-	public ResponseEntity<Marca> consultarByCodigo(@PathVariable Integer id){
-		return new ResponseEntity<>(marcaService.consultarByCodigo(id), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public Marca consultarByCodigo(@PathVariable Integer id){
+		return marcaService.consultarByCodigo(id);
 	}
 
 	@PostMapping
-	public ResponseEntity<Marca> incluir(@RequestBody Marca obj){
-		return new ResponseEntity<>(marcaService.incluir(obj), HttpStatus.CREATED);
+	@ResponseStatus(HttpStatus.CREATED)
+	public Marca incluir(@RequestBody Marca obj){
+		return marcaService.incluir(obj);
 	}
 
 	@DeleteMapping({"/{id}"})
-	public ResponseEntity<Marca> delete(@PathVariable Integer id){
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable Integer id){
 		marcaService.excluir(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 	@PutMapping({"/{id}"})
-	public ResponseEntity<Marca> alterar(@PathVariable Integer id, @RequestBody Marca obj){
-		return new ResponseEntity<>(marcaService.alterar(id, obj), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public Marca alterar(@PathVariable Integer id, @RequestBody Marca obj){
+		return marcaService.alterar(id, obj);
 	}
 
 //	private static final String VIEW = "marca";

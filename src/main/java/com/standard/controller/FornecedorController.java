@@ -3,16 +3,16 @@ package com.standard.controller;
 import com.standard.domain.Fornecedor;
 import com.standard.service.fornecedor.FornecedorService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/fornecedor")
+@RestController
+@RequestMapping(FornecedorController.BASE_URL)
 public class FornecedorController {
 
+	public static final String BASE_URL = "/api/v1/fornecedor";
+	
 	private FornecedorService fornecedorService;
 
 	public FornecedorController(FornecedorService fornecedorService) {
@@ -20,29 +20,33 @@ public class FornecedorController {
 	}
 
 	@GetMapping({"/all"})
-	public ResponseEntity<List<Fornecedor>> consultar(){
-		return new ResponseEntity<>(fornecedorService.consultar(), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public List<Fornecedor> consultar(){
+		return fornecedorService.consultar();
 	}
 
 	@GetMapping({"/{id}"})
-	public ResponseEntity<Fornecedor> consultarByCodigo(@PathVariable Integer id){
-		return new ResponseEntity<>(fornecedorService.consultarByCodigo(id), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public Fornecedor consultarByCodigo(@PathVariable Integer id){
+		return fornecedorService.consultarByCodigo(id);
 	}
 
 	@PostMapping
-	public ResponseEntity<Fornecedor> incluir(@RequestBody Fornecedor obj){
-		return new ResponseEntity<>(fornecedorService.incluir(obj), HttpStatus.CREATED);
+	@ResponseStatus(HttpStatus.CREATED)
+	public Fornecedor incluir(@RequestBody Fornecedor obj){
+		return fornecedorService.incluir(obj);
 	}
 
 	@DeleteMapping({"/{id}"})
-	public ResponseEntity<Fornecedor> delete(@PathVariable Integer id){
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable Integer id){
 		fornecedorService.excluir(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		 
 	}
 
 	@PutMapping({"/{id}"})
-	public ResponseEntity<Fornecedor> alterar(@PathVariable Integer id, @RequestBody Fornecedor obj){
-		return new ResponseEntity<>(fornecedorService.alterar(id, obj), HttpStatus.OK);
+	public Fornecedor alterar(@PathVariable Integer id, @RequestBody Fornecedor obj){
+		return fornecedorService.alterar(id, obj);
 	}
 
 	/*// Set a form validator
