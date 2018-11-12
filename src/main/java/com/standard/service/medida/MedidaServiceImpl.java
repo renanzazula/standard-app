@@ -77,7 +77,7 @@ public class MedidaServiceImpl implements MedidaService {
 	@Override
 	@Transactional
 	public void excluir(Integer codigo) {
-		MedidaEntity medidaDB = medidaRepository.getOne(codigo);
+		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElse(null);
 		medidaRepository.delete(medidaDB);
 	}
 

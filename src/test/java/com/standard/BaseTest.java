@@ -1,5 +1,10 @@
 package com.standard;
 
+import com.standard.domain.Categoria;
+import com.standard.domain.Marca;
+import com.standard.domain.SubCategoria;
+import org.junit.Assert;
+
 public class BaseTest {
 
     protected static final String NOME = "nome";
@@ -13,5 +18,23 @@ public class BaseTest {
     protected static final String VALOR_X  = "X";
     protected static final String VALOR_L  = "L";
     protected static final String VALOR_XL = "XL";
+
+    protected void assertMarca(Marca expected, Marca found){
+        Assert.assertEquals(expected.getCodigo(),    found.getCodigo());
+        Assert.assertEquals(expected.getNome(),      found.getNome());
+        Assert.assertEquals(expected.getDescricao(), found.getDescricao());
+    }
+
+    protected void assertCategoria(Categoria expected, Categoria found){
+        Assert.assertEquals(expected.getCodigo(),    found.getCodigo());
+        Assert.assertEquals(expected.getNome(),      found.getNome());
+        Assert.assertEquals(expected.getDescricao(), found.getDescricao());
+    }
+
+    protected void assertSubCategoria(SubCategoria expected, SubCategoria found){
+        Assert.assertEquals(expected.getCodigo(),    found.getCodigo());
+        Assert.assertEquals(expected.getNome(),      found.getNome());
+        Assert.assertEquals(expected.getDescricao(), found.getDescricao());
+    }
 
 }

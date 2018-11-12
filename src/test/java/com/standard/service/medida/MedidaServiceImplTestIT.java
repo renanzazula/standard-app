@@ -50,8 +50,8 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
     private Medida obj;
     private List<ItensTipoMedida> itensTipoMedida;
-    private ItensTipoMedida  itenTipoMedida;
-    private Medida medida;
+    private ItensTipoMedida itenTipoMedida;
+
     private Marca marca;
     private Categoria categoria;
     private SubCategoria subCategoria;
@@ -60,7 +60,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
     @Before
     public void setUp() {
         medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
-                                                subCategoriaRepository, marcaRepository);
+                subCategoriaRepository, marcaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
         subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
@@ -71,7 +71,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
         marca.setDescricao(DESCRICAO);
         marca = marcaService.incluir(marca);
 
-        subCategoria =  new SubCategoria();
+        subCategoria = new SubCategoria();
         subCategoria.setNome(NOME);
         subCategoria.setDescricao(DESCRICAO);
         subCategoria = subCategoriaService.incluir(subCategoria);
@@ -87,7 +87,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
         for (int i = 0; i < 4; i++) {
             itenTipoMedida = new ItensTipoMedida();
 
-            switch (i){
+            switch (i) {
                 case 0:
                     itenTipoMedida.setValor(VALOR_P);
                     break;
@@ -119,25 +119,8 @@ public class MedidaServiceImplTestIT extends BaseTest {
         Medida medidaSave = medidaService.incluir(obj);
         Assert.assertEquals(medidaSave.getItensTipoMedida().size(), obj.getItensTipoMedida().size());
 
-        for (int i = 0; i < medidaSave.getItensTipoMedida().size() ; i++) {
-
-            Marca marcaFound = medidaSave.getItensTipoMedida().get(i).getMarca();
-            Assert.assertEquals(marcaFound.getCodigo(),    marca.getCodigo());
-            Assert.assertEquals(marcaFound.getNome(),      marca.getNome());
-            Assert.assertEquals(marcaFound.getDescricao(), marca.getDescricao());
-
-            SubCategoria subCategoriaFound = medidaSave.getItensTipoMedida().get(i).getSubCategoria();
-            Assert.assertEquals(subCategoriaFound.getCodigo(),    subCategoria.getCodigo());
-            Assert.assertEquals(subCategoriaFound.getNome(),      subCategoria.getNome());
-            Assert.assertEquals(subCategoriaFound.getDescricao(), subCategoria.getDescricao());
-
-            Categoria categoriaFound = medidaSave.getItensTipoMedida().get(i).getCategoria();
-            Assert.assertEquals(categoriaFound.getCodigo(),    categoria.getCodigo());
-            Assert.assertEquals(categoriaFound.getNome(),      categoria.getNome());
-            Assert.assertEquals(categoriaFound.getDescricao(), categoria.getDescricao());
-
-            Assert.assertEquals(medidaSave.getItensTipoMedida().get(i).getValor(), obj.getItensTipoMedida().get(i).getValor());
-        }
+        obj = medidaService.consultarByCodigo(medidaSave.getCodigo());
+        assertMarcaSubCategoriaCategoria(medidaSave);
     }
 
     @Test
@@ -146,26 +129,136 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterarMarca() {
+
+        obj = medidaService.incluir(obj);
+
+
+        Marca marcaUpdate = new Marca();
+        marcaUpdate.setNome(NOME_UPDATE);
+        marcaUpdate.setDescricao(DESCRICAO_UPDATE);
+        marcaUpdate = marcaService.incluir(marcaUpdate);
+
+        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        toUpdate.setCategoria(categoria);
+        toUpdate.setSubCategoria(subCategoria);
+        toUpdate.setMarca(marcaUpdate);
+
+        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+
+        for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
+            Marca marcaFound = updated.getItensTipoMedida().get(i).getMarca();
+            assertMarca(marcaFound, marcaUpdate);
+
+            Assert.assertNotEquals(marcaUpdate.getCodigo(), marca.getCodigo());
+            Assert.assertNotEquals(marcaUpdate.getNome(), marca.getNome());
+            Assert.assertNotEquals(marcaUpdate.getDescricao(), marca.getDescricao());
+        }
+
     }
 
     @Test
     public void alterarSubCategoria() {
+
+        obj = medidaService.incluir(obj);
+
+        SubCategoria subCategoriaUpdate = new SubCategoria();
+        subCategoriaUpdate.setNome(NOME_UPDATE);
+        subCategoriaUpdate.setDescricao(DESCRICAO_UPDATE);
+        subCategoriaUpdate = subCategoriaService.incluir(subCategoriaUpdate);
+
+        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        toUpdate.setCategoria(categoria);
+        toUpdate.setSubCategoria(subCategoriaUpdate);
+        toUpdate.setMarca(marca);
+
+        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+
+        for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
+            SubCategoria subCategoriaFound = updated.getItensTipoMedida().get(i).getSubCategoria();
+            assertSubCategoria(subCategoriaFound, subCategoriaUpdate);
+
+            Assert.assertNotEquals(subCategoriaUpdate.getCodigo(), subCategoria.getCodigo());
+            Assert.assertNotEquals(subCategoriaUpdate.getNome(), subCategoria.getNome());
+            Assert.assertNotEquals(subCategoriaUpdate.getDescricao(), subCategoria.getDescricao());
+        }
+
     }
 
     @Test
     public void alterarCategoria() {
+
+        obj = medidaService.incluir(obj);
+
+        Categoria categoriaUpdate = new Categoria();
+        categoriaUpdate.setNome(NOME_UPDATE);
+        categoriaUpdate.setDescricao(DESCRICAO_UPDATE);
+        categoriaUpdate.setSubCategorias(new ArrayList<>());
+        categoriaUpdate.getSubCategorias().add(subCategoria);
+        categoriaUpdate = categoriaService.incluir(categoriaUpdate);
+
+        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        toUpdate.setCategoria(categoriaUpdate);
+        toUpdate.setSubCategoria(subCategoria);
+        toUpdate.setMarca(marca);
+
+        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+
+        for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
+            Categoria categoriaFound = updated.getItensTipoMedida().get(i).getCategoria();
+            assertCategoria(categoriaFound, categoriaUpdate);
+
+            Assert.assertNotEquals(categoriaFound.getCodigo(), categoria.getCodigo());
+            Assert.assertNotEquals(categoriaFound.getNome(), categoria.getNome());
+            Assert.assertNotEquals(categoriaFound.getDescricao(), categoria.getDescricao());
+        }
     }
 
     @Test
     public void excluir() {
+        obj = medidaService.incluir(obj);
+
+        Medida delete = medidaService.consultarByCodigo(obj.getCodigo());
+        Assert.assertNotNull(delete);
+
+        medidaService.excluir(delete.getCodigo());
+
+        Medida found = medidaService.consultarByCodigo(obj.getCodigo());
+        Assert.assertNull(found.getCodigo());
+        Assert.assertNull(found.getNome());
+        Assert.assertNull(found.getDescricao());
+
     }
 
     @Test
     public void consultar() {
+        List<Medida> medidas = medidaService.consultar();
+        Assert.assertNotNull(medidas);
+    }
+
+    private void assertMarcaSubCategoriaCategoria(Medida medida) {
+        for (int j = 0; j < medida.getItensTipoMedida().size(); j++) {
+
+            Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
+            assertMarca(marcaFound, marca);
+
+            SubCategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubCategoria();
+            assertSubCategoria(subCategoriaFound, subCategoria);
+
+            Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
+            assertCategoria(categoriaFound, categoria);
+
+            Assert.assertEquals(medida.getItensTipoMedida().get(j).getValor(), obj.getItensTipoMedida().get(j).getValor());
+        }
     }
 
     @Test
     public void consultarByCodigo() {
+        obj = medidaService.incluir(obj);
+        Medida medidaFound = medidaService.consultarByCodigo(obj.getCodigo());
+        Assert.assertEquals(medidaFound.getCodigo(), obj.getCodigo());
+        Assert.assertEquals(medidaFound.getNome(), obj.getNome());
+        Assert.assertEquals(medidaFound.getDescricao() , obj.getDescricao());
+        assertMarcaSubCategoriaCategoria(medidaFound);
     }
 
     @Test
