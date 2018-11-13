@@ -87,6 +87,12 @@ public class DominioControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-
+        when(service.alterar(1,obj)).thenReturn(obj);
+        mockMvc.perform(put(DominioController.BASE_URL+"/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(obj)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome", equalTo(NOME)))
+                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
     }
 }
