@@ -73,7 +73,7 @@ public class VendaServiceImpl implements VendaService {
 		vendaDB.setPagamento(venda.getPagamento());
 		vendaDB.setValorTotal(venda.getSubTotal()); // posso considerar valor total é sub total venda... TODO: validar
 		vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-		vendaDB.setCliente(clienteRepository.getOne(1));
+		vendaDB.setCliente(clienteRepository.getOne(1l));
 
 		CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
 		vendaDB.setCaixa(caixa);
@@ -105,9 +105,8 @@ public class VendaServiceImpl implements VendaService {
 	 * 
 	 * produto_has_itens_tipo_medida
 	 * 
-	 * @param produto_has_itens_tipo_medida_codigo
+	 * @param venda
 	 */
-	@Transactional
 	private void removerProdutoDoEstoque(Venda venda) {
 		venda.getVendaHasItemProduto().forEach(itemVenda -> {
  			Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
@@ -124,9 +123,8 @@ public class VendaServiceImpl implements VendaService {
 	 * 
 	 * produto_has_itens_tipo_medida
 	 * 
-	 * @param produto_has_itens_tipo_medida_codigo
+	 * @param venda
 	 */
-	@Transactional
 	private void adicionarProdutoNoEstoque(Venda venda) {
 		venda.getVendaHasItemProduto().forEach(itemVenda -> {
  			Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
@@ -136,8 +134,7 @@ public class VendaServiceImpl implements VendaService {
 		});
 	}
 	
-	@Transactional(readOnly = true)
-	private Integer getProdutoHasItensTipoMedida(Integer itemTipoMedidaCodigo, Integer produtoCodigo) {
+	private Long getProdutoHasItensTipoMedida(Long itemTipoMedidaCodigo, Long produtoCodigo) {
 		return produtoHasItensTipoMedidaRepository
 				.findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo).getCodigo();
 	}

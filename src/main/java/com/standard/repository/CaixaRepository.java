@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CaixaRepository extends JpaRepository<CaixaEntity, Integer> {
+public interface CaixaRepository extends JpaRepository<CaixaEntity, Long> {
 
     @Query(value = "SELECT codigo FROM caixa ORDER BY codigo DESC LIMIT 0, 1", nativeQuery = true)
-    Integer gerarCodigoCaixa();
+    Long gerarCodigoCaixa();
 
     @Query(value = "SELECT * FROM caixa where status = 'A' ORDER BY codigo DESC LIMIT 0, 1", nativeQuery = true)
     CaixaEntity buscarUltimoCaixa();

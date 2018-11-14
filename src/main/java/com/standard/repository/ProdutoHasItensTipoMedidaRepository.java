@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProdutoHasItensTipoMedidaRepository extends JpaRepository<ProdutoHasItensTipoMedidaEntity, Integer> {
+public interface ProdutoHasItensTipoMedidaRepository extends JpaRepository<ProdutoHasItensTipoMedidaEntity, Long> {
 
-    ProdutoHasItensTipoMedidaEntity findByItensTipoMedidaCodigoAndProdutoCodigo(Integer itemTipoMedidaCodigo,
-                                                                                Integer produtoCodigo);
+    ProdutoHasItensTipoMedidaEntity findByItensTipoMedidaCodigoAndProdutoCodigo(Long itemTipoMedidaCodigo,
+                                                                                Long produtoCodigo);
 }

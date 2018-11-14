@@ -27,7 +27,7 @@ public @Data class VendaFiltro implements Serializable {
 
 	}
 
-	public Integer getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 

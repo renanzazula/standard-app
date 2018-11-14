@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface VendaRepository extends JpaRepository<VendaEntity, Integer>, JpaSpecificationExecutor<VendaEntity> {
+public interface VendaRepository extends JpaRepository<VendaEntity, Long>, JpaSpecificationExecutor<VendaEntity> {
 
     default List<VendaEntity> filter(VendaEntity venda) {
         return findAll(new VendaSpecification(venda));

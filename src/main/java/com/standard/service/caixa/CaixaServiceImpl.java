@@ -97,12 +97,12 @@ public class CaixaServiceImpl implements CaixaService {
 		
 	@Override
 	@Transactional
-	public Integer gerarCodigoCaixa() {
+	public Long gerarCodigoCaixa() {
 		Long codigo = repository.gerarCodigoCaixa();
 		if(codigo != null) {
 			codigo = codigo +1;
 		}else {
-			codigo = 0; 
+			codigo = 0l;
 		}			  
 		return codigo;  
 	}

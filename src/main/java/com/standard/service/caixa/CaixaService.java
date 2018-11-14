@@ -1,8 +1,8 @@
 package com.standard.service.caixa;
 
-import com.standard.entity.CaixaEntity;
 import com.standard.domain.Caixa;
 import com.standard.domain.Venda;
+import com.standard.entity.CaixaEntity;
 
 public interface CaixaService {
 
@@ -16,7 +16,7 @@ public interface CaixaService {
 
 	Caixa buscarCaixa(Caixa Caixa);
 
-	Integer gerarCodigoCaixa();
+	Long gerarCodigoCaixa();
 
 	Caixa updateValorCaixa(CaixaEntity caixa, Venda venda);
 }

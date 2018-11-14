@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MedidaRepository extends JpaRepository<MedidaEntity, Integer> {
+public interface MedidaRepository extends JpaRepository<MedidaEntity, Long> {
 
     public List<MedidaEntity> findByItensTipoMedidaCategoriaAndItensTipoMedidaSubCategoriaAndAndItensTipoMedidaMarca(
             CategoriaEntity categoria_codigo, SubCategoriaEntity sub_categoria_codigo, MarcaEntity marca_codigo);
