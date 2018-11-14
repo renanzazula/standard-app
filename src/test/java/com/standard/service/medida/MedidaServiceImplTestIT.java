@@ -1,7 +1,10 @@
 package com.standard.service.medida;
 
 import com.standard.BaseTest;
-import com.standard.domain.*;
+import com.standard.domain.Categoria;
+import com.standard.domain.Marca;
+import com.standard.domain.Medida;
+import com.standard.domain.SubCategoria;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.MarcaRepository;
 import com.standard.repository.MedidaRepository;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest(showSql = true)
+@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MedidaServiceImplTestIT extends BaseTest {
 
@@ -47,90 +50,55 @@ public class MedidaServiceImplTestIT extends BaseTest {
     private SubCategoriaService subCategoriaService;
     private CategoriaService categoriaService;
 
-
-    private Medida obj;
-    private List<ItensTipoMedida> itensTipoMedida;
-    private ItensTipoMedida itenTipoMedida;
-
-    private Marca marca;
-    private Categoria categoria;
-    private SubCategoria subCategoria;
-
-
     @Before
     public void setUp() {
         medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
-                subCategoriaRepository, marcaRepository);
+                                              subCategoriaRepository, marcaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
         subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
         categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
 
-        marca = new Marca();
-        marca.setNome(NOME);
-        marca.setDescricao(DESCRICAO);
+        setUpMarca();
         marca = marcaService.incluir(marca);
 
-        subCategoria = new SubCategoria();
-        subCategoria.setNome(NOME);
-        subCategoria.setDescricao(DESCRICAO);
+        setUpSubCategoria();
         subCategoria = subCategoriaService.incluir(subCategoria);
 
-        categoria = new Categoria();
-        categoria.setNome(NOME);
-        categoria.setDescricao(DESCRICAO);
+        setUpCategoria();
         categoria.setSubCategorias(new ArrayList<>());
         categoria.getSubCategorias().add(subCategoria);
         categoria = categoriaService.incluir(categoria);
 
-        itensTipoMedida = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            itenTipoMedida = new ItensTipoMedida();
 
-            switch (i) {
-                case 0:
-                    itenTipoMedida.setValor(VALOR_P);
-                    break;
-                case 1:
-                    itenTipoMedida.setValor(VALOR_L);
-                    break;
-                case 2:
-                    itenTipoMedida.setValor(VALOR_X);
-                    break;
-                case 3:
-                    itenTipoMedida.setValor(VALOR_XL);
-                    break;
-            }
-            itensTipoMedida.add(itenTipoMedida);
-        }
-
-        obj = new Medida();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj.setSubCategoria(subCategoria);
-        obj.setCategoria(categoria);
-        obj.setMarca(marca);
-        obj.setItensTipoMedida(itensTipoMedida);
+        setUpItensTipoMedida();
+        setUpMedida();
+        medida.setSubCategoria(subCategoria);
+        medida.setCategoria(categoria);
+        medida.setMarca(marca);
+        medida.setItensTipoMedida(itensTipoMedida);
 
     }
 
     @Test
     public void incluir() {
-        Medida medidaSave = medidaService.incluir(obj);
-        Assert.assertEquals(medidaSave.getItensTipoMedida().size(), obj.getItensTipoMedida().size());
+        Medida medidaSave = medidaService.incluir(medida);
+        Assert.assertEquals(medidaSave.getItensTipoMedida().size(), medida.getItensTipoMedida().size());
 
-        obj = medidaService.consultarByCodigo(medidaSave.getCodigo());
+        medida = medidaService.consultarByCodigo(medidaSave.getCodigo());
         assertMarcaSubCategoriaCategoria(medidaSave);
+        // todo:
     }
 
     @Test
     public void alterar() {
+        // todo:
     }
 
     @Test
     public void alterarMarca() {
 
-        obj = medidaService.incluir(obj);
+        medida = medidaService.incluir(medida);
 
 
         Marca marcaUpdate = new Marca();
@@ -138,12 +106,12 @@ public class MedidaServiceImplTestIT extends BaseTest {
         marcaUpdate.setDescricao(DESCRICAO_UPDATE);
         marcaUpdate = marcaService.incluir(marcaUpdate);
 
-        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
         toUpdate.setCategoria(categoria);
         toUpdate.setSubCategoria(subCategoria);
         toUpdate.setMarca(marcaUpdate);
 
-        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+        Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
 
         for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
             Marca marcaFound = updated.getItensTipoMedida().get(i).getMarca();
@@ -159,19 +127,19 @@ public class MedidaServiceImplTestIT extends BaseTest {
     @Test
     public void alterarSubCategoria() {
 
-        obj = medidaService.incluir(obj);
+        medida = medidaService.incluir(medida);
 
         SubCategoria subCategoriaUpdate = new SubCategoria();
         subCategoriaUpdate.setNome(NOME_UPDATE);
         subCategoriaUpdate.setDescricao(DESCRICAO_UPDATE);
         subCategoriaUpdate = subCategoriaService.incluir(subCategoriaUpdate);
 
-        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
         toUpdate.setCategoria(categoria);
         toUpdate.setSubCategoria(subCategoriaUpdate);
         toUpdate.setMarca(marca);
 
-        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+        Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
 
         for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
             SubCategoria subCategoriaFound = updated.getItensTipoMedida().get(i).getSubCategoria();
@@ -187,7 +155,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
     @Test
     public void alterarCategoria() {
 
-        obj = medidaService.incluir(obj);
+        medida = medidaService.incluir(medida);
 
         Categoria categoriaUpdate = new Categoria();
         categoriaUpdate.setNome(NOME_UPDATE);
@@ -196,12 +164,12 @@ public class MedidaServiceImplTestIT extends BaseTest {
         categoriaUpdate.getSubCategorias().add(subCategoria);
         categoriaUpdate = categoriaService.incluir(categoriaUpdate);
 
-        Medida toUpdate = medidaService.consultarByCodigo(obj.getCodigo());
+        Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
         toUpdate.setCategoria(categoriaUpdate);
         toUpdate.setSubCategoria(subCategoria);
         toUpdate.setMarca(marca);
 
-        Medida updated = medidaService.alterar(obj.getCodigo(), toUpdate);
+        Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
 
         for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
             Categoria categoriaFound = updated.getItensTipoMedida().get(i).getCategoria();
@@ -215,14 +183,14 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
     @Test
     public void excluir() {
-        obj = medidaService.incluir(obj);
+        medida = medidaService.incluir(medida);
 
-        Medida delete = medidaService.consultarByCodigo(obj.getCodigo());
+        Medida delete = medidaService.consultarByCodigo(medida.getCodigo());
         Assert.assertNotNull(delete);
 
         medidaService.excluir(delete.getCodigo());
 
-        Medida found = medidaService.consultarByCodigo(obj.getCodigo());
+        Medida found = medidaService.consultarByCodigo(medida.getCodigo());
         Assert.assertNull(found.getCodigo());
         Assert.assertNull(found.getNome());
         Assert.assertNull(found.getDescricao());
@@ -247,17 +215,17 @@ public class MedidaServiceImplTestIT extends BaseTest {
             Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
             assertCategoria(categoriaFound, categoria);
 
-            Assert.assertEquals(medida.getItensTipoMedida().get(j).getValor(), obj.getItensTipoMedida().get(j).getValor());
+            Assert.assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
         }
     }
 
     @Test
     public void consultarByCodigo() {
-        obj = medidaService.incluir(obj);
-        Medida medidaFound = medidaService.consultarByCodigo(obj.getCodigo());
-        Assert.assertEquals(medidaFound.getCodigo(), obj.getCodigo());
-        Assert.assertEquals(medidaFound.getNome(), obj.getNome());
-        Assert.assertEquals(medidaFound.getDescricao() , obj.getDescricao());
+        medida = medidaService.incluir(medida);
+        Medida medidaFound = medidaService.consultarByCodigo(medida.getCodigo());
+        Assert.assertEquals(medidaFound.getCodigo(), medida.getCodigo());
+        Assert.assertEquals(medidaFound.getNome(), medida.getNome());
+        Assert.assertEquals(medidaFound.getDescricao() , medida.getDescricao());
         assertMarcaSubCategoriaCategoria(medidaFound);
     }
 

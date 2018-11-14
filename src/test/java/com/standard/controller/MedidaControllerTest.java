@@ -40,23 +40,20 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    Medida obj = null;
+
 
     @Before
     public void setUp() throws Exception {
-        obj = new Medida();
-        obj.setCodigo(1);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        setUpMedida();
     }
 
     @Test
     public void testConsultar() throws Exception {
         Medida medida2 = new Medida();
-        medida2.setCodigo(2);
+        medida2.setCodigo(2l);
         medida2.setNome("bob");
 
-        List<Medida> medidas = Arrays.asList(obj, medida2);
+        List<Medida> medidas = Arrays.asList(medida, medida2);
         when(service.consultar()).thenReturn(medidas);
         mockMvc.perform(get(MedidaController.BASE_URL + "/all")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -66,7 +63,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
+        when(service.consultarByCodigo(medida.getCodigo())).thenReturn(medida);
         mockMvc.perform(get(MedidaController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -76,10 +73,10 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.incluir(obj)).thenReturn(obj);
+        when(service.incluir(medida)).thenReturn(medida);
         mockMvc.perform(post(MedidaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(obj)))
+                .content(asJsonString(medida)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
@@ -94,10 +91,10 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1,obj)).thenReturn(obj);
+        when(service.alterar(1l, medida)).thenReturn(medida);
         mockMvc.perform(put(MedidaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(obj)))
+                .content(asJsonString(medida)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));

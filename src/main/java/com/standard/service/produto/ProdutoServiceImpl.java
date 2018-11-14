@@ -7,7 +7,6 @@ import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,31 +19,30 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
-	@Autowired
 	private ProdutoRepository produtoRepository;
-
-	@Autowired
 	private MedidaRepository medidaRepository;
-
-	@Autowired
 	private DominioRepository dominioRepository;
-
-	@Autowired
 	private FornecedorRepository fornecedorRepository;
-
-	@Autowired
 	private CategoriaRepository categoriaRepository;
-
-	@Autowired
 	private SubCategoriaRepository subCategoriaRepository;
-
-	@Autowired
 	private MarcaRepository marcaRepository;
-
-	@Autowired
 	private ItensTipoMedidaRepository itensTipoMedidaRepository;
 
-	@Override
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, MedidaRepository medidaRepository,
+                              DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,
+                              CategoriaRepository categoriaRepository, SubCategoriaRepository subCategoriaRepository,
+                              MarcaRepository marcaRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
+        this.produtoRepository = produtoRepository;
+        this.medidaRepository = medidaRepository;
+        this.dominioRepository = dominioRepository;
+        this.fornecedorRepository = fornecedorRepository;
+        this.categoriaRepository = categoriaRepository;
+        this.subCategoriaRepository = subCategoriaRepository;
+        this.marcaRepository = marcaRepository;
+        this.itensTipoMedidaRepository = itensTipoMedidaRepository;
+    }
+
+    @Override
 	@Transactional
 	public Produto incluir(Produto produto) {
 		ProdutoEntity produtoDB = new ProdutoEntity();
@@ -82,31 +80,35 @@ public class ProdutoServiceImpl implements ProdutoService {
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
 			produtoDB.setMarca(marcaRepository.getOne(produto.getMarca().getCodigo()));
 		}
-
-		if (produto.getProdutoHasItensTipoMedida() != null) {
-			Set<ProdutoHasItensTipoMedidaEntity> set = new HashSet<>();
-			produto.getProdutoHasItensTipoMedida().forEach(phitm -> {
-				ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = new ProdutoHasItensTipoMedidaEntity();
-				produtoHasItensTipoMedida.setQuantidade(phitm.getQuantidade());
-
-				Set<DominioEntity> dominiosDB = new HashSet<>();
-				if(phitm.getDominios() != null) {
-					phitm.getDominios().forEach(dominio -> {
-						if(dominio.getCodigo() != null) {
-							dominiosDB.add(dominioRepository.getOne(dominio.getCodigo()));
-						}
-					});
-				}
-				produtoHasItensTipoMedida.setDominios(dominiosDB);
-				produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItensTipoMedida().getCodigo()));
-				set.add(produtoHasItensTipoMedida);
-			});
-			produtoDB.setProdutoHasItensTipoMedida(set);
-		}
-		return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
+        getProdutoHasItensTipoMedida(produto, produtoDB);
+        return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
 
-	@Override
+    private void getProdutoHasItensTipoMedida(Produto produto, ProdutoEntity produtoDB) {
+        if (produto.getProdutoHasItensTipoMedida() != null) {
+            Set<ProdutoHasItensTipoMedidaEntity> set = new HashSet<>();
+            produto.getProdutoHasItensTipoMedida().forEach(phitm -> {
+                ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = new ProdutoHasItensTipoMedidaEntity();
+
+                produtoHasItensTipoMedida.setQuantidade(phitm.getQuantidade());
+                Set<DominioEntity> dominiosDB = new HashSet<>();
+                if(phitm.getDominios() != null) {
+                    phitm.getDominios().forEach(dominio -> {
+                        if(dominio.getCodigo() != null) {
+                            dominiosDB.add(dominioRepository.getOne(dominio.getCodigo()));
+                        }
+                    });
+                }
+                produtoHasItensTipoMedida.setDominios(dominiosDB);
+                produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItensTipoMedida().getCodigo()));
+
+                set.add(produtoHasItensTipoMedida);
+            });
+            produtoDB.setProdutoHasItensTipoMedida(set);
+        }
+    }
+
+    @Override
 	@Transactional
 	public Produto alterar(Long codigo, Produto produto) {
 		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
@@ -147,31 +149,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 		produtoDB.getProdutoHasItensTipoMedida().forEach(d -> d.getDominios().clear() );
 		produtoDB.getProdutoHasItensTipoMedida().clear();
-		
-		if (produto.getProdutoHasItensTipoMedida() != null) {
-			Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedidaUpdate = new HashSet<>();
-			produto.getProdutoHasItensTipoMedida().forEach(phitm -> {
-				
-				ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = new ProdutoHasItensTipoMedidaEntity();
-				produtoHasItensTipoMedida.setQuantidade(phitm.getQuantidade());
-				
-				if(phitm.getDominios() != null) {
-					Set<DominioEntity> dominiosDB = new HashSet<DominioEntity>();
-					phitm.getDominios().forEach(dominio -> {
-						if(dominio.getCodigo() != null) {
-							dominiosDB.add(dominioRepository.getOne(dominio.getCodigo()));
-						}
-					});
-					produtoHasItensTipoMedida.setDominios(dominiosDB);
-				}
-				produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItensTipoMedida().getCodigo()));
-				produtoHasItensTipoMedidaUpdate.add(produtoHasItensTipoMedida);
-				
-			});
-			
-			produtoDB.getProdutoHasItensTipoMedida().addAll(produtoHasItensTipoMedidaUpdate);
-		}
-
+        getProdutoHasItensTipoMedida(produto, produtoDB);
 		return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
 

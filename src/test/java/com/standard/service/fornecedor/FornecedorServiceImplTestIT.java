@@ -24,20 +24,15 @@ public class FornecedorServiceImplTestIT extends BaseTest {
 
     private FornecedorService service;
 
-    private Fornecedor obj = null;
-
     @Before
     public void setUp() {
-        service = new FornecedorServiceImpl(repository);
-        obj = new Fornecedor();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj = service.incluir(obj);
+        setUpFornecedor();
+        fornecedor = service.incluir(fornecedor);
     }
 
     @Test
     public void incluir() {
-        Fornecedor saved = service.incluir(obj);
+        Fornecedor saved = service.incluir(fornecedor);
         Assert.assertNotNull(saved);
 
         Fornecedor found = service.consultarByCodigo(saved.getCodigo());
@@ -48,7 +43,7 @@ public class FornecedorServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        Fornecedor update = service.consultarByCodigo(obj.getCodigo());
+        Fornecedor update = service.consultarByCodigo(fornecedor.getCodigo());
         Assert.assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -67,20 +62,20 @@ public class FornecedorServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        Fornecedor found = service.consultarByCodigo(obj.getCodigo());
+        Fornecedor found = service.consultarByCodigo(fornecedor.getCodigo());
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), obj.getCodigo());
+        Assert.assertEquals(found.getCodigo(), fornecedor.getCodigo());
     }
 
     @Test
     public void excluir() {
 
-        Fornecedor delete = service.consultarByCodigo(obj.getCodigo());
+        Fornecedor delete = service.consultarByCodigo(fornecedor.getCodigo());
         Assert.assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        Fornecedor found = service.consultarByCodigo(obj.getCodigo());
+        Fornecedor found = service.consultarByCodigo(fornecedor.getCodigo());
         Assert.assertNull(found.getCodigo());
         Assert.assertNull(found.getNome());
         Assert.assertNull(found.getDescricao());

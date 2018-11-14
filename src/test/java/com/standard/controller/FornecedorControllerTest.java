@@ -31,24 +31,19 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
-    Fornecedor obj = null;
-
+ 
     @Before
     public void setUp() throws Exception {
-        obj = new Fornecedor();
-        obj.setCodigo(1);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+       setUpFornecedor();
     }
 
     @Test
     public void testConsultar() throws Exception {
         Fornecedor fornecedor2 = new Fornecedor();
-        fornecedor2.setCodigo(2);
+        fornecedor2.setCodigo(2l);
         fornecedor2.setNome("bob");
 
-        List<Fornecedor> fornecedors = Arrays.asList(obj, fornecedor2);
+        List<Fornecedor> fornecedors = Arrays.asList(fornecedor, fornecedor2);
         when(service.consultar()).thenReturn(fornecedors);
         mockMvc.perform(get(FornecedorController.BASE_URL + "/all")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -58,7 +53,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
+        when(service.consultarByCodigo(fornecedor.getCodigo())).thenReturn(fornecedor);
         mockMvc.perform(get(FornecedorController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -68,10 +63,10 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.incluir(obj)).thenReturn(obj);
+        when(service.incluir(fornecedor)).thenReturn(fornecedor);
         mockMvc.perform(post(FornecedorController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(obj)))
+                .content(asJsonString(fornecedor)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
@@ -86,10 +81,10 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1,obj)).thenReturn(obj);
+        when(service.alterar(1l,fornecedor)).thenReturn(fornecedor);
         mockMvc.perform(put(FornecedorController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(obj)))
+                .content(asJsonString(fornecedor)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));

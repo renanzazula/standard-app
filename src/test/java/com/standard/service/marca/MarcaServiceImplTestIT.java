@@ -25,20 +25,16 @@ public class MarcaServiceImplTestIT extends BaseTest {
 
     private MarcaService service;
 
-    private Marca obj = null;
-
     @Before
     public void setUp() {
         service = new MarcaServiceImpl(repository);
-        obj = new Marca();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj = service.incluir(obj);
+        setUpMarca();
+        marca = service.incluir(marca);
     }
 
     @Test
     public void incluir() {
-        Marca saved = service.incluir(obj);
+        Marca saved = service.incluir(marca);
         Assert.assertNotNull(saved);
 
         Marca found = service.consultarByCodigo(saved.getCodigo());
@@ -49,7 +45,7 @@ public class MarcaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        Marca update = service.consultarByCodigo(obj.getCodigo());
+        Marca update = service.consultarByCodigo(marca.getCodigo());
         Assert.assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -68,20 +64,20 @@ public class MarcaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        Marca found = service.consultarByCodigo(obj.getCodigo());
+        Marca found = service.consultarByCodigo(marca.getCodigo());
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), obj.getCodigo());
+        Assert.assertEquals(found.getCodigo(), marca.getCodigo());
     }
 
     @Test
     public void excluir() {
 
-        Marca delete = service.consultarByCodigo(obj.getCodigo());
+        Marca delete = service.consultarByCodigo(marca.getCodigo());
         Assert.assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        Marca found = service.consultarByCodigo(obj.getCodigo());
+        Marca found = service.consultarByCodigo(marca.getCodigo());
         Assert.assertNull(found.getCodigo());
         Assert.assertNull(found.getNome());
         Assert.assertNull(found.getDescricao());

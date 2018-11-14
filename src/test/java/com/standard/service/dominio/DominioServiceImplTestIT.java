@@ -24,21 +24,16 @@ public class DominioServiceImplTestIT extends BaseTest {
 
     private DominioService service;
 
-    private Dominio obj = null;
-
     @Before
     public void setUp() {
         service = new DominioServiceImpl(repository);
-        obj = new Dominio();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj.setChecked(true);
-        obj = service.incluir(obj);
+        setUpDominio();
+        dominio = service.incluir(dominio);
     }
 
     @Test
     public void incluir() {
-        Dominio saved = service.incluir(obj);
+        Dominio saved = service.incluir(dominio);
         Assert.assertNotNull(saved);
 
         Dominio found = service.consultarByCodigo(saved.getCodigo());
@@ -50,7 +45,7 @@ public class DominioServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        Dominio update = service.consultarByCodigo(obj.getCodigo());
+        Dominio update = service.consultarByCodigo(dominio.getCodigo());
         Assert.assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -71,18 +66,18 @@ public class DominioServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        Dominio found = service.consultarByCodigo(obj.getCodigo());
+        Dominio found = service.consultarByCodigo(dominio.getCodigo());
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), obj.getCodigo());
+        Assert.assertEquals(found.getCodigo(), dominio.getCodigo());
     }
 
     @Test
     public void excluir() {
-        Dominio delete = service.consultarByCodigo(obj.getCodigo());
+        Dominio delete = service.consultarByCodigo(dominio.getCodigo());
         Assert.assertNotNull(delete);
         service.excluir(delete.getCodigo());
 
-        Dominio found = service.consultarByCodigo(obj.getCodigo());
+        Dominio found = service.consultarByCodigo(dominio.getCodigo());
         Assert.assertNull(found.getCodigo());
         Assert.assertNull(found.getNome());
         Assert.assertNull(found.getDescricao());

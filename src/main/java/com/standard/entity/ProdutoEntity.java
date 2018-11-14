@@ -32,6 +32,7 @@ public @Data class ProdutoEntity implements Serializable {
      * categoria_codigo subcategoria_codigo medida_codigo flagSite -> : LFB -> loja
      * fisica born : LOW -> loja online Wix
      */
+    @NotNull
     @Column(name = "barCode")
     private String barCode;
 
@@ -39,6 +40,7 @@ public @Data class ProdutoEntity implements Serializable {
     @Column(name = "nome", length = 45)
     private String nome;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusEnum status;
@@ -47,21 +49,27 @@ public @Data class ProdutoEntity implements Serializable {
     @Column(name = "descricao", length = 45)
     private String descricao;
 
+    @NotNull
     @Column(name = "preco")
     private Double preco;
 
+    @NotNull
     @Column(name = "precoVenda")
     private Double precoVenda;
 
+    @NotNull
     @Column(name = "precoCusto")
     private Double precoCusto;
 
+    @NotNull
     @Column(name = "precoOferta")
     private Double precoOferta;
 
+    @NotNull
     @Column(name = "desconto")
     private Double desconto;
 
+    @NotNull
     @Column(name = "peso")
     private Double peso;
 
@@ -81,7 +89,7 @@ public @Data class ProdutoEntity implements Serializable {
     @Column(name = "foto", columnDefinition = "BLOB")
     private byte[] foto;
 
-    @NotNull
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dataHoraCadastro")
@@ -112,11 +120,9 @@ public @Data class ProdutoEntity implements Serializable {
     @JoinColumn(name = "sub_categoria_codigo")
     private SubCategoriaEntity subCategoria;
 
-    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "produto_codigo")
     @OrderBy("itensTipoMedida")
     private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
-
 
 }
