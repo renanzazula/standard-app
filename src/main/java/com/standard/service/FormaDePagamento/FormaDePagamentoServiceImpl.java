@@ -33,7 +33,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
     @Override
     @Transactional
-    public FormasDePagamento alterar(Integer codigo, FormasDePagamento objct) {
+    public FormasDePagamento alterar(Long codigo, FormasDePagamento objct) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
         formasDePagamentoDB.setNome(objct.getNome());
         formasDePagamentoDB.setDescricao(objct.getDescricao());
@@ -45,7 +45,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
     @Override
     @Transactional
-    public void excluir(Integer codigo) {
+    public void excluir(Long codigo) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
         formaDePagamentoRepository.delete(formasDePagamentoDB);
     }
@@ -59,7 +59,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
     @Override
     @Transactional(readOnly = true)
-    public FormasDePagamento consultarByCodigo(Integer codigo) {
+    public FormasDePagamento consultarByCodigo(Long codigo) {
         return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
                 .apply(formaDePagamentoRepository.findById(codigo).orElse(null));
     }

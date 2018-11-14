@@ -17,7 +17,7 @@ public @Data class SubCategoriaEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@NotNull
 	@Column(name = "nome", length = 45)

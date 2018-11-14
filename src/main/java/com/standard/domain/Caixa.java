@@ -13,7 +13,7 @@ public @Data class Caixa implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	private Integer codigo;
+	private Long codigo;
 	
 	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
 	private Date dataAbertura;

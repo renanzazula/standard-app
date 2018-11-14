@@ -30,7 +30,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional
-	public SubCategoria alterar(Integer codigo, SubCategoria entity) {
+	public SubCategoria alterar(Long codigo, SubCategoria entity) {
 		SubCategoriaEntity subCategoriaDB = repository.findById(entity.getCodigo()).orElse(null);
 		subCategoriaDB.setDescricao(entity.getDescricao());
 		subCategoriaDB.setNome(entity.getNome());
@@ -39,7 +39,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		SubCategoriaEntity subCategoriaDB = repository.findById(codigo).orElse(null);
 		repository.delete(subCategoriaDB);
 	}
@@ -52,7 +52,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public SubCategoria consultarByCodigo(Integer codigo) {
+	public SubCategoria consultarByCodigo(Long codigo) {
 		return JpaFunctions.subCategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 

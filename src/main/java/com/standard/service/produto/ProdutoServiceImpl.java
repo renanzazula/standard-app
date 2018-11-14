@@ -1,29 +1,21 @@
 package com.standard.service.produto;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.standard.domain.Produto;
 import com.standard.entity.DominioEntity;
 import com.standard.entity.ProdutoEntity;
 import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
-import com.standard.domain.Produto;
-import com.standard.repository.CategoriaRepository;
-import com.standard.repository.DominioRepository;
-import com.standard.repository.FornecedorRepository;
-import com.standard.repository.ItensTipoMedidaRepository;
-import com.standard.repository.MarcaRepository;
-import com.standard.repository.MedidaRepository;
-import com.standard.repository.ProdutoRepository;
-import com.standard.repository.SubCategoriaRepository;
+import com.standard.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -116,7 +108,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	@Transactional
-	public Produto alterar(Integer codigo, Produto produto) {
+	public Produto alterar(Long codigo, Produto produto) {
 		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
 		produtoDB.setCodigo(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
@@ -185,7 +177,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
 		produtoDB.setStatus(StatusEnum.Inativo);
 		produtoRepository.saveAndFlush(produtoDB);
@@ -200,7 +192,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Produto consultarByCodigo(Integer codigo) {
+	public Produto consultarByCodigo(Long codigo) {
 		ProdutoEntity p = produtoRepository.getOne(codigo);
 		return JpaFunctions.produtoToProdutoEntity.apply(p);
 	}

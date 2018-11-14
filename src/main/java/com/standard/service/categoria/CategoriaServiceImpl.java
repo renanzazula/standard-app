@@ -43,7 +43,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	@Transactional
-	public Categoria alterar(Integer codigo, Categoria categoria) {
+	public Categoria alterar(Long codigo, Categoria categoria) {
 		CategoriaEntity categoriaDB = repository.findById(codigo).orElse(null);
 		categoriaDB.setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
@@ -59,7 +59,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Categoria consultarByCodigo(Integer codigo) {
+	public Categoria consultarByCodigo(Long codigo) {
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 
@@ -72,7 +72,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		CategoriaEntity categoriaDB = repository.getOne(codigo);
 		categoriaDB.getSubCategoriasSet().clear();
 		repository.saveAndFlush(categoriaDB);

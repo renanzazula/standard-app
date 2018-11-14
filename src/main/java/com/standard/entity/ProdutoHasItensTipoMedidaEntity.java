@@ -17,7 +17,7 @@ public @Data class ProdutoHasItensTipoMedidaEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@Column(name = "quantidade")
 	private Integer quantidade;

@@ -30,7 +30,7 @@ public class DominioServiceImpl implements DominioService {
 
 	@Override
 	@Transactional
-	public Dominio alterar(Integer codigo, Dominio dominio) {
+	public Dominio alterar(Long codigo, Dominio dominio) {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
 		dominioDB.setDescricao(dominio.getDescricao());
 		dominioDB.setNome(dominio.getNome());
@@ -39,7 +39,7 @@ public class DominioServiceImpl implements DominioService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
 		// dominioDB.setStatus(Status.Inativo);
 		repository.delete(dominioDB);
@@ -53,7 +53,7 @@ public class DominioServiceImpl implements DominioService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Dominio consultarByCodigo(Integer codigo) {
+	public Dominio consultarByCodigo(Long codigo) {
 		return JpaFunctions.dominioToDominioEntity.apply(repository.findById(codigo).orElse(null));
 	}
 

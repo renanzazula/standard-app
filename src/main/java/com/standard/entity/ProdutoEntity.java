@@ -15,8 +15,7 @@ import java.util.Set;
 
 @Entity(name = "produto")
 @EqualsAndHashCode(exclude = "produtoHasItensTipoMedida")
-public @Data
-class ProdutoEntity implements Serializable {
+public @Data class ProdutoEntity implements Serializable {
 
     /**
      *
@@ -26,7 +25,7 @@ class ProdutoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "codigo", updatable = false, nullable = false)
-    private Integer codigo;
+    private Long codigo;
 
     /**
      * codigo -> sequencial (from dataBase) marca_codigo fornecedor_codigo

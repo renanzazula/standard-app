@@ -17,7 +17,7 @@ public @Data class VendaHasItemProdutoEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "venda_has_item_produto_codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@ManyToOne
 	@JoinColumn(name = "venda_codigo")

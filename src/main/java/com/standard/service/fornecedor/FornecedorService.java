@@ -1,18 +1,18 @@
 package com.standard.service.fornecedor;
 
-import java.util.List;
-
 import com.standard.domain.Fornecedor;
+
+import java.util.List;
 
 public interface FornecedorService {
 
 	Fornecedor incluir(Fornecedor objct);
 
-	Fornecedor alterar(Integer codigo,Fornecedor objct);
+	Fornecedor alterar(Long codigo,Fornecedor objct);
 	
-	void excluir(Integer codigo);
+	void excluir(Long codigo);
 	
 	List<Fornecedor> consultar();
 	
-	Fornecedor consultarByCodigo(Integer codigo);
+	Fornecedor consultarByCodigo(Long codigo);
 }

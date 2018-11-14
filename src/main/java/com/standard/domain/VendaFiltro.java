@@ -14,7 +14,7 @@ public @Data class VendaFiltro implements Serializable {
 	 */
 	private static final long serialVersionUID = -6566111624858515644L;
 
-	private Integer codigo;
+	private Long codigo;
 	
 	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
 	private Date data;
@@ -31,7 +31,7 @@ public @Data class VendaFiltro implements Serializable {
 		return codigo;
 	}
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 

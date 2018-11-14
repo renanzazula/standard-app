@@ -14,7 +14,7 @@ public @Data class Venda implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	private Integer codigo;
+	private Long codigo;
 
 	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
 	private Date data;
@@ -58,7 +58,7 @@ public @Data class Venda implements Serializable {
 	private List<FormasDePagamento> formasDePagamento;
 	private List<VendaHasItemProduto> vendaHasItemProduto;
 	
-	public Venda(Integer codigo) {		 
+	public Venda(Long codigo) {
 		this.codigo = codigo;
 	}
 	

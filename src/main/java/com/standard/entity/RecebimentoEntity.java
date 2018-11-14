@@ -14,7 +14,7 @@ public @Data class RecebimentoEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@Column(name = "nome")
 	private String nome;

@@ -16,7 +16,7 @@ public @Data class CategoriaEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@NotNull
 	@Size
@@ -37,7 +37,7 @@ public @Data class CategoriaEntity implements Serializable {
 
 	}
 	
-	public CategoriaEntity(Integer codigo) {
+	public CategoriaEntity(Long codigo) {
 		super();
 		this.codigo = codigo;
 	}

@@ -30,7 +30,7 @@ public class MarcaServiceImpl implements MarcaService {
 
 	@Override
 	@Transactional
-	public Marca alterar(Integer codigo, Marca entity) {
+	public Marca alterar(Long codigo, Marca entity) {
 		MarcaEntity marcaDB = repository.getOne(codigo);
 		marcaDB.setDescricao(entity.getDescricao());
 		marcaDB.setNome(entity.getNome());
@@ -39,7 +39,7 @@ public class MarcaServiceImpl implements MarcaService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		MarcaEntity marcaDB = repository.getOne(codigo);
 		//TODO: marcaDB.setStatus(Status.Inativo);
 		repository.delete(marcaDB);
@@ -53,7 +53,7 @@ public class MarcaServiceImpl implements MarcaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Marca consultarByCodigo(Integer codigo) {
+	public Marca consultarByCodigo(Long codigo) {
 		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 

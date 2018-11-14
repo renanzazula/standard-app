@@ -20,7 +20,7 @@ public @Data class VendaEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@CreationTimestamp
 	@Column(name = "data")

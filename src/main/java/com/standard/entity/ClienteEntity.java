@@ -16,6 +16,6 @@ public @Data class ClienteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;	 
+	private Long codigo;
 
 }

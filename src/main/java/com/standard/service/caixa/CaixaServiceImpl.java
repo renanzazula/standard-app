@@ -1,17 +1,16 @@
 package com.standard.service.caixa;
 
-import java.util.Date;
-
+import com.standard.domain.Caixa;
+import com.standard.domain.Venda;
+import com.standard.entity.CaixaEntity;
+import com.standard.enums.StatusCaixaEnum;
+import com.standard.function.JpaFunctions;
+import com.standard.repository.CaixaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.standard.entity.CaixaEntity;
-import com.standard.enums.StatusCaixaEnum;
-import com.standard.function.JpaFunctions;
-import com.standard.domain.Caixa;
-import com.standard.domain.Venda;
-import com.standard.repository.CaixaRepository;
+import java.util.Date;
 
 @Service
 public class CaixaServiceImpl implements CaixaService {
@@ -99,7 +98,7 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	@Transactional
 	public Integer gerarCodigoCaixa() {
-		Integer codigo = repository.gerarCodigoCaixa();
+		Long codigo = repository.gerarCodigoCaixa();
 		if(codigo != null) {
 			codigo = codigo +1;
 		}else {

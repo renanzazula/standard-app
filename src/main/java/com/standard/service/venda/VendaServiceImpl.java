@@ -1,29 +1,20 @@
 package com.standard.service.venda;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.standard.domain.Venda;
+import com.standard.domain.VendaHasItemProduto;
+import com.standard.entity.*;
+import com.standard.enums.StatusVendaEnum;
+import com.standard.function.JpaFunctions;
+import com.standard.repository.*;
+import com.standard.service.caixa.CaixaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.standard.entity.CaixaEntity;
-import com.standard.entity.FormaDePagamentoEntity;
-import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
-import com.standard.entity.VendaEntity;
-import com.standard.entity.VendaHasItemProdutoEntity;
-import com.standard.enums.StatusVendaEnum;
-import com.standard.function.JpaFunctions;
-import com.standard.domain.Venda;
-import com.standard.domain.VendaHasItemProduto;
-import com.standard.repository.CaixaRepository;
-import com.standard.repository.ClienteRepository;
-import com.standard.repository.FormaDePagamentoRepository;
-import com.standard.repository.ProdutoHasItensTipoMedidaRepository;
-import com.standard.repository.VendaRepository;
-import com.standard.service.caixa.CaixaService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class VendaServiceImpl implements VendaService {
@@ -58,7 +49,7 @@ public class VendaServiceImpl implements VendaService {
 		for (VendaHasItemProduto itemVenda :venda.getVendaHasItemProduto()) {
 			VendaHasItemProdutoEntity vendaHasItemProduto = new VendaHasItemProdutoEntity();
  
-			Integer codigo = getProdutoHasItensTipoMedida(
+			Long codigo = getProdutoHasItensTipoMedida(
 					itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(),
 					itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 			
@@ -119,7 +110,7 @@ public class VendaServiceImpl implements VendaService {
 	@Transactional
 	private void removerProdutoDoEstoque(Venda venda) {
 		venda.getVendaHasItemProduto().forEach(itemVenda -> {
- 			Integer codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
+ 			Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 			ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
 			produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() - itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
 			produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
@@ -138,7 +129,7 @@ public class VendaServiceImpl implements VendaService {
 	@Transactional
 	private void adicionarProdutoNoEstoque(Venda venda) {
 		venda.getVendaHasItemProduto().forEach(itemVenda -> {
- 			Integer codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
+ 			Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 			ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
 			produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() + itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
 			produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);

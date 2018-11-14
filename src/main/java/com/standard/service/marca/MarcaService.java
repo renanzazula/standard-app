@@ -1,18 +1,18 @@
 package com.standard.service.marca;
 
-import java.util.List;
-
 import com.standard.domain.Marca;
+
+import java.util.List;
 
 public interface MarcaService {
 
 	Marca incluir(Marca objct);
 
-	Marca alterar(Integer codigo, Marca objct);
+	Marca alterar(Long codigo, Marca objct);
 
-	void excluir(Integer codigo);
+	void excluir(Long codigo);
 
 	List<Marca> consultar();
 
-	Marca consultarByCodigo(Integer codigo);
+	Marca consultarByCodigo(Long codigo);
 }

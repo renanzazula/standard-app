@@ -20,8 +20,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,14 +85,14 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-//        when(produtoService.incluir(obj)).thenReturn(obj);
-//
-//        mockMvc.perform(post(ProdutoController.BASE_URL)
-//               .contentType(MediaType.APPLICATION_JSON)
-//               .content(asJsonString(obj)))
-//               .andExpect(status().isCreated())
-//               .andExpect(jsonPath("$.nome", equalTo(NOME)))
-//               .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+        when(produtoService.incluir(obj)).thenReturn(obj);
+
+        mockMvc.perform(post(ProdutoController.BASE_URL)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(asJsonString(obj)))
+               .andExpect(status().isCreated())
+               .andExpect(jsonPath("$.nome", equalTo(NOME)))
+               .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
     }
 
     @Test

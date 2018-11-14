@@ -48,7 +48,7 @@ public class MedidaServiceImpl implements MedidaService {
 
 	@Override
 	@Transactional
-	public Medida alterar(Integer codigo, Medida medida) {
+	public Medida alterar(Long codigo, Medida medida) {
 		MedidaEntity medidaDB = medidaRepository.getOne(codigo);
 		medidaDB.setDescricao(medida.getDescricao());
 		medidaDB.setNome(medida.getNome());
@@ -76,7 +76,7 @@ public class MedidaServiceImpl implements MedidaService {
 
 	@Override
 	@Transactional
-	public void excluir(Integer codigo) {
+	public void excluir(Long codigo) {
 		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElse(null);
 		medidaRepository.delete(medidaDB);
 	}
@@ -89,7 +89,7 @@ public class MedidaServiceImpl implements MedidaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Medida consultarByCodigo(Integer codigo) {
+	public Medida consultarByCodigo(Long codigo) {
 		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElse(null));
 	}
 

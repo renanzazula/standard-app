@@ -17,7 +17,7 @@ public @Data class MedidaEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "codigo")
-	private Integer codigo;
+	private Long codigo;
 
 	@NotNull
 	@Column(name = "nome", length = 45)
@@ -36,7 +36,7 @@ public @Data class MedidaEntity implements Serializable {
 
 	}
 
-	public MedidaEntity(Integer codigo) {
+	public MedidaEntity(Long codigo) {
 		super();
 		this.codigo = codigo;
 	}

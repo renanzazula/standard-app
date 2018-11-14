@@ -30,7 +30,7 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Override
     @Transactional
-    public Fornecedor alterar(Integer codigo, Fornecedor entity) {
+    public Fornecedor alterar(Long codigo, Fornecedor entity) {
         FornecedorEntity fornecedorDB = repository.getOne(codigo);
         fornecedorDB.setDescricao(entity.getDescricao());
         fornecedorDB.setNome(entity.getNome());
@@ -39,7 +39,7 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Override
     @Transactional
-    public void excluir(Integer codigo) {
+    public void excluir(Long codigo) {
         FornecedorEntity fornecedorDB = repository.getOne(codigo);
         repository.delete(fornecedorDB);
     }
@@ -52,7 +52,7 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Override
     @Transactional(readOnly = true)
-    public Fornecedor consultarByCodigo(Integer codigo) {
+    public Fornecedor consultarByCodigo(Long codigo) {
         return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElse(null));
     }
 

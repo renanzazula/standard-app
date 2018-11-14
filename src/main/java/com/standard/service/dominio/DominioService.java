@@ -8,11 +8,11 @@ public interface DominioService {
 
 	Dominio incluir(Dominio objct);
 
-	Dominio alterar(Integer codigo, Dominio objct);
+	Dominio alterar(Long codigo, Dominio objct);
 
-	void excluir(Integer codigo);
+	void excluir(Long codigo);
 
 	List<Dominio> consultar();
 
-	Dominio consultarByCodigo(Integer codigo);
+	Dominio consultarByCodigo(Long codigo);
 }

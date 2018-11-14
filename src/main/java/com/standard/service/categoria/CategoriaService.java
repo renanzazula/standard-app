@@ -8,11 +8,11 @@ public interface CategoriaService {
 
 	Categoria incluir(Categoria entity);
 
-	Categoria alterar(Integer codigo, Categoria entity);
+	Categoria alterar(Long codigo, Categoria entity);
  
-	Categoria consultarByCodigo(Integer codigo);
+	Categoria consultarByCodigo(Long codigo);
 	
 	List<Categoria> consultar();
 
-	void excluir(Integer codigo);
+	void excluir(Long codigo);
 }

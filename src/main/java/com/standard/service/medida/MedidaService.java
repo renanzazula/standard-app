@@ -9,13 +9,13 @@ public interface MedidaService {
 
 	Medida incluir(Medida objct);
 
-	Medida alterar(Integer codigo, Medida objct);
+	Medida alterar(Long codigo, Medida objct);
 
-	void excluir(Integer codigo);
+	void excluir(Long codigo);
 
 	List<Medida> consultar();
 
-	Medida consultarByCodigo(Integer codigo);
+	Medida consultarByCodigo(Long codigo);
 
 
 

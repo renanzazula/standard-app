@@ -1,14 +1,14 @@
 package com.standard.service.produto;
 
-import java.util.List;
-
 import com.standard.domain.Produto;
+
+import java.util.List;
 
 public interface ProdutoService {
 	Produto incluir(Produto produto);
-	Produto alterar(Integer codigo, Produto produto);
-	void excluir(Integer codigo);
-	Produto consultarByCodigo(Integer codigo);
+	Produto alterar(Long codigo, Produto produto);
+	void excluir(Long codigo);
+	Produto consultarByCodigo(Long codigo);
 	List<Produto> consultar();
 
 	Produto consultarByBarCode(Produto produto);
