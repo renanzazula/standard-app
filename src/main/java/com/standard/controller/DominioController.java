@@ -28,7 +28,7 @@ public class DominioController {
 
 	@GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Dominio  consultarByCodigo(@PathVariable Integer id){
+    public Dominio  consultarByCodigo(@PathVariable Long id){
 	 return dominioService.consultarByCodigo(id);
 	}
 
@@ -40,13 +40,13 @@ public class DominioController {
 
 	@DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Integer id){
+	public void delete(@PathVariable Long id){
 		dominioService.excluir(id);
 	}
 
 	@PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-	public Dominio alterar(@PathVariable Integer id, @RequestBody Dominio dominio){
+	public Dominio alterar(@PathVariable Long id, @RequestBody Dominio dominio){
 		return dominioService.alterar(id, dominio);
 	}
 

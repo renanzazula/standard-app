@@ -28,7 +28,7 @@ public class SubCategoriaController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public SubCategoria consultarByCodigo(@PathVariable Integer id) {
+    public SubCategoria consultarByCodigo(@PathVariable Long id) {
         return subCategoriaService.consultarByCodigo(id);
     }
 
@@ -40,12 +40,12 @@ public class SubCategoriaController {
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         subCategoriaService.excluir(id);
     }
 
     @PutMapping({"/{id}"})
-    public SubCategoria alterar(@PathVariable Integer id, @RequestBody SubCategoria dominio) {
+    public SubCategoria alterar(@PathVariable Long id, @RequestBody SubCategoria dominio) {
         return subCategoriaService.alterar(id, dominio);
     }
 }

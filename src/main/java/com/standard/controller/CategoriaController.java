@@ -27,7 +27,7 @@ public class CategoriaController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Categoria consultarByCodigo(@PathVariable Integer id){
+    public Categoria consultarByCodigo(@PathVariable Long id){
         return categoriaService.consultarByCodigo(id);
     }
 
@@ -39,13 +39,13 @@ public class CategoriaController {
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Long id){
         categoriaService.excluir(id);
     }
 
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Categoria alterar(@PathVariable Integer id, @RequestBody Categoria dominio){
+    public Categoria alterar(@PathVariable Long id, @RequestBody Categoria dominio){
         return categoriaService.alterar(id, dominio);
     }
 }

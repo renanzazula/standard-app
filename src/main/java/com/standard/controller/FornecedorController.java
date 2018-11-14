@@ -27,7 +27,7 @@ public class FornecedorController {
 
 	@GetMapping({"/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Fornecedor consultarByCodigo(@PathVariable Integer id){
+	public Fornecedor consultarByCodigo(@PathVariable Long id){
 		return fornecedorService.consultarByCodigo(id);
 	}
 
@@ -39,13 +39,13 @@ public class FornecedorController {
 
 	@DeleteMapping({"/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Integer id){
+	public void delete(@PathVariable Long id){
 		fornecedorService.excluir(id);
 		 
 	}
 
 	@PutMapping({"/{id}"})
-	public Fornecedor alterar(@PathVariable Integer id, @RequestBody Fornecedor obj){
+	public Fornecedor alterar(@PathVariable Long id, @RequestBody Fornecedor obj){
 		return fornecedorService.alterar(id, obj);
 	}
 

@@ -27,7 +27,7 @@ public class MarcaController {
 
 	@GetMapping({"/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Marca consultarByCodigo(@PathVariable Integer id){
+	public Marca consultarByCodigo(@PathVariable Long id){
 		return marcaService.consultarByCodigo(id);
 	}
 
@@ -39,14 +39,14 @@ public class MarcaController {
 
 	@DeleteMapping({"/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Integer id){
+	public void delete(@PathVariable Long id){
 		marcaService.excluir(id);
 
 	}
 
 	@PutMapping({"/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Marca alterar(@PathVariable Integer id, @RequestBody Marca obj){
+	public Marca alterar(@PathVariable Long id, @RequestBody Marca obj){
 		return marcaService.alterar(id, obj);
 	}
 

@@ -34,7 +34,7 @@ public class MedidaController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Medida consultarByCodigo(@PathVariable Integer id){
+    public Medida consultarByCodigo(@PathVariable Long id){
         return medidaService.consultarByCodigo(id);
     }
 
@@ -46,14 +46,14 @@ public class MedidaController {
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Long id){
         medidaService.excluir(id);
 
     }
 
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Medida alterar(@PathVariable Integer id, @RequestBody Medida medida){
+    public Medida alterar(@PathVariable Long id, @RequestBody Medida medida){
         return medidaService.alterar(id, medida);
     }
 

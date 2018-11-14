@@ -39,7 +39,7 @@ public class ProdutoController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Produto consultarByCodigo(@PathVariable Integer id) {
+    public Produto consultarByCodigo(@PathVariable Long id) {
         return produtoService.consultarByCodigo(id);
     }
 
@@ -51,13 +51,13 @@ public class ProdutoController {
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         produtoService.excluir(id);
     }
 
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Produto alterar(@PathVariable Integer id, @RequestBody Produto produto) {
+    public Produto alterar(@PathVariable Long id, @RequestBody Produto produto) {
         return produtoService.alterar(id, produto);
     }
 
