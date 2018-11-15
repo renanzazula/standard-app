@@ -77,16 +77,16 @@ public class BaseTest {
             itenTipoMedida = new ItensTipoMedida();
             itenTipoMedida.setCodigo(new Long(i));
             switch (i) {
-                case 0:
+                case 1:
                     itenTipoMedida.setValor(VALOR_P);
                     break;
-                case 1:
+                case 2:
                     itenTipoMedida.setValor(VALOR_L);
                     break;
-                case 2:
+                case 3:
                     itenTipoMedida.setValor(VALOR_X);
                     break;
-                case 3:
+                case 4:
                     itenTipoMedida.setValor(VALOR_XL);
                     break;
             }
@@ -135,6 +135,22 @@ public class BaseTest {
         // fixme: medida.setfoto
     }
 
+    protected void assertMarcaSubCategoriaCategoriaValor(Medida medida) {
+        for (int j = 0; j < medida.getItensTipoMedida().size(); j++) {
+
+            Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
+            assertMarca(marcaFound, marca);
+
+            SubCategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubCategoria();
+            assertSubCategoria(subCategoriaFound, subCategoria);
+
+            Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
+            assertCategoria(categoriaFound, categoria);
+
+            Assert.assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
+        }
+    }
+
     protected void assertMarca(Marca expected, Marca found) {
         Assert.assertEquals(expected.getCodigo(), found.getCodigo());
         Assert.assertEquals(expected.getNome(), found.getNome());
@@ -157,6 +173,64 @@ public class BaseTest {
         Assert.assertEquals(expected.getCodigo(), found.getCodigo());
         Assert.assertEquals(expected.getNome(), found.getNome());
         Assert.assertEquals(expected.getDescricao(), found.getDescricao());
+    }
+
+    protected void assertDominios(Dominio expected, Dominio found) {
+        Assert.assertEquals(expected.getCodigo(), found.getCodigo());
+        Assert.assertEquals(expected.getNome(), found.getNome());
+        Assert.assertEquals(expected.getDescricao(), found.getDescricao());
+        Assert.assertEquals(expected.isChecked(), found.isChecked());
+    }
+
+    protected void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
+        for (int i = 0; i < found.size(); i++) {
+            Assert.assertEquals(found.get(i).getCodigo(), produto.get(i).getCodigo());
+            Assert.assertEquals(found.get(i).getDominios().size(),
+                    produto.get(i).getDominios().size());
+
+            for (int j = 0; j < found.get(i).getDominios().size(); j++) {
+                assertDominios(found.get(i).getDominios().get(j),
+                        produto.get(i).getDominios().get(j));
+            }
+
+            Assert.assertEquals(found.get(i).getQuantidade(), produto.get(i).getQuantidade());
+            Assert.assertEquals(found.get(i).getValorUnitario(), produto.get(i).getValorUnitario());
+            Assert.assertEquals(found.get(i).getItensTipoMedida(), produto.get(i).getItensTipoMedida());
+            Assert.assertEquals(found.get(i).getProduto(), produto.get(i).getProduto());
+        }
+    }
+    
+    protected void assertProduto (Produto found, Produto expected){
+        Assert.assertEquals(found.getCodigo(), expected.getCodigo());
+        Assert.assertEquals(found.getBarCode(), expected.getBarCode());
+        Assert.assertEquals(found.getNome(), expected.getNome());
+        Assert.assertEquals(found.getStatus(), expected.getStatus());
+        Assert.assertEquals(found.getDescricao(), expected.getDescricao());
+        Assert.assertEquals(found.getPreco(), expected.getPreco());
+        Assert.assertEquals(found.getPrecoVenda(), expected.getPrecoVenda());
+        Assert.assertEquals(found.getPreco(), expected.getPreco());
+        Assert.assertEquals(found.getPrecoCusto(), expected.getPrecoCusto());
+        Assert.assertEquals(found.getPrecoOferta(), expected.getPrecoOferta());
+        Assert.assertEquals(found.getDesconto(), expected.getDesconto());
+        Assert.assertEquals(found.getPeso(), expected.getPeso());
+        Assert.assertEquals(found.getPorcentagem(), expected.getPorcentagem());
+        Assert.assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
+        assertMarca(found.getMarca(), expected.getMarca());
+        assertCategoria(found.getCategoria(), expected.getCategoria());
+        assertSubCategoria(found.getSubCategoria(), expected.getSubCategoria());
+        assertFornecedor(found.getFornecedor(), expected.getFornecedor());
+        assertMarcaSubCategoriaCategoriaValor(found.getMedida());
+        Assert.assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());
+        assertProdutoHasItensTipoMedida(found.getProdutoHasItensTipoMedida(), expected.getProdutoHasItensTipoMedida());
+    }
+
+    protected void asserItensTipoMedida(ItensTipoMedida found, ItensTipoMedida expected){
+         Assert.assertEquals(found.getCodigo(), expected.getCodigo());
+         Assert.assertEquals(found.getValor(), expected.getValor());
+         Assert.assertEquals(found.getMedida(), expected.getMedida());
+         Assert.assertEquals(found.getMarca(), expected.getMarca());
+         Assert.assertEquals(found.getCategoria(), expected.getCategoria());
+         Assert.assertEquals(found.getSubCategoria(), expected.getSubCategoria());
     }
 
 }

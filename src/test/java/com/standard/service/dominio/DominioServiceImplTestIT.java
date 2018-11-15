@@ -37,10 +37,7 @@ public class DominioServiceImplTestIT extends BaseTest {
         Assert.assertNotNull(saved);
 
         Dominio found = service.consultarByCodigo(saved.getCodigo());
-        Assert.assertEquals(found.getCodigo(), saved.getCodigo());
-        Assert.assertEquals(found.getNome(), saved.getNome());
-        Assert.assertEquals(found.getDescricao(), saved.getDescricao());
-        Assert.assertEquals(found.isChecked(), saved.isChecked());
+        assertDominios(saved, found);
     }
 
     @Test
@@ -52,10 +49,7 @@ public class DominioServiceImplTestIT extends BaseTest {
         update.setChecked(false);
 
         Dominio updated = service.alterar(update.getCodigo(), update);
-        Assert.assertEquals(update.getCodigo(), updated.getCodigo());
-        Assert.assertEquals(update.getNome(), updated.getNome());
-        Assert.assertEquals(update.getDescricao(), updated.getDescricao());
-        Assert.assertEquals(update.isChecked(), updated.isChecked());
+        assertDominios(update, updated);
     }
 
     @Test
@@ -68,7 +62,7 @@ public class DominioServiceImplTestIT extends BaseTest {
     public void consultarByCodigo() {
         Dominio found = service.consultarByCodigo(dominio.getCodigo());
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), dominio.getCodigo());
+        assertDominios(found, dominio);
     }
 
     @Test

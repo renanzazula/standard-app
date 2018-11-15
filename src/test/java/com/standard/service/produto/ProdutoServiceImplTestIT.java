@@ -2,6 +2,7 @@ package com.standard.service.produto;
 
 import com.standard.BaseTest;
 import com.standard.domain.Produto;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.*;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.categoria.CategoriaServiceImpl;
@@ -125,36 +126,76 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     @Test
     public void incluir() {
         Produto produtoSave = produtoService.incluir(produto);
-
         Produto found = produtoService.consultarByCodigo(produtoSave.getCodigo());
-
-        Assert.assertEquals(found.getCodigo(), produtoSave.getCodigo());
-        Assert.assertEquals(found.getBarCode(), produtoSave.getBarCode());
-        Assert.assertEquals(found.getNome(), produtoSave.getNome());
-        Assert.assertEquals(found.getStatus(), produtoSave.getStatus());
-        Assert.assertEquals(found.getDescricao(), produtoSave.getDescricao());
-        Assert.assertEquals(found.getPreco(), produtoSave.getPreco());
-        Assert.assertEquals(found.getPrecoVenda(), produtoSave.getPrecoVenda());
-        Assert.assertEquals(found.getPreco(), produtoSave.getPreco());
-        Assert.assertEquals(found.getPrecoCusto(), produtoSave.getPrecoCusto());
-        Assert.assertEquals(found.getPrecoOferta(), produtoSave.getPrecoOferta());
-        Assert.assertEquals(found.getDesconto(), produtoSave.getDesconto());
-        Assert.assertEquals(found.getPeso(), produtoSave.getPeso());
-        Assert.assertEquals(found.getPorcentagem(), produtoSave.getPorcentagem());
-        Assert.assertEquals(found.getPorcentagemDesconto(), produtoSave.getPorcentagemDesconto());
-
-        assertMarca(found.getMarca(), produtoSave.getMarca());
-        assertCategoria(found.getCategoria(), produtoSave.getCategoria());
-        assertSubCategoria(found.getSubCategoria(), produtoSave.getSubCategoria());
-        assertFornecedor(found.getFornecedor(), produtoSave.getFornecedor());
-
-        // TODO: MEDIDA ITENS MEDIDA ETC...
-
+        assertProduto(found, produtoSave);
     }
 
     @Test
     public void alterar() {
-        // TODO:
+        produto = produtoService.incluir(produto);
+
+        Produto found = produtoService.consultarByCodigo(produto.getCodigo());
+        found.setBarCode(BAR_0_CODE + "_update");
+        found.setNome(NOME + "_update");
+        found.setStatus(StatusEnum.Inativo);
+        found.setDescricao(DESCRICAO + "_update");
+        found.setPreco(new Double(15));
+        found.setPrecoVenda(new Double(15));
+        found.setPreco(new Double(15));
+        found.setPrecoCusto(new Double(15));
+        found.setPrecoOferta(new Double(15));
+        found.setDesconto(new Double(15));
+        found.setPeso(new Double(15));
+        found.setPorcentagem(2);
+        found.setPorcentagemDesconto(2);
+
+        Produto updated = produtoService.alterar(produto.getCodigo(), found);
+        Assert.assertEquals(found.getCodigo(), updated.getCodigo());
+        Assert.assertEquals(found.getBarCode(), updated.getBarCode());
+        Assert.assertEquals(found.getNome(), updated.getNome());
+        Assert.assertEquals(found.getStatus(), updated.getStatus());
+        Assert.assertEquals(found.getDescricao(), updated.getDescricao());
+        Assert.assertEquals(found.getPreco(), updated.getPreco());
+        Assert.assertEquals(found.getPrecoVenda(), updated.getPrecoVenda());
+        Assert.assertEquals(found.getPreco(), updated.getPreco());
+        Assert.assertEquals(found.getPrecoCusto(), updated.getPrecoCusto());
+        Assert.assertEquals(found.getPrecoOferta(), updated.getPrecoOferta());
+        Assert.assertEquals(found.getDesconto(), updated.getDesconto());
+        Assert.assertEquals(found.getPeso(), updated.getPeso());
+        Assert.assertEquals(found.getPorcentagem(), updated.getPorcentagem());
+        Assert.assertEquals(found.getPorcentagemDesconto(), updated.getPorcentagemDesconto());
+
+        assertMarca(found.getMarca(), updated.getMarca());
+        assertCategoria(found.getCategoria(), updated.getCategoria());
+        assertSubCategoria(found.getSubCategoria(), updated.getSubCategoria());
+        assertFornecedor(found.getFornecedor(), updated.getFornecedor());
+        assertMarcaSubCategoriaCategoriaValor(found.getMedida());
+        Assert.assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());
+
+        for (int i = 0; i < found.getProdutoHasItensTipoMedida().size(); i++) {
+            // codigo sempre muda
+
+            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDominios().size(),
+                    updated.getProdutoHasItensTipoMedida().get(i).getDominios().size());
+
+            for (int j = 0; j < found.getProdutoHasItensTipoMedida().get(i).getDominios().size(); j++) {
+                assertDominios(found.getProdutoHasItensTipoMedida().get(i).getDominios().get(j),
+                        updated.getProdutoHasItensTipoMedida().get(i).getDominios().get(j));
+            }
+
+            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getQuantidade(),
+                                updated.getProdutoHasItensTipoMedida().get(i).getQuantidade());
+
+            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
+                                   updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
+
+            asserItensTipoMedida(found.getProdutoHasItensTipoMedida().get(i).getItensTipoMedida(),
+                                 updated.getProdutoHasItensTipoMedida().get(i).getItensTipoMedida());
+
+            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getProduto(),
+                                updated.getProdutoHasItensTipoMedida().get(i).getProduto());
+        }
+
     }
 
     @Test

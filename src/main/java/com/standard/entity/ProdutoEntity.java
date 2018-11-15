@@ -120,7 +120,7 @@ public @Data class ProdutoEntity implements Serializable {
     @JoinColumn(name = "sub_categoria_codigo")
     private SubCategoriaEntity subCategoria;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "produto_codigo")
     @OrderBy("itensTipoMedida")
     private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;

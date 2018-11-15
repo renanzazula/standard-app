@@ -59,7 +59,6 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setPeso(produto.getPeso());
 		produtoDB.setPorcentagem(produto.getPorcentagem());
 		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
-		produtoDB.setDataHoraCadastro(produto.getDataHoraCadastro());
 
 		if (produto.getMedida() != null && produto.getMedida().getCodigo() != null) {
 			produtoDB.setMedida(medidaRepository.getOne(produto.getMedida().getCodigo()));
@@ -101,10 +100,10 @@ public class ProdutoServiceImpl implements ProdutoService {
                 }
                 produtoHasItensTipoMedida.setDominios(dominiosDB);
                 produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItensTipoMedida().getCodigo()));
-
                 set.add(produtoHasItensTipoMedida);
             });
-            produtoDB.setProdutoHasItensTipoMedida(set);
+            produtoDB.setProdutoHasItensTipoMedida(new HashSet<>());
+            produtoDB.getProdutoHasItensTipoMedida().addAll(set);
         }
     }
 
@@ -115,7 +114,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setCodigo(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
 		produtoDB.setNome(produto.getNome());
-		produtoDB.setStatus(StatusEnum.Ativo);
+		produtoDB.setStatus(produto.getStatus());
 		produtoDB.setDescricao(produto.getDescricao());
 		produtoDB.setPreco(produto.getPreco());
 		produtoDB.setPrecoVenda(produto.getPrecoVenda());
@@ -125,7 +124,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setPeso(produto.getPeso());
 		produtoDB.setPorcentagem(produto.getPorcentagem());
 		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
-		produtoDB.setDataHoraCadastro(produto.getDataHoraCadastro());
+
 
 		if (produto.getMedida() != null && produto.getMedida().getCodigo() != null) {
 			produtoDB.setMedida(medidaRepository.getOne(produto.getMedida().getCodigo()));

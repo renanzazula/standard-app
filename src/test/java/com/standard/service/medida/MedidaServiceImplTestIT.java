@@ -86,8 +86,8 @@ public class MedidaServiceImplTestIT extends BaseTest {
         Assert.assertEquals(medidaSave.getItensTipoMedida().size(), medida.getItensTipoMedida().size());
 
         medida = medidaService.consultarByCodigo(medidaSave.getCodigo());
-        assertMarcaSubCategoriaCategoria(medidaSave);
-        // todo:
+        assertMarcaSubCategoriaCategoriaValor(medidaSave);
+
     }
 
     @Test
@@ -203,22 +203,6 @@ public class MedidaServiceImplTestIT extends BaseTest {
         Assert.assertNotNull(medidas);
     }
 
-    private void assertMarcaSubCategoriaCategoria(Medida medida) {
-        for (int j = 0; j < medida.getItensTipoMedida().size(); j++) {
-
-            Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
-            assertMarca(marcaFound, marca);
-
-            SubCategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubCategoria();
-            assertSubCategoria(subCategoriaFound, subCategoria);
-
-            Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
-            assertCategoria(categoriaFound, categoria);
-
-            Assert.assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
-        }
-    }
-
     @Test
     public void consultarByCodigo() {
         medida = medidaService.incluir(medida);
@@ -226,7 +210,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
         Assert.assertEquals(medidaFound.getCodigo(), medida.getCodigo());
         Assert.assertEquals(medidaFound.getNome(), medida.getNome());
         Assert.assertEquals(medidaFound.getDescricao() , medida.getDescricao());
-        assertMarcaSubCategoriaCategoria(medidaFound);
+        assertMarcaSubCategoriaCategoriaValor(medidaFound);
     }
 
     @Test
