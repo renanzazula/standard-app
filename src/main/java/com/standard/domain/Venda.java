@@ -10,7 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public @Data class Venda implements Serializable {
+@Data
+public class Venda implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 

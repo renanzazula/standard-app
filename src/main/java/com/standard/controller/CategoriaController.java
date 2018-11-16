@@ -2,11 +2,13 @@ package com.standard.controller;
 
 import com.standard.domain.Categoria;
 import com.standard.service.categoria.CategoriaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(description = "Categoria Controller")
 @RestController
 @RequestMapping(CategoriaController.BASE_URL)
 public class CategoriaController {
@@ -21,14 +23,16 @@ public class CategoriaController {
 
     @GetMapping({"/all"})
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "retorna todas categorias")
     public List<Categoria> consultar(){
         return categoriaService.consultar();
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public Categoria consultarByCodigo(@PathVariable Long id){
-        return categoriaService.consultarByCodigo(id);
+    @ApiOperation(value = "retorna todas categorias by codigo")
+    public Categoria consultarByCodigo(@PathVariable Long codigo){
+        return categoriaService.consultarByCodigo(codigo);
     }
 
     @PostMapping
@@ -37,16 +41,16 @@ public class CategoriaController {
         return categoriaService.incluir(dominio);
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id){
-        categoriaService.excluir(id);
+    public void delete(@PathVariable Long codigo){
+        categoriaService.excluir(codigo);
     }
 
-    @PutMapping({"/{id}"})
+    @PutMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public Categoria alterar(@PathVariable Long id, @RequestBody Categoria dominio){
-        return categoriaService.alterar(id, dominio);
+    public Categoria alterar(@PathVariable Long codigo, @RequestBody Categoria dominio){
+        return categoriaService.alterar(codigo, dominio);
     }
 }
 

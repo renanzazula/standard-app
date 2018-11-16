@@ -1,13 +1,18 @@
 package com.standard.domain;
 
 import com.standard.util.Constants;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import java.io.Serializable;
- 
-public @Data class VendaHasItemProduto implements Serializable {
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class VendaHasItemProduto implements Serializable {
 
   	/**
 	 * 

@@ -26,10 +26,10 @@ public class DominioController {
         return dominioService.consultar();
 	}
 
-	@GetMapping({"/{id}"})
+	@GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public Dominio  consultarByCodigo(@PathVariable Long id){
-	 return dominioService.consultarByCodigo(id);
+    public Dominio  consultarByCodigo(@PathVariable Long codigo){
+	 return dominioService.consultarByCodigo(codigo);
 	}
 
 	@PostMapping
@@ -38,16 +38,16 @@ public class DominioController {
 		return dominioService.incluir(dominio);
 	}
 
-	@DeleteMapping({"/{id}"})
+	@DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long id){
-		dominioService.excluir(id);
+	public void delete(@PathVariable Long codigo){
+		dominioService.excluir(codigo);
 	}
 
-	@PutMapping({"/{id}"})
+	@PutMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-	public Dominio alterar(@PathVariable Long id, @RequestBody Dominio dominio){
-		return dominioService.alterar(id, dominio);
+	public Dominio alterar(@PathVariable Long codigo, @RequestBody Dominio dominio){
+		return dominioService.alterar(codigo, dominio);
 	}
 
 //	@RequestMapping(value = "/abrirDominio", method = { RequestMethod.GET, RequestMethod.POST })

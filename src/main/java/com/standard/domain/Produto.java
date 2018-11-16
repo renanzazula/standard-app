@@ -3,7 +3,9 @@ package com.standard.domain;
 import com.standard.enums.FlagSiteEnum;
 import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -12,7 +14,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public @Data class Produto implements Serializable {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public   class Produto implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 	private Long codigo;

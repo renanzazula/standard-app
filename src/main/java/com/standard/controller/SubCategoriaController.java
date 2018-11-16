@@ -26,10 +26,10 @@ public class SubCategoriaController {
         return subCategoriaService.consultar();
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public SubCategoria consultarByCodigo(@PathVariable Long id) {
-        return subCategoriaService.consultarByCodigo(id);
+    public SubCategoria consultarByCodigo(@PathVariable Long codigo) {
+        return subCategoriaService.consultarByCodigo(codigo);
     }
 
     @PostMapping
@@ -38,14 +38,14 @@ public class SubCategoriaController {
         return subCategoriaService.incluir(dominio);
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id) {
-        subCategoriaService.excluir(id);
+    public void delete(@PathVariable Long codigo) {
+        subCategoriaService.excluir(codigo);
     }
 
-    @PutMapping({"/{id}"})
-    public SubCategoria alterar(@PathVariable Long id, @RequestBody SubCategoria dominio) {
-        return subCategoriaService.alterar(id, dominio);
+    @PutMapping({"/{codigo}"})
+    public SubCategoria alterar(@PathVariable Long codigo, @RequestBody SubCategoria dominio) {
+        return subCategoriaService.alterar(codigo, dominio);
     }
 }

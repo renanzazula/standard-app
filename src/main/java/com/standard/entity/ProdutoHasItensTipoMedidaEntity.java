@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = {"dominios", "vendaHasItemProduto", "itens_tipo_medida_codigo"})
+@EqualsAndHashCode(exclude = {"dominios", "vendaHasItemProduto" })
 @Entity(name = "produto_has_itens_tipo_medida")
 public @Data
 class ProdutoHasItensTipoMedidaEntity implements Serializable {

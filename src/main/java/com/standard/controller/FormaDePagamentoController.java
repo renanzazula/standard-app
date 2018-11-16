@@ -25,10 +25,10 @@ public class FormaDePagamentoController {
         return formasDePagamentoService.consultar();
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public FormasDePagamento consultarByCodigo(@PathVariable Long id){
-        return formasDePagamentoService.consultarByCodigo(id);
+    public FormasDePagamento consultarByCodigo(@PathVariable Long codigo){
+        return formasDePagamentoService.consultarByCodigo(codigo);
     }
 
     @PostMapping
@@ -37,15 +37,15 @@ public class FormaDePagamentoController {
         return formasDePagamentoService.incluir(obj);
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id){
-        formasDePagamentoService.excluir(id);
+    public void delete(@PathVariable Long codigo){
+        formasDePagamentoService.excluir(codigo);
     }
 
-    @PutMapping({"/{id}"})
+    @PutMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public FormasDePagamento alterar(@PathVariable Long id, @RequestBody FormasDePagamento obj){
-        return formasDePagamentoService.alterar(id, obj);
+    public FormasDePagamento alterar(@PathVariable Long codigo, @RequestBody FormasDePagamento obj){
+        return formasDePagamentoService.alterar(codigo, obj);
     }
 }

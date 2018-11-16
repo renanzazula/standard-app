@@ -37,10 +37,10 @@ public class ProdutoController {
         return produtoService.consultar();
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public Produto consultarByCodigo(@PathVariable Long id) {
-        return produtoService.consultarByCodigo(id);
+    public Produto consultarByCodigo(@PathVariable Long codigo) {
+        return produtoService.consultarByCodigo(codigo);
     }
 
     @PostMapping
@@ -49,16 +49,16 @@ public class ProdutoController {
         return produtoService.incluir(produto);
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id) {
-        produtoService.excluir(id);
+    public void delete(@PathVariable Long codigo) {
+        produtoService.excluir(codigo);
     }
 
-    @PutMapping({"/{id}"})
+    @PutMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public Produto alterar(@PathVariable Long id, @RequestBody Produto produto) {
-        return produtoService.alterar(id, produto);
+    public Produto alterar(@PathVariable Long codigo, @RequestBody Produto produto) {
+        return produtoService.alterar(codigo, produto);
     }
 
     //fixme:

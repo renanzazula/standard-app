@@ -7,64 +7,65 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 
-public @Data class VendaFiltro implements Serializable {
+@Data
+public class VendaFiltro implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6566111624858515644L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6566111624858515644L;
 
-	private Long codigo;
-	
-	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
-	private Date data;
-	
-	private String status;
-	private Cliente cliente;
-	private FormasDePagamento formaDePagamento;
+    private Long codigo;
 
-	public VendaFiltro() {
+    @DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+    private Date data;
 
-	}
+    private String status;
+    private Cliente cliente;
+    private FormasDePagamento formaDePagamento;
 
-	public Long getCodigo() {
-		return codigo;
-	}
+    public VendaFiltro() {
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public Long getCodigo() {
+        return codigo;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
 
-	public FormasDePagamento getFormaDePagamento() {
-		return formaDePagamento;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setFormaDePagamento(FormasDePagamento formaDePagamento) {
-		this.formaDePagamento = formaDePagamento;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    public FormasDePagamento getFormaDePagamento() {
+        return formaDePagamento;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public void setFormaDePagamento(FormasDePagamento formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
 
-	public Date getData() {
-		return data;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public void setData(Date data) {
-		this.data = data;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
 }

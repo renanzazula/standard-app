@@ -25,10 +25,10 @@ public class FornecedorController {
 		return fornecedorService.consultar();
 	}
 
-	@GetMapping({"/{id}"})
+	@GetMapping({"/{codigo}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Fornecedor consultarByCodigo(@PathVariable Long id){
-		return fornecedorService.consultarByCodigo(id);
+	public Fornecedor consultarByCodigo(@PathVariable Long codigo){
+		return fornecedorService.consultarByCodigo(codigo);
 	}
 
 	@PostMapping
@@ -37,16 +37,16 @@ public class FornecedorController {
 		return fornecedorService.incluir(obj);
 	}
 
-	@DeleteMapping({"/{id}"})
+	@DeleteMapping({"/{codigo}"})
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long id){
-		fornecedorService.excluir(id);
+	public void delete(@PathVariable Long codigo){
+		fornecedorService.excluir(codigo);
 		 
 	}
 
-	@PutMapping({"/{id}"})
-	public Fornecedor alterar(@PathVariable Long id, @RequestBody Fornecedor obj){
-		return fornecedorService.alterar(id, obj);
+	@PutMapping({"/{codigo}"})
+	public Fornecedor alterar(@PathVariable Long codigo, @RequestBody Fornecedor obj){
+		return fornecedorService.alterar(codigo, obj);
 	}
 
 	/*// Set a form validator

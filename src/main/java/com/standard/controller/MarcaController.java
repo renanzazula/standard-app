@@ -25,10 +25,10 @@ public class MarcaController {
 		return marcaService.consultar();
 	}
 
-	@GetMapping({"/{id}"})
+	@GetMapping({"/{codigo}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Marca consultarByCodigo(@PathVariable Long id){
-		return marcaService.consultarByCodigo(id);
+	public Marca consultarByCodigo(@PathVariable Long codigo){
+		return marcaService.consultarByCodigo(codigo);
 	}
 
 	@PostMapping
@@ -37,17 +37,17 @@ public class MarcaController {
 		return marcaService.incluir(obj);
 	}
 
-	@DeleteMapping({"/{id}"})
+	@DeleteMapping({"/{codigo}"})
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long id){
-		marcaService.excluir(id);
+	public void delete(@PathVariable Long codigo){
+		marcaService.excluir(codigo);
 
 	}
 
-	@PutMapping({"/{id}"})
+	@PutMapping({"/{codigo}"})
 	@ResponseStatus(HttpStatus.OK)
-	public Marca alterar(@PathVariable Long id, @RequestBody Marca obj){
-		return marcaService.alterar(id, obj);
+	public Marca alterar(@PathVariable Long codigo, @RequestBody Marca obj){
+		return marcaService.alterar(codigo, obj);
 	}
 
 //	private static final String VIEW = "marca";
