@@ -1,6 +1,8 @@
 package com.standard.service.produto;
 
 import com.standard.BaseTest;
+import com.standard.domain.Fornecedor;
+import com.standard.domain.Marca;
 import com.standard.domain.Produto;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.*;
@@ -26,6 +28,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -173,7 +176,6 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         Assert.assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());
 
         for (int i = 0; i < found.getProdutoHasItensTipoMedida().size(); i++) {
-            // codigo sempre muda
 
             Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDominios().size(),
                     updated.getProdutoHasItensTipoMedida().get(i).getDominios().size());
@@ -189,18 +191,34 @@ public class ProdutoServiceImplTestIT extends BaseTest {
             Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
                                    updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
 
-            asserItensTipoMedida(found.getProdutoHasItensTipoMedida().get(i).getItensTipoMedida(),
-                                 updated.getProdutoHasItensTipoMedida().get(i).getItensTipoMedida());
+            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor(),
+                                 updated.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor());
 
-            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getProduto(),
-                                updated.getProdutoHasItensTipoMedida().get(i).getProduto());
         }
 
     }
 
     @Test
     public void alterar_produto_Marca() {
-        // TODO:
+
+        Marca marcaToUpdate = new Marca();
+        marcaToUpdate.setNome(NOME +"_update");
+        marcaToUpdate.setDescricao(DESCRICAO + "_update");
+        marcaToUpdate =  marcaService.incluir(marcaToUpdate);
+
+        produto = produtoService.incluir(produto);
+
+        Produto found = produtoService.consultarByCodigo(produto.getCodigo());
+        found.setMarca(marcaToUpdate);
+
+        Produto updated = produtoService.alterar(produto.getCodigo(), found);
+
+        assertMarca(updated.getMarca(), marcaToUpdate);
+
+        Assert.assertNotEquals(updated.getMarca().getCodigo(),    marca.getCodigo());
+        Assert.assertNotEquals(updated.getMarca().getNome(),      marca.getNome());
+        Assert.assertNotEquals(updated.getMarca().getDescricao(), marca.getDescricao());
+
     }
 
     @Test
@@ -215,31 +233,55 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar_produto_Fornecedor() {
-        // TODO:
+
+        Fornecedor fornecedorToUpdate = new Fornecedor();
+        fornecedorToUpdate.setNome(NOME +"_update");
+        fornecedorToUpdate.setDescricao(DESCRICAO + "_update");
+        fornecedorToUpdate =  fornecedorService.incluir(fornecedorToUpdate);
+
+        produto = produtoService.incluir(produto);
+
+        Produto found = produtoService.consultarByCodigo(produto.getCodigo());
+        found.setFornecedor(fornecedorToUpdate);
+
+        Produto updated = produtoService.alterar(produto.getCodigo(), found);
+
+        assertFornecedor(updated.getFornecedor(), fornecedorToUpdate);
+
+        Assert.assertNotEquals(updated.getFornecedor().getCodigo(),    fornecedor.getCodigo());
+        Assert.assertNotEquals(updated.getFornecedor().getNome(),      fornecedor.getNome());
+        Assert.assertNotEquals(updated.getFornecedor().getDescricao(), fornecedor.getDescricao());
+
     }
 
     @Test
     public void excluir() {
-        // TODO:
+        produto = produtoService.incluir(produto);
+        Produto found = produtoService.consultarByCodigo(produto.getCodigo());
+        Assert.assertNotNull(found);
+        produtoService.excluir(found.getCodigo());
     }
 
-    @Test
-    public void validarCodigoProduto() {
-        // TODO:
-    }
 
     @Test
     public void consultarByCodigo() {
-        // TODO:
+        produto = produtoService.incluir(produto);
+        Produto found = produtoService.consultarByCodigo(produto.getCodigo());
+        Assert.assertNotNull(found);
+        Assert.assertEquals(found.getCodigo(), produto.getCodigo());
     }
 
     @Test
     public void consultarByBarCode() {
-        // TODO:
+        Produto found = produtoService.consultarByBarCode(produto.getBarCode());
+        Assert.assertNotNull(found);
+        Assert.assertEquals(found.getCodigo(), produto.getCodigo());
     }
 
     @Test
     public void consultar() {
-        // TODO:
+        produto = produtoService.incluir(produto);
+        List<Produto> produtos = produtoService.consultar();
+        Assert.assertNotNull(produtos);
     }
 }

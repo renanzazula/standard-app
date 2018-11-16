@@ -2,8 +2,10 @@ package com.standard.function.jpa;
 
 import com.standard.domain.Produto;
 import com.standard.entity.ProdutoEntity;
+import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -49,7 +51,10 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
             }
 
             if (input.getProdutoHasItensTipoMedida() != null) {
-                output.setProdutoHasItensTipoMedida(input.getProdutoHasItensTipoMedida().stream().map(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity).collect(Collectors.toList()));
+                output.setProdutoHasItensTipoMedida(input.getProdutoHasItensTipoMedida()
+                        .stream()
+                        .sorted(Comparator.comparing(ProdutoHasItensTipoMedidaEntity::getCodigo))
+                        .map(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity).collect(Collectors.toList()));
             }
         }
         return output;

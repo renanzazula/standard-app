@@ -1,13 +1,15 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
+import com.standard.domain.Produto;
+import com.standard.domain.ProdutoHasItensTipoMedida;
+import com.standard.entity.DominioEntity;
 import com.standard.entity.ProdutoEntity;
 import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.domain.Produto;
-import com.standard.domain.ProdutoHasItensTipoMedida;
+
+import java.util.Comparator;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 		implements Function<ProdutoHasItensTipoMedidaEntity, ProdutoHasItensTipoMedida> {
@@ -18,7 +20,10 @@ public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 		if (input != null) {
 			output.setCodigo(input.getCodigo());
 			if (input.getDominios() != null) {
-				output.setDominios(input.getDominios().stream().map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList()));
+				output.setDominios(input.getDominios()
+						.stream()
+						.sorted(Comparator.comparing(DominioEntity::getCodigo))
+						.map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList()));
 			}
 			if (input.getItensTipoMedida() != null) {
 				output.setItensTipoMedida(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItensTipoMedida()));

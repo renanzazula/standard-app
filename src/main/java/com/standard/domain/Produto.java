@@ -6,6 +6,7 @@ import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public   class Produto implements Serializable {

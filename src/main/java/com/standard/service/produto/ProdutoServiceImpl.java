@@ -176,8 +176,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Produto consultarByBarCode(Produto produto) {
-		Optional<ProdutoEntity> p = produtoRepository.findByBarCode(produto.getBarCode().trim());
+	public Produto consultarByBarCode(String barcode) {
+		Optional<ProdutoEntity> p = produtoRepository.findByBarCode(barcode.trim());
 		return JpaFunctions.produtoToProdutoEntity.apply(p.get());
 	}
 

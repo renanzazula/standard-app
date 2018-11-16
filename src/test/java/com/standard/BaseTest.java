@@ -66,7 +66,7 @@ public class BaseTest {
 
     public void setUpMedida() {
         medida = new Medida();
-        medida.setCodigo(1l);
+        // medida.setCodigo(1l);
         medida.setNome(NOME);
         medida.setDescricao(DESCRICAO);
     }
@@ -75,7 +75,7 @@ public class BaseTest {
         itensTipoMedida = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             itenTipoMedida = new ItensTipoMedida();
-            itenTipoMedida.setCodigo(new Long(i));
+            //itenTipoMedida.setCodigo(new Long(i));
             switch (i) {
                 case 1:
                     itenTipoMedida.setValor(VALOR_P);
@@ -110,7 +110,7 @@ public class BaseTest {
             produtoHasItenTipoMedida.setQuantidade(QUANTIDADE);
             produtoHasItenTipoMedida.setDominios(new ArrayList<>());
             produtoHasItenTipoMedida.getDominios().add(dominio);
-            produtoHasItenTipoMedida.setItensTipoMedida(itensTipoMedida.get(j));
+            produtoHasItenTipoMedida.setItensTipoMedida(medida.getItensTipoMedida().get(j));
             produtoHasItensTipoMedida.add(produtoHasItenTipoMedida);
             j++;
         }
@@ -192,11 +192,10 @@ public class BaseTest {
                 assertDominios(found.get(i).getDominios().get(j),
                         produto.get(i).getDominios().get(j));
             }
-
             Assert.assertEquals(found.get(i).getQuantidade(), produto.get(i).getQuantidade());
             Assert.assertEquals(found.get(i).getValorUnitario(), produto.get(i).getValorUnitario());
-            Assert.assertEquals(found.get(i).getItensTipoMedida(), produto.get(i).getItensTipoMedida());
-            Assert.assertEquals(found.get(i).getProduto(), produto.get(i).getProduto());
+            Assert.assertEquals(found.get(i).getItensTipoMedida().getValor(), produto.get(i).getItensTipoMedida().getValor());
+
         }
     }
     

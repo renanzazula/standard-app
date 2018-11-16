@@ -11,6 +11,6 @@ public interface ProdutoService {
 	Produto consultarByCodigo(Long codigo);
 	List<Produto> consultar();
 
-	Produto consultarByBarCode(Produto produto);
+	Produto consultarByBarCode(String barcode);
 	boolean validarCodigoProduto(Produto produto);
 }
