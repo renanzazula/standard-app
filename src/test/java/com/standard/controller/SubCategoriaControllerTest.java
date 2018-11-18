@@ -1,6 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.SubCategoria;
+import com.standard.service.categoria.CategoriaService;
 import com.standard.service.subCategoria.SubCategoriaService;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,10 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @MockBean
     SubCategoriaService service;
 
+    @MockBean
+    CategoriaService categoriaService;
+
+
     @Autowired
     MockMvc mockMvc;
 
@@ -36,6 +41,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Before
     public void setUp() {
+
         obj = new SubCategoria();
         obj.setCodigo(1L);
         obj.setNome(NOME);

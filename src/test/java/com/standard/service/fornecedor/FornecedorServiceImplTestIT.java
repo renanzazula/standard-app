@@ -26,6 +26,7 @@ public class FornecedorServiceImplTestIT extends BaseTest {
 
     @Before
     public void setUp() {
+        service = new FornecedorServiceImpl(repository);
         setUpFornecedor();
         fornecedor = service.incluir(fornecedor);
     }

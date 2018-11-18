@@ -269,6 +269,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByBarCode() {
+        produto = produtoService.incluir(produto);
         Produto found = produtoService.consultarByBarCode(produto.getBarCode());
         Assert.assertNotNull(found);
         Assert.assertEquals(found.getCodigo(), produto.getCodigo());

@@ -75,7 +75,6 @@ public class BaseTest {
         itensTipoMedida = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             itenTipoMedida = new ItensTipoMedida();
-            //itenTipoMedida.setCodigo(new Long(i));
             switch (i) {
                 case 1:
                     itenTipoMedida.setValor(VALOR_P);
