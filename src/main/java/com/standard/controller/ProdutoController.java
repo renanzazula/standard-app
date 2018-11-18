@@ -1,6 +1,6 @@
 package com.standard.controller;
 
-import com.standard.domain.*;
+import com.standard.domain.Produto;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.dominio.DominioService;
 import com.standard.service.medida.MedidaService;
@@ -17,17 +17,14 @@ public class ProdutoController {
 
     public static final String BASE_URL = "/api/v1/produto";
 
-    private ProdutoService produtoService;
-    private CategoriaService categoriaService;
-    private MedidaService medidaService;
-    private DominioService dominioService;
+    private final ProdutoService produtoService;
 
     public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService,
                              MedidaService medidaService, DominioService dominioService) {
         this.produtoService = produtoService;
-        this.categoriaService = categoriaService;
-        this.medidaService = medidaService;
-        this.dominioService = dominioService;
+        CategoriaService categoriaService1 = categoriaService;
+        MedidaService medidaService1 = medidaService;
+        DominioService dominioService1 = dominioService;
     }
 
 
@@ -61,51 +58,15 @@ public class ProdutoController {
         return produtoService.alterar(codigo, produto);
     }
 
-    //fixme:
-    @RequestMapping(value = "/ajaxConsultaSubCategoriaByCategoria")
+    @RequestMapping(value = "/addicionarProduto/{barCode}")
     @ResponseStatus(HttpStatus.OK)
-    public List<SubCategoria> consultaSubCategoriaByCategoria(@RequestBody Categoria categoria) {
-        Categoria listSubCategorias = categoriaService.consultarByCodigo(categoria.getCodigo());
-        return listSubCategorias.getSubCategorias();
+    public Produto addicionarProduto(@PathVariable String barCode) {
+        return produtoService.consultarByBarCode(barCode);
     }
 
 
-    @RequestMapping(value = "/addicionarProduto")
-    @ResponseStatus(HttpStatus.OK)
-    public Produto addicionarProduto(@RequestBody String barCodep) {
-        Produto barCode = new Produto();
-        barCode.setBarCode(barCodep);
-        Produto produtoDB = produtoService.consultarByBarCode(barCode);
-
-        return produtoDB;
-    }
-
-    @RequestMapping(value = "/ajaxConsultarItensMedidaByCategoria")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Medida> ajaxConsultarItensMedidaByCategoria(@RequestBody Produto produto) {
-        return medidaService.consultarByCategoriaSubCategoriaMarca(produto);
-    }
-
-    @RequestMapping(value = "/ajaxConsultarItensMedidaByProdutoCodigo")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProdutoHasItensTipoMedida> ajaxConsultarItensMedidaByProdutoCodigo(@RequestBody Produto produto) {
-        Produto produtoDB = produtoService.consultarByCodigo(produto.getCodigo());
-        return produtoDB.getProdutoHasItensTipoMedida();
-    }
 
 
-    @RequestMapping(value = "/ajaxConsultarItensMedidaByMedidaCodigo")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ItensTipoMedida> ajaxConsultarItensMedidaByMedidaCodigo(@RequestBody Medida medida) {
-        Medida medidas = medidaService.consultarByCodigo(medida.getCodigo());
-        return medidas.getItensTipoMedida();
-    }
 
-
-    @RequestMapping(value = "/ajaxObterDominios")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Dominio> ajaxObterDominios() {
-        return dominioService.consultar();
-    }
 
 }

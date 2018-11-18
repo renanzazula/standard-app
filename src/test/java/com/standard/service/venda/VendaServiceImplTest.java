@@ -1,0 +1,70 @@
+package com.standard.service.venda;
+
+import com.standard.BaseTest;
+import com.standard.repository.*;
+import com.standard.service.caixa.CaixaService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class VendaServiceImplTest extends BaseTest {
+
+    @Autowired
+    private VendaRepository vendaRepository;
+
+    @Autowired
+    private FormaDePagamentoRepository formaDePagamentoRepository;
+
+    @Autowired
+    private CaixaRepository caixaRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
+
+    private VendaService vendaService;
+    private CaixaService caixaService;
+
+    @Before
+    public void setUp() {
+        vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, caixaRepository,
+                clienteRepository, produtoHasItensTipoMedidaRepository, caixaService);
+
+
+    }
+
+    @Test
+    public void incluir() {
+
+    }
+
+    @Test
+    public void alterar() {
+    }
+
+    @Test
+    public void cancelar() {
+    }
+
+    @Test
+    public void consultarByCodigo() {
+    }
+
+    @Test
+    public void consultar() {
+        vendaService.consultar();
+    }
+
+    @Test
+    public void filtrarVenda() {
+    }
+}

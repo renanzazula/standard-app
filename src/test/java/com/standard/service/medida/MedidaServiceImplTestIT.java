@@ -215,5 +215,6 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCategoriaSubCategoriaMarca() {
+        // TODO
     }
 }

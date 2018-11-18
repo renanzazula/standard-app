@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class SubCategoriaServiceImpl implements SubCategoriaService {
 
-	private SubCategoriaRepository repository;
+	private final SubCategoriaRepository repository;
 
 	public SubCategoriaServiceImpl(SubCategoriaRepository repository) {
 		this.repository = repository;
@@ -32,7 +33,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 	@Transactional
 	public SubCategoria alterar(Long codigo, SubCategoria entity) {
 		SubCategoriaEntity subCategoriaDB = repository.findById(entity.getCodigo()).orElse(null);
-		subCategoriaDB.setDescricao(entity.getDescricao());
+		Objects.requireNonNull(subCategoriaDB).setDescricao(entity.getDescricao());
 		subCategoriaDB.setNome(entity.getNome());
 		return JpaFunctions.subCategoriaToSubCategoriaEntity.apply(repository.saveAndFlush(subCategoriaDB));
 	}

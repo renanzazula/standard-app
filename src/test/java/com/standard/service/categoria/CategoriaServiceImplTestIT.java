@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest(showSql = true)
+@DataJpaTest()
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CategoriaServiceImplTestIT extends BaseTest {
 
@@ -31,20 +31,17 @@ public class CategoriaServiceImplTestIT extends BaseTest {
     private SubCategoriaRepository subCategoriaRepository;
 
     private CategoriaService service;
-    private SubCategoriaService subCategoriaService;
 
     private Categoria obj = null;
-    private SubCategoria subCategoria = null;
-    private List<SubCategoria> subCategorias = null;
 
     @Before
     public void setUp() {
         service = new CategoriaServiceImpl(repository, subCategoriaRepository);
-        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
+        SubCategoriaService subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
 
-        subCategorias = new ArrayList<>();
+        List<SubCategoria> subCategorias = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            subCategoria = new SubCategoria();
+            SubCategoria subCategoria = new SubCategoria();
             subCategoria.setNome(NOME + "_" + i);
             subCategoria.setDescricao(DESCRICAO + "_" + i);
             subCategorias.add(subCategoriaService.incluir(subCategoria));

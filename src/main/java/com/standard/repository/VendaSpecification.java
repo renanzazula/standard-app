@@ -7,9 +7,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 
-public class VendaSpecification implements Specification<VendaEntity> {
+class VendaSpecification implements Specification<VendaEntity> {
 
-    private VendaEntity venda;
+    private final VendaEntity venda;
 
     public VendaSpecification(VendaEntity venda) {
         super();

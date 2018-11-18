@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-public @Data class Error implements Serializable{
+@Data class Error implements Serializable{
 	
  	/**
 	 * 

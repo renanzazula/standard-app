@@ -32,12 +32,12 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    Marca obj = null;
+    private Marca obj = null;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         obj = new Marca();
-        obj.setCodigo(1l);
+        obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
     }
@@ -45,7 +45,7 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         Marca marca2 = new Marca();
-        marca2.setCodigo(2l);
+        marca2.setCodigo(2L);
         marca2.setNome("bob");
 
         List<Marca> marcas = Arrays.asList(obj, marca2);
@@ -86,7 +86,7 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l,obj)).thenReturn(obj);
+        when(service.alterar(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(MarcaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))

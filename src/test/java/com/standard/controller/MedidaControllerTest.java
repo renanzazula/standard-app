@@ -43,14 +43,14 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         setUpMedida();
     }
 
     @Test
     public void testConsultar() throws Exception {
         Medida medida2 = new Medida();
-        medida2.setCodigo(2l);
+        medida2.setCodigo(2L);
         medida2.setNome("bob");
 
         List<Medida> medidas = Arrays.asList(medida, medida2);
@@ -91,7 +91,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l, medida)).thenReturn(medida);
+        when(service.alterar(1L, medida)).thenReturn(medida);
         mockMvc.perform(put(MedidaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(medida)))

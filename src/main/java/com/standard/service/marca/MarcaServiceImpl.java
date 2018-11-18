@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class MarcaServiceImpl implements MarcaService {
 
-	private MarcaRepository repository;
+	private final MarcaRepository repository;
 
     public MarcaServiceImpl(MarcaRepository repository) {
         this.repository = repository;

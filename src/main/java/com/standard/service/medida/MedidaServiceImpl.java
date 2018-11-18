@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 @Service
 public class MedidaServiceImpl implements MedidaService {
 
-	private MedidaRepository medidaRepository;
-	private CategoriaRepository categoriaRepository;
-	private SubCategoriaRepository subCategoriaRepository;
-	private MarcaRepository marcaRepository;
+	private final MedidaRepository medidaRepository;
+	private final CategoriaRepository categoriaRepository;
+	private final SubCategoriaRepository subCategoriaRepository;
+	private final MarcaRepository marcaRepository;
 
     public MedidaServiceImpl(MedidaRepository medidaRepository, CategoriaRepository categoriaRepository,
                              SubCategoriaRepository subCategoriaRepository, MarcaRepository marcaRepository) {

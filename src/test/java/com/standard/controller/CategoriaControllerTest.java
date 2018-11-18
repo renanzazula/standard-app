@@ -35,14 +35,14 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
     
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         setUpCategoria();
     }
 
     @Test
     public void testConsultar() throws Exception {
         Categoria categoria2 = new Categoria();
-        categoria2.setCodigo(2l);
+        categoria2.setCodigo(2L);
         categoria2.setNome("bob");
 
         List<Categoria> categorias = Arrays.asList(categoria, categoria2);
@@ -83,7 +83,7 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l,categoria)).thenReturn(categoria);
+        when(service.alterar(1L,categoria)).thenReturn(categoria);
         mockMvc.perform(put(CategoriaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(categoria)))

@@ -13,7 +13,7 @@ public class FormaDePagamentoController {
 
     public static final String BASE_URL = "/api/v1/formaDePagamento";
 
-    private FormaDePagamentoService formasDePagamentoService;
+    private final FormaDePagamentoService formasDePagamentoService;
 
     public FormaDePagamentoController(FormaDePagamentoService formasDePagamentoService) {
         this.formasDePagamentoService = formasDePagamentoService;

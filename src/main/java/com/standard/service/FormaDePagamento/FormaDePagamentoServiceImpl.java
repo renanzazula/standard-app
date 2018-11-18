@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
-    private FormaDePagamentoRepository formaDePagamentoRepository;
+    private final FormaDePagamentoRepository formaDePagamentoRepository;
 
     public FormaDePagamentoServiceImpl(FormaDePagamentoRepository formaDePagamentoRepository) {
         this.formaDePagamentoRepository = formaDePagamentoRepository;

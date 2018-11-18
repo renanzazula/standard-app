@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RunWith(SpringRunner.class)
-@DataJpaTest(showSql = true)
+@DataJpaTest()
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MarcaServiceImplTestIT extends BaseTest {
 

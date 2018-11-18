@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Retirada implements Serializable {
+class Retirada implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 

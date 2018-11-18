@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
-	private ProdutoRepository produtoRepository;
-	private MedidaRepository medidaRepository;
-	private DominioRepository dominioRepository;
-	private FornecedorRepository fornecedorRepository;
-	private CategoriaRepository categoriaRepository;
-	private SubCategoriaRepository subCategoriaRepository;
-	private MarcaRepository marcaRepository;
-	private ItensTipoMedidaRepository itensTipoMedidaRepository;
+	private final ProdutoRepository produtoRepository;
+	private final MedidaRepository medidaRepository;
+	private final DominioRepository dominioRepository;
+	private final FornecedorRepository fornecedorRepository;
+	private final CategoriaRepository categoriaRepository;
+	private final SubCategoriaRepository subCategoriaRepository;
+	private final MarcaRepository marcaRepository;
+	private final ItensTipoMedidaRepository itensTipoMedidaRepository;
 
     public ProdutoServiceImpl(ProdutoRepository produtoRepository, MedidaRepository medidaRepository,
                               DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,

@@ -61,24 +61,20 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     private ItensTipoMedidaRepository itensTipoMedidaRepository;
 
     private MarcaService marcaService;
-    private MedidaService medidaService;
-    private SubCategoriaService subCategoriaService;
-    private CategoriaService categoriaService;
     private FornecedorService fornecedorService;
-    private DominioService dominioService;
     private ProdutoService produtoService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
-        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
+        MedidaService medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
                 subCategoriaRepository, marcaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
-        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
-        categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
+        SubCategoriaService subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
+        CategoriaService categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
         fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
-        dominioService = new DominioServiceImpl(dominioRepository);
+        DominioService dominioService = new DominioServiceImpl(dominioRepository);
         produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
                 dominioRepository, fornecedorRepository,
                 categoriaRepository, subCategoriaRepository,
@@ -142,13 +138,13 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         found.setNome(NOME + "_update");
         found.setStatus(StatusEnum.Inativo);
         found.setDescricao(DESCRICAO + "_update");
-        found.setPreco(new Double(15));
-        found.setPrecoVenda(new Double(15));
-        found.setPreco(new Double(15));
-        found.setPrecoCusto(new Double(15));
-        found.setPrecoOferta(new Double(15));
-        found.setDesconto(new Double(15));
-        found.setPeso(new Double(15));
+        found.setPreco(15d);
+        found.setPrecoVenda(15d);
+        found.setPreco(15d);
+        found.setPrecoCusto(15d);
+        found.setPrecoOferta(15d);
+        found.setDesconto(15d);
+        found.setPeso(15d);
         found.setPorcentagem(2);
         found.setPorcentagemDesconto(2);
 

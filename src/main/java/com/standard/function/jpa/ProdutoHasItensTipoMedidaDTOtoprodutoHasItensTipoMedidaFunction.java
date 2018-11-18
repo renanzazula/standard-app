@@ -9,7 +9,7 @@ import com.standard.function.JpaFunctions;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
+class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         implements Function<ProdutoHasItensTipoMedidaEntity, ProdutoHasItensTipoMedida> {
 
     @Override

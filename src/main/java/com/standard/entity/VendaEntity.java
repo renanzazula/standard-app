@@ -80,6 +80,6 @@ public @Data class VendaEntity implements Serializable {
 
 	@NotNull
 	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
-	private Set<VendaHasItemProdutoEntity> vendaHasItemProduto = new HashSet<VendaHasItemProdutoEntity>();
+	private Set<VendaHasItemProdutoEntity> vendaHasItemProduto = new HashSet<>();
 
 }

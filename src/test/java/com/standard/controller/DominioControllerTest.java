@@ -32,12 +32,12 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    Dominio obj = null;
+    private Dominio obj = null;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         obj = new Dominio();
-        obj.setCodigo(1l);
+        obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
         obj.setChecked(true);
@@ -46,7 +46,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         Dominio dominio2 = new Dominio();
-        dominio2.setCodigo(2l);
+        dominio2.setCodigo(2L);
         dominio2.setNome("bob");
 
         List<Dominio> dominios = Arrays.asList(obj, dominio2);
@@ -87,7 +87,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l,obj)).thenReturn(obj);
+        when(service.alterar(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(DominioController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))

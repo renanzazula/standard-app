@@ -52,5 +52,7 @@ public class CategoriaController {
     public Categoria alterar(@PathVariable Long codigo, @RequestBody Categoria dominio){
         return categoriaService.alterar(codigo, dominio);
     }
+
+
 }
 

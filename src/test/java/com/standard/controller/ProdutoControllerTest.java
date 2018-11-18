@@ -61,7 +61,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     private DominioService dominioService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // requeridos
         setUpMarca();
         when(marcaService.incluir(marca)).thenReturn(marca);
@@ -105,7 +105,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         Produto produto2 = new Produto();
-        produto2.setCodigo(2l);
+        produto2.setCodigo(2L);
         produto2.setNome("bob");
 
         List<Produto> produtos = Arrays.asList(produto, produto2);
@@ -131,7 +131,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testIncluir() throws Exception {
+    public void testIncluir() {
 //        when(produtoService.incluir(produto)).thenReturn(produto);
 //
 //        mockMvc.perform(post(ProdutoController.BASE_URL)
@@ -150,7 +150,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() throws Exception {
+    public void testAlterar() {
 //        when(produtoService.alterar(1,medida)).thenReturn(medida);
 //        mockMvc.perform(put(ProdutoController.BASE_URL + "/1")
 //                .contentType(MediaType.APPLICATION_JSON)

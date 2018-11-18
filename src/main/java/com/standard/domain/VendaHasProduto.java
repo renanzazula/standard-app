@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VendaHasProduto implements Serializable {
+class VendaHasProduto implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 	private Long codigo;

@@ -11,14 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
 
-	private CategoriaRepository repository;
-	private SubCategoriaRepository subCategoriaRepository;
+	private final CategoriaRepository repository;
+	private final SubCategoriaRepository subCategoriaRepository;
 
 	public CategoriaServiceImpl(CategoriaRepository repository, SubCategoriaRepository subCategoriaRepository) {
 		this.repository = repository;
@@ -33,9 +34,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 		categoriaDB.setNome(categoria.getNome());
 		if(categoria.getSubCategorias() != null) {
 			Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-			categoria.getSubCategorias().forEach(sub -> {
-				subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo()));
-			});
+			categoria.getSubCategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
 			categoriaDB.setSubCategoriasSet(subCategoria);
 		}
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
@@ -45,13 +44,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Transactional
 	public Categoria alterar(Long codigo, Categoria categoria) {
 		CategoriaEntity categoriaDB = repository.findById(codigo).orElse(null);
-		categoriaDB.setDescricao(categoria.getDescricao());
+		Objects.requireNonNull(categoriaDB).setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
 		categoriaDB.getSubCategoriasSet().clear();
 		Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-		categoria.getSubCategorias().forEach(sub -> {
-			subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo()));
-		});
+		categoria.getSubCategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
 		categoriaDB.getSubCategoriasSet().addAll(subCategoria);
 
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));

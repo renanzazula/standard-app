@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class DominioServiceImpl implements DominioService {
 
-	private DominioRepository repository;
+	private final DominioRepository repository;
 
 	public DominioServiceImpl(DominioRepository repository) {
 		this.repository = repository;
@@ -32,7 +33,7 @@ public class DominioServiceImpl implements DominioService {
 	@Transactional
 	public Dominio alterar(Long codigo, Dominio dominio) {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
-		dominioDB.setDescricao(dominio.getDescricao());
+		Objects.requireNonNull(dominioDB).setDescricao(dominio.getDescricao());
 		dominioDB.setNome(dominio.getNome());
 		return JpaFunctions.dominioToDominioEntity.apply(repository.save(dominioDB));
 	}

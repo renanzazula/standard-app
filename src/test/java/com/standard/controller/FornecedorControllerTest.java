@@ -33,14 +33,14 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
     MockMvc mockMvc;
  
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
        setUpFornecedor();
     }
 
     @Test
     public void testConsultar() throws Exception {
         Fornecedor fornecedor2 = new Fornecedor();
-        fornecedor2.setCodigo(2l);
+        fornecedor2.setCodigo(2L);
         fornecedor2.setNome("bob");
 
         List<Fornecedor> fornecedors = Arrays.asList(fornecedor, fornecedor2);
@@ -81,7 +81,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l,fornecedor)).thenReturn(fornecedor);
+        when(service.alterar(1L,fornecedor)).thenReturn(fornecedor);
         mockMvc.perform(put(FornecedorController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(fornecedor)))

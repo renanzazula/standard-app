@@ -2,7 +2,7 @@ package com.standard.domain;
 
 import java.io.Serializable;
 
-public class BreadCrumb implements Serializable{
+class BreadCrumb implements Serializable{
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class BreadCrumb implements Serializable{
 		return last;
 	}
 
-	public void setLast(String last) {
+	private void setLast(String last) {
 		this.last = last;
 	}
 

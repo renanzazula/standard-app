@@ -32,12 +32,12 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    FormasDePagamento obj = null;
+    private FormasDePagamento obj = null;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         obj = new FormasDePagamento();
-        obj.setCodigo(1l);
+        obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
     }
@@ -45,7 +45,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         FormasDePagamento formaDePagamento2 = new FormasDePagamento();
-        formaDePagamento2.setCodigo(2l);
+        formaDePagamento2.setCodigo(2L);
         formaDePagamento2.setNome("bob");
 
         List<FormasDePagamento> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
@@ -86,7 +86,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l, obj)).thenReturn(obj);
+        when(service.alterar(1L, obj)).thenReturn(obj);
         mockMvc.perform(put(FormaDePagamentoController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))

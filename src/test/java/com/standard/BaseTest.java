@@ -17,12 +17,12 @@ public class BaseTest {
     protected static final int PORCENTAGEM_DESCONTO = 15;
     protected static final int PORCENTAGEM_DESCONTO_UPDATE = 15;
 
-    protected static final String VALOR_P = "P";
-    protected static final String VALOR_X = "X";
-    protected static final String VALOR_L = "L";
-    protected static final String VALOR_XL = "XL";
-    public static final int QUANTIDADE = 10;
-    public static final long CODIGO = 1l;
+    private static final String VALOR_P = "P";
+    private static final String VALOR_X = "X";
+    private static final String VALOR_L = "L";
+    private static final String VALOR_XL = "XL";
+    private static final int QUANTIDADE = 10;
+    private static final long CODIGO = 1L;
 
     // obj commons
     protected Marca marca = null;
@@ -31,47 +31,47 @@ public class BaseTest {
     protected Fornecedor fornecedor = null;
     protected Medida medida = null;
     protected List<ItensTipoMedida> itensTipoMedida = null;
-    protected ItensTipoMedida itenTipoMedida = null;
+    private ItensTipoMedida itenTipoMedida = null;
     protected Dominio dominio = null;
 
     protected Produto produto = null;
     protected List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida = null;
-    protected ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
+    private ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
 
-    public void setUpMarca() {
+    protected void setUpMarca() {
         marca = new Marca();
         marca.setNome(NOME);
         marca.setDescricao(DESCRICAO);
     }
 
-    public void setUpSubCategoria() {
+    protected void setUpSubCategoria() {
         subCategoria = new SubCategoria();
         subCategoria.setNome(NOME);
         subCategoria.setDescricao(DESCRICAO);
     }
 
-    public void setUpCategoria() {
+    protected void setUpCategoria() {
         categoria = new Categoria();
-        categoria.setCodigo(1l);
+        categoria.setCodigo(1L);
         categoria.setNome(NOME);
         categoria.setDescricao(DESCRICAO);
     }
 
-    public void setUpFornecedor() {
+    protected void setUpFornecedor() {
         fornecedor = new Fornecedor();
-        fornecedor.setCodigo(1l);
+        fornecedor.setCodigo(1L);
         fornecedor.setNome(NOME);
         fornecedor.setDescricao(DESCRICAO);
     }
 
-    public void setUpMedida() {
+    protected void setUpMedida() {
         medida = new Medida();
         // medida.setCodigo(1l);
         medida.setNome(NOME);
         medida.setDescricao(DESCRICAO);
     }
 
-    public void setUpItensTipoMedida() {
+    protected void setUpItensTipoMedida() {
         itensTipoMedida = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             itenTipoMedida = new ItensTipoMedida();
@@ -94,7 +94,7 @@ public class BaseTest {
         }
     }
 
-    public void setUpDominio() {
+    protected void setUpDominio() {
         dominio = new Dominio();
         dominio.setCodigo(CODIGO);
         dominio.setNome(NOME);
@@ -102,7 +102,7 @@ public class BaseTest {
         dominio.setChecked(true);
     }
 
-    public void setUpProdutoHasItensTipoMedida() {
+    protected void setUpProdutoHasItensTipoMedida() {
         produtoHasItensTipoMedida = new ArrayList<>();
         int j = 0;
         for (int i = 1; i < 5; i++) {
@@ -116,20 +116,20 @@ public class BaseTest {
         }
     }
 
-    public void setUpProduto() {
+    protected void setUpProduto() {
         produto = new Produto();
-        produto.setCodigo(1l);
+        produto.setCodigo(1L);
         produto.setBarCode(BAR_0_CODE);
         produto.setNome(NOME);
         produto.setStatus(StatusEnum.Ativo);
         produto.setDescricao(DESCRICAO);
-        produto.setPreco(new Double(10));
-        produto.setPrecoVenda(new Double(10));
-        produto.setPreco(new Double(10));
-        produto.setPrecoCusto(new Double(10));
-        produto.setPrecoOferta(new Double(10));
-        produto.setDesconto(new Double(10));
-        produto.setPeso(new Double(10));
+        produto.setPreco(10d);
+        produto.setPrecoVenda(10d);
+        produto.setPreco(10d);
+        produto.setPrecoCusto(10d);
+        produto.setPrecoOferta(10d);
+        produto.setDesconto(10d);
+        produto.setPeso(10d);
         produto.setPorcentagem(1);
         produto.setPorcentagemDesconto(1);
         // fixme: medida.setfoto
@@ -182,7 +182,7 @@ public class BaseTest {
         Assert.assertEquals(expected.isChecked(), found.isChecked());
     }
 
-    protected void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
+    private void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
         for (int i = 0; i < found.size(); i++) {
             Assert.assertEquals(found.get(i).getCodigo(), produto.get(i).getCodigo());
             Assert.assertEquals(found.get(i).getDominios().size(),

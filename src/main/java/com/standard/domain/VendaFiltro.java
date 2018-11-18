@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class VendaFiltro implements Serializable {
+class VendaFiltro implements Serializable {
 
     /**
      *

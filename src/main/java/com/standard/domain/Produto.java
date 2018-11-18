@@ -64,7 +64,7 @@ public   class Produto implements Serializable {
 	private List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida;
  
 	public Integer getQuantidadeTotalEstoque() {
-		Integer quantidadeTotalEstoque = new Integer(0);
+		Integer quantidadeTotalEstoque = 0;
 		if(this.produtoHasItensTipoMedida != null) { 
 			for (ProdutoHasItensTipoMedida produtoHasItensTipoMedida : this.produtoHasItensTipoMedida) {
 				if(produtoHasItensTipoMedida.getQuantidade() != null) { 

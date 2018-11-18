@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class FornecedorServiceImpl implements FornecedorService {
 
-    private FornecedorRepository repository;
+    private final FornecedorRepository repository;
 
     public FornecedorServiceImpl(FornecedorRepository repository) {
         this.repository = repository;

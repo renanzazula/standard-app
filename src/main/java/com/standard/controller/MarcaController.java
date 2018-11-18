@@ -13,7 +13,7 @@ public class MarcaController {
 
 	public static final String BASE_URL = "/api/v1/marca";
 	
-	private MarcaService marcaService;
+	private final MarcaService marcaService;
 
 	public MarcaController(MarcaService marcaService) {
 		this.marcaService = marcaService;

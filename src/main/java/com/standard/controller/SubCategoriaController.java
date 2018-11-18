@@ -1,6 +1,8 @@
 package com.standard.controller;
 
+import com.standard.domain.Categoria;
 import com.standard.domain.SubCategoria;
+import com.standard.service.categoria.CategoriaService;
 import com.standard.service.subCategoria.SubCategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,11 @@ public class SubCategoriaController {
 
     private final SubCategoriaService subCategoriaService;
 
-    public SubCategoriaController(SubCategoriaService subSubCategoriaService) {
+    private final CategoriaService categoriaService;
+
+    public SubCategoriaController(SubCategoriaService subSubCategoriaService, CategoriaService categoriaService) {
         this.subCategoriaService = subSubCategoriaService;
+        this.categoriaService = categoriaService;
     }
 
     @GetMapping({"/all"})
@@ -47,5 +52,13 @@ public class SubCategoriaController {
     @PutMapping({"/{codigo}"})
     public SubCategoria alterar(@PathVariable Long codigo, @RequestBody SubCategoria dominio) {
         return subCategoriaService.alterar(codigo, dominio);
+    }
+
+    //fixme:
+    @GetMapping( value = "/byCategoria/{codigo}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SubCategoria> consultaSubCategoriaByCategoria(@PathVariable Long codigo) {
+        Categoria listSubCategorias = categoriaService.consultarByCodigo(codigo);
+        return listSubCategorias.getSubCategorias();
     }
 }

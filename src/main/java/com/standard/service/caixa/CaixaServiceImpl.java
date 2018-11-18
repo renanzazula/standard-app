@@ -15,8 +15,12 @@ import java.util.Date;
 @Service
 public class CaixaServiceImpl implements CaixaService {
 
+	private final CaixaRepository repository;
+
 	@Autowired
-	private CaixaRepository repository;
+	public CaixaServiceImpl(CaixaRepository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	@Transactional
@@ -29,10 +33,10 @@ public class CaixaServiceImpl implements CaixaService {
 	public Caixa abrirCaixa(Caixa caixa) {
 		CaixaEntity caixaEntity = new CaixaEntity();
 		caixaEntity.setValorInicial(caixa.getValorInicial());
-		caixaEntity.setValorFinal(new Double(0));
-		caixaEntity.setTotal(new Double(0));
-		caixaEntity.setTotalDesconto(new Double(0));
-		caixaEntity.setTotalVendas(new Double(0));
+		caixaEntity.setValorFinal((double) 0);
+		caixaEntity.setTotal((double) 0);
+		caixaEntity.setTotalDesconto((double) 0);
+		caixaEntity.setTotalVendas((double) 0);
 		caixaEntity.setStatus(StatusCaixaEnum.A);
 		caixaEntity.setDataAbertura(new Date());
 		caixaEntity.setHoraAbertura(new Date());
@@ -60,11 +64,11 @@ public class CaixaServiceImpl implements CaixaService {
 			caixa.setCodigo(gerarCodigoCaixa());
 			caixa.setDataAbertura(new Date());
 			caixa.setHoraAbertura(new Date());
-			caixa.setValorInicial(new Double(0));
-			caixa.setValorFinal(new Double(0));
-			caixa.setTotalVendas(new Double(0));
-			caixa.setTotalDesconto(new Double(0));
-			caixa.setTotal(new Double(0));			
+			caixa.setValorInicial((double) 0);
+			caixa.setValorFinal((double) 0);
+			caixa.setTotalVendas((double) 0);
+			caixa.setTotalDesconto((double) 0);
+			caixa.setTotal((double) 0);
 			caixa.setStatus(StatusCaixaEnum.F.toString());
 			return caixa;
  		}
@@ -87,7 +91,7 @@ public class CaixaServiceImpl implements CaixaService {
 		
 		// FIXME: arrumar melhor solucao 
 		if(caixa.getValorInicial() == null) {
-			caixaEntity.setTotal(totalVendas + new Double(0));	
+			caixaEntity.setTotal(totalVendas + (double) 0);
 		}else {
 			caixaEntity.setTotal(totalVendas + caixa.getValorInicial());
 		}
@@ -102,7 +106,7 @@ public class CaixaServiceImpl implements CaixaService {
 		if(codigo != null) {
 			codigo = codigo +1;
 		}else {
-			codigo = 0l;
+			codigo = 0L;
 		}			  
 		return codigo;  
 	}

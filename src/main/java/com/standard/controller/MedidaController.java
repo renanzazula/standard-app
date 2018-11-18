@@ -16,9 +16,9 @@ public class MedidaController {
 
     public static final String BASE_URL = "/api/v1/medida";
     
-    private CategoriaService categoriaService;
-    private MarcaService marcaService;
-    private MedidaService medidaService;
+    private final CategoriaService categoriaService;
+    private final MarcaService marcaService;
+    private final MedidaService medidaService;
 
     public MedidaController(CategoriaService categoriaService, MarcaService marcaService, MedidaService medidaService) {
         this.categoriaService = categoriaService;
@@ -48,7 +48,6 @@ public class MedidaController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long codigo){
         medidaService.excluir(codigo);
-
     }
 
     @PutMapping({"/{codigo}"})

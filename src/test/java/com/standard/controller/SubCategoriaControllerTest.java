@@ -32,12 +32,12 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    SubCategoria obj = null;
+    private SubCategoria obj = null;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         obj = new SubCategoria();
-        obj.setCodigo(1l);
+        obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
     }
@@ -45,7 +45,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         SubCategoria subCategoria2 = new SubCategoria();
-        subCategoria2.setCodigo(2l);
+        subCategoria2.setCodigo(2L);
         subCategoria2.setNome("bob");
 
         List<SubCategoria> subCategorias = Arrays.asList(obj, subCategoria2);
@@ -86,7 +86,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1l,obj)).thenReturn(obj);
+        when(service.alterar(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(SubCategoriaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
