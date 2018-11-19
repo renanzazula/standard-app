@@ -8,14 +8,14 @@ import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
 import com.standard.service.subCategoria.SubCategoriaService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {ProdutoController.class})
 public class ProdutoControllerTest extends AbstractRestControllerTest {
 
@@ -56,11 +56,10 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     private SubCategoriaService subCategoriaService;
 
 
-
     @MockBean
     private DominioService dominioService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // requeridos
         setUpMarca();
@@ -113,11 +112,11 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(produtoService.consultar()).thenReturn(produtos);
 
         mockMvc.perform(get(ProdutoController.BASE_URL + "/all")
-               .contentType(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$", hasSize(2)))
-               .andExpect(jsonPath("$[0].nome", is(NOME)));
-                // Todo: others fields
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].nome", is(NOME)));
+        // Todo: others fields
     }
 
     @Test
@@ -158,7 +157,8 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$.nome", equalTo(NOME)))
 //                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
-    }    
+    }
+
     //
     @Test
     public void consultaSubCategoriaByCategoria() {

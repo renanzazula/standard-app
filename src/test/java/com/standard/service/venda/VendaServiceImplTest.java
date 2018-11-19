@@ -3,16 +3,18 @@ package com.standard.service.venda;
 import com.standard.BaseTest;
 import com.standard.repository.*;
 import com.standard.service.caixa.CaixaService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+
+
 @DataJpaTest
+@ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class VendaServiceImplTest extends BaseTest {
 
@@ -34,7 +36,7 @@ public class VendaServiceImplTest extends BaseTest {
     private VendaService vendaService;
     private CaixaService caixaService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, caixaRepository,
                 clienteRepository, produtoHasItensTipoMedidaRepository, caixaService);

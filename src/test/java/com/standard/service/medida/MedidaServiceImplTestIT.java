@@ -15,19 +15,20 @@ import com.standard.service.marca.MarcaService;
 import com.standard.service.marca.MarcaServiceImpl;
 import com.standard.service.subCategoria.SubCategoriaService;
 import com.standard.service.subCategoria.SubCategoriaServiceImpl;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MedidaServiceImplTestIT extends BaseTest {
@@ -50,10 +51,10 @@ public class MedidaServiceImplTestIT extends BaseTest {
     private SubCategoriaService subCategoriaService;
     private CategoriaService categoriaService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
-                                              subCategoriaRepository, marcaRepository);
+                subCategoriaRepository, marcaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
         subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
@@ -83,7 +84,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
     @Test
     public void incluir() {
         Medida medidaSave = medidaService.incluir(medida);
-        Assert.assertEquals(medidaSave.getItensTipoMedida().size(), medida.getItensTipoMedida().size());
+        assertEquals(medidaSave.getItensTipoMedida().size(), medida.getItensTipoMedida().size());
 
         medida = medidaService.consultarByCodigo(medidaSave.getCodigo());
         assertMarcaSubCategoriaCategoriaValor(medidaSave);
@@ -117,9 +118,9 @@ public class MedidaServiceImplTestIT extends BaseTest {
             Marca marcaFound = updated.getItensTipoMedida().get(i).getMarca();
             assertMarca(marcaFound, marcaUpdate);
 
-            Assert.assertNotEquals(marcaUpdate.getCodigo(), marca.getCodigo());
-            Assert.assertNotEquals(marcaUpdate.getNome(), marca.getNome());
-            Assert.assertNotEquals(marcaUpdate.getDescricao(), marca.getDescricao());
+            assertNotEquals(marcaUpdate.getCodigo(), marca.getCodigo());
+            assertNotEquals(marcaUpdate.getNome(), marca.getNome());
+            assertNotEquals(marcaUpdate.getDescricao(), marca.getDescricao());
         }
 
     }
@@ -145,9 +146,9 @@ public class MedidaServiceImplTestIT extends BaseTest {
             SubCategoria subCategoriaFound = updated.getItensTipoMedida().get(i).getSubCategoria();
             assertSubCategoria(subCategoriaFound, subCategoriaUpdate);
 
-            Assert.assertNotEquals(subCategoriaUpdate.getCodigo(), subCategoria.getCodigo());
-            Assert.assertNotEquals(subCategoriaUpdate.getNome(), subCategoria.getNome());
-            Assert.assertNotEquals(subCategoriaUpdate.getDescricao(), subCategoria.getDescricao());
+            assertNotEquals(subCategoriaUpdate.getCodigo(), subCategoria.getCodigo());
+            assertNotEquals(subCategoriaUpdate.getNome(), subCategoria.getNome());
+            assertNotEquals(subCategoriaUpdate.getDescricao(), subCategoria.getDescricao());
         }
 
     }
@@ -175,9 +176,9 @@ public class MedidaServiceImplTestIT extends BaseTest {
             Categoria categoriaFound = updated.getItensTipoMedida().get(i).getCategoria();
             assertCategoria(categoriaFound, categoriaUpdate);
 
-            Assert.assertNotEquals(categoriaFound.getCodigo(), categoria.getCodigo());
-            Assert.assertNotEquals(categoriaFound.getNome(), categoria.getNome());
-            Assert.assertNotEquals(categoriaFound.getDescricao(), categoria.getDescricao());
+            assertNotEquals(categoriaFound.getCodigo(), categoria.getCodigo());
+            assertNotEquals(categoriaFound.getNome(), categoria.getNome());
+            assertNotEquals(categoriaFound.getDescricao(), categoria.getDescricao());
         }
     }
 
@@ -186,30 +187,30 @@ public class MedidaServiceImplTestIT extends BaseTest {
         medida = medidaService.incluir(medida);
 
         Medida delete = medidaService.consultarByCodigo(medida.getCodigo());
-        Assert.assertNotNull(delete);
+        assertNotNull(delete);
 
         medidaService.excluir(delete.getCodigo());
 
         Medida found = medidaService.consultarByCodigo(medida.getCodigo());
-        Assert.assertNull(found.getCodigo());
-        Assert.assertNull(found.getNome());
-        Assert.assertNull(found.getDescricao());
+        assertNull(found.getCodigo());
+        assertNull(found.getNome());
+        assertNull(found.getDescricao());
 
     }
 
     @Test
     public void consultar() {
         List<Medida> medidas = medidaService.consultar();
-        Assert.assertNotNull(medidas);
+        assertNotNull(medidas);
     }
 
     @Test
     public void consultarByCodigo() {
         medida = medidaService.incluir(medida);
         Medida medidaFound = medidaService.consultarByCodigo(medida.getCodigo());
-        Assert.assertEquals(medidaFound.getCodigo(), medida.getCodigo());
-        Assert.assertEquals(medidaFound.getNome(), medida.getNome());
-        Assert.assertEquals(medidaFound.getDescricao() , medida.getDescricao());
+        assertEquals(medidaFound.getCodigo(), medida.getCodigo());
+        assertEquals(medidaFound.getNome(), medida.getNome());
+        assertEquals(medidaFound.getDescricao(), medida.getDescricao());
         assertMarcaSubCategoriaCategoriaValor(medidaFound);
     }
 

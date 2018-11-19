@@ -18,19 +18,20 @@ import com.standard.service.medida.MedidaService;
 import com.standard.service.medida.MedidaServiceImpl;
 import com.standard.service.subCategoria.SubCategoriaService;
 import com.standard.service.subCategoria.SubCategoriaServiceImpl;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ProdutoServiceImplTestIT extends BaseTest {
@@ -64,7 +65,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     private FornecedorService fornecedorService;
     private ProdutoService produtoService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         MedidaService medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
@@ -149,31 +150,31 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         found.setPorcentagemDesconto(2);
 
         Produto updated = produtoService.alterar(produto.getCodigo(), found);
-        Assert.assertEquals(found.getCodigo(), updated.getCodigo());
-        Assert.assertEquals(found.getBarCode(), updated.getBarCode());
-        Assert.assertEquals(found.getNome(), updated.getNome());
-        Assert.assertEquals(found.getStatus(), updated.getStatus());
-        Assert.assertEquals(found.getDescricao(), updated.getDescricao());
-        Assert.assertEquals(found.getPreco(), updated.getPreco());
-        Assert.assertEquals(found.getPrecoVenda(), updated.getPrecoVenda());
-        Assert.assertEquals(found.getPreco(), updated.getPreco());
-        Assert.assertEquals(found.getPrecoCusto(), updated.getPrecoCusto());
-        Assert.assertEquals(found.getPrecoOferta(), updated.getPrecoOferta());
-        Assert.assertEquals(found.getDesconto(), updated.getDesconto());
-        Assert.assertEquals(found.getPeso(), updated.getPeso());
-        Assert.assertEquals(found.getPorcentagem(), updated.getPorcentagem());
-        Assert.assertEquals(found.getPorcentagemDesconto(), updated.getPorcentagemDesconto());
+        assertEquals(found.getCodigo(), updated.getCodigo());
+        assertEquals(found.getBarCode(), updated.getBarCode());
+        assertEquals(found.getNome(), updated.getNome());
+        assertEquals(found.getStatus(), updated.getStatus());
+        assertEquals(found.getDescricao(), updated.getDescricao());
+        assertEquals(found.getPreco(), updated.getPreco());
+        assertEquals(found.getPrecoVenda(), updated.getPrecoVenda());
+        assertEquals(found.getPreco(), updated.getPreco());
+        assertEquals(found.getPrecoCusto(), updated.getPrecoCusto());
+        assertEquals(found.getPrecoOferta(), updated.getPrecoOferta());
+        assertEquals(found.getDesconto(), updated.getDesconto());
+        assertEquals(found.getPeso(), updated.getPeso());
+        assertEquals(found.getPorcentagem(), updated.getPorcentagem());
+        assertEquals(found.getPorcentagemDesconto(), updated.getPorcentagemDesconto());
 
         assertMarca(found.getMarca(), updated.getMarca());
         assertCategoria(found.getCategoria(), updated.getCategoria());
         assertSubCategoria(found.getSubCategoria(), updated.getSubCategoria());
         assertFornecedor(found.getFornecedor(), updated.getFornecedor());
         assertMarcaSubCategoriaCategoriaValor(found.getMedida());
-        Assert.assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());
+        assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());
 
         for (int i = 0; i < found.getProdutoHasItensTipoMedida().size(); i++) {
 
-            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDominios().size(),
+            assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDominios().size(),
                     updated.getProdutoHasItensTipoMedida().get(i).getDominios().size());
 
             for (int j = 0; j < found.getProdutoHasItensTipoMedida().get(i).getDominios().size(); j++) {
@@ -181,13 +182,13 @@ public class ProdutoServiceImplTestIT extends BaseTest {
                         updated.getProdutoHasItensTipoMedida().get(i).getDominios().get(j));
             }
 
-            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getQuantidade(),
+            assertEquals(found.getProdutoHasItensTipoMedida().get(i).getQuantidade(),
                                 updated.getProdutoHasItensTipoMedida().get(i).getQuantidade());
 
-            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
+            assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
                                    updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
 
-            Assert.assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor(),
+            assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor(),
                                  updated.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor());
 
         }
@@ -211,9 +212,9 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         assertMarca(updated.getMarca(), marcaToUpdate);
 
-        Assert.assertNotEquals(updated.getMarca().getCodigo(),    marca.getCodigo());
-        Assert.assertNotEquals(updated.getMarca().getNome(),      marca.getNome());
-        Assert.assertNotEquals(updated.getMarca().getDescricao(), marca.getDescricao());
+        assertNotEquals(updated.getMarca().getCodigo(),    marca.getCodigo());
+        assertNotEquals(updated.getMarca().getNome(),      marca.getNome());
+        assertNotEquals(updated.getMarca().getDescricao(), marca.getDescricao());
 
     }
 
@@ -244,9 +245,9 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         assertFornecedor(updated.getFornecedor(), fornecedorToUpdate);
 
-        Assert.assertNotEquals(updated.getFornecedor().getCodigo(),    fornecedor.getCodigo());
-        Assert.assertNotEquals(updated.getFornecedor().getNome(),      fornecedor.getNome());
-        Assert.assertNotEquals(updated.getFornecedor().getDescricao(), fornecedor.getDescricao());
+        assertNotEquals(updated.getFornecedor().getCodigo(),    fornecedor.getCodigo());
+        assertNotEquals(updated.getFornecedor().getNome(),      fornecedor.getNome());
+        assertNotEquals(updated.getFornecedor().getDescricao(), fornecedor.getDescricao());
 
     }
 
@@ -254,7 +255,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     public void excluir() {
         produto = produtoService.incluir(produto);
         Produto found = produtoService.consultarByCodigo(produto.getCodigo());
-        Assert.assertNotNull(found);
+        assertNotNull(found);
         produtoService.excluir(found.getCodigo());
     }
 
@@ -263,22 +264,22 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     public void consultarByCodigo() {
         produto = produtoService.incluir(produto);
         Produto found = produtoService.consultarByCodigo(produto.getCodigo());
-        Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), produto.getCodigo());
+        assertNotNull(found);
+        assertEquals(found.getCodigo(), produto.getCodigo());
     }
 
     @Test
     public void consultarByBarCode() {
         produto = produtoService.incluir(produto);
         Produto found = produtoService.consultarByBarCode(produto.getBarCode());
-        Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), produto.getCodigo());
+        assertNotNull(found);
+        assertEquals(found.getCodigo(), produto.getCodigo());
     }
 
     @Test
     public void consultar() {
         produto = produtoService.incluir(produto);
         List<Produto> produtos = produtoService.consultar();
-        Assert.assertNotNull(produtos);
+        assertNotNull(produtos);
     }
 }

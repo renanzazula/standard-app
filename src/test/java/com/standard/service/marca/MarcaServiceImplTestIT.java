@@ -3,19 +3,20 @@ package com.standard.service.marca;
 import com.standard.BaseTest;
 import com.standard.domain.Marca;
 import com.standard.repository.MarcaRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+
+@ExtendWith(SpringExtension.class)
 @DataJpaTest()
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MarcaServiceImplTestIT extends BaseTest {
@@ -25,7 +26,7 @@ public class MarcaServiceImplTestIT extends BaseTest {
 
     private MarcaService service;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new MarcaServiceImpl(repository);
         setUpMarca();
@@ -35,51 +36,51 @@ public class MarcaServiceImplTestIT extends BaseTest {
     @Test
     public void incluir() {
         Marca saved = service.incluir(marca);
-        Assert.assertNotNull(saved);
+        assertNotNull(saved);
 
         Marca found = service.consultarByCodigo(saved.getCodigo());
-        Assert.assertEquals(found.getCodigo(), saved.getCodigo());
-        Assert.assertEquals(found.getNome(), saved.getNome());
-        Assert.assertEquals(found.getDescricao(), saved.getDescricao());
+        assertEquals(found.getCodigo(), saved.getCodigo());
+        assertEquals(found.getNome(), saved.getNome());
+        assertEquals(found.getDescricao(), saved.getDescricao());
     }
 
     @Test
     public void alterar() {
         Marca update = service.consultarByCodigo(marca.getCodigo());
-        Assert.assertNotNull(update);
+        assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
 
         Marca updated = service.alterar(update.getCodigo(), update);
-        Assert.assertEquals(update.getCodigo(), updated.getCodigo());
-        Assert.assertEquals(update.getNome(), updated.getNome());
-        Assert.assertEquals(update.getDescricao(), updated.getDescricao());
+        assertEquals(update.getCodigo(), updated.getCodigo());
+        assertEquals(update.getNome(), updated.getNome());
+        assertEquals(update.getDescricao(), updated.getDescricao());
     }
 
     @Test
     public void consultar() {
         List<Marca> found = service.consultar();
-        Assert.assertNotNull(found);
+        assertNotNull(found);
     }
 
     @Test
     public void consultarByCodigo() {
         Marca found = service.consultarByCodigo(marca.getCodigo());
-        Assert.assertNotNull(found);
-        Assert.assertEquals(found.getCodigo(), marca.getCodigo());
+        assertNotNull(found);
+        assertEquals(found.getCodigo(), marca.getCodigo());
     }
 
     @Test
     public void excluir() {
 
         Marca delete = service.consultarByCodigo(marca.getCodigo());
-        Assert.assertNotNull(delete);
+        assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
         Marca found = service.consultarByCodigo(marca.getCodigo());
-        Assert.assertNull(found.getCodigo());
-        Assert.assertNull(found.getNome());
-        Assert.assertNull(found.getDescricao());
+        assertNull(found.getCodigo());
+        assertNull(found.getNome());
+        assertNull(found.getDescricao());
     }
 }

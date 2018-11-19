@@ -3,19 +3,21 @@ package com.standard.service.dominio;
 import com.standard.BaseTest;
 import com.standard.domain.Dominio;
 import com.standard.repository.DominioRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest()
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+@DataJpaTest
+@ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class DominioServiceImplTestIT extends BaseTest {
 
@@ -24,7 +26,7 @@ public class DominioServiceImplTestIT extends BaseTest {
 
     private DominioService service;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new DominioServiceImpl(repository);
         setUpDominio();
@@ -34,7 +36,7 @@ public class DominioServiceImplTestIT extends BaseTest {
     @Test
     public void incluir() {
         Dominio saved = service.incluir(dominio);
-        Assert.assertNotNull(saved);
+        assertNotNull(saved);
 
         Dominio found = service.consultarByCodigo(saved.getCodigo());
         assertDominios(saved, found);
@@ -43,7 +45,7 @@ public class DominioServiceImplTestIT extends BaseTest {
     @Test
     public void alterar() {
         Dominio update = service.consultarByCodigo(dominio.getCodigo());
-        Assert.assertNotNull(update);
+        assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
         update.setChecked(false);
@@ -55,25 +57,25 @@ public class DominioServiceImplTestIT extends BaseTest {
     @Test
     public void consultar() {
         List<Dominio> found = service.consultar();
-        Assert.assertNotNull(found);
+        assertNotNull(found);
     }
 
     @Test
     public void consultarByCodigo() {
         Dominio found = service.consultarByCodigo(dominio.getCodigo());
-        Assert.assertNotNull(found);
+        assertNotNull(found);
         assertDominios(found, dominio);
     }
 
     @Test
     public void excluir() {
         Dominio delete = service.consultarByCodigo(dominio.getCodigo());
-        Assert.assertNotNull(delete);
+        assertNotNull(delete);
         service.excluir(delete.getCodigo());
 
         Dominio found = service.consultarByCodigo(dominio.getCodigo());
-        Assert.assertNull(found.getCodigo());
-        Assert.assertNull(found.getNome());
-        Assert.assertNull(found.getDescricao());
+        assertNull(found.getCodigo());
+        assertNull(found.getNome());
+        assertNull(found.getDescricao());
     }
 }
