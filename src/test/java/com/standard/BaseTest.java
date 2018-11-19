@@ -17,6 +17,8 @@ public class BaseTest {
     protected static final String BAR_0_CODE = "0000000BAR0CODE";
     protected static final int PORCENTAGEM_DESCONTO = 15;
     protected static final int PORCENTAGEM_DESCONTO_UPDATE = 15;
+    protected static final int QUANTIDADE_PRODUTOS_VENDA = 1;
+    protected static final Double VALOR_UNITARIO = new Double(10);
 
     private static final String VALOR_P = "P";
     private static final String VALOR_X = "X";
@@ -26,6 +28,9 @@ public class BaseTest {
     private static final long CODIGO = 1L;
 
     // obj commons
+    protected FormasDePagamento formasDePagamento = null;
+    protected Venda venda = null;
+    protected Caixa caixa = null;
     protected Marca marca = null;
     protected SubCategoria subCategoria = null;
     protected Categoria categoria = null;
@@ -35,8 +40,8 @@ public class BaseTest {
     protected Dominio dominio = null;
     protected Produto produto = null;
     protected List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida = null;
-    private ItensTipoMedida itenTipoMedida = null;
-    private ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
+    protected ItensTipoMedida itenTipoMedida = null;
+    protected ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
 
     protected void setUpMarca() {
         marca = new Marca();
@@ -55,6 +60,13 @@ public class BaseTest {
         categoria.setCodigo(1L);
         categoria.setNome(NOME);
         categoria.setDescricao(DESCRICAO);
+    }
+
+    protected void setUpFormasDePagamento(){
+        formasDePagamento = new FormasDePagamento();
+        formasDePagamento.setNome(NOME);
+        formasDePagamento.setDescricao(DESCRICAO);
+        formasDePagamento.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
     }
 
     protected void setUpFornecedor() {
@@ -230,5 +242,6 @@ public class BaseTest {
         assertEquals(found.getCategoria(), expected.getCategoria());
         assertEquals(found.getSubCategoria(), expected.getSubCategoria());
     }
+
 
 }

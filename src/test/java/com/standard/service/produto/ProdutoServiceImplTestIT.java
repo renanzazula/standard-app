@@ -64,18 +64,23 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     private MarcaService marcaService;
     private FornecedorService fornecedorService;
     private ProdutoService produtoService;
+    private SubCategoriaService subCategoriaService;
+    private CategoriaService categoriaService;
+    private DominioService dominioService;
+    private MedidaService medidaService;
+
+
 
     @BeforeEach
     public void setUp() {
 
-        MedidaService medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
-                subCategoriaRepository, marcaRepository);
-
         marcaService = new MarcaServiceImpl(marcaRepository);
-        SubCategoriaService subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
-        CategoriaService categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
+        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
+        categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
         fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
-        DominioService dominioService = new DominioServiceImpl(dominioRepository);
+        dominioService = new DominioServiceImpl(dominioRepository);
+        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository, subCategoriaRepository,
+                marcaRepository);
         produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
                 dominioRepository, fornecedorRepository,
                 categoriaRepository, subCategoriaRepository,
@@ -183,13 +188,13 @@ public class ProdutoServiceImplTestIT extends BaseTest {
             }
 
             assertEquals(found.getProdutoHasItensTipoMedida().get(i).getQuantidade(),
-                                updated.getProdutoHasItensTipoMedida().get(i).getQuantidade());
+                    updated.getProdutoHasItensTipoMedida().get(i).getQuantidade());
 
             assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
-                                   updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
+                    updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
 
             assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor(),
-                                 updated.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor());
+                    updated.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor());
 
         }
 
@@ -199,9 +204,9 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     public void alterar_produto_Marca() {
 
         Marca marcaToUpdate = new Marca();
-        marcaToUpdate.setNome(NOME +"_update");
+        marcaToUpdate.setNome(NOME + "_update");
         marcaToUpdate.setDescricao(DESCRICAO + "_update");
-        marcaToUpdate =  marcaService.incluir(marcaToUpdate);
+        marcaToUpdate = marcaService.incluir(marcaToUpdate);
 
         produto = produtoService.incluir(produto);
 
@@ -212,8 +217,8 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         assertMarca(updated.getMarca(), marcaToUpdate);
 
-        assertNotEquals(updated.getMarca().getCodigo(),    marca.getCodigo());
-        assertNotEquals(updated.getMarca().getNome(),      marca.getNome());
+        assertNotEquals(updated.getMarca().getCodigo(), marca.getCodigo());
+        assertNotEquals(updated.getMarca().getNome(), marca.getNome());
         assertNotEquals(updated.getMarca().getDescricao(), marca.getDescricao());
 
     }
@@ -232,9 +237,9 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     public void alterar_produto_Fornecedor() {
 
         Fornecedor fornecedorToUpdate = new Fornecedor();
-        fornecedorToUpdate.setNome(NOME +"_update");
+        fornecedorToUpdate.setNome(NOME + "_update");
         fornecedorToUpdate.setDescricao(DESCRICAO + "_update");
-        fornecedorToUpdate =  fornecedorService.incluir(fornecedorToUpdate);
+        fornecedorToUpdate = fornecedorService.incluir(fornecedorToUpdate);
 
         produto = produtoService.incluir(produto);
 
@@ -245,8 +250,8 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         assertFornecedor(updated.getFornecedor(), fornecedorToUpdate);
 
-        assertNotEquals(updated.getFornecedor().getCodigo(),    fornecedor.getCodigo());
-        assertNotEquals(updated.getFornecedor().getNome(),      fornecedor.getNome());
+        assertNotEquals(updated.getFornecedor().getCodigo(), fornecedor.getCodigo());
+        assertNotEquals(updated.getFornecedor().getNome(), fornecedor.getNome());
         assertNotEquals(updated.getFornecedor().getDescricao(), fornecedor.getDescricao());
 
     }

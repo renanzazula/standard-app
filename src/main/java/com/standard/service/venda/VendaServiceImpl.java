@@ -7,7 +7,6 @@ import com.standard.enums.StatusVendaEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.*;
 import com.standard.service.caixa.CaixaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +24,10 @@ public class VendaServiceImpl implements VendaService {
     private final ClienteRepository clienteRepository;
     private final ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
 
+
     private final CaixaService caixaService;
 
-    @Autowired
+
     public VendaServiceImpl(VendaRepository vendaRepository, FormaDePagamentoRepository
             formaDePagamentoRepository, CaixaRepository caixaRepository,
                             ClienteRepository clienteRepository,

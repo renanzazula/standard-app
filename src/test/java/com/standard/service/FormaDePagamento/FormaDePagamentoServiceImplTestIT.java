@@ -26,23 +26,17 @@ public class FormaDePagamentoServiceImplTestIT extends BaseTest {
 
     private FormaDePagamentoService service;
 
-    private FormasDePagamento obj = null;
-
     @BeforeEach
     public void setUp() {
         service = new FormaDePagamentoServiceImpl(repository);
-        obj = new FormasDePagamento();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
-        obj = service.incluir(obj);
+        setUpFormasDePagamento();
+        formasDePagamento = service.incluir(formasDePagamento);
     }
 
     @Test
     public void incluir() {
-        FormasDePagamento saved = service.incluir(obj);
+        FormasDePagamento saved = service.incluir(formasDePagamento);
         assertNotNull(saved);
-
         FormasDePagamento found = service.consultarByCodigo(saved.getCodigo());
         assertEquals(found.getCodigo(), saved.getCodigo());
         assertEquals(found.getNome(), saved.getNome());
@@ -52,7 +46,7 @@ public class FormaDePagamentoServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        FormasDePagamento update = service.consultarByCodigo(obj.getCodigo());
+        FormasDePagamento update = service.consultarByCodigo(formasDePagamento.getCodigo());
         assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -73,20 +67,20 @@ public class FormaDePagamentoServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        FormasDePagamento found = service.consultarByCodigo(obj.getCodigo());
+        FormasDePagamento found = service.consultarByCodigo(formasDePagamento.getCodigo());
         assertNotNull(found);
-        assertEquals(found.getCodigo(), obj.getCodigo());
+        assertEquals(found.getCodigo(), formasDePagamento.getCodigo());
     }
 
     @Test
     public void excluir() {
 
-        FormasDePagamento delete = service.consultarByCodigo(obj.getCodigo());
+        FormasDePagamento delete = service.consultarByCodigo(formasDePagamento.getCodigo());
         assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        FormasDePagamento found = service.consultarByCodigo(obj.getCodigo());
+        FormasDePagamento found = service.consultarByCodigo(formasDePagamento.getCodigo());
         assertNull(found.getCodigo());
         assertNull(found.getNome());
         assertNull(found.getDescricao());
