@@ -30,9 +30,9 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: /.mvnw install -DskipTests
+      - run: .mvnw install -DskipTests
       
-      - run: /.mvnw dependency:go-offline
+      - run: .mvnw dependency:go-offline
 
       - save_cache:
           paths:
@@ -40,4 +40,4 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
       # run tests!
-      - run: /.mvnw integration-test
+      - run: .mvnw integration-test
