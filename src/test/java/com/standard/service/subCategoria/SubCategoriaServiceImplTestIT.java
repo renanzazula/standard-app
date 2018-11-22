@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest()
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class SubCategoriaServiceImplTest extends BaseTest {
+public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Autowired
     private SubCategoriaRepository repository;

@@ -16,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class VendaServiceImplTest extends BaseTest {
+public class VendaServiceImplTestIT extends BaseTest {
 
     @Autowired
     private VendaRepository vendaRepository;
