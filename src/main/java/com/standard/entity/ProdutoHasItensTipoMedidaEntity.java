@@ -4,20 +4,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 @EqualsAndHashCode(exclude = {"dominios", "vendaHasItemProduto" })
 @Entity(name = "produto_has_itens_tipo_medida")
 public @Data
-class ProdutoHasItensTipoMedidaEntity implements Serializable {
+class ProdutoHasItensTipoMedidaEntity extends BaseAuditEntity {
 
     private static final long serialVersionUID = -6612762288260227887L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "codigo")
-    private Long codigo;
 
     @Column(name = "quantidade")
     private Integer quantidade;

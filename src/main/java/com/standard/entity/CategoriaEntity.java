@@ -5,24 +5,19 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Set;
 
 @Entity(name = "categoria")
-public @Data class CategoriaEntity implements Serializable {
+public @Data class CategoriaEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
-
 	@NotNull
-	@Size
+	@Size(max = 45)
 	@Column(name = "nome", length = 45)
 	private String nome;
 
+	@Size(max = 45)
 	@Column(name = "descricao", length = 45)
 	private String descricao;
 
@@ -36,11 +31,12 @@ public @Data class CategoriaEntity implements Serializable {
 	public CategoriaEntity() {
 
 	}
-	
-	public CategoriaEntity(Long codigo) {
-		super();
-		this.codigo = codigo;
-	}
+
+// FIXME:
+//	public CategoriaEntity(Long codigo) {
+//		super();
+//		this.codigo = codigo;
+//	}
 
 	public CategoriaEntity(String nome, String descricao) {
 		super();

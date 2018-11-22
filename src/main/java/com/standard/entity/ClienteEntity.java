@@ -2,20 +2,15 @@ package com.standard.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
 
 @Entity(name = "cliente")
-public @Data class ClienteEntity implements Serializable {
+public @Data class ClienteEntity extends BaseAuditEntity{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8568637406067043051L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
 
 }

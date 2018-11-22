@@ -6,20 +6,13 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name = "caixa")
-public @Data class CaixaEntity implements Serializable {
+public @Data class CaixaEntity  extends BaseAuditEntity  {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
-
-	 
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dataAbertura")
