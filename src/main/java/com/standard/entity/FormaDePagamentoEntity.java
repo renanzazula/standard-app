@@ -2,24 +2,19 @@ package com.standard.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity(name = "formaDePagamento")
-public @Data class FormaDePagamentoEntity implements Serializable {
+public @Data class FormaDePagamentoEntity extends BaseAuditEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
 
 	@NotNull
 	@Column(name = "nome", length = 45)

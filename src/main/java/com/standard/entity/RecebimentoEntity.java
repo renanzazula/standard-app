@@ -2,19 +2,16 @@ package com.standard.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity(name = "recebimento")
-public @Data class RecebimentoEntity implements Serializable {
+public @Data class RecebimentoEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
 
 	@Column(name = "nome")
 	private String nome;

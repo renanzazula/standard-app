@@ -3,11 +3,10 @@ package com.standard.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "venda_has_item_produto")
-public @Data class VendaHasItemProdutoEntity implements Serializable {
+public @Data class VendaHasItemProdutoEntity extends BaseAuditEntity{
 
 	/**
 	 * 

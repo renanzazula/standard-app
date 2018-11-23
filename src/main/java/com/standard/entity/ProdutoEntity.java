@@ -9,23 +9,19 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity(name = "produto")
 @EqualsAndHashCode(exclude = "produtoHasItensTipoMedida")
-public @Data class ProdutoEntity implements Serializable {
+public @Data class ProdutoEntity extends BaseAuditEntity {
 
     /**
      *
      */
     private static final long serialVersionUID = 2203862074139518315L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "codigo", updatable = false, nullable = false)
-    private Long codigo;
+
 
     /**
      * codigo -> sequencial (from dataBase) marca_codigo fornecedor_codigo

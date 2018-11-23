@@ -6,21 +6,15 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(exclude = "vendaHasItemProduto")
 @Entity(name = "venda")
-public @Data class VendaEntity implements Serializable {
+public @Data class VendaEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
 
 	@CreationTimestamp
 	@Column(name = "data")

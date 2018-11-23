@@ -4,19 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 @Entity(name = "itens_tipo_medida")
 @EqualsAndHashCode(exclude="produtoHasItensTipoMedida")
-public @Data class ItensTipoMedidaEntity implements Serializable {
+public @Data class ItensTipoMedidaEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigo")
-	private Long codigo;
 
 	@Column(name = "valor")
 	private String valor;
