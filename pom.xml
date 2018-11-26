@@ -53,7 +53,8 @@
         <maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
         <cglib-nodep.version>3.2.9</cglib-nodep.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
-        <versions-maven-plugin.version>2.5</versions-maven-plugin.version>
+        <!--<versions-maven-plugin.version>2.5</versions-maven-plugin.version>-->
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -148,6 +149,7 @@
             <artifactId>cglib-nodep</artifactId>
             <version>${cglib-nodep.version}</version>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -225,10 +227,14 @@
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin.version}</version>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${cobertura-maven-plugin.version}</version>
                 <configuration>
-                    <generateBackupPoms>false</generateBackupPoms>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check />
                 </configuration>
             </plugin>
         </plugins>
