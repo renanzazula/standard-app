@@ -78,7 +78,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setPagamento(venda.getPagamento());
         vendaDB.setValorTotal(venda.getSubTotal()); // posso considerar valor total é sub total venda... TODO: validar
         vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(1L));
+        vendaDB.setCliente(clienteRepository.getOne(venda.getCliente().getCodigo()));
 
         CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
         vendaDB.setCaixa(caixa);

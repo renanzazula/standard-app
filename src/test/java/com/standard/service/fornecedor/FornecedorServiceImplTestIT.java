@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DataJpaTest()
+@DataJpaTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class FornecedorServiceImplTestIT extends BaseTest {

@@ -1,10 +1,7 @@
 package com.standard.service.venda;
 
 import com.standard.BaseTest;
-import com.standard.domain.Caixa;
-import com.standard.domain.ProdutoHasItensTipoMedida;
-import com.standard.domain.Venda;
-import com.standard.domain.VendaHasItemProduto;
+import com.standard.domain.*;
 import com.standard.entity.ClienteEntity;
 import com.standard.repository.*;
 import com.standard.service.FormaDePagamento.FormaDePagamentoService;
@@ -93,6 +90,8 @@ public class VendaServiceImplTestIT extends BaseTest {
     private CaixaService caixaService;
     private FormaDePagamentoService formaDePagamentoService;
 
+    // Fixme: later
+    ClienteEntity clienteEntity = null;
 
     @BeforeEach
     public void setUp() {
@@ -115,9 +114,11 @@ public class VendaServiceImplTestIT extends BaseTest {
         vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, caixaRepository,
                 clienteRepository, produtoHasItensTipoMedidaRepository, caixaService);
 
-        ClienteEntity c = new ClienteEntity();
-        c.setCodigo(1L);
-        clienteRepository.save(c);
+        clienteEntity = new ClienteEntity();
+        clienteRepository.save(clienteEntity);
+
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(clienteEntity.getCodigo());
 
         formaDePagamentoService  = new FormaDePagamentoServiceImpl(formaDePagamentoRepository);
         setUpFormasDePagamento();
@@ -183,6 +184,7 @@ public class VendaServiceImplTestIT extends BaseTest {
         venda.setCaixa(new Caixa());
         venda.setCaixa(caixa);
         venda.setFormaDePagamento(formasDePagamento);
+        venda.setCliente(cliente);
         VendaHasItemProduto vendaHasItemProduto = new VendaHasItemProduto();
 
         ProdutoHasItensTipoMedida produtoHasItensTipoMedida = new ProdutoHasItensTipoMedida();

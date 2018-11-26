@@ -101,7 +101,6 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
         medida = medidaService.incluir(medida);
 
-
         Marca marcaUpdate = new Marca();
         marcaUpdate.setNome(NOME_UPDATE);
         marcaUpdate.setDescricao(DESCRICAO_UPDATE);
