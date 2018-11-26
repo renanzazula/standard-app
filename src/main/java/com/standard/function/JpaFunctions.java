@@ -1,19 +1,6 @@
 package com.standard.function;
 
-import com.standard.function.jpa.CaixaToCaixaEntityFunction;
-import com.standard.function.jpa.CategoriaToCategoriaEntityFunction;
-import com.standard.function.jpa.ClienteToClienteEntityFunction;
-import com.standard.function.jpa.DominioToDominioEntityFunction;
-import com.standard.function.jpa.FormaDePagamentoToFormaDePagamentoEntityFunction;
-import com.standard.function.jpa.FornecedorToFornecedorEntityFunction;
-import com.standard.function.jpa.ItensTipoMedidaToItensTipoMedidaEntityFunction;
-import com.standard.function.jpa.MarcaToMarcaEntityFunction;
-import com.standard.function.jpa.MedidaToMedidaEntityFunction;
-import com.standard.function.jpa.ProdutoToProdutoEntityFunction;
-import com.standard.function.jpa.ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction;
-import com.standard.function.jpa.SubCategoriaToSubCategoriaEntityFunction;
-import com.standard.function.jpa.VendaToVendaEntityFunction;
-import com.standard.function.jpa.VendaHasItemProdutoToVendaHasItemProdutoEntityFunction;
+import com.standard.function.jpa.*;
 
 public class JpaFunctions {
 
@@ -35,5 +22,5 @@ public class JpaFunctions {
 	public static final ClienteToClienteEntityFunction clienteToClienteEntity = new ClienteToClienteEntityFunction();
 	public static final CaixaToCaixaEntityFunction caixaToCaixaEntity = new CaixaToCaixaEntityFunction();
 	public static final VendaHasItemProdutoToVendaHasItemProdutoEntityFunction vendaHasItemProdutoToVendaHasItemEntity = new VendaHasItemProdutoToVendaHasItemProdutoEntityFunction();
-
+	public static final RetiradaEntityToRetiradaFunction retiradaEntityToRetirada = new RetiradaEntityToRetiradaFunction();
 }

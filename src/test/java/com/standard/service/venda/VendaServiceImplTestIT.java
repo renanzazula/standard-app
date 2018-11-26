@@ -127,7 +127,7 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         caixa = new Caixa();
         caixa.setValorInicial(new Double(5));
-        caixaService.abrirCaixa(caixa);
+        caixa = caixaService.abrirCaixa(caixa);
 
         // requeridos
         setUpMarca();

@@ -26,20 +26,20 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     private SubCategoriaService service;
 
-    private SubCategoria obj = null;
+
 
     @BeforeEach
     public void setUp() {
         service = new SubCategoriaServiceImpl(repository);
-        obj = new SubCategoria();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
-        obj = service.incluir(obj);
+        subCategoria = new SubCategoria();
+        subCategoria.setNome(NOME);
+        subCategoria.setDescricao(DESCRICAO);
+        subCategoria = service.incluir(subCategoria);
     }
 
     @Test
     public void incluir() {
-        SubCategoria saved = service.incluir(obj);
+        SubCategoria saved = service.incluir(subCategoria);
         
         assertNotNull(saved);
 
@@ -51,7 +51,7 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        SubCategoria update = service.consultarByCodigo(obj.getCodigo());
+        SubCategoria update = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -70,20 +70,20 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        SubCategoria found = service.consultarByCodigo(obj.getCodigo());
+        SubCategoria found = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(found);
-        assertEquals(found.getCodigo(), obj.getCodigo());
+        assertEquals(found.getCodigo(), subCategoria.getCodigo());
     }
 
     @Test
     public void excluir() {
 
-        SubCategoria delete = service.consultarByCodigo(obj.getCodigo());
+        SubCategoria delete = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        SubCategoria found = service.consultarByCodigo(obj.getCodigo());
+        SubCategoria found = service.consultarByCodigo(subCategoria.getCodigo());
         assertNull(found.getCodigo());
         assertNull(found.getNome());
         assertNull(found.getDescricao());

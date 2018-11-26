@@ -25,7 +25,4 @@ public @Data class RetiradaEntity extends BaseAuditEntity {
 	@ManyToOne
 	@JoinColumn(name = "caixa_codigo")
 	private CaixaEntity caixa;
-
-
-
 }

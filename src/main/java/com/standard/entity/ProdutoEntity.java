@@ -85,7 +85,7 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     @Column(name = "foto", columnDefinition = "BLOB")
     private byte[] foto;
 
-
+    // fixme: data hora separar
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dataHoraCadastro")

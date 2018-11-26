@@ -9,15 +9,15 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class Retirada implements Serializable {
+public class Retirada implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long codigo;
 	private String descricao;
-
 	//fixme:
-	private Date dataHora;
+	private Date data;
+	private Date hora;
 	private Double valor;
 	private Caixa caixa;
  
