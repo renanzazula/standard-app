@@ -171,15 +171,15 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         // fim
         venda = new Venda();
-        venda.setValorTotal(new Double(10));
+        venda.setValorTotal(10.0);
         venda.setQuantidade(10);
-        venda.setSubTotal(new Double(10));
-        venda.setValorPendente(new Double(10));
-        venda.setValorPago(new Double(10));
-        venda.setDesconto(new Double(10));
-        venda.setTotalApagar(new Double(10));
-        venda.setTroco(new Double(10));
-        venda.setPagamento(new Double(10));
+        venda.setSubTotal(10.0);
+        venda.setValorPendente(10.0);
+        venda.setValorPago(10.0);
+        venda.setDesconto(10.0);
+        venda.setTotalApagar(10.0);
+        venda.setTroco(10.0);
+        venda.setPagamento(10.0);
         venda.setStatus("");
         venda.setCaixa(new Caixa());
         venda.setCaixa(caixa);
@@ -197,8 +197,6 @@ public class VendaServiceImplTestIT extends BaseTest {
         List<VendaHasItemProduto> vendaHasItensProdutos = new ArrayList<>();
         vendaHasItensProdutos.add(vendaHasItemProduto);
         venda.setVendaHasItemProduto(vendaHasItensProdutos);
-
-
     }
 
     @Test

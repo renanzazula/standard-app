@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 
 @Entity(name = "recebimento")
 public @Data class RecebimentoEntity extends BaseAuditEntity {
@@ -19,9 +18,6 @@ public @Data class RecebimentoEntity extends BaseAuditEntity {
 	@Column(name = "descricao")
 	private String descricao;
 
-	@Column(name = "dataHora")
-	private Date dataHora;
-
 	@Column(name = "valor")
 	private Double valor;
 
@@ -32,7 +28,4 @@ public @Data class RecebimentoEntity extends BaseAuditEntity {
 	@ManyToOne
 	@JoinColumn(name = "cliente_codigo")
 	private ClienteEntity cliente;
-
-	 
-
 }

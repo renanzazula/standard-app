@@ -23,4 +23,6 @@ public class JpaFunctions {
 	public static final CaixaToCaixaEntityFunction caixaToCaixaEntity = new CaixaToCaixaEntityFunction();
 	public static final VendaHasItemProdutoToVendaHasItemProdutoEntityFunction vendaHasItemProdutoToVendaHasItemEntity = new VendaHasItemProdutoToVendaHasItemProdutoEntityFunction();
 	public static final RetiradaEntityToRetiradaFunction retiradaEntityToRetirada = new RetiradaEntityToRetiradaFunction();
+	public static final RecebimentoEntityToRecebimentoFunction recebimentoEntityToRecebimento = new RecebimentoEntityToRecebimentoFunction();
+
 }
