@@ -1,11 +1,14 @@
 package com.standard.domain;
 
+import com.standard.util.Constants;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -28,5 +31,11 @@ public class Dominio implements Serializable {
 
     @ApiModelProperty(value = "ativo", notes = "ativo = true, nao ativo = false", required = true)
     private boolean checked;
+
+    @DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+    private Date data;
+
+    @DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
+    private Date hora;
 
 }

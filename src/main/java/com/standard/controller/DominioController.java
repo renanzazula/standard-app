@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping(DominioController.BASE_URL)
 public class DominioController {
 
-	public static final String BASE_URL = "/api/v1/dominio";
+	public static final String BASE_URL = "/api/v1/dominios";
 
 	private final DominioService dominioService;
 
@@ -20,7 +20,7 @@ public class DominioController {
 		this.dominioService = dominioService;
 	}
 
-	@GetMapping({"/all"})
+	@GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
 	public List<Dominio> consultar(){
         return dominioService.consultar();

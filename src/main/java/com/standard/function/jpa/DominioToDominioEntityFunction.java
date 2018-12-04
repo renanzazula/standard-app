@@ -1,9 +1,9 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-
-import com.standard.entity.DominioEntity;
 import com.standard.domain.Dominio;
+import com.standard.entity.DominioEntity;
+
+import java.util.function.Function;
 
 public class DominioToDominioEntityFunction  implements Function<DominioEntity, Dominio> {
 
@@ -14,6 +14,8 @@ public class DominioToDominioEntityFunction  implements Function<DominioEntity, 
 			output.setCodigo(input.getCodigo());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
+			output.setData(input.getDataCriacao());
+			output.setHora(input.getHoraCriacao());
 		}
 		return output;
 	}

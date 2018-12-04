@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
- 
 @Entity(name = "fornecedor")
 public @Data class FornecedorEntity extends BaseAuditEntity {
 
