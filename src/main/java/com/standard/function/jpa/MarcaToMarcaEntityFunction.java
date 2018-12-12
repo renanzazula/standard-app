@@ -1,9 +1,9 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-
-import com.standard.entity.MarcaEntity;
 import com.standard.domain.Marca;
+import com.standard.entity.MarcaEntity;
+
+import java.util.function.Function;
 
 public class MarcaToMarcaEntityFunction implements Function<MarcaEntity, Marca> {
 
@@ -14,6 +14,8 @@ public class MarcaToMarcaEntityFunction implements Function<MarcaEntity, Marca> 
 			output.setCodigo(input.getCodigo());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
+			output.setData(input.getDataCriacao());
+			output.setHora(input.getHoraCriacao());
 		}
 		return output;
 	}

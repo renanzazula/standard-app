@@ -1,9 +1,9 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-
-import com.standard.entity.FormaDePagamentoEntity;
 import com.standard.domain.FormasDePagamento;
+import com.standard.entity.FormaDePagamentoEntity;
+
+import java.util.function.Function;
 
 public class FormaDePagamentoToFormaDePagamentoEntityFunction implements Function<FormaDePagamentoEntity, FormasDePagamento> {
 
@@ -15,6 +15,8 @@ public class FormaDePagamentoToFormaDePagamentoEntityFunction implements Functio
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 			output.setPorcentagemDesconto(input.getPorcentagemDesconto());
+			output.setData(input.getDataCriacao());
+			output.setHora(input.getHoraCriacao());
 		}
 		return output;
 	}

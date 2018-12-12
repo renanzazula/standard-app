@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping(FormaDePagamentoController.BASE_URL)
 public class FormaDePagamentoController {
 
-    public static final String BASE_URL = "/api/v1/formaDePagamento";
+    public static final String BASE_URL = "/api/v1/formasDepagamento";
 
     private final FormaDePagamentoService formasDePagamentoService;
 
@@ -19,7 +19,7 @@ public class FormaDePagamentoController {
         this.formasDePagamentoService = formasDePagamentoService;
     }
 
-    @GetMapping({"/all"})
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public List<FormasDePagamento> consultar(){
         return formasDePagamentoService.consultar();

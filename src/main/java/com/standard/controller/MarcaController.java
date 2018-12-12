@@ -19,7 +19,7 @@ public class MarcaController {
 		this.marcaService = marcaService;
 	}
 
-	@GetMapping({"/all"})
+	@GetMapping({""})
 	@ResponseStatus(HttpStatus.OK)
 	public List<Marca> consultar(){
 		return marcaService.consultar();
