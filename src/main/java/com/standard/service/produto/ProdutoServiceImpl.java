@@ -162,13 +162,6 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public boolean validarCodigoProduto(Produto produto) {
-
-		return false;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public Produto consultarByCodigo(Long codigo) {
 		ProdutoEntity p = produtoRepository.getOne(codigo);
 		return JpaFunctions.produtoToProdutoEntity.apply(p);

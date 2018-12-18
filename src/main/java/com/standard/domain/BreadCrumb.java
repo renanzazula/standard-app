@@ -2,7 +2,7 @@ package com.standard.domain;
 
 import java.io.Serializable;
 
-class BreadCrumb implements Serializable{
+public class BreadCrumb implements Serializable{
 
 	/**
 	 * 

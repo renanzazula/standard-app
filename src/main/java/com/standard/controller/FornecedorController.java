@@ -19,7 +19,7 @@ public class FornecedorController {
 		this.fornecedorService = fornecedorService;
 	}
 
-	@GetMapping({"/all"})
+	@GetMapping({""})
 	@ResponseStatus(HttpStatus.OK)
 	public List<Fornecedor> consultar(){
 		return fornecedorService.consultar();

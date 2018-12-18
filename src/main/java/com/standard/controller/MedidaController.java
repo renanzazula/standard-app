@@ -26,7 +26,7 @@ public class MedidaController {
         this.medidaService = medidaService;
     }
 
-    @GetMapping({"/all"})
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public  List<Medida> consultar(){
         return medidaService.consultar();

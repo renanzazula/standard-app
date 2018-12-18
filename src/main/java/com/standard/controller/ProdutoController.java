@@ -28,7 +28,7 @@ public class ProdutoController {
     }
 
 
-    @GetMapping({"/all"})
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public List<Produto> consultar() {
         return produtoService.consultar();

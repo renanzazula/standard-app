@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {FormaDePagamentoController.class})
+@WebMvcTest(controllers = {FormasDePagamentoController.class})
 public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @MockBean
@@ -50,7 +50,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
         List<FormasDePagamento> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
         when(service.consultar()).thenReturn(formaDePagamentos);
-        mockMvc.perform(get(FormaDePagamentoController.BASE_URL + "/all")
+        mockMvc.perform(get(FormasDePagamentoController.BASE_URL + "/all")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -59,7 +59,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
-        mockMvc.perform(get(FormaDePagamentoController.BASE_URL + "/1")
+        mockMvc.perform(get(FormasDePagamentoController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -69,7 +69,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testIncluir() throws Exception {
         when(service.incluir(obj)).thenReturn(obj);
-        mockMvc.perform(post(FormaDePagamentoController.BASE_URL)
+        mockMvc.perform(post(FormasDePagamentoController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
@@ -79,7 +79,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(FormaDePagamentoController.BASE_URL + "/1")
+        mockMvc.perform(delete(FormasDePagamentoController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -87,7 +87,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testAlterar() throws Exception {
         when(service.alterar(1L, obj)).thenReturn(obj);
-        mockMvc.perform(put(FormaDePagamentoController.BASE_URL + "/1")
+        mockMvc.perform(put(FormasDePagamentoController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())

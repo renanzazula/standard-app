@@ -25,7 +25,7 @@ public class SubCategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping({"/all"})
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public List<SubCategoria> consultar() {
         return subCategoriaService.consultar();

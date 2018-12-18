@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(description = "Venda Controller")
 @RestController
-@RequestMapping(CategoriaController.BASE_URL)
+@RequestMapping(VendaController.BASE_URL)
 public class VendaController {
+
+    public static final String BASE_URL = "/api/v1/categoria";
 
     // 1 todo: stop later todo This
     // 2
