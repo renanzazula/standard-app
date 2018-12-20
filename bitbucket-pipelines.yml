@@ -1,0 +1,15 @@
+# This is a sample build configuration for Java (Maven).
+# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: maven:3.3.9
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - maven
+        script: # Modify the commands below to build your repository.
+          - mvn -B verify # -B batch mode makes Maven less verbose
+          - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-bitbucket -Dsonar.login=2d9c08ad18c4ea2a62b7f04a6b4814b3aff7e466
