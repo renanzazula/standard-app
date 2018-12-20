@@ -11,5 +11,4 @@ pipelines:
         caches:
           - maven
         script: # Modify the commands below to build your repository.
-          - mvn -B verify # -B batch mode makes Maven less verbose
-          - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-bitbucket -Dsonar.login=2d9c08ad18c4ea2a62b7f04a6b4814b3aff7e466
+          - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-bitbucket -Dsonar.login=454127241003dd57a450435ac7290feccf5fc17f
