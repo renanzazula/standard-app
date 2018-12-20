@@ -57,6 +57,7 @@
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectKey>standard-app</sonar.projectKey>
+        <sonar.login>454127241003dd57a450435ac7290feccf5fc17f</sonar.login>
     </properties>
 
     <dependencies>
