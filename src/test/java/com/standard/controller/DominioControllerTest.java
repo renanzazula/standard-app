@@ -51,7 +51,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
 
         List<Dominio> dominios = Arrays.asList(obj, dominio2);
         when(service.consultar()).thenReturn(dominios);
-        mockMvc.perform(get(DominioController.BASE_URL + "/all")
+        mockMvc.perform(get(DominioController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

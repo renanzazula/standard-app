@@ -7,7 +7,7 @@ import com.standard.service.fornecedor.FornecedorService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
-import com.standard.service.subCategoria.SubCategoriaService;
+import com.standard.service.subcategoria.SubCategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -111,7 +111,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
         when(produtoService.consultar()).thenReturn(produtos);
 
-        mockMvc.perform(get(ProdutoController.BASE_URL + "/all")
+        mockMvc.perform(get(ProdutoController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))

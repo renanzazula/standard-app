@@ -30,17 +30,4 @@ class MedidaEntity extends BaseAuditEntity {
     public MedidaEntity() {
 
     }
-
-    // FIXME:
-//	public MedidaEntity(Long codigo) {
-//		super();
-//		this.codigo = codigo;
-//	}
-
-    public MedidaEntity(String nome, String descricao) {
-        super();
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
 }

@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Api(description = "Categoria Controller")
+
+@Api("Categoria Controller")
 @RestController
 @RequestMapping(CategoriaController.BASE_URL)
 public class CategoriaController {
@@ -21,7 +22,7 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping({"/all"})
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "retorna todas categorias")
     public List<Categoria> consultar(){

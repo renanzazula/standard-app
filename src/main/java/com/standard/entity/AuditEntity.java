@@ -16,7 +16,7 @@ import java.util.Date;
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class AuditEntity implements Serializable {
+public class  AuditEntity implements Serializable {
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
@@ -33,6 +33,9 @@ public class AuditEntity implements Serializable {
     private Long criadorPor;
 
     @Version
+    @Column(name = "version")
+    private Long version;
+
     @LastModifiedDate
     @Column(name = "data_alteracao")
     private Date dataAlteracao;

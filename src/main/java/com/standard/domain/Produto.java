@@ -66,9 +66,9 @@ public   class Produto implements Serializable {
 	public Integer getQuantidadeTotalEstoque() {
 		Integer quantidadeTotalEstoque = 0;
 		if(this.produtoHasItensTipoMedida != null) { 
-			for (ProdutoHasItensTipoMedida produtoHasItensTipoMedida : this.produtoHasItensTipoMedida) {
-				if(produtoHasItensTipoMedida.getQuantidade() != null) { 
-					quantidadeTotalEstoque = quantidadeTotalEstoque + produtoHasItensTipoMedida.getQuantidade();
+			for (ProdutoHasItensTipoMedida correnteProdutoHasItensTipoMedida : this.produtoHasItensTipoMedida) {
+				if(correnteProdutoHasItensTipoMedida.getQuantidade() != null) {
+					quantidadeTotalEstoque = quantidadeTotalEstoque + correnteProdutoHasItensTipoMedida.getQuantidade();
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.FormasDePagamento;
-import com.standard.service.FormaDePagamento.FormaDePagamentoService;
+import com.standard.service.formaDePagamento.FormaDePagamentoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +50,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
         List<FormasDePagamento> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
         when(service.consultar()).thenReturn(formaDePagamentos);
-        mockMvc.perform(get(FormasDePagamentoController.BASE_URL + "/all")
+        mockMvc.perform(get(FormasDePagamentoController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

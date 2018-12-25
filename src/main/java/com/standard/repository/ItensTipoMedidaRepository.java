@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItensTipoMedidaRepository extends JpaRepository<ItensTipoMedidaEntity, Long> {
 
-    ItensTipoMedidaEntity findByMedidaCodigo(Long medida_codigo);
+    ItensTipoMedidaEntity findByMedidaCodigo(Long medidaCodigo);
 
 }

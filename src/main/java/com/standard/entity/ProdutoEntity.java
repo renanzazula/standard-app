@@ -16,12 +16,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = "produtoHasItensTipoMedida")
 public @Data class ProdutoEntity extends BaseAuditEntity {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 2203862074139518315L;
-
-
 
     /**
      * codigo -> sequencial (from dataBase) marca_codigo fornecedor_codigo

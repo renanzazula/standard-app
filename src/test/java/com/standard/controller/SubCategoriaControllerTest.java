@@ -2,7 +2,7 @@ package com.standard.controller;
 
 import com.standard.domain.SubCategoria;
 import com.standard.service.categoria.CategoriaService;
-import com.standard.service.subCategoria.SubCategoriaService;
+import com.standard.service.subcategoria.SubCategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,7 +56,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
         List<SubCategoria> subCategorias = Arrays.asList(obj, subCategoria2);
         when(service.consultar()).thenReturn(subCategorias);
-        mockMvc.perform(get(SubCategoriaController.BASE_URL + "/all")
+        mockMvc.perform(get(SubCategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

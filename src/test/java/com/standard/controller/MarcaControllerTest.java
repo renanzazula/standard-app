@@ -50,7 +50,7 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
 
         List<Marca> marcas = Arrays.asList(obj, marca2);
         when(service.consultar()).thenReturn(marcas);
-        mockMvc.perform(get(MarcaController.BASE_URL + "/all")
+        mockMvc.perform(get(MarcaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

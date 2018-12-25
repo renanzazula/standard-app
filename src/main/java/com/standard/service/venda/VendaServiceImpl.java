@@ -219,9 +219,9 @@ public class VendaServiceImpl implements VendaService {
 
         if (venda.getFormaDePagamento() != null) {
             if (venda.getFormaDePagamento().getCodigo() != null) {
-                FormaDePagamentoEntity FormaDePagamentoEntity = new FormaDePagamentoEntity();
-                FormaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
-                vendaEntity.setFormaDePagamento(FormaDePagamentoEntity);
+                FormaDePagamentoEntity formaDePagamentoEntity = new FormaDePagamentoEntity();
+                formaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
+                vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
             }
         }
         return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());

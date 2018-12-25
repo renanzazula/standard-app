@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.FormasDePagamento;
-import com.standard.service.FormaDePagamento.FormaDePagamentoService;
+import com.standard.service.formaDePagamento.FormaDePagamentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

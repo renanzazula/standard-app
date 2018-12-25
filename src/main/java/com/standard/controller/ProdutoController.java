@@ -1,9 +1,6 @@
 package com.standard.controller;
 
 import com.standard.domain.Produto;
-import com.standard.service.categoria.CategoriaService;
-import com.standard.service.dominio.DominioService;
-import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +16,8 @@ public class ProdutoController {
 
     private final ProdutoService produtoService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService,
-                             MedidaService medidaService, DominioService dominioService) {
+    public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
-        CategoriaService categoriaService1 = categoriaService;
-        MedidaService medidaService1 = medidaService;
-        DominioService dominioService1 = dominioService;
     }
 
 

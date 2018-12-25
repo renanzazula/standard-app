@@ -47,7 +47,7 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
 
         List<Categoria> categorias = Arrays.asList(categoria, categoria2);
         when(service.consultar()).thenReturn(categorias);
-        mockMvc.perform(get(CategoriaController.BASE_URL + "/all")
+        mockMvc.perform(get(CategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

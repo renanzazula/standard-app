@@ -55,7 +55,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
         List<Medida> medidas = Arrays.asList(medida, medida2);
         when(service.consultar()).thenReturn(medidas);
-        mockMvc.perform(get(MedidaController.BASE_URL + "/all")
+        mockMvc.perform(get(MedidaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

@@ -45,7 +45,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
 
         List<Fornecedor> fornecedors = Arrays.asList(fornecedor, fornecedor2);
         when(service.consultar()).thenReturn(fornecedors);
-        mockMvc.perform(get(FornecedorController.BASE_URL + "/all")
+        mockMvc.perform(get(FornecedorController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

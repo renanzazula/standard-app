@@ -8,13 +8,13 @@ public interface CaixaService {
 
 	Caixa carregarCaixa(Caixa caixa);
 
-	Caixa abrirCaixa(Caixa Caixa);
+	Caixa abrirCaixa(Caixa caixa);
 
-	Caixa fecharCaixa(Caixa Caixa);
+	Caixa fecharCaixa(Caixa caixa);
 
 	Caixa buscarUltimoCaixa();
 
-	Caixa buscarCaixa(Caixa Caixa);
+	Caixa buscarCaixa(Caixa caixa);
 
 	Long gerarCodigoCaixa();
 

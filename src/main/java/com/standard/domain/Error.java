@@ -6,10 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data class Error implements Serializable{
-	
- 	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7754886921722274018L;
 	
 	

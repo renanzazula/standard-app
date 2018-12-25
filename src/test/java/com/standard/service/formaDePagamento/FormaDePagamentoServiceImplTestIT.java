@@ -1,4 +1,4 @@
-package com.standard.service.FormaDePagamento;
+package com.standard.service.formaDePagamento;
 
 import com.standard.BaseTest;
 import com.standard.domain.FormasDePagamento;

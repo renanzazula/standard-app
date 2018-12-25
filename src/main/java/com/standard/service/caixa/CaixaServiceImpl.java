@@ -89,7 +89,7 @@ public class CaixaServiceImpl implements CaixaService {
 		Double totalVendas = caixaEntity.getTotalVendas() + venda.getValorPago();
 		caixaEntity.setTotalVendas(totalVendas);
 		
-		// FIXME: arrumar melhor solucao 
+
 		if(caixa.getValorInicial() == null) {
 			caixaEntity.setTotal(totalVendas + (double) 0);
 		}else {

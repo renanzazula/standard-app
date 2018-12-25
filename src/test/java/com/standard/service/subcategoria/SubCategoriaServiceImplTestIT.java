@@ -1,4 +1,4 @@
-package com.standard.service.subCategoria;
+package com.standard.service.subcategoria;
 
 import com.standard.BaseTest;
 import com.standard.domain.SubCategoria;

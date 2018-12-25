@@ -28,22 +28,6 @@ public @Data class CategoriaEntity extends BaseAuditEntity {
 	@OrderBy("codigo")
 	private Set<SubCategoriaEntity> subCategoriasSet;
 
-	public CategoriaEntity() {
 
-	}
-
-// FIXME:
-//	public CategoriaEntity(Long codigo) {
-//		super();
-//		this.codigo = codigo;
-//	}
-
-	public CategoriaEntity(String nome, String descricao) {
-		super();
-		this.nome = nome;
-		this.descricao = descricao;
-	}
-
-	 
 
 }

@@ -3,7 +3,7 @@ package com.standard.controller;
 import com.standard.domain.Categoria;
 import com.standard.domain.SubCategoria;
 import com.standard.service.categoria.CategoriaService;
-import com.standard.service.subCategoria.SubCategoriaService;
+import com.standard.service.subcategoria.SubCategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(SubCategoriaController.BASE_URL)
 public class SubCategoriaController {
 
-    public static final String BASE_URL = "/api/v1/subCategoria";
+    public static final String BASE_URL = "/api/v1/subcategoria";
 
     private final SubCategoriaService subCategoriaService;
 
