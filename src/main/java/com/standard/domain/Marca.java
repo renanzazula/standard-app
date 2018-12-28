@@ -23,10 +23,12 @@ public class Marca implements Serializable {
 	private StatusEnum status;
 	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
 	private Date data;
-
 	@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
 	private Date hora;
+	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+	private Date dataAlteracao;
+	@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
+	private Date horaAlteracao;
 
-	 
 
 }

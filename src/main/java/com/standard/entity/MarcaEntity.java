@@ -19,6 +19,6 @@ public @Data class MarcaEntity extends BaseAuditEntity{
 	@Column(name = "descricao", length = 45)
 	private String descricao;
 
-	 
+
 
 }

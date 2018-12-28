@@ -26,7 +26,7 @@ INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_cod
 INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,13,);
 INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,14,);
 INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,15,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (3,16,);
+INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (3,16,);                      
 INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (3,17,);
 
 INSERT INTO `marca` (`nome`,`descricao`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('ADIDAS','ADIDAS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);

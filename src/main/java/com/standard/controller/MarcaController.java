@@ -41,7 +41,6 @@ public class MarcaController {
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable Long codigo){
 		marcaService.excluir(codigo);
-
 	}
 
 	@PutMapping({"/{codigo}"})

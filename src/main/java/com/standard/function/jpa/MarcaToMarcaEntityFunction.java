@@ -16,6 +16,9 @@ public class MarcaToMarcaEntityFunction implements Function<MarcaEntity, Marca> 
 			output.setDescricao(input.getDescricao());
 			output.setData(input.getDataCriacao());
 			output.setHora(input.getHoraCriacao());
+			output.setDataAlteracao(input.getDataAlteracao());
+			output.setHoraAlteracao(input.getDataAlteracao());
+			output.setStatus(input.getStatus());
 		}
 		return output;
 	}
