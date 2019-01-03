@@ -2,7 +2,7 @@ package com.standard.service.categoria;
 
 import com.standard.BaseTest;
 import com.standard.domain.Categoria;
-import com.standard.domain.SubCategoria;
+import com.standard.domain.Subcategoria;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.SubCategoriaRepository;
 import com.standard.service.subcategoria.SubCategoriaService;
@@ -40,9 +40,9 @@ public class CategoriaServiceImplTestIT extends BaseTest {
         service = new CategoriaServiceImpl(repository, subCategoriaRepository);
         SubCategoriaService subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
 
-        List<SubCategoria> subCategorias = new ArrayList<>();
+        List<Subcategoria> subCategorias = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            SubCategoria subCategoria = new SubCategoria();
+            Subcategoria subCategoria = new Subcategoria();
             subCategoria.setNome(NOME + "_" + i);
             subCategoria.setDescricao(DESCRICAO + "_" + i);
             subCategorias.add(subCategoriaService.incluir(subCategoria));
@@ -51,7 +51,7 @@ public class CategoriaServiceImplTestIT extends BaseTest {
         obj = new Categoria();
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
-        obj.setSubCategorias(subCategorias);
+        obj.setSubcategorias(subCategorias);
         obj = service.incluir(obj);
     }
 

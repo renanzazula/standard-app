@@ -18,7 +18,7 @@ public class BaseTest {
     protected static final int PORCENTAGEM_DESCONTO = 15;
     protected static final int PORCENTAGEM_DESCONTO_UPDATE = 15;
     protected static final int QUANTIDADE_PRODUTOS_VENDA = 1;
-    protected static final Double VALOR_UNITARIO = new Double(10);
+    protected static final Double VALOR_UNITARIO = 10.0;
 
     private static final String VALOR_P = "P";
     private static final String VALOR_X = "X";
@@ -32,7 +32,7 @@ public class BaseTest {
     protected Venda venda = null;
     protected Caixa caixa = null;
     protected Marca marca = null;
-    protected SubCategoria subCategoria = null;
+    protected Subcategoria subCategoria = null;
     protected Categoria categoria = null;
     protected Fornecedor fornecedor = null;
     protected Medida medida = null;
@@ -50,7 +50,7 @@ public class BaseTest {
     }
 
     protected void setUpSubCategoria() {
-        subCategoria = new SubCategoria();
+        subCategoria = new Subcategoria();
         subCategoria.setNome(NOME);
         subCategoria.setDescricao(DESCRICAO);
     }
@@ -152,7 +152,7 @@ public class BaseTest {
             Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
             assertMarca(marcaFound, marca);
 
-            SubCategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubCategoria();
+            Subcategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubcategoria();
             assertSubCategoria(subCategoriaFound, subCategoria);
 
             Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
@@ -174,7 +174,7 @@ public class BaseTest {
         assertEquals(expected.getDescricao(), found.getDescricao());
     }
 
-    protected void assertSubCategoria(SubCategoria expected, SubCategoria found) {
+    protected void assertSubCategoria(Subcategoria expected, Subcategoria found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
@@ -240,7 +240,7 @@ public class BaseTest {
         assertEquals(found.getMedida(), expected.getMedida());
         assertEquals(found.getMarca(), expected.getMarca());
         assertEquals(found.getCategoria(), expected.getCategoria());
-        assertEquals(found.getSubCategoria(), expected.getSubCategoria());
+        assertEquals(found.getSubcategoria(), expected.getSubcategoria());
     }
 
 

@@ -1,10 +1,10 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-
+import com.standard.domain.ItensTipoMedida;
 import com.standard.entity.ItensTipoMedidaEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.domain.ItensTipoMedida;
+
+import java.util.function.Function;
 
 public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<ItensTipoMedidaEntity, ItensTipoMedida> {
 
@@ -19,7 +19,7 @@ public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<
 				output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
 			}
 			if (input.getSubCategoria() != null) {
-				output.setSubCategoria(JpaFunctions.subCategoriaToSubCategoriaEntity.apply(input.getSubCategoria()));
+				output.setSubcategoria(JpaFunctions.subCategoriaToSubCategoriaEntity.apply(input.getSubCategoria()));
 			}
 			if (input.getMarca() != null) {
 				output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));

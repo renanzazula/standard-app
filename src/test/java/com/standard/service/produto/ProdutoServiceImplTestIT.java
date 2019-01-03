@@ -97,8 +97,8 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         subCategoria = subCategoriaService.incluir(subCategoria);
 
         setUpCategoria();
-        categoria.setSubCategorias(new ArrayList<>());
-        categoria.getSubCategorias().add(subCategoria);
+        categoria.setSubcategorias(new ArrayList<>());
+        categoria.getSubcategorias().add(subCategoria);
         categoria = categoriaService.incluir(categoria);
 
         setUpDominio();
@@ -106,7 +106,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubCategoria(subCategoria);
+        medida.setSubcategoria(subCategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);

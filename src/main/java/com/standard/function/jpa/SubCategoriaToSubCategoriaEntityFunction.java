@@ -1,15 +1,15 @@
 package com.standard.function.jpa;
 
+import com.standard.domain.Subcategoria;
+import com.standard.entity.SubCategoriaEntity;
+
 import java.util.function.Function;
 
-import com.standard.entity.SubCategoriaEntity;
-import com.standard.domain.SubCategoria;
-
-public class SubCategoriaToSubCategoriaEntityFunction implements Function<SubCategoriaEntity, SubCategoria> {
+public class SubCategoriaToSubCategoriaEntityFunction implements Function<SubCategoriaEntity, Subcategoria> {
 
 	@Override
-	public SubCategoria apply(SubCategoriaEntity input) {
-		SubCategoria output = new SubCategoria();
+	public Subcategoria apply(SubCategoriaEntity input) {
+		Subcategoria output = new Subcategoria();
 		if (input != null) {
 			output.setCodigo(input.getCodigo());
 			output.setNome(input.getNome());

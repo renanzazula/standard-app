@@ -1,7 +1,7 @@
 package com.standard.service.subcategoria;
 
 import com.standard.BaseTest;
-import com.standard.domain.SubCategoria;
+import com.standard.domain.Subcategoria;
 import com.standard.repository.SubCategoriaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
     @BeforeEach
     public void setUp() {
         service = new SubCategoriaServiceImpl(repository);
-        subCategoria = new SubCategoria();
+        subCategoria = new Subcategoria();
         subCategoria.setNome(NOME);
         subCategoria.setDescricao(DESCRICAO);
         subCategoria = service.incluir(subCategoria);
@@ -39,11 +39,11 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void incluir() {
-        SubCategoria saved = service.incluir(subCategoria);
+        Subcategoria saved = service.incluir(subCategoria);
         
         assertNotNull(saved);
 
-        SubCategoria found = service.consultarByCodigo(saved.getCodigo());
+        Subcategoria found = service.consultarByCodigo(saved.getCodigo());
         assertEquals(found.getCodigo(), saved.getCodigo());
         assertEquals(found.getNome(), saved.getNome());
         assertEquals(found.getDescricao(), saved.getDescricao());
@@ -51,12 +51,12 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        SubCategoria update = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria update = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
 
-        SubCategoria updated = service.alterar(update.getCodigo(), update);
+        Subcategoria updated = service.alterar(update.getCodigo(), update);
         assertEquals(update.getCodigo(), updated.getCodigo());
         assertEquals(update.getNome(), updated.getNome());
         assertEquals(update.getDescricao(), updated.getDescricao());
@@ -64,13 +64,13 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultar() {
-        List<SubCategoria> found = service.consultar();
+        List<Subcategoria> found = service.consultar();
         assertNotNull(found);
     }
 
     @Test
     public void consultarByCodigo() {
-        SubCategoria found = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria found = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(found);
         assertEquals(found.getCodigo(), subCategoria.getCodigo());
     }
@@ -78,12 +78,12 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
     @Test
     public void excluir() {
 
-        SubCategoria delete = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria delete = service.consultarByCodigo(subCategoria.getCodigo());
         assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        SubCategoria found = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria found = service.consultarByCodigo(subCategoria.getCodigo());
         assertNull(found.getCodigo());
         assertNull(found.getNome());
         assertNull(found.getDescricao());

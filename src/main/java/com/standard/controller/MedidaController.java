@@ -64,7 +64,7 @@ public class MedidaController {
                 if(medida.getItensTipoMedida().get(0) != null) {
                     if(medida.getItensTipoMedida().get(0).getCategoria() != null) {
                         Categoria categoria = medida.getItensTipoMedida().get(0).getCategoria();
-                        medida.setSubCategorias(categoriaService.consultarByCodigo(categoria.getCodigo()).getSubCategorias());
+                        medida.setSubcategorias(categoriaService.consultarByCodigo(categoria.getCodigo()).getSubcategorias());
                     }
                 }
             }

@@ -126,7 +126,7 @@ public class VendaServiceImplTestIT extends BaseTest {
 
 
         caixa = new Caixa();
-        caixa.setValorInicial(new Double(5));
+        caixa.setValorInicial(5.0);
         caixa = caixaService.abrirCaixa(caixa);
 
         // requeridos
@@ -140,8 +140,8 @@ public class VendaServiceImplTestIT extends BaseTest {
         subCategoria = subCategoriaService.incluir(subCategoria);
 
         setUpCategoria();
-        categoria.setSubCategorias(new ArrayList<>());
-        categoria.getSubCategorias().add(subCategoria);
+        categoria.setSubcategorias(new ArrayList<>());
+        categoria.getSubcategorias().add(subCategoria);
         categoria = categoriaService.incluir(categoria);
 
         setUpDominio();
@@ -149,7 +149,7 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubCategoria(subCategoria);
+        medida.setSubcategoria(subCategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);

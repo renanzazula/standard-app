@@ -21,13 +21,12 @@ public class Medida implements Serializable {
 	private String descricao;
 	
 	private Categoria categoria;
-	private SubCategoria subCategoria;
+	private Subcategoria subcategoria;
 	private Marca marca;
 	
 	private List<Categoria> categorias;
-	private List<SubCategoria> subCategorias;
+	private List<Subcategoria> subcategorias;
 	private List<Marca> marcas;
-	
 	private List<ItensTipoMedida> itensTipoMedida;
 
 	 

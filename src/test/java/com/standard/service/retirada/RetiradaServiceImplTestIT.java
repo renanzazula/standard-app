@@ -38,7 +38,7 @@ public class RetiradaServiceImplTestIT extends BaseTest {
         caixaService =  new CaixaServiceImpl(caixaRepository);
 
         caixa = new Caixa();
-        caixa.setValorInicial(new Double(5));
+        caixa.setValorInicial(5.0);
         caixa = caixaService.abrirCaixa(caixa);
 
         service = new RetiradaServiceImpl(repository, caixaRepository);

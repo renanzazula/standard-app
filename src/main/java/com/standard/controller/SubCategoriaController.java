@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Categoria;
-import com.standard.domain.SubCategoria;
+import com.standard.domain.Subcategoria;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.subcategoria.SubCategoriaService;
 import org.springframework.http.HttpStatus;
@@ -27,19 +27,19 @@ public class SubCategoriaController {
 
     @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
-    public List<SubCategoria> consultar() {
+    public List<Subcategoria> consultar() {
         return subCategoriaService.consultar();
     }
 
     @GetMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public SubCategoria consultarByCodigo(@PathVariable Long codigo) {
+    public Subcategoria consultarByCodigo(@PathVariable Long codigo) {
         return subCategoriaService.consultarByCodigo(codigo);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SubCategoria incluir(@RequestBody SubCategoria dominio) {
+    public Subcategoria incluir(@RequestBody Subcategoria dominio) {
         return subCategoriaService.incluir(dominio);
     }
 
@@ -50,15 +50,14 @@ public class SubCategoriaController {
     }
 
     @PutMapping({"/{codigo}"})
-    public SubCategoria alterar(@PathVariable Long codigo, @RequestBody SubCategoria dominio) {
+    public Subcategoria alterar(@PathVariable Long codigo, @RequestBody Subcategoria dominio) {
         return subCategoriaService.alterar(codigo, dominio);
     }
 
-    //fixme:
-    @GetMapping( value = "/byCategoria/{codigo}")
+    @GetMapping( value = "/categoria/{codigo}")
     @ResponseStatus(HttpStatus.OK)
-    public List<SubCategoria> consultaSubCategoriaByCategoria(@PathVariable Long codigo) {
+    public List<Subcategoria> consultaSubCategoriaByCategoria(@PathVariable Long codigo) {
         Categoria listSubCategorias = categoriaService.consultarByCodigo(codigo);
-        return listSubCategorias.getSubCategorias();
+        return listSubCategorias.getSubcategorias();
     }
 }

@@ -72,8 +72,8 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(subCategoriaService.incluir(subCategoria)).thenReturn(subCategoria);
 
         setUpCategoria();
-        categoria.setSubCategorias(new ArrayList<>());
-        categoria.getSubCategorias().add(subCategoria);
+        categoria.setSubcategorias(new ArrayList<>());
+        categoria.getSubcategorias().add(subCategoria);
         when(categoriaService.incluir(categoria)).thenReturn(categoria);
 
         setUpDominio();
@@ -81,7 +81,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubCategoria(subCategoria);
+        medida.setSubcategoria(subCategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);

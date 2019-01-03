@@ -32,9 +32,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 		CategoriaEntity categoriaDB = new CategoriaEntity();
 		categoriaDB.setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
-		if(categoria.getSubCategorias() != null) {
+		if(categoria.getSubcategorias() != null) {
 			Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-			categoria.getSubCategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
+			categoria.getSubcategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
 			categoriaDB.setSubCategoriasSet(subCategoria);
 		}
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
@@ -48,7 +48,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 		categoriaDB.setNome(categoria.getNome());
 		categoriaDB.getSubCategoriasSet().clear();
 		Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-		categoria.getSubCategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
+		categoria.getSubcategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
 		categoriaDB.getSubCategoriasSet().addAll(subCategoria);
 
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));

@@ -65,7 +65,7 @@ public class MedidaServiceImpl implements MedidaService {
 		medida.getItensTipoMedida().forEach(itensMedida -> {
 			ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
 			itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
-			itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubCategoria().getCodigo()));
+			itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubcategoria().getCodigo()));
 			if (medida.getMarca() != null) {
 				itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
 			}
@@ -102,7 +102,7 @@ public class MedidaServiceImpl implements MedidaService {
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
 			marca = marcaRepository.getOne(produto.getMarca().getCodigo());
 		}
-		if (produto.getCategoria().getSubCategorias() != null && produto.getSubCategoria().getCodigo() != null) {
+		if (produto.getCategoria().getSubcategorias() != null && produto.getSubCategoria().getCodigo() != null) {
 			subCategoria = subCategoriaRepository.getOne(produto.getSubCategoria().getCodigo());
 		}
 		if (produto.getCategoria() != null && produto.getCategoria().getCodigo() != null) {

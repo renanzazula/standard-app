@@ -1,6 +1,6 @@
 package com.standard.service.subcategoria;
 
-import com.standard.domain.SubCategoria;
+import com.standard.domain.Subcategoria;
 import com.standard.entity.SubCategoriaEntity;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.SubCategoriaRepository;
@@ -22,7 +22,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional
-	public SubCategoria incluir(SubCategoria entity) {
+	public Subcategoria incluir(Subcategoria entity) {
 		SubCategoriaEntity subCategoriaDB = new SubCategoriaEntity();
 		subCategoriaDB.setNome(entity.getNome());
 		subCategoriaDB.setDescricao(entity.getDescricao());
@@ -31,7 +31,7 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional
-	public SubCategoria alterar(Long codigo, SubCategoria entity) {
+	public Subcategoria alterar(Long codigo, Subcategoria entity) {
 		SubCategoriaEntity subCategoriaDB = repository.findById(entity.getCodigo()).orElse(null);
 		Objects.requireNonNull(subCategoriaDB).setDescricao(entity.getDescricao());
 		subCategoriaDB.setNome(entity.getNome());
@@ -47,13 +47,13 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<SubCategoria> consultar() {
+	public List<Subcategoria> consultar() {
 		return repository.findAll().stream().map(JpaFunctions.subCategoriaToSubCategoriaEntity).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public SubCategoria consultarByCodigo(Long codigo) {
+	public Subcategoria consultarByCodigo(Long codigo) {
 		return JpaFunctions.subCategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 

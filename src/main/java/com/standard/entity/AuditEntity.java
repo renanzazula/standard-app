@@ -1,6 +1,5 @@
 package com.standard.entity;
 
-import com.standard.enums.StatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -45,10 +43,5 @@ public class  AuditEntity implements Serializable {
     @LastModifiedBy
     @Column(name = "alterado_por")
     private Long alteradoPor;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private StatusEnum status;
 
 }

@@ -1,6 +1,6 @@
 package com.standard.controller;
 
-import com.standard.domain.SubCategoria;
+import com.standard.domain.Subcategoria;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.subcategoria.SubCategoriaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,12 +37,12 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    private SubCategoria obj = null;
+    private Subcategoria obj = null;
 
     @BeforeEach
     public void setUp() {
 
-        obj = new SubCategoria();
+        obj = new Subcategoria();
         obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
@@ -50,11 +50,11 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultar() throws Exception {
-        SubCategoria subCategoria2 = new SubCategoria();
+        Subcategoria subCategoria2 = new Subcategoria();
         subCategoria2.setCodigo(2L);
         subCategoria2.setNome("bob");
 
-        List<SubCategoria> subCategorias = Arrays.asList(obj, subCategoria2);
+        List<Subcategoria> subCategorias = Arrays.asList(obj, subCategoria2);
         when(service.consultar()).thenReturn(subCategorias);
         mockMvc.perform(get(SubCategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
