@@ -1,0 +1,34 @@
+version: '3'
+services:
+  standard:
+      image: standard-app
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      ports:
+          - 8081:8081
+#      depends_on:
+#          - payments-db
+#      links:
+#          - payments-db
+#  payments-db:
+#      container_name: payments_db
+#      image: postgres
+#      restart: always
+#      volumes:
+#          - payments_db:/var/lib/postgresql/data
+#      environment:
+#          - POSTGRES_PASSWORD=payments
+#          - POSTGRES_USER=payments
+#          - POSTGRES_DB=payments
+#          - PGDATA=/var/lib/postgresql/data/pgdata
+#      ports:
+#          - 54320:5432
+#volumes:
+#    payments_db: {}
+#
+#
+#  FROM openjdk:10
+#  COPY clx-payments-server/build/libs/*-boot.war /app.war
+#  EXPOSE 9090
+#  ENTRYPOINT ["sh", "-c", "java --add-modules java.xml.bind -jar -Dspring.profiles.active=$ACTIVE_SPRING_PROFILE app.war"]
