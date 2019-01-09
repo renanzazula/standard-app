@@ -12,16 +12,10 @@ pipelines:
         caches:
           - maven
         script:
-          - mvnw clean
+          - mvn clean
     - step:
         name: Maven Compile Build
         caches:
           - maven
         script:
-          - mvnw compile
-    - step:
-        name: Maven Package Build
-        caches:
-          - maven
-        script:
-          - mvnw package
+          - mvn install -DskipTests
