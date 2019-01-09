@@ -1,12 +1,12 @@
 version: '3'
 services:
-  standard:
+  standard-app:
       image: standard-app
       build:
         context: ./
         dockerfile: Dockerfile
       ports:
-          - 8081:8081
+          - 8080:8080
 #      depends_on:
 #          - payments-db
 #      links:
@@ -26,9 +26,3 @@ services:
 #          - 54320:5432
 #volumes:
 #    payments_db: {}
-#
-#
-#  FROM openjdk:10
-#  COPY clx-payments-server/build/libs/*-boot.war /app.war
-#  EXPOSE 9090
-#  ENTRYPOINT ["sh", "-c", "java --add-modules java.xml.bind -jar -Dspring.profiles.active=$ACTIVE_SPRING_PROFILE app.war"]
