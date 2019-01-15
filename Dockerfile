@@ -11,7 +11,7 @@ WORKDIR /var/www/app
 
 RUN git clone -b master https://renanzazula@bitbucket.org/zazularenan/standard-app.git /standard-app/
 RUN cp -R /standard-app/* /var/www/app
-RUN chown app:app -R /var/www/app
+#RUN chown app:app -R /var/www/app
 
 ADD /var/www/app/app.jar /app.jar
 EXPOSE 8080
