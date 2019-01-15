@@ -17,22 +17,7 @@
 Standard-app
 
 From Docker image at centos 
-
-
-
  - To build "docker build -t spring-boot-docker ." with dot
  - To running "docker run -d -p 8080:8080 spring-boot-docker"
- 
- 
- 
- #FROM openjdk:8-jre-alpine
- ##TODO When changing to jdk10/11, add the "--add-modules java.xml.bind" to the CMD or correspondent gradle dependency, otherwise errors will occur
- #MAINTAINER Crealogix AG
- #ADD build/libs/clx-payments-server-*-boot.war /app.war
- #EXPOSE 9090
- #EXPOSE 8788
- #CMD java -Dspring.profiles.active=$ACTIVE_SPRING_PROFILE -agentlib:jdwp=transport=dt_socket,address=0.0.0.0:8788,server=y,suspend=n -Djava.security.egd=file:/dev/./urandom -jar /app.war
- FROM openjdk:11-browsers-legacy
- COPY clx-payments-server/build/libs/*-boot.war /app.war
- EXPOSE 9090
- ENTRYPOINT ["sh", "-c", "java --add-modules java.xml.bind -jar -Dspring.profiles.active=$ACTIVE_SPRING_PROFILE app.war"]
+
+
