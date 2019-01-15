@@ -1,7 +1,7 @@
 FROM openjdk:11
 MAINTAINER Renan Zazula
 
-RUN git clone -b docker https://renanzazula@bitbucket.org/zazularenan/standard-app.git /standard-app/
+RUN git clone -b https://renanzazula@bitbucket.org/zazularenan/standard-app.git /standard-app/
 RUN cp -R /standard-app/* /home/app/
 RUN chown app:app -R /home/app/
 
