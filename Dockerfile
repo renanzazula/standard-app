@@ -4,6 +4,11 @@ MAINTAINER Renan Zazula
 RUN mkdir -p /standard-app/
 RUN mkdir -p /var/www/app
 
+WORKDIR /standard-app/
+
+VOLUME /var/www/app
+WORKDIR /var/www/app
+
 RUN git clone -b master https://renanzazula@bitbucket.org/zazularenan/standard-app.git /standard-app/
 RUN cp -R /standard-app/* /var/www/app
 RUN chown app:app -R /var/www/app
