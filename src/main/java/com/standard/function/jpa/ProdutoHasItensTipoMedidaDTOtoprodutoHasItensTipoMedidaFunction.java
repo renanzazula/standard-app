@@ -60,8 +60,8 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
             output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
         }
 
-        if (input.getSubCategoria() != null) {
-            output.setSubCategoria(JpaFunctions.subCategoriaToSubCategoriaEntity.apply(input.getSubCategoria()));
+        if (input.getSubcategoria() != null) {
+            output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
         }
 
         if (input.getMedida() != null) {

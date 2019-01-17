@@ -4,7 +4,7 @@ import com.standard.domain.Subcategoria;
 
 import java.util.List;
 
-public interface SubCategoriaService {
+public interface SubcategoriaService {
 
 	Subcategoria incluir(Subcategoria objc);
 

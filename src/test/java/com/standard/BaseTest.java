@@ -32,7 +32,7 @@ public class BaseTest {
     protected Venda venda = null;
     protected Caixa caixa = null;
     protected Marca marca = null;
-    protected Subcategoria subCategoria = null;
+    protected Subcategoria subcategoria = null;
     protected Categoria categoria = null;
     protected Fornecedor fornecedor = null;
     protected Medida medida = null;
@@ -50,9 +50,9 @@ public class BaseTest {
     }
 
     protected void setUpSubCategoria() {
-        subCategoria = new Subcategoria();
-        subCategoria.setNome(NOME);
-        subCategoria.setDescricao(DESCRICAO);
+        subcategoria = new Subcategoria();
+        subcategoria.setNome(NOME);
+        subcategoria.setDescricao(DESCRICAO);
     }
 
     protected void setUpCategoria() {
@@ -152,8 +152,8 @@ public class BaseTest {
             Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
             assertMarca(marcaFound, marca);
 
-            Subcategoria subCategoriaFound = medida.getItensTipoMedida().get(j).getSubcategoria();
-            assertSubCategoria(subCategoriaFound, subCategoria);
+            Subcategoria subcategoriaFound = medida.getItensTipoMedida().get(j).getSubcategoria();
+            assertSubCategoria(subcategoriaFound, subcategoria);
 
             Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
             assertCategoria(categoriaFound, categoria);
@@ -227,7 +227,7 @@ public class BaseTest {
         assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
         assertMarca(found.getMarca(), expected.getMarca());
         assertCategoria(found.getCategoria(), expected.getCategoria());
-        assertSubCategoria(found.getSubCategoria(), expected.getSubCategoria());
+        assertSubCategoria(found.getSubcategoria(), expected.getSubcategoria());
         assertFornecedor(found.getFornecedor(), expected.getFornecedor());
         assertMarcaSubCategoriaCategoriaValor(found.getMedida());
         assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());

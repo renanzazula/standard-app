@@ -2,7 +2,7 @@ package com.standard.controller;
 
 import com.standard.domain.Subcategoria;
 import com.standard.service.categoria.CategoriaService;
-import com.standard.service.subcategoria.SubCategoriaService;
+import com.standard.service.subcategoria.SubcategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @MockBean
-    SubCategoriaService service;
+    SubcategoriaService service;
 
     @MockBean
     CategoriaService categoriaService;
@@ -50,12 +50,12 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultar() throws Exception {
-        Subcategoria subCategoria2 = new Subcategoria();
-        subCategoria2.setCodigo(2L);
-        subCategoria2.setNome("bob");
+        Subcategoria subcategoria2 = new Subcategoria();
+        subcategoria2.setCodigo(2L);
+        subcategoria2.setNome("bob");
 
-        List<Subcategoria> subCategorias = Arrays.asList(obj, subCategoria2);
-        when(service.consultar()).thenReturn(subCategorias);
+        List<Subcategoria> subcategorias = Arrays.asList(obj, subcategoria2);
+        when(service.consultar()).thenReturn(subcategorias);
         mockMvc.perform(get(SubCategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

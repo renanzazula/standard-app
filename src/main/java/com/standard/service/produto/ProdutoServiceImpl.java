@@ -24,20 +24,20 @@ public class ProdutoServiceImpl implements ProdutoService {
 	private final DominioRepository dominioRepository;
 	private final FornecedorRepository fornecedorRepository;
 	private final CategoriaRepository categoriaRepository;
-	private final SubCategoriaRepository subCategoriaRepository;
+	private final SubcategoriaRepository subcategoriaRepository;
 	private final MarcaRepository marcaRepository;
 	private final ItensTipoMedidaRepository itensTipoMedidaRepository;
 
     public ProdutoServiceImpl(ProdutoRepository produtoRepository, MedidaRepository medidaRepository,
-                              DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,
-                              CategoriaRepository categoriaRepository, SubCategoriaRepository subCategoriaRepository,
-                              MarcaRepository marcaRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
+							  DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,
+							  CategoriaRepository categoriaRepository, SubcategoriaRepository subcategoriaRepository,
+							  MarcaRepository marcaRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
         this.produtoRepository = produtoRepository;
         this.medidaRepository = medidaRepository;
         this.dominioRepository = dominioRepository;
         this.fornecedorRepository = fornecedorRepository;
         this.categoriaRepository = categoriaRepository;
-        this.subCategoriaRepository = subCategoriaRepository;
+        this.subcategoriaRepository = subcategoriaRepository;
         this.marcaRepository = marcaRepository;
         this.itensTipoMedidaRepository = itensTipoMedidaRepository;
     }
@@ -72,8 +72,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setCategoria(categoriaRepository.getOne(produto.getCategoria().getCodigo()));
 		}
 
-		if (produto.getSubCategoria() != null && produto.getSubCategoria().getCodigo() != null) {
-			produtoDB.setSubCategoria(subCategoriaRepository.getOne(produto.getSubCategoria().getCodigo()));
+		if (produto.getSubcategoria() != null && produto.getSubcategoria().getCodigo() != null) {
+			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo()));
 		}
 
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
@@ -138,8 +138,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setCategoria(categoriaRepository.getOne(produto.getCategoria().getCodigo()));
 		}
 
-		if (produto.getSubCategoria() != null && produto.getSubCategoria().getCodigo() != null) {
-			produtoDB.setSubCategoria(subCategoriaRepository.getOne(produto.getSubCategoria().getCodigo()));
+		if (produto.getSubcategoria() != null && produto.getSubcategoria().getCodigo() != null) {
+			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo()));
 		}
 
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {

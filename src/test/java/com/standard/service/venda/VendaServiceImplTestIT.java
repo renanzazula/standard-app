@@ -20,8 +20,8 @@ import com.standard.service.medida.MedidaService;
 import com.standard.service.medida.MedidaServiceImpl;
 import com.standard.service.produto.ProdutoService;
 import com.standard.service.produto.ProdutoServiceImpl;
-import com.standard.service.subcategoria.SubCategoriaService;
-import com.standard.service.subcategoria.SubCategoriaServiceImpl;
+import com.standard.service.subcategoria.SubcategoriaService;
+import com.standard.service.subcategoria.SubcategoriaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,7 +58,7 @@ public class VendaServiceImplTestIT extends BaseTest {
     private CategoriaRepository categoriaRepository;
 
     @Autowired
-    private SubCategoriaRepository subCategoriaRepository;
+    private SubcategoriaRepository subcategoriaRepository;
 
     @Autowired
     private MarcaRepository marcaRepository;
@@ -82,7 +82,7 @@ public class VendaServiceImplTestIT extends BaseTest {
     private MarcaService marcaService;
     private FornecedorService fornecedorService;
     private ProdutoService produtoService;
-    private SubCategoriaService subCategoriaService;
+    private SubcategoriaService subcategoriaService;
     private CategoriaService categoriaService;
     private DominioService dominioService;
     private MedidaService medidaService;
@@ -99,16 +99,16 @@ public class VendaServiceImplTestIT extends BaseTest {
         caixaService =  new CaixaServiceImpl(caixaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
-        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
-        categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
+        subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
+        categoriaService = new CategoriaServiceImpl(categoriaRepository, subcategoriaRepository);
         fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
         dominioService = new DominioServiceImpl(dominioRepository);
         medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
-                subCategoriaRepository, marcaRepository);
+                subcategoriaRepository, marcaRepository);
 
         produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
                 dominioRepository, fornecedorRepository,
-                categoriaRepository, subCategoriaRepository,
+                categoriaRepository, subcategoriaRepository,
                 marcaRepository, itensTipoMedidaRepository);
 
         vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, caixaRepository,
@@ -137,11 +137,11 @@ public class VendaServiceImplTestIT extends BaseTest {
         fornecedor = fornecedorService.incluir(fornecedor);
 
         setUpSubCategoria();
-        subCategoria = subCategoriaService.incluir(subCategoria);
+        subcategoria = subcategoriaService.incluir(subcategoria);
 
         setUpCategoria();
         categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subCategoria);
+        categoria.getSubcategorias().add(subcategoria);
         categoria = categoriaService.incluir(categoria);
 
         setUpDominio();
@@ -149,7 +149,7 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subCategoria);
+        medida.setSubcategoria(subcategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
@@ -165,7 +165,7 @@ public class VendaServiceImplTestIT extends BaseTest {
         produto.setFornecedor(fornecedor);
         produto.setCategoria(categoria);
         produto.setMedida(medida);
-        produto.setSubCategoria(subCategoria);
+        produto.setSubcategoria(subcategoria);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
         produto = produtoService.incluir(produto);
 

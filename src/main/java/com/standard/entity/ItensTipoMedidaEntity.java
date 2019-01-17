@@ -28,8 +28,8 @@ public @Data class ItensTipoMedidaEntity extends BaseAuditEntity {
 	private CategoriaEntity categoria;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "sub_categoria_codigo")
-	private SubCategoriaEntity subCategoria;
+	@JoinColumn(name = "subcategoria_codigo")
+	private SubcategoriaEntity subcategoria;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "itens_tipo_medida_codigo")

@@ -2,7 +2,7 @@ package com.standard.service.subcategoria;
 
 import com.standard.BaseTest;
 import com.standard.domain.Subcategoria;
-import com.standard.repository.SubCategoriaRepository;
+import com.standard.repository.SubcategoriaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,27 +19,27 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest()
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class SubCategoriaServiceImplTestIT extends BaseTest {
+public class SubcategoriaServiceImplTestIT extends BaseTest {
 
     @Autowired
-    private SubCategoriaRepository repository;
+    private SubcategoriaRepository repository;
 
-    private SubCategoriaService service;
+    private SubcategoriaService service;
 
 
 
     @BeforeEach
     public void setUp() {
-        service = new SubCategoriaServiceImpl(repository);
-        subCategoria = new Subcategoria();
-        subCategoria.setNome(NOME);
-        subCategoria.setDescricao(DESCRICAO);
-        subCategoria = service.incluir(subCategoria);
+        service = new SubcategoriaServiceImpl(repository);
+        subcategoria = new Subcategoria();
+        subcategoria.setNome(NOME);
+        subcategoria.setDescricao(DESCRICAO);
+        subcategoria = service.incluir(subcategoria);
     }
 
     @Test
     public void incluir() {
-        Subcategoria saved = service.incluir(subCategoria);
+        Subcategoria saved = service.incluir(subcategoria);
         
         assertNotNull(saved);
 
@@ -51,7 +51,7 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        Subcategoria update = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria update = service.consultarByCodigo(subcategoria.getCodigo());
         assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
@@ -70,20 +70,20 @@ public class SubCategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        Subcategoria found = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria found = service.consultarByCodigo(subcategoria.getCodigo());
         assertNotNull(found);
-        assertEquals(found.getCodigo(), subCategoria.getCodigo());
+        assertEquals(found.getCodigo(), subcategoria.getCodigo());
     }
 
     @Test
     public void excluir() {
 
-        Subcategoria delete = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria delete = service.consultarByCodigo(subcategoria.getCodigo());
         assertNotNull(delete);
 
         service.excluir(delete.getCodigo());
 
-        Subcategoria found = service.consultarByCodigo(subCategoria.getCodigo());
+        Subcategoria found = service.consultarByCodigo(subcategoria.getCodigo());
         assertNull(found.getCodigo());
         assertNull(found.getNome());
         assertNull(found.getDescricao());

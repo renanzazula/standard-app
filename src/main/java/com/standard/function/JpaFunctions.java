@@ -5,7 +5,7 @@ import com.standard.function.jpa.*;
 public class JpaFunctions {
 
     public static final CategoriaToCategoriaEntityFunction categoriaToCategoriaEntity = new CategoriaToCategoriaEntityFunction();
-    public static final SubCategoriaToSubCategoriaEntityFunction subCategoriaToSubCategoriaEntity = new SubCategoriaToSubCategoriaEntityFunction();
+    public static final SubCategoriaToSubCategoriaEntityFunction subcategoriaToSubCategoriaEntity = new SubCategoriaToSubCategoriaEntityFunction();
     public static final FornecedorToFornecedorEntityFunction fornecedortoFornecedorEntity = new FornecedorToFornecedorEntityFunction();
     public static final MarcaToMarcaEntityFunction marcaToMarcaEntity = new MarcaToMarcaEntityFunction();
     public static final MedidaToMedidaEntityFunction medidaToMedidaEntity = new MedidaToMedidaEntityFunction();

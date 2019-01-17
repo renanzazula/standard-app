@@ -108,8 +108,8 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sub_categoria_codigo")
-    private SubCategoriaEntity subCategoria;
+    @JoinColumn(name = "subcategoria_codigo")
+    private SubcategoriaEntity subcategoria;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "produto_codigo")

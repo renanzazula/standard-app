@@ -52,7 +52,7 @@ public   class Produto implements Serializable {
 	private Fornecedor fornecedor;
 	private Medida medida;
 	private Categoria categoria;
-	private Subcategoria subCategoria;
+	private Subcategoria subcategoria;
 	private Marca marca;
 
 	private List<Dominio> dominios;

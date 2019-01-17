@@ -7,7 +7,7 @@ import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.MarcaRepository;
 import com.standard.repository.MedidaRepository;
-import com.standard.repository.SubCategoriaRepository;
+import com.standard.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +21,14 @@ public class MedidaServiceImpl implements MedidaService {
 
 	private final MedidaRepository medidaRepository;
 	private final CategoriaRepository categoriaRepository;
-	private final SubCategoriaRepository subCategoriaRepository;
+	private final SubcategoriaRepository subcategoriaRepository;
 	private final MarcaRepository marcaRepository;
 
     public MedidaServiceImpl(MedidaRepository medidaRepository, CategoriaRepository categoriaRepository,
-                             SubCategoriaRepository subCategoriaRepository, MarcaRepository marcaRepository) {
+							 SubcategoriaRepository subcategoriaRepository, MarcaRepository marcaRepository) {
         this.medidaRepository = medidaRepository;
         this.categoriaRepository = categoriaRepository;
-        this.subCategoriaRepository = subCategoriaRepository;
+        this.subcategoriaRepository = subcategoriaRepository;
         this.marcaRepository = marcaRepository;
     }
 
@@ -65,7 +65,7 @@ public class MedidaServiceImpl implements MedidaService {
 		medida.getItensTipoMedida().forEach(itensMedida -> {
 			ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
 			itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
-			itens.setSubCategoria(subCategoriaRepository.getOne(medida.getSubcategoria().getCodigo()));
+			itens.setSubcategoria(subcategoriaRepository.getOne(medida.getSubcategoria().getCodigo()));
 			if (medida.getMarca() != null) {
 				itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
 			}
@@ -97,20 +97,20 @@ public class MedidaServiceImpl implements MedidaService {
 	@Transactional(readOnly = true)
 	public List<Medida> consultarByCategoriaSubCategoriaMarca(Produto produto) {
 		CategoriaEntity categoria = null;
-		SubCategoriaEntity subCategoria = null;
+		SubcategoriaEntity subcategoria = null;
 		MarcaEntity marca = null;
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
 			marca = marcaRepository.getOne(produto.getMarca().getCodigo());
 		}
-		if (produto.getCategoria().getSubcategorias() != null && produto.getSubCategoria().getCodigo() != null) {
-			subCategoria = subCategoriaRepository.getOne(produto.getSubCategoria().getCodigo());
+		if (produto.getCategoria().getSubcategorias() != null && produto.getSubcategoria().getCodigo() != null) {
+			subcategoria = subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo());
 		}
 		if (produto.getCategoria() != null && produto.getCategoria().getCodigo() != null) {
 			categoria = categoriaRepository.getOne(produto.getCategoria().getCodigo());
 		}
 		return medidaRepository
-				.findByItensTipoMedidaCategoriaAndItensTipoMedidaSubCategoriaAndAndItensTipoMedidaMarca(categoria,
-						subCategoria, marca)
+				.findByItensTipoMedidaCategoriaAndItensTipoMedidaSubcategoriaAndAndItensTipoMedidaMarca(categoria,
+						subcategoria, marca)
 				.stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
 
 	}

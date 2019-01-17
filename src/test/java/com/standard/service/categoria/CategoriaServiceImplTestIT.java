@@ -4,9 +4,9 @@ import com.standard.BaseTest;
 import com.standard.domain.Categoria;
 import com.standard.domain.Subcategoria;
 import com.standard.repository.CategoriaRepository;
-import com.standard.repository.SubCategoriaRepository;
-import com.standard.service.subcategoria.SubCategoriaService;
-import com.standard.service.subcategoria.SubCategoriaServiceImpl;
+import com.standard.repository.SubcategoriaRepository;
+import com.standard.service.subcategoria.SubcategoriaService;
+import com.standard.service.subcategoria.SubcategoriaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ public class CategoriaServiceImplTestIT extends BaseTest {
     private CategoriaRepository repository;
 
     @Autowired
-    private SubCategoriaRepository subCategoriaRepository;
+    private SubcategoriaRepository subcategoriaRepository;
 
     private CategoriaService service;
 
@@ -37,21 +37,21 @@ public class CategoriaServiceImplTestIT extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        service = new CategoriaServiceImpl(repository, subCategoriaRepository);
-        SubCategoriaService subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
+        service = new CategoriaServiceImpl(repository, subcategoriaRepository);
+        SubcategoriaService subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
 
-        List<Subcategoria> subCategorias = new ArrayList<>();
+        List<Subcategoria> subcategorias = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            Subcategoria subCategoria = new Subcategoria();
-            subCategoria.setNome(NOME + "_" + i);
-            subCategoria.setDescricao(DESCRICAO + "_" + i);
-            subCategorias.add(subCategoriaService.incluir(subCategoria));
+            Subcategoria subcategoria = new Subcategoria();
+            subcategoria.setNome(NOME + "_" + i);
+            subcategoria.setDescricao(DESCRICAO + "_" + i);
+            subcategorias.add(subcategoriaService.incluir(subcategoria));
         }
 
         obj = new Categoria();
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
-        obj.setSubcategorias(subCategorias);
+        obj.setSubcategorias(subcategorias);
         obj = service.incluir(obj);
     }
 

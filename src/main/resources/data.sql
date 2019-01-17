@@ -2,32 +2,32 @@ INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_
 INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (2,'CLOTHING','CLOTHING', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (3,'FOOTWEAR','FOOTWEAR', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'0','0', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (6,'ACCESSORIES','ACCESSORIES', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (7,'BEARINGS','BEARINGS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (8,'DECKS','DECKS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (9,'GRIPTAPE','GRIPTAPE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (10,'TRUCKS','TRUCKS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (11,'WHEELS','WHEELS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (12,'CAPS','CAPS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (13,'HOODIE','HOODIE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (14,'JACKETS','JACKETS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (15,'T-SHIRT','T-SHIRT', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (16,'MENS SHOE SIZE','MENS SHOE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-INSERT INTO `sub_categoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (17,'MENS SHOE SIZE','WOMENS SHOE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'0','0', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (6,'ACCESSORIES','ACCESSORIES', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (7,'BEARINGS','BEARINGS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (8,'DECKS','DECKS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (9,'GRIPTAPE','GRIPTAPE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (10,'TRUCKS','TRUCKS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (11,'WHEELS','WHEELS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (12,'CAPS','CAPS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (13,'HOODIE','HOODIE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (14,'JACKETS','JACKETS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (15,'T-SHIRT','T-SHIRT', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (16,'MENS SHOE SIZE','MENS SHOE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (17,'MENS SHOE SIZE','WOMENS SHOE', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,6,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,7,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,8,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,9,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,10,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (1,11,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,12,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,13,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,14,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (2,15,);
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (3,16,);                      
-INSERT INTO `categoria_has_sub_categoria` (`categoria_codigo`,`sub_categoria_codigo`) VALUES (3,17,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,6,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,7,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,8,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,9,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,10,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,11,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (2,12,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (2,13,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (2,14,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (2,15,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (3,16,);
+INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (3,17,);
 
 INSERT INTO `marca` (`nome`,`descricao`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('ADIDAS','ADIDAS', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 INSERT INTO `marca` (`nome`,`descricao`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('ADIDASxHARDIES','ADIDASxHARDIES', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
@@ -98,21 +98,21 @@ INSERT INTO `forma_de_pagamento` (`codigo`,`descricao`,`nome`,`porcentagem_desco
 
 INSERT INTO `medida` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) values (1, 'US MENS SHOES',   'US', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '6');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '6.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '7');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '7.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '8');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '8.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '9');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '9.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '10');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '10.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '11');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '11.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '12');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '12.5');
-INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, sub_categoria_codigo, valor) values (3, null, 1, 16, '13');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '6');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '6.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '7');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '7.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '13');
 
 INSERT INTO `fornecedor` (`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('FORNECEDOR','FORNECEDOR', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
 

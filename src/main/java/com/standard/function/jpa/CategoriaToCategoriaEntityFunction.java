@@ -15,8 +15,8 @@ public class CategoriaToCategoriaEntityFunction implements java.util.function.Fu
             output.setCodigo(input.getCodigo());
             output.setNome(input.getNome());
             output.setDescricao(input.getDescricao());
-            if (input.getSubCategoriasSet() != null) {
-                output.setSubcategorias(input.getSubCategoriasSet().stream().map(JpaFunctions.subCategoriaToSubCategoriaEntity).collect(Collectors.toList()));
+            if (input.getSubcategoriasSet() != null) {
+                output.setSubcategorias(input.getSubcategoriasSet().stream().map(JpaFunctions.subcategoriaToSubCategoriaEntity).collect(Collectors.toList()));
             }
         }
         return output;

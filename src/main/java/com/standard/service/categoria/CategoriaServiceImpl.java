@@ -2,10 +2,10 @@ package com.standard.service.categoria;
 
 import com.standard.domain.Categoria;
 import com.standard.entity.CategoriaEntity;
-import com.standard.entity.SubCategoriaEntity;
+import com.standard.entity.SubcategoriaEntity;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoriaRepository;
-import com.standard.repository.SubCategoriaRepository;
+import com.standard.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 public class CategoriaServiceImpl implements CategoriaService {
 
 	private final CategoriaRepository repository;
-	private final SubCategoriaRepository subCategoriaRepository;
+	private final SubcategoriaRepository subcategoriaRepository;
 
-	public CategoriaServiceImpl(CategoriaRepository repository, SubCategoriaRepository subCategoriaRepository) {
+	public CategoriaServiceImpl(CategoriaRepository repository, SubcategoriaRepository subcategoriaRepository) {
 		this.repository = repository;
-		this.subCategoriaRepository = subCategoriaRepository;
+		this.subcategoriaRepository = subcategoriaRepository;
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 		categoriaDB.setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
 		if(categoria.getSubcategorias() != null) {
-			Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-			categoria.getSubcategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
-			categoriaDB.setSubCategoriasSet(subCategoria);
+			Set<SubcategoriaEntity> subcategoriaSet = new HashSet<>();
+			categoria.getSubcategorias().forEach(sub -> subcategoriaSet.add(subcategoriaRepository.getOne(sub.getCodigo())));
+			categoriaDB.setSubcategoriasSet(subcategoriaSet);
 		}
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
 	}
@@ -46,10 +46,10 @@ public class CategoriaServiceImpl implements CategoriaService {
 		CategoriaEntity categoriaDB = repository.findById(codigo).orElse(null);
 		Objects.requireNonNull(categoriaDB).setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
-		categoriaDB.getSubCategoriasSet().clear();
-		Set<SubCategoriaEntity> subCategoria = new HashSet<>();
-		categoria.getSubcategorias().forEach(sub -> subCategoria.add(subCategoriaRepository.getOne(sub.getCodigo())));
-		categoriaDB.getSubCategoriasSet().addAll(subCategoria);
+		categoriaDB.getSubcategoriasSet().clear();
+		Set<SubcategoriaEntity> subcategoriaSet = new HashSet<>();
+		categoria.getSubcategorias().forEach(sub -> subcategoriaSet.add(subcategoriaRepository.getOne(sub.getCodigo())));
+		categoriaDB.getSubcategoriasSet().addAll(subcategoriaSet);
 
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
 	}
@@ -71,7 +71,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		CategoriaEntity categoriaDB = repository.getOne(codigo);
-		categoriaDB.getSubCategoriasSet().clear();
+		categoriaDB.getSubcategoriasSet().clear();
 		repository.saveAndFlush(categoriaDB);
 		repository.delete(repository.getOne(codigo));
 	}

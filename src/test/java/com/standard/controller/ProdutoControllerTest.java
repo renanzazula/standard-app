@@ -7,7 +7,7 @@ import com.standard.service.fornecedor.FornecedorService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
-import com.standard.service.subcategoria.SubCategoriaService;
+import com.standard.service.subcategoria.SubcategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +53,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
 
     @MockBean
-    private SubCategoriaService subCategoriaService;
+    private SubcategoriaService subcategoriaService;
 
 
     @MockBean
@@ -69,11 +69,11 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(fornecedorService.incluir(fornecedor)).thenReturn(fornecedor);
 
         setUpSubCategoria();
-        when(subCategoriaService.incluir(subCategoria)).thenReturn(subCategoria);
+        when(subcategoriaService.incluir(subcategoria)).thenReturn(subcategoria);
 
         setUpCategoria();
         categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subCategoria);
+        categoria.getSubcategorias().add(subcategoria);
         when(categoriaService.incluir(categoria)).thenReturn(categoria);
 
         setUpDominio();
@@ -81,7 +81,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subCategoria);
+        medida.setSubcategoria(subcategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
@@ -97,7 +97,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         produto.setFornecedor(fornecedor);
         produto.setCategoria(categoria);
         produto.setMedida(medida);
-        produto.setSubCategoria(subCategoria);
+        produto.setSubcategoria(subcategoria);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
     }
 

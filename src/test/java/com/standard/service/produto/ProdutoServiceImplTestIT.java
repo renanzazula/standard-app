@@ -16,8 +16,8 @@ import com.standard.service.marca.MarcaService;
 import com.standard.service.marca.MarcaServiceImpl;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.medida.MedidaServiceImpl;
-import com.standard.service.subcategoria.SubCategoriaService;
-import com.standard.service.subcategoria.SubCategoriaServiceImpl;
+import com.standard.service.subcategoria.SubcategoriaService;
+import com.standard.service.subcategoria.SubcategoriaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +44,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     private CategoriaRepository categoriaRepository;
 
     @Autowired
-    private SubCategoriaRepository subCategoriaRepository;
+    private SubcategoriaRepository subcategoriaRepository;
 
     @Autowired
     private MarcaRepository marcaRepository;
@@ -64,7 +64,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     private MarcaService marcaService;
     private FornecedorService fornecedorService;
     private ProdutoService produtoService;
-    private SubCategoriaService subCategoriaService;
+    private SubcategoriaService subcategoriaService;
     private CategoriaService categoriaService;
     private DominioService dominioService;
     private MedidaService medidaService;
@@ -75,15 +75,15 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     public void setUp() {
 
         marcaService = new MarcaServiceImpl(marcaRepository);
-        subCategoriaService = new SubCategoriaServiceImpl(subCategoriaRepository);
-        categoriaService = new CategoriaServiceImpl(categoriaRepository, subCategoriaRepository);
+        subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
+        categoriaService = new CategoriaServiceImpl(categoriaRepository, subcategoriaRepository);
         fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
         dominioService = new DominioServiceImpl(dominioRepository);
-        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository, subCategoriaRepository,
+        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository, subcategoriaRepository,
                 marcaRepository);
         produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
                 dominioRepository, fornecedorRepository,
-                categoriaRepository, subCategoriaRepository,
+                categoriaRepository, subcategoriaRepository,
                 marcaRepository, itensTipoMedidaRepository);
 
         // requeridos
@@ -94,11 +94,11 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         fornecedor = fornecedorService.incluir(fornecedor);
 
         setUpSubCategoria();
-        subCategoria = subCategoriaService.incluir(subCategoria);
+        subcategoria = subcategoriaService.incluir(subcategoria);
 
         setUpCategoria();
         categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subCategoria);
+        categoria.getSubcategorias().add(subcategoria);
         categoria = categoriaService.incluir(categoria);
 
         setUpDominio();
@@ -106,7 +106,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subCategoria);
+        medida.setSubcategoria(subcategoria);
         medida.setCategoria(categoria);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
@@ -122,7 +122,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         produto.setFornecedor(fornecedor);
         produto.setCategoria(categoria);
         produto.setMedida(medida);
-        produto.setSubCategoria(subCategoria);
+        produto.setSubcategoria(subcategoria);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
 
 
@@ -172,7 +172,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
         assertMarca(found.getMarca(), updated.getMarca());
         assertCategoria(found.getCategoria(), updated.getCategoria());
-        assertSubCategoria(found.getSubCategoria(), updated.getSubCategoria());
+        assertSubCategoria(found.getSubcategoria(), updated.getSubcategoria());
         assertFornecedor(found.getFornecedor(), updated.getFornecedor());
         assertMarcaSubCategoriaCategoriaValor(found.getMedida());
         assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());

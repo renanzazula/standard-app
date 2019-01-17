@@ -22,11 +22,11 @@ public @Data class CategoriaEntity extends BaseAuditEntity {
 	private String descricao;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "categoria_has_sub_categoria", joinColumns = {
+	@JoinTable(name = "categoria_has_subcategoria", joinColumns = {
 			@JoinColumn(name = "categoria_codigo", nullable = false, updatable = false, referencedColumnName = "codigo") }, inverseJoinColumns = {
-					@JoinColumn(name = "sub_categoria_codigo", nullable = false, updatable = false) })
+					@JoinColumn(name = "subcategoria_codigo", nullable = false, updatable = false) })
 	@OrderBy("codigo")
-	private Set<SubCategoriaEntity> subCategoriasSet;
+	private Set<SubcategoriaEntity> subcategoriasSet;
 
 
 

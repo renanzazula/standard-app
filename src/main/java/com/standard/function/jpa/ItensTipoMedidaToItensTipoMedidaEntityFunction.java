@@ -18,8 +18,8 @@ public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<
 			if (input.getCategoria() != null) {
 				output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
 			}
-			if (input.getSubCategoria() != null) {
-				output.setSubcategoria(JpaFunctions.subCategoriaToSubCategoriaEntity.apply(input.getSubCategoria()));
+			if (input.getSubcategoria() != null) {
+				output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
 			}
 			if (input.getMarca() != null) {
 				output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
