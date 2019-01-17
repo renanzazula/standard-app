@@ -58,7 +58,6 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectKey>standard-app</sonar.projectKey>
         <sonar.organization>renanzazula-bitbucket</sonar.organization>
-        <!--${SONAR_TOKEN}-->
         <sonar.login>454127241003dd57a450435ac7290feccf5fc17f</sonar.login>
     </properties>
 
@@ -79,7 +78,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -15,3 +15,9 @@
 [![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=standard-app&metric=vulnerabilities)](https://sonarcloud.io/api/project_badges/measure?project=standard-app&metric=vulnerabilities)
 
 Standard-app
+
+From Docker image at centos 
+ - To build "docker build -t spring-boot-docker ." with dot
+ - To running "docker run -d -p 8080:8080 spring-boot-docker"
+
+

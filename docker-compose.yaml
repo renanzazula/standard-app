@@ -1,0 +1,28 @@
+version: '3'
+services:
+  standard-app:
+      image: standard-app
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      ports:
+          - 8080:8080
+#      depends_on:
+#          - payments-db
+#      links:
+#          - payments-db
+#  payments-db:
+#      container_name: payments_db
+#      image: postgres
+#      restart: always
+#      volumes:
+#          - payments_db:/var/lib/postgresql/data
+#      environment:
+#          - POSTGRES_PASSWORD=payments
+#          - POSTGRES_USER=payments
+#          - POSTGRES_DB=payments
+#          - PGDATA=/var/lib/postgresql/data/pgdata
+#      ports:
+#          - 54320:5432
+#volumes:
+#    payments_db: {}
