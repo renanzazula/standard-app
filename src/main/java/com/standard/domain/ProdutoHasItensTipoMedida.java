@@ -12,17 +12,16 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public   class ProdutoHasItensTipoMedida implements Serializable {
+public class ProdutoHasItensTipoMedida implements Serializable {
 
-	private static final long serialVersionUID = -6612762288260227887L;
+    private static final long serialVersionUID = -6612762288260227887L;
 
-	private Long codigo;
-	private List<Dominio> dominios;
-	private Integer quantidade;
-	private Double  valorUnitario;
-	private ItensTipoMedida itensTipoMedida;
-	private Produto produto;
+    private Long codigo;
+    private List<Dominio> dominios;
+    private Integer quantidade;
+    private Double valorUnitario;
+    private ItensTipoMedida itensTipoMedida;
+    private Produto produto;
 
-	 
 
 }

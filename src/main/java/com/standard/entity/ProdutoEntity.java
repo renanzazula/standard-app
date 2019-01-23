@@ -40,7 +40,7 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     @Column(name = "descricao", length = 45)
     private String descricao;
 
-    @NotNull
+//    @NotNull TODO: verificar pq preciso do preco do produto se tenho os outros precos abaixo
     @Column(name = "preco")
     private Double preco;
 

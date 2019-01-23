@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface MedidaRepository extends JpaRepository<MedidaEntity, Long> {
 
-    public List<MedidaEntity> findByItensTipoMedidaCategoriaAndItensTipoMedidaSubcategoriaAndAndItensTipoMedidaMarca(
+    List<MedidaEntity> findByItensTipoMedidaCategoriaAndItensTipoMedidaSubcategoriaAndAndItensTipoMedidaMarca(
             CategoriaEntity categoria_codigo, SubcategoriaEntity subcategoria_codigo, MarcaEntity marca_codigo);
 
 }
