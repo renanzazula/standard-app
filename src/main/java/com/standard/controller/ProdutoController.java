@@ -4,6 +4,7 @@ import com.standard.domain.Produto;
 import com.standard.service.produto.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto incluir(@RequestBody Produto produto) {
+    public Produto incluir(@RequestParam("file") MultipartFile file, @RequestParam("produto") Produto produto) {
+        System.out.println(file);
         return produtoService.incluir(produto);
     }
 
@@ -56,10 +58,6 @@ public class ProdutoController {
     public Produto addicionarProduto(@PathVariable String barCode) {
         return produtoService.consultarByBarCode(barCode);
     }
-
-
-
-
 
 
 }
