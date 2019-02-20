@@ -1,5 +1,7 @@
 package com.standard.entity;
 
+import com.standard.enums.StatusEnum;
+import com.standard.enums.StatusVendaEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,8 +31,9 @@ public @Data class VendaEntity extends BaseAuditEntity {
 	@Column(name = "valorTotal")
 	private Double valorTotal;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private String status;
+	private StatusVendaEnum status;
 
 	@Column(name = "subTotal")
 	private Double subTotal;

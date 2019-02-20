@@ -1,9 +1,12 @@
 package com.standard.entity;
 
+import com.standard.enums.StatusEnum;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -23,6 +26,10 @@ public @Data class FormaDePagamentoEntity extends BaseAuditEntity {
 	@NotNull
 	@Column(name = "descricao", length = 45)
 	private String descricao;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusEnum status;
 
 	@NotNull
 	@Min(0)

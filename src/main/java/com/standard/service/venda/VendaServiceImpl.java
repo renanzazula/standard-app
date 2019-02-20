@@ -69,16 +69,7 @@ public class VendaServiceImpl implements VendaService {
 
         vendaDB.setVendaHasItemProduto(vendaHasItemProdutoSet);
         vendaDB.setQuantidade(quantidadeTotalEstoque);
-        vendaDB.setSubTotal(venda.getSubTotal());
-        vendaDB.setValorPendente(venda.getValorPendente());
-        vendaDB.setValorPago(venda.getValorPago());
-        vendaDB.setDesconto(venda.getDesconto());
-        vendaDB.setTotalApagar(venda.getTotalApagar());
-        vendaDB.setTroco(venda.getTroco());
-        vendaDB.setPagamento(venda.getPagamento());
-        vendaDB.setValorTotal(venda.getSubTotal()); // posso considerar valor total é sub total venda... TODO: validar
-        vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(venda.getCliente().getCodigo()));
+        vendaToVendaDB(venda, vendaDB, venda.getSubTotal());
 
         CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
         vendaDB.setCaixa(caixa);
@@ -88,7 +79,7 @@ public class VendaServiceImpl implements VendaService {
         if (caixa != null) {
             if (caixa.getStatus().name().equals("A")) {
                 // if caixa satus F error
-                vendaDB.setStatus(StatusVendaEnum.Efetuda.name());
+                vendaDB.setStatus(StatusVendaEnum.EFETUDA);
                 vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
 
                 /**
@@ -103,6 +94,19 @@ public class VendaServiceImpl implements VendaService {
             }
         }
         return vResult;
+    }
+
+    private void vendaToVendaDB(Venda venda, VendaEntity vendaDB, Double subTotal) {
+        vendaDB.setSubTotal(venda.getSubTotal());
+        vendaDB.setValorPendente(venda.getValorPendente());
+        vendaDB.setValorPago(venda.getValorPago());
+        vendaDB.setDesconto(venda.getDesconto());
+        vendaDB.setTotalApagar(venda.getTotalApagar());
+        vendaDB.setTroco(venda.getTroco());
+        vendaDB.setPagamento(venda.getPagamento());
+        vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
+        vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
+        vendaDB.setCliente(clienteRepository.getOne(venda.getCliente().getCodigo()));
     }
 
     /**
@@ -155,16 +159,7 @@ public class VendaServiceImpl implements VendaService {
         // status; Definicao o que sera status...
 
         vendaDB.setQuantidade(venda.getQuantidade());
-        vendaDB.setSubTotal(venda.getSubTotal());
-        vendaDB.setValorPendente(venda.getValorPendente());
-        vendaDB.setValorPago(venda.getValorPago());
-        vendaDB.setDesconto(venda.getDesconto());
-        vendaDB.setTotalApagar(venda.getTotalApagar());
-        vendaDB.setTroco(venda.getTroco());
-        vendaDB.setPagamento(venda.getPagamento());
-        vendaDB.setValorTotal(venda.getValorTotal());
-        vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(venda.getCliente().getCodigo()));
+        vendaToVendaDB(venda, vendaDB, venda.getValorTotal());
         vendaDB.setCaixa(caixaRepository.getOne(venda.getCaixa().getCodigo()));
         return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
 
@@ -182,7 +177,7 @@ public class VendaServiceImpl implements VendaService {
         // TODO: update caixa
         // forma de pagamento setar como retirada
         //data e hora
-        vendaDB.setStatus(StatusVendaEnum.Cancelado.name());
+        vendaDB.setStatus(StatusVendaEnum.CANCELADO);
         vendaRepository.saveAndFlush(vendaDB);
     }
 
@@ -217,12 +212,10 @@ public class VendaServiceImpl implements VendaService {
         // TODO:
 //		vendaEntity.setCliente(venda.getCliente());
 
-        if (venda.getFormaDePagamento() != null) {
-            if (venda.getFormaDePagamento().getCodigo() != null) {
-                FormaDePagamentoEntity formaDePagamentoEntity = new FormaDePagamentoEntity();
-                formaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
-                vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
-            }
+        if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
+            FormaDePagamentoEntity formaDePagamentoEntity = new FormaDePagamentoEntity();
+            formaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
+            vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
         }
         return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
     }

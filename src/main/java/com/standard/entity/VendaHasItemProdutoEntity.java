@@ -8,9 +8,6 @@ import javax.persistence.*;
 @Table(name = "venda_has_item_produto")
 public @Data class VendaHasItemProdutoEntity extends BaseAuditEntity{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2516119080969832005L;
 
 	@Id

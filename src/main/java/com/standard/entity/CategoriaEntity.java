@@ -1,5 +1,6 @@
 package com.standard.entity;
 
+import com.standard.enums.StatusEnum;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +21,10 @@ public @Data class CategoriaEntity extends BaseAuditEntity {
 	@Size(max = 45)
 	@Column(name = "descricao", length = 45)
 	private String descricao;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusEnum status;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "categoria_has_subcategoria", joinColumns = {

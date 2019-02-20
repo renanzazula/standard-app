@@ -1,12 +1,10 @@
 package com.standard.entity;
 
+import com.standard.enums.StatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
@@ -23,6 +21,10 @@ public @Data class SubcategoriaEntity extends BaseAuditEntity {
 	@NotNull
 	@Column(name = "descricao", length = 45)
 	private String descricao;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusEnum status;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "subcategoriasSet")
 	private Set<CategoriaEntity> categoria;

@@ -1,5 +1,6 @@
 package com.standard.entity;
 
+import com.standard.enums.StatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,12 +23,12 @@ class MedidaEntity extends BaseAuditEntity {
     @Column(name = "descricao", length = 45)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusEnum status;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medida_codigo")
     @OrderBy("codigo")
     private Set<ItensTipoMedidaEntity> itensTipoMedida;
-
-    public MedidaEntity() {
-
-    }
 }

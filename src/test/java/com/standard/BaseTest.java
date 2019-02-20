@@ -132,7 +132,7 @@ public class BaseTest {
         produto.setCodigo(1L);
         produto.setBarCode(BAR_0_CODE);
         produto.setNome(NOME);
-        produto.setStatus(StatusEnum.Ativo);
+        produto.setStatus(StatusEnum.ATIVO);
         produto.setDescricao(DESCRICAO);
         produto.setPreco(10d);
         produto.setPrecoVenda(10d);

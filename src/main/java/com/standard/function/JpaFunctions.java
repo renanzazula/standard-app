@@ -4,6 +4,9 @@ import com.standard.function.jpa.*;
 
 public class JpaFunctions {
 
+    public JpaFunctions() {
+    }
+
     public static final CategoriaToCategoriaEntityFunction categoriaToCategoriaEntity = new CategoriaToCategoriaEntityFunction();
     public static final SubCategoriaToSubCategoriaEntityFunction subcategoriaToSubCategoriaEntity = new SubCategoriaToSubCategoriaEntityFunction();
     public static final FornecedorToFornecedorEntityFunction fornecedortoFornecedorEntity = new FornecedorToFornecedorEntityFunction();

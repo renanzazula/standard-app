@@ -29,10 +29,4 @@ public class Dominio implements Serializable {
     @ApiModelProperty(value = "ativo", notes = "ativo = true, nao ativo = false", required = true)
     private boolean checked;
 
-//    @DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
-//    private Date data;
-//
-//    @DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
-//    private Date hora;
-
 }

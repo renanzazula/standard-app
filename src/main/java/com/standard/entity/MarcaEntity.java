@@ -23,7 +23,6 @@ class MarcaEntity extends BaseAuditEntity {
     @Column(name = "descricao", length = 45)
     private String descricao;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusEnum status;

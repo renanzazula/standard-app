@@ -2,6 +2,7 @@ package com.standard.service.marca;
 
 import com.standard.domain.Marca;
 import com.standard.entity.MarcaEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.MarcaRepository;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class MarcaServiceImpl implements MarcaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		MarcaEntity marcaDB = repository.getOne(codigo);
-		//TODO: marcaDB.setStatus(Status.Inativo);
-		repository.delete(marcaDB);
+		marcaDB.setStatus(StatusEnum.INATIVO);
+		repository.save(marcaDB);
 	}
 
 	@Override

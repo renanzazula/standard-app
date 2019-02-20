@@ -3,6 +3,7 @@ package com.standard.service.medida;
 import com.standard.domain.Medida;
 import com.standard.domain.Produto;
 import com.standard.entity.*;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.MarcaRepository;
@@ -78,7 +79,8 @@ public class MedidaServiceImpl implements MedidaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElse(null);
-		medidaRepository.delete(medidaDB);
+		medidaDB.setStatus(StatusEnum.INATIVO);
+		medidaRepository.save(medidaDB);
 	}
 
 	@Override

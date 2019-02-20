@@ -2,6 +2,7 @@ package com.standard.service.formaDePagamento;
 
 import com.standard.domain.FormasDePagamento;
 import com.standard.entity.FormaDePagamentoEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.FormaDePagamentoRepository;
 import org.springframework.stereotype.Service;
@@ -23,31 +24,30 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     @Transactional
     public FormasDePagamento incluir(FormasDePagamento objct) {
         FormaDePagamentoEntity formasDePagamentoDB = new FormaDePagamentoEntity();
-        formasDePagamentoDB.setNome(objct.getNome());
-        formasDePagamentoDB.setDescricao(objct.getDescricao());
-        formasDePagamentoDB.setPorcentagemDesconto(objct.getPorcentagemDesconto());
-        formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB);
-        return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
-                .apply(formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB));
+        return getFormasDePagamento(objct, formasDePagamentoDB);
     }
 
     @Override
     @Transactional
     public FormasDePagamento alterar(Long codigo, FormasDePagamento objct) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
+        return getFormasDePagamento(objct, formasDePagamentoDB);
+    }
+
+    private FormasDePagamento getFormasDePagamento(FormasDePagamento objct, FormaDePagamentoEntity formasDePagamentoDB) {
         formasDePagamentoDB.setNome(objct.getNome());
         formasDePagamentoDB.setDescricao(objct.getDescricao());
         formasDePagamentoDB.setPorcentagemDesconto(objct.getPorcentagemDesconto());
         formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB);
-        return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
-                .apply(formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB));
+        return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity.apply(formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB));
     }
 
     @Override
     @Transactional
     public void excluir(Long codigo) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
-        formaDePagamentoRepository.delete(formasDePagamentoDB);
+        formasDePagamentoDB.setStatus(StatusEnum.INATIVO);
+        formaDePagamentoRepository.save(formasDePagamentoDB);
     }
 
     @Override
