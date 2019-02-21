@@ -49,7 +49,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setCodigo(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
 		produtoDB.setNome(produto.getNome());
-		produtoDB.setStatus(StatusEnum.Ativo);
+		produtoDB.setStatus(StatusEnum.ATIVO);
 		produtoDB.setDescricao(produto.getDescricao());
 		produtoDB.setPreco(produto.getPreco());
 		produtoDB.setPrecoVenda(produto.getPrecoVenda());
@@ -156,7 +156,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Transactional
 	public void excluir(Long codigo) {
 		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
-		produtoDB.setStatus(StatusEnum.Inativo);
+		produtoDB.setStatus(StatusEnum.INATIVO);
 		produtoRepository.saveAndFlush(produtoDB);
 	}
 
@@ -171,7 +171,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Transactional(readOnly = true)
 	public Produto consultarByBarCode(String barcode) {
 		Optional<ProdutoEntity> p = produtoRepository.findByBarCode(barcode.trim());
-		return JpaFunctions.produtoToProdutoEntity.apply(p.get());
+		if(p.isPresent()){
+			return JpaFunctions.produtoToProdutoEntity.apply(p.get());
+		}else{
+			return null;
+		}
 	}
 
 	@Override

@@ -29,21 +29,15 @@ class VendaSpecification implements Specification<VendaEntity> {
             p.getExpressions().add(cb.equal(root.get("data"), venda.getData()));
         }
 
-        if (venda.getStatus() != null) {
-            if (!venda.getStatus().equals("NONE")) {
-                p.getExpressions().add(cb.equal(root.get("status"), venda.getStatus()));
-            }
+        if (venda.getStatus() != null && !venda.getStatus().equals("NONE")) {
+            p.getExpressions().add(cb.equal(root.get("status"), venda.getStatus()));
         }
 
         // TODO: Cliente
 
-        if (venda.getFormaDePagamento() != null) {
-            if (venda.getFormaDePagamento().getCodigo() != null) {
-
-                Join<VendaEntity, FormaDePagamentoEntity> sq = root.join("formaDePagamento");
-                p.getExpressions().add(cb.equal(sq.get("codigo"), venda.getFormaDePagamento().getCodigo()));
-
-            }
+        if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
+            Join<VendaEntity, FormaDePagamentoEntity> sq = root.join("formaDePagamento");
+            p.getExpressions().add(cb.equal(sq.get("codigo"), venda.getFormaDePagamento().getCodigo()));
         }
         return p;
     }

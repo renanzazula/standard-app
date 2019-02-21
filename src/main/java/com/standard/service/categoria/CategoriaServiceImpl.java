@@ -3,6 +3,7 @@ package com.standard.service.categoria;
 import com.standard.domain.Categoria;
 import com.standard.entity.CategoriaEntity;
 import com.standard.entity.SubcategoriaEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.SubcategoriaRepository;
@@ -71,9 +72,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		CategoriaEntity categoriaDB = repository.getOne(codigo);
-		categoriaDB.getSubcategoriasSet().clear();
+		categoriaDB.setStatus(StatusEnum.INATIVO);
 		repository.saveAndFlush(categoriaDB);
-		repository.delete(repository.getOne(codigo));
 	}
 
 }

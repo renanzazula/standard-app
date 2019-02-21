@@ -3,6 +3,7 @@ package com.standard.service.venda;
 import com.standard.BaseTest;
 import com.standard.domain.*;
 import com.standard.entity.ClienteEntity;
+import com.standard.enums.StatusVendaEnum;
 import com.standard.repository.*;
 import com.standard.service.caixa.CaixaService;
 import com.standard.service.caixa.CaixaServiceImpl;
@@ -180,7 +181,7 @@ public class VendaServiceImplTestIT extends BaseTest {
         venda.setTotalApagar(10.0);
         venda.setTroco(10.0);
         venda.setPagamento(10.0);
-        venda.setStatus("");
+        venda.setStatus(StatusVendaEnum.EFETUDA);
         venda.setCaixa(new Caixa());
         venda.setCaixa(caixa);
         venda.setFormaDePagamento(formasDePagamento);

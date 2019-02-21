@@ -1,5 +1,6 @@
 package com.standard.domain;
 
+import com.standard.enums.StatusVendaEnum;
 import com.standard.util.Constants;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,7 +51,7 @@ public class Venda implements Serializable {
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double pagamento;
 
-	private String status;
+	private StatusVendaEnum status;
 	private Caixa caixa;
 	private Cliente cliente;
 

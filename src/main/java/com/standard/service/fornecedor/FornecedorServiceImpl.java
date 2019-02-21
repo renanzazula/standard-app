@@ -2,6 +2,7 @@ package com.standard.service.fornecedor;
 
 import com.standard.domain.Fornecedor;
 import com.standard.entity.FornecedorEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.FornecedorRepository;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,8 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Transactional
     public void excluir(Long codigo) {
         FornecedorEntity fornecedorDB = repository.getOne(codigo);
-        repository.delete(fornecedorDB);
+        fornecedorDB.setStatus(StatusEnum.INATIVO);
+        repository.save(fornecedorDB);
     }
 
     @Override

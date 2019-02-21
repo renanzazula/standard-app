@@ -2,6 +2,7 @@ package com.standard.service.subcategoria;
 
 import com.standard.domain.Subcategoria;
 import com.standard.entity.SubcategoriaEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,8 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		SubcategoriaEntity subcategoriaDB = repository.findById(codigo).orElse(null);
-		repository.delete(subcategoriaDB);
+		subcategoriaDB.setStatus(StatusEnum.INATIVO);
+		repository.save(subcategoriaDB);
 	}
 
 	@Override

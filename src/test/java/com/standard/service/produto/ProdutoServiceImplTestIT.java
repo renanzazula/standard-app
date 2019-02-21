@@ -142,7 +142,7 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         Produto found = produtoService.consultarByCodigo(produto.getCodigo());
         found.setBarCode(BAR_0_CODE + "_update");
         found.setNome(NOME + "_update");
-        found.setStatus(StatusEnum.Inativo);
+        found.setStatus(StatusEnum.INATIVO);
         found.setDescricao(DESCRICAO + "_update");
         found.setPreco(15d);
         found.setPrecoVenda(15d);

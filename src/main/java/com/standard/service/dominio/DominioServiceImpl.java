@@ -2,6 +2,7 @@ package com.standard.service.dominio;
 
 import com.standard.domain.Dominio;
 import com.standard.entity.DominioEntity;
+import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.DominioRepository;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,8 @@ public class DominioServiceImpl implements DominioService {
 	@Transactional
 	public void excluir(Long codigo) {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
-		// dominioDB.setStatus(Status.Inativo);
-		repository.delete(dominioDB);
+		dominioDB.setStatus(StatusEnum.INATIVO);
+		repository.save(dominioDB);
 	}
 
 	@Override
