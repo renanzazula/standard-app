@@ -20,4 +20,5 @@ From Docker image at centos
  - To build "docker build -t spring-boot-docker ." with dot
  - To running "docker run -d -p 8080:8080 spring-boot-docker"
 
-
+from maven command line profile local  
+mvnw spring-boot:run -Dmaven.test.skip=true -Dspring-boot.run.profiles=local
