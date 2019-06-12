@@ -23,10 +23,7 @@ public class VendaServiceImpl implements VendaService {
     private final CaixaRepository caixaRepository;
     private final ClienteRepository clienteRepository;
     private final ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
-
-
     private final CaixaService caixaService;
-
 
     public VendaServiceImpl(VendaRepository vendaRepository, FormaDePagamentoRepository
             formaDePagamentoRepository, CaixaRepository caixaRepository,
@@ -39,8 +36,6 @@ public class VendaServiceImpl implements VendaService {
         this.produtoHasItensTipoMedidaRepository = produtoHasItensTipoMedidaRepository;
         this.caixaService = caixaService;
     }
-
-
 
     @Override
     @Transactional
@@ -79,18 +74,10 @@ public class VendaServiceImpl implements VendaService {
         if (caixa != null) {
             if (caixa.getStatus().name().equals("A")) {
                 // if caixa satus F error
-                vendaDB.setStatus(StatusVendaEnum.EFETUDA);
+                vendaDB.setStatus(StatusVendaEnum.PENDENDE_CONFIRMAR);
                 vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
-
-                /**
-                 * Update valor total caixa
-                 */
-                caixaService.updateValorCaixa(caixa, venda);
-
-                /**
-                 * Efetuar baixa no estoque...
-                 */
-                removerProdutoDoEstoque(venda);
+            }else{
+                // todo Error bussines exeption
             }
         }
         return vResult;
@@ -127,6 +114,8 @@ public class VendaServiceImpl implements VendaService {
 
 
     /**
+     * este methodo quando uma pesso quer devolver o produto, a venda sera para status
+     *
      * adiciona quantidade tabela produto_has_itens_tipo_medida
      * <p>
      * produto_has_itens_tipo_medida
@@ -147,36 +136,57 @@ public class VendaServiceImpl implements VendaService {
                 .findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo).getCodigo();
     }
 
-    //Por questao de processo alarar venda
-    // Uma venda devera ser cancelada e crear uma nova...
-    // TODO: Alterar venda nao existe....
     @Override
+    @Transactional
     public Venda alterar(Venda venda) {
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
-
-        // itens mideida
-
-        // status; Definicao o que sera status...
-
         vendaDB.setQuantidade(venda.getQuantidade());
         vendaToVendaDB(venda, vendaDB, venda.getValorTotal());
         vendaDB.setCaixa(caixaRepository.getOne(venda.getCaixa().getCodigo()));
         return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
-
     }
 
+    @Override
+    public Venda alterarStatusVendaParaEfetuada(Venda venda) {
+        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
+        vendaDB.setCaixa(caixa);
+
+        Venda vResult = null;
+        if (caixa != null) {
+            if (caixa.getStatus().name().equals("A")) {
+                // if caixa satus F error
+                vendaDB.setStatus(StatusVendaEnum.EFETUDA);
+                vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+
+                // Update valor total caixa
+                caixaService.updateValorCaixa(caixa, venda);
+
+                // Efetuar baixa no estoque...
+                removerProdutoDoEstoque(venda);
+            }
+        }
+        return vResult;
+    }
+
+    public Venda alterarStatusVendaParaNaoRealizada(Venda venda) {
+        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
+        vendaDB.setCaixa(caixa);
+       Venda vResult = null;
+        if (caixa != null) {
+            if (caixa.getStatus().name().equals("A")) {
+                 vendaDB.setStatus(StatusVendaEnum.NAO_REALIZADA);
+                vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+            }
+        }
+        return vResult;
+    }
 
     @Override
     @Transactional
     public void cancelar(Venda venda) {
-
-        adicionarProdutoNoEstoque(venda);
-
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
-
-        // TODO: update caixa
-        // forma de pagamento setar como retirada
-        //data e hora
         vendaDB.setStatus(StatusVendaEnum.CANCELADO);
         vendaRepository.saveAndFlush(vendaDB);
     }

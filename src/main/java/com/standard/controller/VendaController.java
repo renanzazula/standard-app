@@ -1,21 +1,42 @@
 package com.standard.controller;
 
-import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.standard.domain.Venda;
+import com.standard.service.venda.VendaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping(VendaController.BASE_URL)
 public class VendaController {
 
-    public static final String BASE_URL = "/api/v1/categoria";
+    public static final String BASE_URL = "/api/v1/venda";
 
-    // 1 todo: stop later todo This
-    // 2
-    // 3
-    // 4
-    // 5
-    // 6
+    @Autowired
+    private VendaService vendaService;
+
+    // 1 avancar
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Venda avancar(@RequestBody Venda venda){
+        return vendaService.incluir(venda);
+    }
+
+    // 2 confirmar
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
+        return vendaService.alterarStatusVendaParaEfetuada(venda);
+    }
+
+    // 3 imprimir recibo ou enviar por email
+
+    // 2 cancelar venda
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Venda alterarStatusVendaParaNaoRealizada(@RequestBody Venda venda){
+        return vendaService.alterarStatusVendaParaNaoRealizada(venda);
+    }
 
 }
