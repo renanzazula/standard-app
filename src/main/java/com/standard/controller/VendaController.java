@@ -16,21 +16,28 @@ public class VendaController {
     @Autowired
     private VendaService vendaService;
 
-    // 1 avancar
-    @PostMapping
+    // 1 - avancar
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Venda avancar(@RequestBody Venda venda){
         return vendaService.incluir(venda);
     }
 
-    // 2 confirmar
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
-//        return vendaService.alterarStatusVendaParaEfetuada(venda);
-//    }
+    // 2 - get venda by codigo
+    @GetMapping("/{codigo}/confirmar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Venda getVendaById(@PathVariable("codigo") Long codigo){
+        return vendaService.consultarByCodigo(new Venda(codigo));
+    }
 
-    // 3 imprimir recibo ou enviar por email
+    // 3 - confirmar
+    @PostMapping("/corfirmar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
+        return vendaService.alterarStatusVendaParaEfetuada(venda);
+    }
+
+    // 4 imprimir recibo ou enviar por email
 
     // 2 cancelar venda
 //    @PostMapping
