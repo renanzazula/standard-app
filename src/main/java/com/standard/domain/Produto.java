@@ -1,6 +1,5 @@
 package com.standard.domain;
 
-import com.standard.enums.FlagSiteEnum;
 import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -75,9 +73,9 @@ public   class Produto implements Serializable {
 		return quantidadeTotalEstoque;
 	}
 
-	public List<FlagSiteEnum> getFlagSite() {
-		return Arrays.asList(FlagSiteEnum.values()); 
-	}
+	//public List<FlagSiteEnum> getFlagSite() {
+//		return Arrays.asList(FlagSiteEnum.values());
+//	}
 	
 	
 }

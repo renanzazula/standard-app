@@ -24,19 +24,19 @@ public class VendaController {
     }
 
     // 2 confirmar
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
-        return vendaService.alterarStatusVendaParaEfetuada(venda);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
+//        return vendaService.alterarStatusVendaParaEfetuada(venda);
+//    }
 
     // 3 imprimir recibo ou enviar por email
 
     // 2 cancelar venda
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Venda alterarStatusVendaParaNaoRealizada(@RequestBody Venda venda){
-        return vendaService.alterarStatusVendaParaNaoRealizada(venda);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Venda alterarStatusVendaParaNaoRealizada(@RequestBody Venda venda){
+//        return vendaService.alterarStatusVendaParaNaoRealizada(venda);
+//    }
 
 }

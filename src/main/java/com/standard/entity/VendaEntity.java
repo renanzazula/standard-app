@@ -1,6 +1,5 @@
 package com.standard.entity;
 
-import com.standard.enums.StatusEnum;
 import com.standard.enums.StatusVendaEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,13 +19,11 @@ public @Data class VendaEntity extends BaseAuditEntity {
 
 	@CreationTimestamp
 	@Column(name = "data")
-	@Temporal(TemporalType.DATE)
-	private Date data;
+	private LocalDateTime data;
 
 	@CreationTimestamp
 	@Column(name = "hora")
-	@Temporal(TemporalType.TIME)
-	private Date hora;
+	private LocalDateTime hora;
 
 	@Column(name = "valorTotal")
 	private Double valorTotal;

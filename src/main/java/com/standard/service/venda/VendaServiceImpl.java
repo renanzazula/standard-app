@@ -76,9 +76,11 @@ public class VendaServiceImpl implements VendaService {
                 // if caixa satus F error
                 vendaDB.setStatus(StatusVendaEnum.PENDENDE_CONFIRMAR);
                 vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
-            }else{
+            } else {
                 // todo Error bussines exeption
             }
+        } else {
+            // TODO; error or status Fechado
         }
         return vResult;
     }
@@ -93,7 +95,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setPagamento(venda.getPagamento());
         vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
         vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(venda.getCliente().getCodigo()));
+        vendaDB.setCliente(clienteRepository.getOne(new Long(1))); //venda.getCliente().getCodigo()
     }
 
     /**
@@ -115,7 +117,7 @@ public class VendaServiceImpl implements VendaService {
 
     /**
      * este methodo quando uma pesso quer devolver o produto, a venda sera para status
-     *
+     * <p>
      * adiciona quantidade tabela produto_has_itens_tipo_medida
      * <p>
      * produto_has_itens_tipo_medida
@@ -132,8 +134,8 @@ public class VendaServiceImpl implements VendaService {
     }
 
     private Long getProdutoHasItensTipoMedida(Long itemTipoMedidaCodigo, Long produtoCodigo) {
-        return produtoHasItensTipoMedidaRepository
-                .findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo).getCodigo();
+        ProdutoHasItensTipoMedidaEntity ent = produtoHasItensTipoMedidaRepository.findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo);
+        return ent.getCodigo();
     }
 
     @Override
@@ -173,10 +175,10 @@ public class VendaServiceImpl implements VendaService {
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
         CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
         vendaDB.setCaixa(caixa);
-       Venda vResult = null;
+        Venda vResult = null;
         if (caixa != null) {
             if (caixa.getStatus().name().equals("A")) {
-                 vendaDB.setStatus(StatusVendaEnum.NAO_REALIZADA);
+                vendaDB.setStatus(StatusVendaEnum.NAO_REALIZADA);
                 vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
             }
         }

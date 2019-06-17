@@ -3,12 +3,11 @@ package com.standard.domain;
 import com.standard.enums.StatusVendaEnum;
 import com.standard.util.Constants;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,11 +17,11 @@ public class Venda implements Serializable {
 
 	private Long codigo;
 
-	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
-	private Date data;
+	//@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+	private LocalDateTime data;
 
-	@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
-	private Date hora;
+	//@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
+	private LocalDateTime hora;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double valorTotal;

@@ -113,7 +113,7 @@ INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, 
 -- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12');
 -- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12.5');
 -- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '13');
-
 INSERT INTO `fornecedor` (`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('FORNECEDOR','FORNECEDOR', 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
-
 INSERT INTO `cliente` (`codigo`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1, 0, 0, SYSDATE(), SYSDATE(), SYSDATE(), 0);
+INSERT INTO `caixa` (`codigo`,`alterado_por`,`criado_por`,`data_alteracao`,`data_criacao`,`hora_criacao`,`version`,`data_abertura`,`data_fechamento`,`hora_abertura`,`hora_fechamento`,`status`,`total`,`total_desconto`,`total_vendas`,`valor_final`,`valor_inicial`)VALUES (null,null,null,null,SYSDATE(),null,0,SYSDATE(),null,SYSDATE(),null,'A',0,0,0,0,5.0);
+
