@@ -41,29 +41,29 @@ public class VendaServiceImpl implements VendaService {
     @Transactional
     public Venda incluir(Venda venda) {
 
-        Integer quantidadeTotalEstoque = 0;
+        Integer quantidadeTotalItensVenda = 0;
         VendaEntity vendaDB = new VendaEntity();
 
         // itens medida
         Set<VendaHasItemProdutoEntity> vendaHasItemProdutoSet = new HashSet<>();
         for (VendaHasItemProduto itemVenda : venda.getVendaHasItemProduto()) {
-            VendaHasItemProdutoEntity vendaHasItemProduto = new VendaHasItemProdutoEntity();
+            VendaHasItemProdutoEntity vendaHasItemProdutoDb = new VendaHasItemProdutoEntity();
 
             Long codigo = getProdutoHasItensTipoMedida(
                     itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(),
                     itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 
-            ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
-            quantidadeTotalEstoque = (quantidadeTotalEstoque + itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
-            vendaHasItemProduto.setQuantidade(itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
-            vendaHasItemProduto.setValorUnitario(itemVenda.getProdutoHasItensTipoMedida().getValorUnitario());
-            vendaHasItemProduto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
-            vendaHasItemProduto.setVenda(vendaDB);
-            vendaHasItemProdutoSet.add(vendaHasItemProduto);
+            ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedidaDb = produtoHasItensTipoMedidaRepository.getOne(codigo);
+            quantidadeTotalItensVenda = (quantidadeTotalItensVenda + itemVenda.getQuantidade());
+            vendaHasItemProdutoDb.setQuantidade(itemVenda.getQuantidade());
+            vendaHasItemProdutoDb.setValorUnitario(produtoHasItensTipoMedidaDb.getValorUnitario());
+            vendaHasItemProdutoDb.setProdutoHasItensTipoMedida(produtoHasItensTipoMedidaDb);
+            vendaHasItemProdutoDb.setVenda(vendaDB);
+            vendaHasItemProdutoSet.add(vendaHasItemProdutoDb);
         }
 
         vendaDB.setVendaHasItemProduto(vendaHasItemProdutoSet);
-        vendaDB.setQuantidade(quantidadeTotalEstoque);
+        vendaDB.setQuantidade(quantidadeTotalItensVenda);
         vendaToVendaDB(venda, vendaDB, venda.getSubTotal());
 
         CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
@@ -95,7 +95,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setPagamento(venda.getPagamento());
         vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
         vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(new Long(1))); //venda.getCliente().getCodigo()
+        vendaDB.setCliente(clienteRepository.getOne(Long.valueOf(1))); //venda.getCliente().getCodigo()
     }
 
     /**
