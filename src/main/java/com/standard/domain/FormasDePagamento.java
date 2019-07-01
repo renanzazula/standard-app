@@ -21,8 +21,9 @@ public class FormasDePagamento implements Serializable {
 	private String descricao;
 	private Integer porcentagemDesconto;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=Constants.PATTERN_DATE_FORMAT)
+    @JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
 	private Date data;
-	//@DateTimeFormat(pattern =)
-	//private Date hora;
+
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
+	private Date hora;
 }

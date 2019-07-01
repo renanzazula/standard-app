@@ -1,8 +1,8 @@
 package com.standard.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.util.Constants;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -14,17 +14,17 @@ public @Data class Caixa implements Serializable {
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long codigo;
-	
-	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
 	private Date dataAbertura;
-	
-	@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
 	private Date horaAbertura;
-	
-	@DateTimeFormat(pattern = Constants.PATTERN_DATE_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
 	private Date dataFechamento;
-	
-	@DateTimeFormat(pattern = Constants.PATTERN_TIME_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
 	private Date horaFechamento;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)

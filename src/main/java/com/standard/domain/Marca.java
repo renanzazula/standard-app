@@ -1,11 +1,14 @@
 package com.standard.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.enums.StatusEnum;
+import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +21,11 @@ public class Marca implements Serializable {
 	private String nome;
 	private String descricao;
 	private StatusEnum status;
+	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
+	private Date data;
+
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
+	private Date hora;
 
 
 

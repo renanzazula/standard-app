@@ -1,5 +1,6 @@
 package com.standard.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
@@ -25,14 +26,17 @@ public   class Produto implements Serializable {
 	private String nome;
 	private StatusEnum status;
 	private String descricao;
-	
-	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double preco;
-	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double precoVenda;
-	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double precoCusto;
-	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
+
+	@JsonFormat(pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double precoOferta;
 	
 	private Double desconto;
@@ -43,8 +47,8 @@ public   class Produto implements Serializable {
 	
 	@NumberFormat(style=Style.PERCENT)
 	private Integer porcentagemDesconto;
-	
-	// FIXME: um data e uma hora 
+
+	@JsonFormat(pattern=Constants.PATTERN_DATE_TIME_FORMAT)
 	private Date dataHoraCadastro;
 
 	private Fornecedor fornecedor;

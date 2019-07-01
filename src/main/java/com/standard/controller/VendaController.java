@@ -31,7 +31,7 @@ public class VendaController {
     }
 
     // 3 - confirmar
-    @PostMapping("/corfirmar")
+    @PostMapping("/confirmar")
     @ResponseStatus(HttpStatus.CREATED)
     public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
         return vendaService.alterarStatusVendaParaEfetuada(venda);

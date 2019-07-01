@@ -109,7 +109,7 @@ public class VendaServiceImpl implements VendaService {
         venda.getVendaHasItemProduto().forEach(itemVenda -> {
             Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
             ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
-            produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() - itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
+            produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() - itemVenda.getQuantidade());
             produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
         });
     }

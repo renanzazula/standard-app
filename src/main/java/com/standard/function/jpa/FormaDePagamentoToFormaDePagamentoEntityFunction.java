@@ -15,8 +15,8 @@ public class FormaDePagamentoToFormaDePagamentoEntityFunction implements Functio
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 			output.setPorcentagemDesconto(input.getPorcentagemDesconto());
-		//	output.setData(input.getDataCriacao()); //fixme: erro quando front-end envia data e hora
-		//	output.setHora(input.getHoraCriacao());
+			output.setData(input.getDataCriacao());
+			output.setHora(input.getHoraCriacao());
 		}
 		return output;
 	}

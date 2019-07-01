@@ -1,11 +1,14 @@
 package com.standard.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,7 +22,13 @@ public class Medida implements Serializable {
 	private Long codigo;
 	private String nome;
 	private String descricao;
-	
+
+	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
+	private Date data;
+
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
+	private Date hora;
+
 	private Categoria categoria;
 	private Subcategoria subcategoria;
 	private Marca marca;
