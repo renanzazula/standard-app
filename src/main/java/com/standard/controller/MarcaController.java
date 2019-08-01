@@ -2,12 +2,15 @@ package com.standard.controller;
 
 import com.standard.domain.Marca;
 import com.standard.service.marca.MarcaService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(MarcaController.BASE_URL)
 public class MarcaController {
 
@@ -15,38 +18,30 @@ public class MarcaController {
 	
 	private final MarcaService marcaService;
 
-	public MarcaController(MarcaService marcaService) {
-		this.marcaService = marcaService;
-	}
-
 	@GetMapping({""})
-	@ResponseStatus(HttpStatus.OK)
-	public List<Marca> consultar(){
-		return marcaService.consultar();
+	public ResponseEntity<List<Marca>> consultar(){
+		return new ResponseEntity<>(marcaService.consultar(), HttpStatus.OK);
 	}
 
 	@GetMapping({"/{codigo}"})
-	@ResponseStatus(HttpStatus.OK)
-	public Marca consultarByCodigo(@PathVariable Long codigo){
-		return marcaService.consultarByCodigo(codigo);
+	public ResponseEntity<Marca> consultarByCodigo(@PathVariable Long codigo){
+		return new ResponseEntity<>(marcaService.consultarByCodigo(codigo), HttpStatus.OK);
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Marca incluir(@RequestBody Marca obj){
-		return marcaService.incluir(obj);
+	public ResponseEntity<Marca> incluir(@RequestBody Marca obj){
+		return new ResponseEntity<>(marcaService.incluir(obj), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping({"/{codigo}"})
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long codigo){
 		marcaService.excluir(codigo);
 	}
 
 	@PutMapping({"/{codigo}"})
-	@ResponseStatus(HttpStatus.OK)
-	public Marca alterar(@PathVariable Long codigo, @RequestBody Marca obj){
-		return marcaService.alterar(codigo, obj);
+	public ResponseEntity<Marca> alterar(@PathVariable Long codigo, @RequestBody Marca obj){
+		return new ResponseEntity<>(marcaService.alterar(codigo, obj), HttpStatus.OK);
 	}
 
 }

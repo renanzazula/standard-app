@@ -46,7 +46,9 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     @Transactional
     public void excluir(Long codigo) {
         FormaDePagamentoEntity formasDePagamentoDB = formaDePagamentoRepository.getOne(codigo);
-        formasDePagamentoDB.setStatus(StatusEnum.INATIVO);
+        if(formasDePagamentoDB != null) {
+            formasDePagamentoDB.setStatus(StatusEnum.INATIVO);
+        }
         formaDePagamentoRepository.save(formasDePagamentoDB);
     }
 

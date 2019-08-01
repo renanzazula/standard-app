@@ -2,39 +2,37 @@ package com.standard.controller;
 
 import com.standard.domain.Venda;
 import com.standard.service.venda.VendaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(VendaController.BASE_URL)
 public class VendaController {
 
     public static final String BASE_URL = "/api/v1/venda";
 
-    @Autowired
-    private VendaService vendaService;
+    private final VendaService vendaService;
 
     // 1 - avancar
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Venda avancar(@RequestBody Venda venda){
-        return vendaService.incluir(venda);
+    public ResponseEntity<Venda> avancar(@RequestBody Venda venda) {
+        return new ResponseEntity<>(vendaService.incluir(venda), HttpStatus.OK);
     }
 
     // 2 - get venda by codigo
     @GetMapping("/{codigo}/confirmar")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Venda getVendaById(@PathVariable("codigo") Long codigo){
-        return vendaService.consultarByCodigo(new Venda(codigo));
+    public ResponseEntity<Venda> getVendaById(@PathVariable("codigo") Long codigo) {
+        return new ResponseEntity<>(vendaService.consultarByCodigo(new Venda(codigo)), HttpStatus.OK);
     }
 
     // 3 - confirmar
     @PostMapping("/confirmar")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Venda alterarStatusVendaParaEfetuada(@RequestBody Venda venda){
-        return vendaService.alterarStatusVendaParaEfetuada(venda);
+    public ResponseEntity<Venda> alterarStatusVendaParaEfetuada(@RequestBody Venda venda) {
+        return new ResponseEntity<>(vendaService.alterarStatusVendaParaEfetuada(venda), HttpStatus.OK);
     }
 
     // 4 imprimir recibo ou enviar por email

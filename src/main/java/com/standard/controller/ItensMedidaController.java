@@ -6,12 +6,15 @@ import com.standard.domain.Produto;
 import com.standard.domain.ProdutoHasItensTipoMedida;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(DominioController.BASE_URL)
 public class ItensMedidaController {
 
@@ -20,31 +23,22 @@ public class ItensMedidaController {
     private final MedidaService medidaService;
     private final ProdutoService produtoService;
 
-    public ItensMedidaController(MedidaService medidaService, ProdutoService produtoService) {
-        this.medidaService = medidaService;
-        this.produtoService = produtoService;
-    }
-
     // fixme: separar end point...
     @RequestMapping(value = "/ajaxConsultarItensMedidaByCategoria")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Medida> ajaxConsultarItensMedidaByCategoria(@RequestBody Produto produto) {
-        return medidaService.consultarByCategoriaSubCategoriaMarca(produto);
+    public ResponseEntity<List<Medida>> ajaxConsultarItensMedidaByCategoria(@RequestBody Produto produto) {
+        return new ResponseEntity<>(medidaService.consultarByCategoriaSubCategoriaMarca(produto), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byProduto/{codigo}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProdutoHasItensTipoMedida> ajaxConsultarItensMedidaByProdutoCodigo(@PathVariable String codigo) {
-        Produto produtoDB = produtoService.consultarByCodigo(new Long(codigo));
-        return produtoDB.getProdutoHasItensTipoMedida();
+    public  ResponseEntity<List<ProdutoHasItensTipoMedida>> ajaxConsultarItensMedidaByProdutoCodigo(@PathVariable String codigo) {
+        Produto produtoDB = produtoService.consultarByCodigo(Long.valueOf(codigo));
+        return new ResponseEntity<>(produtoDB.getProdutoHasItensTipoMedida(), HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/byMedida/{codigo}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ItensTipoMedida> ajaxConsultarItensMedidaByMedidaCodigo(@RequestBody Medida medida, @PathVariable String codigo) {
+    public ResponseEntity<List<ItensTipoMedida>> ajaxConsultarItensMedidaByMedidaCodigo(@RequestBody Medida medida, @PathVariable String codigo) {
         Medida medidas = medidaService.consultarByCodigo(medida.getCodigo());
-        return medidas.getItensTipoMedida();
+        return new ResponseEntity<>(medidas.getItensTipoMedida(), HttpStatus.OK);
     }
 
 }

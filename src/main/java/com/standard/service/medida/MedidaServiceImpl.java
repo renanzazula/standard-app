@@ -79,7 +79,9 @@ public class MedidaServiceImpl implements MedidaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElse(null);
-		medidaDB.setStatus(StatusEnum.INATIVO);
+		if (medidaDB != null){
+			medidaDB.setStatus(StatusEnum.INATIVO);
+		}
 		medidaRepository.save(medidaDB);
 	}
 

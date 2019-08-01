@@ -82,7 +82,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     public void testDelete() throws Exception {
         mockMvc.perform(delete(DominioController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @Test

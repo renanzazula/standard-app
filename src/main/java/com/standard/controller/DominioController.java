@@ -3,50 +3,45 @@ package com.standard.controller;
 
 import com.standard.domain.Dominio;
 import com.standard.service.dominio.DominioService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(DominioController.BASE_URL)
 public class DominioController {
 
-	public static final String BASE_URL = "/api/v1/dominios";
+    public static final String BASE_URL = "/api/v1/dominios";
 
-	private final DominioService dominioService;
+    private final DominioService dominioService;
 
-	public DominioController(DominioService dominioService) {
-		this.dominioService = dominioService;
-	}
+    @GetMapping({""})
+    public ResponseEntity<List<Dominio>> consultar() {
+        return new ResponseEntity<>(dominioService.consultar(), HttpStatus.OK);
+    }
 
-	@GetMapping({""})
-    @ResponseStatus(HttpStatus.OK)
-	public List<Dominio> consultar(){
-        return dominioService.consultar();
-	}
+    @GetMapping({"/{codigo}"})
+    public ResponseEntity<Dominio> consultarByCodigo(@PathVariable Long codigo) {
+        return new ResponseEntity<>(dominioService.consultarByCodigo(codigo), HttpStatus.OK);
+    }
 
-	@GetMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-    public Dominio  consultarByCodigo(@PathVariable Long codigo){
-	 return dominioService.consultarByCodigo(codigo);
-	}
+    @PostMapping
+    public ResponseEntity<Dominio> incluir(@RequestBody Dominio dominio) {
+        return new ResponseEntity<>(dominioService.incluir(dominio), HttpStatus.CREATED);
+    }
 
-	@PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-	public Dominio incluir(@RequestBody Dominio dominio){
-		return dominioService.incluir(dominio);
-	}
+    @DeleteMapping({"/{codigo}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long codigo) {
+        dominioService.excluir(codigo);
+    }
 
-	@DeleteMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long codigo){
-		dominioService.excluir(codigo);
-	}
-
-	@PutMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-	public Dominio alterar(@PathVariable Long codigo, @RequestBody Dominio dominio){
-		return dominioService.alterar(codigo, dominio);
-	}
+    @PutMapping({"/{codigo}"})
+    public ResponseEntity<Dominio> alterar(@PathVariable Long codigo, @RequestBody Dominio dominio) {
+        return new ResponseEntity<>(dominioService.alterar(codigo, dominio), HttpStatus.OK);
+    }
 }

@@ -78,7 +78,7 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
     public void testDelete() throws Exception {
         mockMvc.perform(delete(CategoriaController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @Test

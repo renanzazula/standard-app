@@ -43,7 +43,9 @@ public class DominioServiceImpl implements DominioService {
 	@Transactional
 	public void excluir(Long codigo) {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
-		dominioDB.setStatus(StatusEnum.INATIVO);
+		if(dominioDB != null) {
+			dominioDB.setStatus(StatusEnum.INATIVO);
+		}
 		repository.save(dominioDB);
 	}
 

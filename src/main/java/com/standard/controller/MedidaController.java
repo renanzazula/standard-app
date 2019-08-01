@@ -5,64 +5,57 @@ import com.standard.domain.Medida;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(MedidaController.BASE_URL)
 public class MedidaController {
 
     public static final String BASE_URL = "/api/v1/medida";
-    
+
     private final CategoriaService categoriaService;
     private final MarcaService marcaService;
     private final MedidaService medidaService;
 
-    public MedidaController(CategoriaService categoriaService, MarcaService marcaService, MedidaService medidaService) {
-        this.categoriaService = categoriaService;
-        this.marcaService = marcaService;
-        this.medidaService = medidaService;
-    }
-
     @GetMapping({""})
-    @ResponseStatus(HttpStatus.OK)
-    public  List<Medida> consultar(){
-        return medidaService.consultar();
+    public ResponseEntity<List<Medida>> consultar() {
+        return new ResponseEntity<>(medidaService.consultar(), HttpStatus.OK);
     }
 
     @GetMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-    public Medida consultarByCodigo(@PathVariable Long codigo){
-        return medidaService.consultarByCodigo(codigo);
+    public ResponseEntity<Medida> consultarByCodigo(@PathVariable Long codigo) {
+        return new ResponseEntity<>(medidaService.consultarByCodigo(codigo), HttpStatus.OK);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Medida incluir(@RequestBody Medida medida){
-        return medidaService.incluir(medida) ;
+    public ResponseEntity<Medida> incluir(@RequestBody Medida medida) {
+        return new ResponseEntity<>(medidaService.incluir(medida), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long codigo){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long codigo) {
         medidaService.excluir(codigo);
     }
 
     @PutMapping({"/{codigo}"})
-    @ResponseStatus(HttpStatus.OK)
-    public Medida alterar(@PathVariable Long codigo, @RequestBody Medida medida){
-        return medidaService.alterar(codigo, medida);
+    public ResponseEntity<Medida> alterar(@PathVariable Long codigo, @RequestBody Medida medida) {
+        return new ResponseEntity<>(medidaService.alterar(codigo, medida), HttpStatus.OK);
     }
 
     private Medida carregaMedida(Medida medida) {
         medida.setMarcas(marcaService.consultar());
         medida.setCategorias(categoriaService.consultar());
         if (medida.getItensTipoMedida() != null) {
-            if(medida.getItensTipoMedida().size() > 0) {
-                if(medida.getItensTipoMedida().get(0) != null) {
-                    if(medida.getItensTipoMedida().get(0).getCategoria() != null) {
+            if (medida.getItensTipoMedida().size() > 0) {
+                if (medida.getItensTipoMedida().get(0) != null) {
+                    if (medida.getItensTipoMedida().get(0).getCategoria() != null) {
                         Categoria categoria = medida.getItensTipoMedida().get(0).getCategoria();
                         medida.setSubcategorias(categoriaService.consultarByCodigo(categoria.getCodigo()).getSubcategorias());
                     }

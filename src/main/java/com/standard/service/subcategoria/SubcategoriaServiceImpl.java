@@ -43,7 +43,9 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		SubcategoriaEntity subcategoriaDB = repository.findById(codigo).orElse(null);
-		subcategoriaDB.setStatus(StatusEnum.INATIVO);
+		if(subcategoriaDB != null){
+			subcategoriaDB.setStatus(StatusEnum.INATIVO);
+		}
 		repository.save(subcategoriaDB);
 	}
 

@@ -29,10 +29,11 @@ class VendaSpecification implements Specification<VendaEntity> {
             p.getExpressions().add(cb.equal(root.get("data"), venda.getData()));
         }
 
-        if (venda.getStatus() != null && !venda.getStatus().equals("NONE")) {
-            p.getExpressions().add(cb.equal(root.get("status"), venda.getStatus()));
+        if (venda.getStatus() != null) {
+            if(venda.getStatus().name().equals("NONE")){
+                p.getExpressions().add(cb.equal(root.get("status"), venda.getStatus()));
+            }
         }
-
         // TODO: Cliente
 
         if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {

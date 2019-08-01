@@ -72,7 +72,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Transactional
 	public void excluir(Long codigo) {
 		CategoriaEntity categoriaDB = repository.getOne(codigo);
-		categoriaDB.setStatus(StatusEnum.INATIVO);
+		if(categoriaDB != null) {
+			categoriaDB.setStatus(StatusEnum.INATIVO);
+		}
 		repository.saveAndFlush(categoriaDB);
 	}
 
