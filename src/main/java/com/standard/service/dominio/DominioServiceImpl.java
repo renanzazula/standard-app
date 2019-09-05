@@ -5,6 +5,7 @@ import com.standard.entity.DominioEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.DominioRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,12 +52,14 @@ public class DominioServiceImpl implements DominioService {
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "dominioListCache", condition = "#showInventoryOnHand == false")
 	public List<Dominio> consultar() {
 		return repository.findAll().stream().map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "dominioCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Dominio consultarByCodigo(Long codigo) {
 		return JpaFunctions.dominioToDominioEntity.apply(repository.findById(codigo).orElse(null));
 	}

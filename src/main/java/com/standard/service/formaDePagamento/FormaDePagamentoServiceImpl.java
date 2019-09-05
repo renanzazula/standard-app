@@ -5,6 +5,7 @@ import com.standard.entity.FormaDePagamentoEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.FormaDePagamentoRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "formasDePagamentoListCache", condition = "#showInventoryOnHand == false")
     public List<FormasDePagamento> consultar() {
         return formaDePagamentoRepository.findAll().stream().map(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity)
                 .collect(Collectors.toList());
@@ -61,6 +63,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "formasDePagamentoCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public FormasDePagamento consultarByCodigo(Long codigo) {
         return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
                 .apply(formaDePagamentoRepository.findById(codigo).orElse(null));

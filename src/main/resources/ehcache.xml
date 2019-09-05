@@ -1,0 +1,38 @@
+<config
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xmlns='http://www.ehcache.org/v3'>
+    <service>
+        <jsr107:defaults enable-management="true" enable-statistics="true"/>
+    </service>
+
+    <cache alias="categoriaCache" uses-template="config-cache"/>
+    <cache alias="categoriaListCache" uses-template="config-cache"/>
+
+    <cache alias="dominioCache" uses-template="config-cache"/>
+    <cache alias="dominioListCache" uses-template="config-cache"/>
+
+    <cache alias="formasDePagamentoCache" uses-template="config-cache"/>
+    <cache alias="formasDePagamentoListCache" uses-template="config-cache"/>
+
+    <cache alias="fornecedorCache" uses-template="config-cache"/>
+    <cache alias="fornecedorListCache" uses-template="config-cache"/>
+
+    <cache alias="marcaCache" uses-template="config-cache"/>
+    <cache alias="marcaListCache" uses-template="config-cache"/>
+
+    <cache alias="medidaCache" uses-template="config-cache"/>
+    <cache alias="medidaListCache" uses-template="config-cache"/>
+
+    <cache alias="subcategoriaCache" uses-template="config-cache"/>
+    <cache alias="subcategoriaListCache" uses-template="config-cache"/>
+
+    <cache-template name="config-cache">
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+        <resources>
+            <heap>1</heap>
+            <offheap unit="MB">1</offheap>
+        </resources>
+    </cache-template>
+</config>

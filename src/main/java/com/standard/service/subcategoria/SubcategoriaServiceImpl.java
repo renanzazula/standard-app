@@ -5,6 +5,7 @@ import com.standard.entity.SubcategoriaEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.SubcategoriaRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,12 +52,14 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "subcategoriaListCache", condition = "#showInventoryOnHand == false")
 	public List<Subcategoria> consultar() {
 		return repository.findAll().stream().map(JpaFunctions.subcategoriaToSubCategoriaEntity).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "subcategoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Subcategoria consultarByCodigo(Long codigo) {
 		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElse(null));
 	}

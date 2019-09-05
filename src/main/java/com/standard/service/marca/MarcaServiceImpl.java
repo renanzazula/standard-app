@@ -5,6 +5,7 @@ import com.standard.entity.MarcaEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.MarcaRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,12 +49,14 @@ public class MarcaServiceImpl implements MarcaService {
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "marcaListCache", condition = "#showInventoryOnHand == false")
 	public List<Marca> consultar() {
 		return repository.findAll().stream().map(JpaFunctions.marcaToMarcaEntity).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "marcaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Marca consultarByCodigo(Long codigo) {
 		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElse(null));
 	}

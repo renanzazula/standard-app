@@ -9,6 +9,7 @@ import com.standard.repository.CategoriaRepository;
 import com.standard.repository.MarcaRepository;
 import com.standard.repository.MedidaRepository;
 import com.standard.repository.SubcategoriaRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,12 +88,14 @@ public class MedidaServiceImpl implements MedidaService {
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "medidaListCache", condition = "#showInventoryOnHand == false")
 	public List<Medida> consultar() {
 		return medidaRepository.findAll().stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "medidaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Medida consultarByCodigo(Long codigo) {
 		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElse(null));
 	}

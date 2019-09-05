@@ -5,6 +5,7 @@ import com.standard.entity.FornecedorEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.FornecedorRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,12 +49,14 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "fornecedorListCache", condition = "#showInventoryOnHand == false")
     public List<Fornecedor> consultar() {
         return repository.findAll().stream().map(JpaFunctions.fornecedortoFornecedorEntity).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "fornecedorCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public Fornecedor consultarByCodigo(Long codigo) {
         return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElse(null));
     }

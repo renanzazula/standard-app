@@ -7,6 +7,7 @@ import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoriaRepository;
 import com.standard.repository.SubcategoriaRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,13 +58,14 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "categoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Categoria consultarByCodigo(Long codigo) {
 		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.findById(codigo).orElse(null));
 	}
 
-
 	@Override
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "categoriaListCache", condition = "#showInventoryOnHand == false")
 	public List<Categoria> consultar() {
 		return repository.findAll().stream().map(JpaFunctions.categoriaToCategoriaEntity).collect(Collectors.toList());
 	}
