@@ -3,10 +3,7 @@ package com.standard.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -64,7 +61,8 @@ public   class Produto implements Serializable {
 	private List<Marca> marcas;
 	private List<Medida> medidas;
 	private List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida;
- 
+ 	private Integer quantidadeTotalEstoque;
+			
 	public Integer getQuantidadeTotalEstoque() {
 		Integer quantidadeTotalEstoque = 0;
 		if(this.produtoHasItensTipoMedida != null) { 
@@ -76,10 +74,4 @@ public   class Produto implements Serializable {
 		}
 		return quantidadeTotalEstoque;
 	}
-
-	//public List<FlagSiteEnum> getFlagSite() {
-//		return Arrays.asList(FlagSiteEnum.values());
-//	}
-	
-	
 }
