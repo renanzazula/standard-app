@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(ProdutoController.BASE_URL)
 public class ProdutoController {
 
-    public static final String BASE_URL = "/api/v1/produto";
+    public static final String BASE_URL = "/private/v1/produto";
 
     private final ProdutoService produtoService;
 

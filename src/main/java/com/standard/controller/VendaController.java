@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(VendaController.BASE_URL)
 public class VendaController {
 
-    public static final String BASE_URL = "/api/v1/venda";
+    public static final String BASE_URL = "/private/v1/venda";
 
     private final VendaService vendaService;
 

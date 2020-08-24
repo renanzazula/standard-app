@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(SubCategoriaController.BASE_URL)
 public class SubCategoriaController {
 
-    public static final String BASE_URL = "/api/v1/subcategoria";
+    public static final String BASE_URL = "/private/v1/subcategoria";
 
     private final SubcategoriaService subcategoriaService;
     private final CategoriaService categoriaService;

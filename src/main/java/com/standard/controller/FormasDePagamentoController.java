@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(FormasDePagamentoController.BASE_URL)
 public class FormasDePagamentoController {
 
-    public static final String BASE_URL = "/api/v1/formasDePagamento";
+    public static final String BASE_URL = "/private/v1/formasDePagamento";
 
     private final FormaDePagamentoService formasDePagamentoService;
 

@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(FornecedorController.BASE_URL)
 public class FornecedorController {
 
-    public static final String BASE_URL = "/api/v1/fornecedor";
+    public static final String BASE_URL = "/private/v1/fornecedor";
 
     private final FornecedorService fornecedorService;
 

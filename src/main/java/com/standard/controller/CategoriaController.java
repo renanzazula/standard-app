@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoriaController {
 
-    public static final String BASE_URL = "/api/v1/categoria";
+    public static final String BASE_URL = "/private/v1/categoria";
 
     private final CategoriaService categoriaService;
 

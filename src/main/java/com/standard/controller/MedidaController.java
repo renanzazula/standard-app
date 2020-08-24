@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(MedidaController.BASE_URL)
 public class MedidaController {
 
-    public static final String BASE_URL = "/api/v1/medida";
+    public static final String BASE_URL = "/private/v1/medida";
 
     private final CategoriaService categoriaService;
     private final MarcaService marcaService;

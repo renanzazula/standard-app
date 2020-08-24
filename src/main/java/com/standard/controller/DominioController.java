@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(DominioController.BASE_URL)
 public class DominioController {
 
-    public static final String BASE_URL = "/api/v1/dominios";
+    public static final String BASE_URL = "/private/v1/dominios";
 
     private final DominioService dominioService;
 

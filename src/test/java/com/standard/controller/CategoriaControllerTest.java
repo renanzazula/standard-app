@@ -31,13 +31,18 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
     
-
     @BeforeEach
     public void setUp() {
         setUpCategoria();
     }
+
+    @Test
+    void testGetIndexSlashPublic() throws Exception{
+        mockMvc.perform(get(CategoriaController.BASE_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
 
     @Test
     public void testConsultar() throws Exception {

@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(MarcaController.BASE_URL)
 public class MarcaController {
 
-	public static final String BASE_URL = "/api/v1/marca";
+	public static final String BASE_URL = "/private/v1/marca";
 	
 	private final MarcaService marcaService;
 
