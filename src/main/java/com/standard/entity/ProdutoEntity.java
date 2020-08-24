@@ -113,7 +113,6 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "produto_codigo")
-    @OrderBy("itensTipoMedida")
     private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
 
 }

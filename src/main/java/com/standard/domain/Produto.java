@@ -72,6 +72,6 @@ public   class Produto implements Serializable {
 				}
 			}
 		}
-		return quantidadeTotalEstoque;
+			return quantidadeTotalEstoque;
 	}
 }
