@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class DominioServiceImpl implements DominioService {
 	@Override
 	@Transactional
 	public Dominio alterar(Long codigo, Dominio dominio) {
-		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
+		DominioEntity dominioDB = repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		Objects.requireNonNull(dominioDB).setDescricao(dominio.getDescricao());
 		dominioDB.setNome(dominio.getNome());
 		return JpaFunctions.dominioToDominioEntity.apply(repository.save(dominioDB));
@@ -43,7 +44,7 @@ public class DominioServiceImpl implements DominioService {
 	@Override
 	@Transactional
 	public void excluir(Long codigo) {
-		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
+		DominioEntity dominioDB = repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if(dominioDB != null) {
 			dominioDB.setStatus(StatusEnum.INATIVO);
 		}
@@ -61,7 +62,7 @@ public class DominioServiceImpl implements DominioService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "dominioCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Dominio consultarByCodigo(Long codigo) {
-		return JpaFunctions.dominioToDominioEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.dominioToDominioEntity.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
 	}
 
 }

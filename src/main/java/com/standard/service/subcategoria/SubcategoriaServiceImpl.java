@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Override
 	@Transactional
 	public Subcategoria alterar(Long codigo, Subcategoria entity) {
-		SubcategoriaEntity subcategoriaDB = repository.findById(entity.getCodigo()).orElse(null);
+		SubcategoriaEntity subcategoriaDB = repository.findById(entity.getCodigo()).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		Objects.requireNonNull(subcategoriaDB).setDescricao(entity.getDescricao());
 		subcategoriaDB.setNome(entity.getNome());
 		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.saveAndFlush(subcategoriaDB));
@@ -43,7 +44,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Override
 	@Transactional
 	public void excluir(Long codigo) {
-		SubcategoriaEntity subcategoriaDB = repository.findById(codigo).orElse(null);
+		SubcategoriaEntity subcategoriaDB = repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if(subcategoriaDB != null){
 			subcategoriaDB.setStatus(StatusEnum.INATIVO);
 		}
@@ -61,7 +62,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "subcategoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Subcategoria consultarByCodigo(Long codigo) {
-		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
 	}
 
 }

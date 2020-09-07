@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     @Cacheable(cacheNames = "formasDePagamentoCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public FormasDePagamento consultarByCodigo(Long codigo) {
         return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
-                .apply(formaDePagamentoRepository.findById(codigo).orElse(null));
+                .apply(formaDePagamentoRepository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,6 +38,11 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(wac)
+                .apply(springSecurity())
+                .build();
+        
         obj = new Marca();
         obj.setCodigo(1L);
         obj.setNome(NOME);
@@ -51,6 +58,8 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
         List<Marca> marcas = Arrays.asList(obj, marca2);
         when(service.consultar()).thenReturn(marcas);
         mockMvc.perform(get(MarcaController.BASE_URL)
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -60,6 +69,8 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
         mockMvc.perform(get(MarcaController.BASE_URL + "/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -70,6 +81,8 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     public void testIncluir() throws Exception {
         when(service.incluir(obj)).thenReturn(obj);
         mockMvc.perform(post(MarcaController.BASE_URL)
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
@@ -80,6 +93,8 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(MarcaController.BASE_URL + "/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -88,6 +103,8 @@ public class MarcaControllerTest extends AbstractRestControllerTest {
     public void testAlterar() throws Exception {
         when(service.alterar(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(MarcaController.BASE_URL+"/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())

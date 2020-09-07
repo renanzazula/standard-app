@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,7 +80,7 @@ public class MedidaServiceImpl implements MedidaService {
 	@Override
 	@Transactional
 	public void excluir(Long codigo) {
-		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElse(null);
+		MedidaEntity medidaDB = medidaRepository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if (medidaDB != null){
 			medidaDB.setStatus(StatusEnum.INATIVO);
 		}
@@ -97,7 +98,7 @@ public class MedidaServiceImpl implements MedidaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "medidaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Medida consultarByCodigo(Long codigo) {
-		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElse(null));
+		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
 	}
 
 	@Override

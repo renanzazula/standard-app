@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Override
 	@Transactional
 	public Categoria alterar(Long codigo, Categoria categoria) {
-		CategoriaEntity categoriaDB = repository.findById(codigo).orElse(null);
+		CategoriaEntity categoriaDB = repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		Objects.requireNonNull(categoriaDB).setDescricao(categoria.getDescricao());
 		categoriaDB.setNome(categoria.getNome());
 		categoriaDB.getSubcategoriasSet().clear();
@@ -60,7 +61,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "categoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Categoria consultarByCodigo(Long codigo) {
-		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.findById(codigo)
+				.orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
 	}
 
 	@Override

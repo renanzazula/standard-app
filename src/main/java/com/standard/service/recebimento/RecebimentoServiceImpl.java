@@ -8,6 +8,7 @@ import com.standard.repository.ClienteRepository;
 import com.standard.repository.RecebimentoRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +69,6 @@ public class RecebimentoServiceImpl implements RecebimentoService {
 
     @Override
     public Recebimento consultarByCodigo(Long codigo) {
-        return JpaFunctions.recebimentoEntityToRecebimento.apply(repository.findById(codigo).orElse(null));
+        return JpaFunctions.recebimentoEntityToRecebimento.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
     }
 }

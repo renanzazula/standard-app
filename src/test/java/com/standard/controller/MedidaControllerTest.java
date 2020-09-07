@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +46,11 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(wac)
+                .apply(springSecurity())
+                .build();
+
         setUpMedida();
     }
 
@@ -56,6 +63,8 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
         List<Medida> medidas = Arrays.asList(medida, medida2);
         when(service.consultar()).thenReturn(medidas);
         mockMvc.perform(get(MedidaController.BASE_URL)
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -66,6 +75,8 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
         setUpMedida();
         when(service.consultarByCodigo(medida.getCodigo())).thenReturn(medida);
         mockMvc.perform(get(MedidaController.BASE_URL + "/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
                 //.andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -76,6 +87,8 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     public void testIncluir() throws Exception {
         when(service.incluir(medida)).thenReturn(medida);
         mockMvc.perform(post(MedidaController.BASE_URL)
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(medida)))
                 .andExpect(status().isCreated())
@@ -86,6 +99,8 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(MedidaController.BASE_URL + "/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -94,6 +109,8 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     public void testAlterar() throws Exception {
         when(service.alterar(1L, medida)).thenReturn(medida);
         mockMvc.perform(put(MedidaController.BASE_URL+"/1")
+                .header(API_KEY, API_KEY_VALUE)
+                .header(API_SECRET, API_SECRET_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(medida)))
                 .andExpect(status().isOk())

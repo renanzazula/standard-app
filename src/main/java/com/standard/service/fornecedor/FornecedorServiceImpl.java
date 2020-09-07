@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,7 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "fornecedorCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public Fornecedor consultarByCodigo(Long codigo) {
-        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElse(null));
+        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
     }
 
 }

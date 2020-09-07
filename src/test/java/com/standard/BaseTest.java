@@ -2,13 +2,33 @@ package com.standard;
 
 import com.standard.domain.*;
 import com.standard.enums.StatusEnum;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 public class BaseTest {
+
+    @Autowired
+    protected WebApplicationContext wac;
+    
+    protected static final String API_KEY = "Api-Key";
+    protected static final String API_SECRET = "Api-Secret";
+    protected static final String API_KEY_VALUE = "standard";
+    protected static final String API_SECRET_VALUE = "standard";
+
 
     protected static final String NOME = "nome";
     protected static final String DESCRICAO = "Descriçao";
@@ -26,7 +46,7 @@ public class BaseTest {
     private static final String VALOR_XL = "XL";
     private static final int QUANTIDADE = 10;
     private static final long CODIGO = 1L;
-
+    
     // obj commons
     protected FormasDePagamento formasDePagamento = null;
     protected Venda venda = null;
@@ -242,6 +262,7 @@ public class BaseTest {
         assertEquals(found.getCategoria(), expected.getCategoria());
         assertEquals(found.getSubcategoria(), expected.getSubcategoria());
     }
-
+    
+    
 
 }

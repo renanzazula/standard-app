@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,7 @@ public class MarcaServiceImpl implements MarcaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "marcaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Marca consultarByCodigo(Long codigo) {
-		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
 	}
 
 }

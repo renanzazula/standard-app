@@ -7,6 +7,7 @@ import com.standard.repository.CaixaRepository;
 import com.standard.repository.RetiradaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class RetiradaServiceImpl implements RetiradaService {
 
     @Override
     public Retirada consultarByCodigo(Long codigo) {
-        return JpaFunctions.retiradaEntityToRetirada.apply(repository.findById(codigo).orElse(null));
+        return JpaFunctions.retiradaEntityToRetirada.apply(repository.findById(codigo).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
     }
 
     @Override
