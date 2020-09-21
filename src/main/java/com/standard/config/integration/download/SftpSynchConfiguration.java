@@ -44,7 +44,7 @@ public class SftpSynchConfiguration {
     @InboundChannelAdapter(channel = "fileUpload", poller = @Poller(fixedDelay = "3000"))
     public MessageSource<File> sftpMessageSource() {
         SftpInboundFileSynchronizingMessageSource source = new SftpInboundFileSynchronizingMessageSource(synchronizer());
-        source.setLocalDirectory(new File("tmp/incoming"));
+        source.setLocalDirectory(new File("temp/incoming"));
         source.setAutoCreateLocalDirectory(true);
         return source;
     }
