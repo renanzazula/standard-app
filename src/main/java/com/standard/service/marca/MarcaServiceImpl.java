@@ -27,7 +27,7 @@ public class MarcaServiceImpl implements MarcaService {
 		MarcaEntity marcaDB = new MarcaEntity();
 		marcaDB.setDescricao(entity.getDescricao());
 		marcaDB.setNome(entity.getNome());
-		return JpaFunctions.marcaToMarcaEntity.apply(repository.save(marcaDB));
+		return JpaFunctions.marcaEntityToMarca.apply(repository.save(marcaDB));
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class MarcaServiceImpl implements MarcaService {
 		MarcaEntity marcaDB = repository.getOne(codigo);
 		marcaDB.setDescricao(entity.getDescricao());
 		marcaDB.setNome(entity.getNome());
-		return JpaFunctions.marcaToMarcaEntity.apply(repository.saveAndFlush(marcaDB));
+		return JpaFunctions.marcaEntityToMarca.apply(repository.saveAndFlush(marcaDB));
 	}
 
 	@Override
@@ -51,14 +51,14 @@ public class MarcaServiceImpl implements MarcaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "marcaListCache", condition = "#showInventoryOnHand == false")
 	public List<Marca> consultar() {
-		return repository.findAll().stream().map(JpaFunctions.marcaToMarcaEntity).collect(Collectors.toList());
+		return repository.findAll().stream().map(JpaFunctions.marcaEntityToMarca).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "marcaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Marca consultarByCodigo(Long codigo) {
-		return JpaFunctions.marcaToMarcaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.marcaEntityToMarca.apply(repository.findById(codigo).orElse(null));
 	}
 
 }

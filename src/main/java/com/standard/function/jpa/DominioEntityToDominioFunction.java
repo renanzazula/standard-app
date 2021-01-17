@@ -5,7 +5,7 @@ import com.standard.entity.DominioEntity;
 
 import java.util.function.Function;
 
-public class DominioToDominioEntityFunction  implements Function<DominioEntity, Dominio> {
+public class DominioEntityToDominioFunction implements Function<DominioEntity, Dominio> {
 
 	@Override
 	public Dominio apply(DominioEntity input) {

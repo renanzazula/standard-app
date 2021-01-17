@@ -28,7 +28,7 @@ public class DominioServiceImpl implements DominioService {
 		DominioEntity dominioDB = new DominioEntity();
 		dominioDB.setDescricao(entity.getDescricao());
 		dominioDB.setNome(entity.getNome());
-		return JpaFunctions.dominioToDominioEntity.apply(repository.save(dominioDB));
+		return JpaFunctions.dominioEntityToDominio.apply(repository.save(dominioDB));
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class DominioServiceImpl implements DominioService {
 		DominioEntity dominioDB = repository.findById(codigo).orElse(null);
 		Objects.requireNonNull(dominioDB).setDescricao(dominio.getDescricao());
 		dominioDB.setNome(dominio.getNome());
-		return JpaFunctions.dominioToDominioEntity.apply(repository.save(dominioDB));
+		return JpaFunctions.dominioEntityToDominio.apply(repository.save(dominioDB));
 	}
 
 	@Override
@@ -54,14 +54,14 @@ public class DominioServiceImpl implements DominioService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "dominioListCache", condition = "#showInventoryOnHand == false")
 	public List<Dominio> consultar() {
-		return repository.findAll().stream().map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList());
+		return repository.findAll().stream().map(JpaFunctions.dominioEntityToDominio).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "dominioCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Dominio consultarByCodigo(Long codigo) {
-		return JpaFunctions.dominioToDominioEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.dominioEntityToDominio.apply(repository.findById(codigo).orElse(null));
 	}
 
 }

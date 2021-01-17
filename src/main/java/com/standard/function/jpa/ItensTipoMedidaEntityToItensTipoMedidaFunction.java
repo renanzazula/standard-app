@@ -6,7 +6,7 @@ import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
 
-public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<ItensTipoMedidaEntity, ItensTipoMedida> {
+public class ItensTipoMedidaEntityToItensTipoMedidaFunction implements Function<ItensTipoMedidaEntity, ItensTipoMedida> {
 
 	@Override
 	public ItensTipoMedida apply(ItensTipoMedidaEntity input) {
@@ -16,13 +16,13 @@ public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<
 			output.setValor(input.getValor());
 
 			if (input.getCategoria() != null) {
-				output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+				output.setCategoria(JpaFunctions.categoriaEntityToCategoria.apply(input.getCategoria()));
 			}
 			if (input.getSubcategoria() != null) {
-				output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+				output.setSubcategoria(JpaFunctions.subCategoriaEntityToSubcategoria.apply(input.getSubcategoria()));
 			}
 			if (input.getMarca() != null) {
-				output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
+				output.setMarca(JpaFunctions.marcaEntityToMarca.apply(input.getMarca()));
 			}
 
 		}

@@ -75,7 +75,7 @@ public class VendaServiceImpl implements VendaService {
             if (caixa.getStatus().name().equals("A")) {
                 // if caixa satus F error
                 vendaDB.setStatus(StatusVendaEnum.PENDENDE_CONFIRMAR);
-                vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+                vResult = JpaFunctions.vendaEntityToVenda.apply(vendaRepository.saveAndFlush(vendaDB));
             } else {
                 // todo Error bussines exeption
             }
@@ -145,7 +145,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setQuantidade(venda.getQuantidade());
         vendaToVendaDB(venda, vendaDB, venda.getValorTotal());
         vendaDB.setCaixa(caixaRepository.getOne(venda.getCaixa().getCodigo()));
-        return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+        return JpaFunctions.vendaEntityToVenda.apply(vendaRepository.saveAndFlush(vendaDB));
     }
 
     @Override
@@ -159,7 +159,7 @@ public class VendaServiceImpl implements VendaService {
             if (caixa.getStatus().name().equals("A")) {
                 // if caixa satus F error
                 vendaDB.setStatus(StatusVendaEnum.EFETUDA);
-                vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+                vResult = JpaFunctions.vendaEntityToVenda.apply(vendaRepository.saveAndFlush(vendaDB));
 
                 // Update valor total caixa
                 caixaService.updateValorCaixa(caixa, venda);
@@ -179,7 +179,7 @@ public class VendaServiceImpl implements VendaService {
         if (caixa != null) {
             if (caixa.getStatus().name().equals("A")) {
                 vendaDB.setStatus(StatusVendaEnum.NAO_REALIZADA);
-                vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
+                vResult = JpaFunctions.vendaEntityToVenda.apply(vendaRepository.saveAndFlush(vendaDB));
             }
         }
         return vResult;
@@ -196,13 +196,13 @@ public class VendaServiceImpl implements VendaService {
     @Override
     @Transactional(readOnly = true)
     public Venda consultarByCodigo(Venda venda) {
-        return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.getOne(venda.getCodigo()));
+        return JpaFunctions.vendaEntityToVenda.apply(vendaRepository.getOne(venda.getCodigo()));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Venda> consultar() {
-        return vendaRepository.findAll().stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
+        return vendaRepository.findAll().stream().map(JpaFunctions.vendaEntityToVenda).collect(Collectors.toList());
     }
 
     @Override
@@ -229,7 +229,7 @@ public class VendaServiceImpl implements VendaService {
             formaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
             vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
         }
-        return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
+        return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaEntityToVenda).collect(Collectors.toList());
     }
 
 }

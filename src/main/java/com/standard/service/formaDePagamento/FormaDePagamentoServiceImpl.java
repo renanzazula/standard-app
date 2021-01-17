@@ -40,7 +40,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
         formasDePagamentoDB.setDescricao(objct.getDescricao());
         formasDePagamentoDB.setPorcentagemDesconto(objct.getPorcentagemDesconto());
         formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB);
-        return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity.apply(formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB));
+        return JpaFunctions.formaDePagamentoEntityToFormasDePagamento.apply(formaDePagamentoRepository.saveAndFlush(formasDePagamentoDB));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "formasDePagamentoListCache", condition = "#showInventoryOnHand == false")
     public List<FormasDePagamento> consultar() {
-        return formaDePagamentoRepository.findAll().stream().map(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity)
+        return formaDePagamentoRepository.findAll().stream().map(JpaFunctions.formaDePagamentoEntityToFormasDePagamento)
                 .collect(Collectors.toList());
     }
 
@@ -65,7 +65,7 @@ public class FormaDePagamentoServiceImpl implements FormaDePagamentoService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "formasDePagamentoCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public FormasDePagamento consultarByCodigo(Long codigo) {
-        return JpaFunctions.formasDePagamentoToFormaDePagamentoEntity
+        return JpaFunctions.formaDePagamentoEntityToFormasDePagamento
                 .apply(formaDePagamentoRepository.findById(codigo).orElse(null));
     }
 

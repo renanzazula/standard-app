@@ -25,7 +25,7 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	@Transactional
 	public Caixa carregarCaixa(Caixa caixa) {
-		return JpaFunctions.caixaToCaixaEntity.apply(repository.getOne(caixa.getCodigo()));
+		return JpaFunctions.caixaEntityToCaixa.apply(repository.getOne(caixa.getCodigo()));
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class CaixaServiceImpl implements CaixaService {
 		caixaEntity.setStatus(StatusCaixaEnum.A);
 		caixaEntity.setDataAbertura(new Date());
 		caixaEntity.setHoraAbertura(new Date());
-		return  JpaFunctions.caixaToCaixaEntity.apply(repository.saveAndFlush(caixaEntity));
+		return  JpaFunctions.caixaEntityToCaixa.apply(repository.saveAndFlush(caixaEntity));
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class CaixaServiceImpl implements CaixaService {
 		caixaEntity.setStatus(StatusCaixaEnum.F);
 		caixaEntity.setDataFechamento(new Date());
 		caixaEntity.setHoraFechamento(new Date());
-		return  JpaFunctions.caixaToCaixaEntity.apply(repository.saveAndFlush(caixaEntity));
+		return  JpaFunctions.caixaEntityToCaixa.apply(repository.saveAndFlush(caixaEntity));
 	}	
 
 	@Override
@@ -58,7 +58,7 @@ public class CaixaServiceImpl implements CaixaService {
 	public Caixa buscarUltimoCaixa() {
 		CaixaEntity caixaEntity = repository.buscarUltimoCaixa();
  		if(caixaEntity != null) {
- 			return JpaFunctions.caixaToCaixaEntity.apply(caixaEntity);
+ 			return JpaFunctions.caixaEntityToCaixa.apply(caixaEntity);
  		} else {
  			Caixa caixa = new Caixa(); 
 			caixa.setCodigo(gerarCodigoCaixa());
@@ -77,7 +77,7 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	@Transactional
 	public Caixa buscarCaixa(Caixa caixa) {
-		return JpaFunctions.caixaToCaixaEntity.apply(repository.getOne(caixa.getCodigo()));
+		return JpaFunctions.caixaEntityToCaixa.apply(repository.getOne(caixa.getCodigo()));
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class CaixaServiceImpl implements CaixaService {
 			caixaEntity.setTotal(totalVendas + caixa.getValorInicial());
 		}
 		
-		return JpaFunctions.caixaToCaixaEntity.apply(repository.saveAndFlush(caixaEntity));
+		return JpaFunctions.caixaEntityToCaixa.apply(repository.saveAndFlush(caixaEntity));
 	}
 		
 	@Override

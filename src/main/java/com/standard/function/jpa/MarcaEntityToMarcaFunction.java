@@ -5,7 +5,7 @@ import com.standard.entity.MarcaEntity;
 
 import java.util.function.Function;
 
-public class MarcaToMarcaEntityFunction implements Function<MarcaEntity, Marca> {
+public class MarcaEntityToMarcaFunction implements Function<MarcaEntity, Marca> {
 
 	@Override
 	public Marca apply(MarcaEntity input) {

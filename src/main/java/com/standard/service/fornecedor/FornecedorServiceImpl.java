@@ -27,7 +27,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         FornecedorEntity fornecedorDB = new FornecedorEntity();
         fornecedorDB.setDescricao(entity.getDescricao());
         fornecedorDB.setNome(entity.getNome());
-        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
+        return JpaFunctions.fornecedorEntityToFornecedor.apply(repository.saveAndFlush(fornecedorDB));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         FornecedorEntity fornecedorDB = repository.getOne(codigo);
         fornecedorDB.setDescricao(entity.getDescricao());
         fornecedorDB.setNome(entity.getNome());
-        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.saveAndFlush(fornecedorDB));
+        return JpaFunctions.fornecedorEntityToFornecedor.apply(repository.saveAndFlush(fornecedorDB));
     }
 
     @Override
@@ -51,14 +51,14 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "fornecedorListCache", condition = "#showInventoryOnHand == false")
     public List<Fornecedor> consultar() {
-        return repository.findAll().stream().map(JpaFunctions.fornecedortoFornecedorEntity).collect(Collectors.toList());
+        return repository.findAll().stream().map(JpaFunctions.fornecedorEntityToFornecedor).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "fornecedorCache", key = "#codigo", condition = "#showInventoryOnHand == false")
     public Fornecedor consultarByCodigo(Long codigo) {
-        return JpaFunctions.fornecedortoFornecedorEntity.apply(repository.findById(codigo).orElse(null));
+        return JpaFunctions.fornecedorEntityToFornecedor.apply(repository.findById(codigo).orElse(null));
     }
 
 }

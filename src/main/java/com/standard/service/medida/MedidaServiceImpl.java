@@ -45,7 +45,7 @@ public class MedidaServiceImpl implements MedidaService {
 			itensMedidaBuild(medida, itensSet);
 			medidaDB.setItensTipoMedida(itensSet);
 		}
-		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.saveAndFlush(medidaDB));
+		return JpaFunctions.medidaEntityToMedida.apply(medidaRepository.saveAndFlush(medidaDB));
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MedidaServiceImpl implements MedidaService {
 			itensMedidaBuild(medida, itensSet);
 			medidaDB.getItensTipoMedida().addAll(itensSet);
 		}
-		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.saveAndFlush(medidaDB));
+		return JpaFunctions.medidaEntityToMedida.apply(medidaRepository.saveAndFlush(medidaDB));
 	}
 
 	private void itensMedidaBuild(Medida medida, Set<ItensTipoMedidaEntity> itensSet) {
@@ -90,14 +90,14 @@ public class MedidaServiceImpl implements MedidaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "medidaListCache", condition = "#showInventoryOnHand == false")
 	public List<Medida> consultar() {
-		return medidaRepository.findAll().stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
+		return medidaRepository.findAll().stream().map(JpaFunctions.medidaEntityToMedida).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "medidaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Medida consultarByCodigo(Long codigo) {
-		return JpaFunctions.medidaToMedidaEntity.apply(medidaRepository.findById(codigo).orElse(null));
+		return JpaFunctions.medidaEntityToMedida.apply(medidaRepository.findById(codigo).orElse(null));
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class MedidaServiceImpl implements MedidaService {
 		return medidaRepository
 				.findByItensTipoMedidaCategoriaAndItensTipoMedidaSubcategoriaAndAndItensTipoMedidaMarca(categoria,
 						subcategoria, marca)
-				.stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
+				.stream().map(JpaFunctions.medidaEntityToMedida).collect(Collectors.toList());
 
 	}
 	
