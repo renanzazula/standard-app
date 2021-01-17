@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
+public class ProdutoHasItensTipoMedidaEntityToProdutoHasItensTipoMedidaFunction
 		implements Function<ProdutoHasItensTipoMedidaEntity, ProdutoHasItensTipoMedida> {
 
 	@Override
@@ -23,10 +23,10 @@ public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 				output.setDominios(input.getDominios()
 						.stream()
 						.sorted(Comparator.comparing(DominioEntity::getCodigo))
-						.map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList()));
+						.map(JpaFunctions.dominioEntityToDominio).collect(Collectors.toList()));
 			}
 			if (input.getItensTipoMedida() != null) {
-				output.setItensTipoMedida(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItensTipoMedida()));
+				output.setItensTipoMedida(JpaFunctions.itensTipoMedidaEntityToItensTipoMedida.apply(input.getItensTipoMedida()));
 			}
 
 			if (input.getProduto() != null) {
@@ -62,23 +62,23 @@ public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 		output.setDataHoraCadastro(input.getDataHoraCadastro());
 		
 		if(input.getFornecedor() != null) {
-			output.setFornecedor(JpaFunctions.fornecedortoFornecedorEntity.apply(input.getFornecedor()));
+			output.setFornecedor(JpaFunctions.fornecedorEntityToFornecedor.apply(input.getFornecedor()));
 		}
 
 		if(input.getCategoria() !=  null) {
-			output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+			output.setCategoria(JpaFunctions.categoriaEntityToCategoria.apply(input.getCategoria()));
 		}
 		
 		if(input.getSubcategoria() != null) {
-			output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+			output.setSubcategoria(JpaFunctions.subCategoriaEntityToSubcategoria.apply(input.getSubcategoria()));
 		}
 		
 		if(input.getMedida() != null) {
-			output.setMedida(JpaFunctions.medidaToMedidaEntity.apply(input.getMedida()));
+			output.setMedida(JpaFunctions.medidaEntityToMedida.apply(input.getMedida()));
 		}
 		
 		if (input.getMarca() != null) {
-			output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
+			output.setMarca(JpaFunctions.marcaEntityToMarca.apply(input.getMarca()));
 		}
 		return output;
 	} 

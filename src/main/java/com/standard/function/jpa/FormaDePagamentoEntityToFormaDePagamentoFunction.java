@@ -5,7 +5,7 @@ import com.standard.entity.FormaDePagamentoEntity;
 
 import java.util.function.Function;
 
-public class FormaDePagamentoToFormaDePagamentoEntityFunction implements Function<FormaDePagamentoEntity, FormasDePagamento> {
+public class FormaDePagamentoEntityToFormaDePagamentoFunction implements Function<FormaDePagamentoEntity, FormasDePagamento> {
 
 	@Override
 	public FormasDePagamento apply(FormaDePagamentoEntity input) {

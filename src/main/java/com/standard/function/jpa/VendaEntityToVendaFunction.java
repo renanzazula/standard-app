@@ -7,7 +7,7 @@ import com.standard.function.JpaFunctions;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> {
+public class VendaEntityToVendaFunction implements Function<VendaEntity, Venda> {
 
     @Override
     public Venda apply(VendaEntity input) {
@@ -29,18 +29,18 @@ public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> 
             output.setValorTotal(input.getValorTotal());
 
             if (input.getFormaDePagamento() != null) {
-                output.setFormaDePagamento(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity.apply(input.getFormaDePagamento()));
+                output.setFormaDePagamento(JpaFunctions.formaDePagamentoEntityToFormasDePagamento.apply(input.getFormaDePagamento()));
             }
             if (input.getCliente() != null) {
-                output.setCliente(JpaFunctions.clienteToClienteEntity.apply(input.getCliente()));
+                output.setCliente(JpaFunctions.clienteEntityToCliente.apply(input.getCliente()));
             }
 
             if (input.getCaixa() != null) {
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+                output.setCaixa(JpaFunctions.caixaEntityToCaixa.apply(input.getCaixa()));
             }
 
             if (input.getVendaHasItemProduto() != null) {
-                output.setVendaHasItemProduto(input.getVendaHasItemProduto().stream().map(JpaFunctions.vendaHasItemProdutoToVendaHasItemEntity).collect(Collectors.toList()));
+                output.setVendaHasItemProduto(input.getVendaHasItemProduto().stream().map(JpaFunctions.vendaHasItemProdutoEntityToVendaHasItemProduto).collect(Collectors.toList()));
             }
 
         }

@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, Produto> {
+public class ProdutoEntityToProdutoFunction implements Function<ProdutoEntity, Produto> {
 
     @Override
     public Produto apply(ProdutoEntity input) {
@@ -31,30 +31,30 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
             output.setDataHoraCadastro(input.getDataHoraCadastro());
 
             if (input.getFornecedor() != null) {
-                output.setFornecedor(JpaFunctions.fornecedortoFornecedorEntity.apply(input.getFornecedor()));
+                output.setFornecedor(JpaFunctions.fornecedorEntityToFornecedor.apply(input.getFornecedor()));
             }
 
             if (input.getCategoria() != null) {
-                output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+                output.setCategoria(JpaFunctions.categoriaEntityToCategoria.apply(input.getCategoria()));
             }
 
             if (input.getSubcategoria() != null) {
-                output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+                output.setSubcategoria(JpaFunctions.subCategoriaEntityToSubcategoria.apply(input.getSubcategoria()));
             }
 
             if (input.getMedida() != null) {
-                output.setMedida(JpaFunctions.medidaToMedidaEntity.apply(input.getMedida()));
+                output.setMedida(JpaFunctions.medidaEntityToMedida.apply(input.getMedida()));
             }
 
             if (input.getMarca() != null) {
-                output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
+                output.setMarca(JpaFunctions.marcaEntityToMarca.apply(input.getMarca()));
             }
 
             if (input.getProdutoHasItensTipoMedida() != null) {
                 output.setProdutoHasItensTipoMedida(input.getProdutoHasItensTipoMedida()
                         .stream()
                         .sorted(Comparator.comparing(ProdutoHasItensTipoMedidaEntity::getCodigo))
-                        .map(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity).collect(Collectors.toList()));
+                        .map(JpaFunctions.produtoHasItensTipoMedidaEntityToProdutoHasItensTipoMedida).collect(Collectors.toList()));
             }
         }
         return output;

@@ -5,7 +5,7 @@ import java.util.function.Function;
 import com.standard.entity.CaixaEntity;
 import com.standard.domain.Caixa;
 
-public class CaixaToCaixaEntityFunction implements Function<CaixaEntity, Caixa> {
+public class CaixaEntityToCaixaFunction implements Function<CaixaEntity, Caixa> {
 
 	@Override
 	public Caixa apply(CaixaEntity input) {

@@ -7,7 +7,6 @@ import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.*;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,7 +80,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setMarca(marcaRepository.getOne(produto.getMarca().getCodigo()));
 		}
         getProdutoHasItensTipoMedida(produto, produtoDB);
-        return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
+        return JpaFunctions.produtoEntityToProduto.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
 
     private void getProdutoHasItensTipoMedida(Produto produto, ProdutoEntity produtoDB) {
@@ -150,7 +149,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.getProdutoHasItensTipoMedida().forEach(d -> d.getDominios().clear() );
 		produtoDB.getProdutoHasItensTipoMedida().clear();
         getProdutoHasItensTipoMedida(produto, produtoDB);
-		return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
+		return JpaFunctions.produtoEntityToProduto.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
 
 	@Override
@@ -165,7 +164,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Transactional(readOnly = true)
 	public Produto consultarByCodigo(Long codigo) {
 		ProdutoEntity p = produtoRepository.getOne(codigo);
-		return JpaFunctions.produtoToProdutoEntity.apply(p);
+		return JpaFunctions.produtoEntityToProduto.apply(p);
 	}
 	
 	@Override
@@ -173,7 +172,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	public Produto consultarByBarCode(String barcode) {
 		Optional<ProdutoEntity> p = produtoRepository.findByBarCode(barcode.trim());
 		if(p.isPresent()){
-			return JpaFunctions.produtoToProdutoEntity.apply(p.get());
+			return JpaFunctions.produtoEntityToProduto.apply(p.get());
 		}else{
 			return null;
 		}
@@ -182,7 +181,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Produto> consultar() {
-		return produtoRepository.findAll().stream().map(JpaFunctions.produtoToProdutoEntity).collect(Collectors.toList());
+		return produtoRepository.findAll().stream().map(JpaFunctions.produtoEntityToProduto).collect(Collectors.toList());
 	}
 
 }

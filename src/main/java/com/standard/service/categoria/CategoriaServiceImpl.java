@@ -39,7 +39,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 			categoria.getSubcategorias().forEach(sub -> subcategoriaSet.add(subcategoriaRepository.getOne(sub.getCodigo())));
 			categoriaDB.setSubcategoriasSet(subcategoriaSet);
 		}
-		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
+		return JpaFunctions.categoriaEntityToCategoria.apply(repository.saveAndFlush(categoriaDB));
 	}
 
 	@Override
@@ -53,21 +53,21 @@ public class CategoriaServiceImpl implements CategoriaService {
 		categoria.getSubcategorias().forEach(sub -> subcategoriaSet.add(subcategoriaRepository.getOne(sub.getCodigo())));
 		categoriaDB.getSubcategoriasSet().addAll(subcategoriaSet);
 
-		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.saveAndFlush(categoriaDB));
+		return JpaFunctions.categoriaEntityToCategoria.apply(repository.saveAndFlush(categoriaDB));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "categoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Categoria consultarByCodigo(Long codigo) {
-		return JpaFunctions.categoriaToCategoriaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.categoriaEntityToCategoria.apply(repository.findById(codigo).orElse(null));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "categoriaListCache", condition = "#showInventoryOnHand == false")
 	public List<Categoria> consultar() {
-		return repository.findAll().stream().map(JpaFunctions.categoriaToCategoriaEntity).collect(Collectors.toList());
+		return repository.findAll().stream().map(JpaFunctions.categoriaEntityToCategoria).collect(Collectors.toList());
 	}
 
 	@Override

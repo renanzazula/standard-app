@@ -4,9 +4,10 @@ import com.standard.domain.Categoria;
 import com.standard.entity.CategoriaEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class CategoriaToCategoriaEntityFunction implements java.util.function.Function<CategoriaEntity, Categoria> {
+public class CategoriaEntityToCategoriaFunction implements Function<CategoriaEntity, Categoria> {
 
     @Override
     public Categoria apply(CategoriaEntity input) {
@@ -16,7 +17,7 @@ public class CategoriaToCategoriaEntityFunction implements java.util.function.Fu
             output.setNome(input.getNome());
             output.setDescricao(input.getDescricao());
             if (input.getSubcategoriasSet() != null) {
-                output.setSubcategorias(input.getSubcategoriasSet().stream().map(JpaFunctions.subcategoriaToSubCategoriaEntity).collect(Collectors.toList()));
+                output.setSubcategorias(input.getSubcategoriasSet().stream().map(JpaFunctions.subCategoriaEntityToSubcategoria).collect(Collectors.toList()));
             }
         }
         return output;

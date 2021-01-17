@@ -5,7 +5,7 @@ import java.util.function.Function;
 import com.standard.entity.ClienteEntity;
 import com.standard.domain.Cliente;
 
-public class ClienteToClienteEntityFunction implements Function<ClienteEntity, Cliente> {
+public class ClienteEntityToClienteFunction implements Function<ClienteEntity, Cliente> {
 
 	@Override
 	public Cliente apply(ClienteEntity input) {

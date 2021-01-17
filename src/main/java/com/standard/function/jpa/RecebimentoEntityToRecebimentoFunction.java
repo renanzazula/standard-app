@@ -17,10 +17,10 @@ public class RecebimentoEntityToRecebimentoFunction implements Function<Recebime
             output.setDescricao(input.getDescricao());
             output.setValor(input.getValor());
             if(input.getCaixa() != null){
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+                output.setCaixa(JpaFunctions.caixaEntityToCaixa.apply(input.getCaixa()));
             }
             if(input.getCliente() != null){
-                output.setCliente(JpaFunctions.clienteToClienteEntity.apply(input.getCliente()));
+                output.setCliente(JpaFunctions.clienteEntityToCliente.apply(input.getCliente()));
             }
         }
         return output;

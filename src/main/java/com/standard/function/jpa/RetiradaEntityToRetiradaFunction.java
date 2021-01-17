@@ -16,7 +16,7 @@ public class RetiradaEntityToRetiradaFunction implements java.util.function.Func
             output.setData(input.getDataCriacao());
             output.setHora(input.getHoraCriacao());
             if(input.getCaixa() != null){
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+                output.setCaixa(JpaFunctions.caixaEntityToCaixa.apply(input.getCaixa()));
             }
         }
         return output;

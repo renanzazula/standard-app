@@ -28,7 +28,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 		SubcategoriaEntity subcategoriaDB = new SubcategoriaEntity();
 		subcategoriaDB.setNome(entity.getNome());
 		subcategoriaDB.setDescricao(entity.getDescricao());
-		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.saveAndFlush(subcategoriaDB));
+		return JpaFunctions.subCategoriaEntityToSubcategoria.apply(repository.saveAndFlush(subcategoriaDB));
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 		SubcategoriaEntity subcategoriaDB = repository.findById(entity.getCodigo()).orElse(null);
 		Objects.requireNonNull(subcategoriaDB).setDescricao(entity.getDescricao());
 		subcategoriaDB.setNome(entity.getNome());
-		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.saveAndFlush(subcategoriaDB));
+		return JpaFunctions.subCategoriaEntityToSubcategoria.apply(repository.saveAndFlush(subcategoriaDB));
 	}
 
 	@Override
@@ -54,14 +54,14 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "subcategoriaListCache", condition = "#showInventoryOnHand == false")
 	public List<Subcategoria> consultar() {
-		return repository.findAll().stream().map(JpaFunctions.subcategoriaToSubCategoriaEntity).collect(Collectors.toList());
+		return repository.findAll().stream().map(JpaFunctions.subCategoriaEntityToSubcategoria).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "subcategoriaCache", key = "#codigo", condition = "#showInventoryOnHand == false")
 	public Subcategoria consultarByCodigo(Long codigo) {
-		return JpaFunctions.subcategoriaToSubCategoriaEntity.apply(repository.findById(codigo).orElse(null));
+		return JpaFunctions.subCategoriaEntityToSubcategoria.apply(repository.findById(codigo).orElse(null));
 	}
 
 }

@@ -5,7 +5,7 @@ import com.standard.entity.FornecedorEntity;
 
 import java.util.function.Function;
 
-public class FornecedorToFornecedorEntityFunction implements Function<FornecedorEntity, Fornecedor> {
+public class FornecedorEntityToFornecedorFunction implements Function<FornecedorEntity, Fornecedor> {
 
     @Override
     public Fornecedor apply(FornecedorEntity input) {

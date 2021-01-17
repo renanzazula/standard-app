@@ -5,7 +5,7 @@ import com.standard.entity.SubcategoriaEntity;
 
 import java.util.function.Function;
 
-public class SubCategoriaToSubCategoriaEntityFunction implements Function<SubcategoriaEntity, Subcategoria> {
+public class SubcategoriaEntityToSubcategoriaFunction implements Function<SubcategoriaEntity, Subcategoria> {
 
 	@Override
 	public Subcategoria apply(SubcategoriaEntity input) {
