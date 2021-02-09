@@ -6,6 +6,7 @@ import com.standard.domain.Produto;
 import com.standard.domain.ProdutoHasItensTipoMedida;
 import com.standard.service.medida.MedidaService;
 import com.standard.service.produto.ProdutoService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Itens de Medida Controller", tags = "itens de medida")
 @RestController
 @AllArgsConstructor
 @RequestMapping(DominioController.BASE_URL)
 public class ItensMedidaController {
 
-    public static final String BASE_URL = "/api/v1/itensMedida";
+    public static final String BASE_URL = "/private/v1/itensMedida";
 
     private final MedidaService medidaService;
     private final ProdutoService produtoService;

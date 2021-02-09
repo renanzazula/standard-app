@@ -22,3 +22,12 @@ From Docker image at centos
 
 from maven command line profile local  
 mvnw spring-boot:run -Dmaven.test.skip=true -Dspring-boot.run.profiles=local
+
+####Api docs:
+ - http://localhost:8080/standard-app/v2/api-docs
+####Swagger:
+ - http://localhost:8080/standard-app/swagger-ui.html#/
+####Sonnar:
+ - https://sonarcloud.io/dashboard?id=standard-app
+####Cicle CI:
+ - https://app.circleci.com/pipelines/bitbucket/zazularenan

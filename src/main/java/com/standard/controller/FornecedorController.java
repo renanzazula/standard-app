@@ -2,6 +2,7 @@ package com.standard.controller;
 
 import com.standard.domain.Fornecedor;
 import com.standard.service.fornecedor.FornecedorService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Fornecedor Controller", tags = "fornecedor")
 @RestController
 @AllArgsConstructor
 @RequestMapping(FornecedorController.BASE_URL)
 public class FornecedorController {
 
-    public static final String BASE_URL = "/api/v1/fornecedor";
+    public static final String BASE_URL = "/private/v1/fornecedor";
 
     private final FornecedorService fornecedorService;
 

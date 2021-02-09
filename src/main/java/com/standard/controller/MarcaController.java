@@ -2,6 +2,7 @@ package com.standard.controller;
 
 import com.standard.domain.Marca;
 import com.standard.service.marca.MarcaService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Marca Controller", tags = "marca")
 @RestController
 @AllArgsConstructor
 @RequestMapping(MarcaController.BASE_URL)
 public class MarcaController {
 
-	public static final String BASE_URL = "/api/v1/marca";
+	public static final String BASE_URL = "/private/v1/marca";
 	
 	private final MarcaService marcaService;
 

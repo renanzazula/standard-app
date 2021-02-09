@@ -3,6 +3,7 @@ package com.standard.controller;
 
 import com.standard.domain.Dominio;
 import com.standard.service.dominio.DominioService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Dominio Controller", tags = "dominio")
 @RestController
 @AllArgsConstructor
 @RequestMapping(DominioController.BASE_URL)
 public class DominioController {
 
-    public static final String BASE_URL = "/api/v1/dominios";
+    public static final String BASE_URL = "/private/v1/dominios";
 
     private final DominioService dominioService;
 
