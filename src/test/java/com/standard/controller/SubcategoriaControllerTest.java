@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {SubCategoriaController.class})
-public class SubCategoriaControllerTest extends AbstractRestControllerTest {
+@WebMvcTest(controllers = {SubcategoriaController.class})
+public class SubcategoriaControllerTest extends AbstractRestControllerTest {
 
     @MockBean
     SubcategoriaService service;
@@ -56,7 +56,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
         List<Subcategoria> subcategorias = Arrays.asList(obj, subcategoria2);
         when(service.consultar()).thenReturn(subcategorias);
-        mockMvc.perform(get(SubCategoriaController.BASE_URL)
+        mockMvc.perform(get(SubcategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -65,7 +65,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
-        mockMvc.perform(get(SubCategoriaController.BASE_URL + "/1")
+        mockMvc.perform(get(SubcategoriaController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -75,7 +75,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testIncluir() throws Exception {
         when(service.incluir(obj)).thenReturn(obj);
-        mockMvc.perform(post(SubCategoriaController.BASE_URL)
+        mockMvc.perform(post(SubcategoriaController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
@@ -85,7 +85,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(SubCategoriaController.BASE_URL + "/1")
+        mockMvc.perform(delete(SubcategoriaController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -93,7 +93,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testAlterar() throws Exception {
         when(service.alterar(1L,obj)).thenReturn(obj);
-        mockMvc.perform(put(SubCategoriaController.BASE_URL+"/1")
+        mockMvc.perform(put(SubcategoriaController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())

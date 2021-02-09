@@ -3,6 +3,7 @@ package com.standard.controller;
 import com.standard.domain.Produto;
 import com.standard.service.produto.ProdutoService;
 import com.standard.util.DoubleFormat;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Produto Controller", tags = "produto")
 @RestController
 @AllArgsConstructor
 @RequestMapping(ProdutoController.BASE_URL)
 public class ProdutoController {
 
-    public static final String BASE_URL = "/api/v1/produto";
+    public static final String BASE_URL = "/private/v1/produto";
 
     private final ProdutoService produtoService;
 

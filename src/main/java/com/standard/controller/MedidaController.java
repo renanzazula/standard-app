@@ -5,6 +5,7 @@ import com.standard.domain.Medida;
 import com.standard.service.categoria.CategoriaService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Medida Controller", tags = "medida")
 @RestController
 @AllArgsConstructor
 @RequestMapping(MedidaController.BASE_URL)
 public class MedidaController {
 
-    public static final String BASE_URL = "/api/v1/medida";
+    public static final String BASE_URL = "/private/v1/medida";
 
     private final CategoriaService categoriaService;
     private final MarcaService marcaService;

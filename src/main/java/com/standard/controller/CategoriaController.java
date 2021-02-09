@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api("Categoria Controller")
+@Api(value = "Categoria Controller", tags = "categoria")
 @RestController
 @RequestMapping(CategoriaController.BASE_URL)
 @AllArgsConstructor
 public class CategoriaController {
 
-    public static final String BASE_URL = "/api/v1/categoria";
+    public static final String BASE_URL = "/private/v1/categoria";
 
     private final CategoriaService categoriaService;
 

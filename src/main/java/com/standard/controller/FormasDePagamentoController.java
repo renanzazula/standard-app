@@ -2,6 +2,7 @@ package com.standard.controller;
 
 import com.standard.domain.FormasDePagamento;
 import com.standard.service.formaDePagamento.FormaDePagamentoService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "Formas De Pagamento Controller", tags = "formas de pagamento")
 @RestController
 @AllArgsConstructor
 @RequestMapping(FormasDePagamentoController.BASE_URL)
 public class FormasDePagamentoController {
 
-    public static final String BASE_URL = "/api/v1/formasDePagamento";
+    public static final String BASE_URL = "/private/v1/formasDePagamento";
 
     private final FormaDePagamentoService formasDePagamentoService;
 

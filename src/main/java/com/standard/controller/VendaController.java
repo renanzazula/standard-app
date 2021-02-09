@@ -2,18 +2,19 @@ package com.standard.controller;
 
 import com.standard.domain.Venda;
 import com.standard.service.venda.VendaService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@Api(value = "Venda Controller", tags = "venda")
 @RestController
 @AllArgsConstructor
 @RequestMapping(VendaController.BASE_URL)
 public class VendaController {
 
-    public static final String BASE_URL = "/api/v1/venda";
+    public static final String BASE_URL = "/private/v1/venda";
 
     private final VendaService vendaService;
 
