@@ -22,3 +22,6 @@ From Docker image at centos
 
 from maven command line profile local  
 mvnw spring-boot:run -Dmaven.test.skip=true -Dspring-boot.run.profiles=local
+
+Example execute docker at FTP (For use with spring integration)
+ - docker run -d -v C:/Users/renz/Documents/docker-ftp/ftp -p 20:20 -p 21:21 -p 21100-21110:21100-21110 -e FTP_USER=myuser -e FTP_PASS=mypass -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 --name vsftpd --restart=always fauria/vsftpd
