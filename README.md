@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/renanzazula/standard-app/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/renanzazula/standard-app/tree/master)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=renanzazula_standard-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=renanzazula_standard-app)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=renanzazula_standard-app)](https://sonarcloud.io/summary/new_code?id=renanzazula_standard-app)
