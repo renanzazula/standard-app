@@ -48,4 +48,4 @@ jobs:
 #      - run:
 #          name: Send to CodeCov
 #          command: bash <(curl -s https://codecov.io/bash) -t 966743ab-ff4a-4bc8-ac70-9bf4deb251b4
-      - run: mvn sonar:sonar -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-gitHub -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f57ed22f9c49184261597246cd37e1a32a80d301
+#      - run: mvn sonar:sonar -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-gitHub -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f57ed22f9c49184261597246cd37e1a32a80d301
