@@ -1,0 +1,51 @@
+services:
+  standard-db:
+    container_name: "standard-db"
+    image: mysql:latest
+    env_file:
+      - ../.env
+    environment:
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_DATA=$MYSQL_DATA
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    ports:
+      - '${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}'
+    volumes:
+      - "./startup-scripts/01_init__.sql:/docker-entrypoint-initdb.d/01_init__.sql"
+    networks:
+      - mysql-network
+
+  standard-app:
+    container_name: "standard-app"
+    build:
+      context: .
+      args:
+        APP_LOCAL_PORT: ${APP_LOCAL_PORT}
+        APP_DOCKER_PORT: ${APP_DOCKER_PORT}
+        MYSQL_HOST: ${MYSQL_HOST}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+    image: renanzazula/standard-app:latest
+    restart: on-failure
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
+    env_file:
+      - ../.env
+    expose:
+      - '${APP_DOCKER_PORT}'
+    ports:
+      - '${APP_DOCKER_PORT}:${APP_LOCAL_PORT}'
+    depends_on:
+      - standard-db
+    networks:
+      - mysql-network
+
+networks:
+  mysql-network:
+    driver: bridge

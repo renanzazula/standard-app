@@ -1,49 +1,97 @@
 package com.standard.entity.security;
 
 import lombok.*;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Builder
-@Entity(name = "user")
-public class UserEntity implements Serializable {
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "user")
+public class UserEntity implements UserDetails, CredentialsContainer, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @NotNull
-    @Column(name = "username", length = 80)
+
+    @Column(name = "username")
     private String username;
 
-    @NotNull
-    @Column(name = "password", length = 80)
-    private String password;
-    
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private UserPasswordEntity userPassword;
+
     @Singular
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_authority",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
-    private Set<AuthorityEntity> authorities;
-    
-    @Builder.Default
-    private Boolean accountNonExpired = true;
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
+    private Set<RoleEntity> roles;
+
+    //fix order venta cliente
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    private CustomerEntity customer;
 
     @Builder.Default
-    private Boolean accountNonLocked = true;
+    @Column(name = "accountNonExpired")
+    private boolean accountNonExpired = true;
 
     @Builder.Default
-    private Boolean credentialsNonExpired = true;
+    @Column(name = "accountNonLocked")
+    private boolean accountNonLocked = true;
 
     @Builder.Default
-    private Boolean enabled = true;
-    
+    @Column(name = "credentialNonExpired")
+    private boolean credentialNonExpired = true;
+
+    @Builder.Default
+    @Column(name = "enable")
+    private boolean enable = true;
+
+    @Transient
+    public Set<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> set = new HashSet<>();
+        for (RoleEntity role : this.roles) {
+            Set<AuthorityEntity> authorities = role.getAuthorities();
+            for (AuthorityEntity authorityEntity : authorities) {
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authorityEntity.getPermission());
+                set.add(simpleGrantedAuthority);
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public String getPassword() {
+        return userPassword.getPassword();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enable;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        // TODO document why this method is empty
+    }
+
 }

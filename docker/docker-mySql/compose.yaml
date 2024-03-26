@@ -1,0 +1,24 @@
+services:
+  standard-db-app:
+    container_name: "standard-db-app"
+    image: mysql:latest
+    env_file:
+      - ../.env
+    environment:
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_DATA=$MYSQL_DATA
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    ports:
+      - '${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}'
+    volumes:
+      - "../../docker/db-files/startup-scripts/01_init.sql:/docker-entrypoint-initdb.d/01_init.sql"
+    networks:
+      - mysql-network
+
+networks:
+  mysql-network:
+    driver: bridge

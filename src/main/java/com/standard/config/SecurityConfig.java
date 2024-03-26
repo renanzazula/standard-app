@@ -1,49 +1,68 @@
 package com.standard.config;
 
-import com.standard.security.PasswordEncoderFactories;
-import com.standard.security.RestHeaderAuthFilter;
+import com.standard.security.encoder.PasswordEncoderFactories;
+import com.standard.security.filter.ConcurrentSessionFilter;
+import com.standard.security.filter.RestHeaderAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * Created by jt on 6/13/20.
- */
+
 @Configuration
 @EnableWebSecurity
-
+@RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
+    private final LogoutFilter logoutFilter;
+    private final UserDetailsService userDetailsService;
+    private final ConcurrentSessionFilter concurrencyFilter;
+    private final HttpSessionCsrfTokenRepository csrfTokenRepository;
+    private final PersistentTokenRepository persistentTokenRepository;
+    private final CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(headerAuthFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable();
 
-        http.authorizeRequests(authorize -> {
-            authorize
-                    .antMatchers("/console/**").permitAll()
-                    .antMatchers("/public/**").permitAll()
-                    .antMatchers("/private/**").authenticated();
-        }).authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
+        http.addFilterBefore(concurrencyFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(logoutFilter, LogoutFilter.class);
 
-        // h2 console config 
+        http.authorizeRequests(authorizes -> {
+                    authorizes.antMatchers("/h2-console/**",
+                            "/swagger-ui.html",
+                            "/resources/**",
+                            "/swagger-resources/**",
+                            "/api/v1/authentication/login").permitAll();
+                    authorizes.antMatchers("/api/**").authenticated();
+                })
+                .authorizeRequests().anyRequest().authenticated()
+                .and().csrf().ignoringAntMatchers("/h2-console/**", "/api/**")
+                .csrfTokenRepository(csrfTokenRepository)
+                .and().rememberMe().tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService)
+                .and().exceptionHandling()
+                .and().sessionManagement()
+                .sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy);
+
         http.headers().frameOptions().sameOrigin();
     }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        
-////        auth.inMemoryAuthentication().withUser("standard")
-////                .password("{bcrypt10}$2a$10$Aype7wLEB5fMRUUEImlcnuCEtxhoAe2vmCmfbBUzs3qF3Qhwuyksm").roles("ADMIN");
-//    }
-
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManager();
+    }
     private RestHeaderAuthFilter headerAuthFilter(AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(new AntPathRequestMatcher("/private/**"));
         filter.setAuthenticationManager(authenticationManager);

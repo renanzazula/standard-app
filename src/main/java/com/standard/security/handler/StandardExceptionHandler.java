@@ -1,11 +1,10 @@
-package com.standard.handler;
+package com.standard.security.handler;
 
 import com.google.common.base.Throwables;
 import com.standard.domain.Error;
 import com.standard.domain.ErrorDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -44,7 +43,7 @@ public class StandardExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<Error> HandleBindException(BindException ex, HttpServletRequest request) {
+    public ResponseEntity<Error> handleBindException(BindException ex, HttpServletRequest request) {
 
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
@@ -61,7 +60,7 @@ public class StandardExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Error> HandleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+    public ResponseEntity<Error> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
 
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
@@ -79,7 +78,7 @@ public class StandardExceptionHandler {
 
     
     @ExceptionHandler({AuthenticationException.class })
-    public ResponseEntity<Error> HandleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+    public ResponseEntity<Error> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
 
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
@@ -96,7 +95,7 @@ public class StandardExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Void> HandleEntityNotFoundException() {
+    public ResponseEntity<Void> handleEntityNotFoundException() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

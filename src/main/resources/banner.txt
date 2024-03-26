@@ -10,4 +10,3 @@ Application Version : ${build.version}
 Spring Boot Version : ${spring-boot.formatted-version}      
 Java Version: ${java.version}
 
-                                                                                   

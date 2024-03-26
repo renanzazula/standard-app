@@ -1,3 +1,4 @@
+
 INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'HARDWARE','HARDWARE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (2,'CLOTHING','CLOTHING', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (3,'FOOTWEAR','FOOTWEAR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
@@ -101,18 +102,19 @@ INSERT INTO `medida` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por
 INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '6');
 INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '6.5');
 INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '7');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '7.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12.5');
--- INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '13');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '7.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '8.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '9.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '10.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '11.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '12.5');
+INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '13');
+
 INSERT INTO `fornecedor` (`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('FORNECEDOR','FORNECEDOR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO `cliente` (`codigo`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1, 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO `caixa` (`codigo`,`alterado_por`,`criado_por`,`data_alteracao`,`data_criacao`,`hora_criacao`,`version`,`data_abertura`,`data_fechamento`,`hora_abertura`,`hora_fechamento`,`status`,`total`,`total_desconto`,`total_vendas`,`valor_final`,`valor_inicial`)VALUES (null,null,null,null,CURRENT_TIMESTAMP(),null,0,CURRENT_TIMESTAMP(),null,CURRENT_TIMESTAMP(),null,'A',0,0,0,0,5.0);

@@ -1,4 +1,4 @@
-package com.standard.security;
+package com.standard.security.encoder;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;

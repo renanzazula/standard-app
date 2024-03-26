@@ -17,10 +17,4 @@ public class WebConfig implements WebMvcConfigurer {
                 RequestMethod.PUT.name(), RequestMethod.POST.name(), RequestMethod.DELETE.name());
     }
 
-    @Bean
-    ServletRegistrationBean h2servletRegistration(){
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-        registrationBean.addUrlMappings("/console/*");
-        return registrationBean;
-    }
 }

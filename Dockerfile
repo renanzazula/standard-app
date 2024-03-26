@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 MAINTAINER Renan Zazula
 
 RUN mkdir -p /standard-app/

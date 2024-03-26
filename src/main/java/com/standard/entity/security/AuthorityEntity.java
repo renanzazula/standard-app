@@ -3,23 +3,27 @@ package com.standard.entity.security;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@Entity(name = "authority")
-public class AuthorityEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "authority")
+public class AuthorityEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "role", length = 45)
-    private String role;
+    @Column(name = "permission")
+    private String permission;
 
     @ManyToMany(mappedBy = "authorities")
-    private Set<UserEntity> userEntities;
+    private Set<RoleEntity> roles;
+
 }

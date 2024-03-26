@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
+        <version>2.6.5</version>
     </parent>
 
     <developers>
@@ -36,7 +36,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <spring-boot-admin.version>2.1.0</spring-boot-admin.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
@@ -52,11 +52,13 @@
         <maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
         <cglib-nodep.version>3.2.9</cglib-nodep.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
-        <!--<versions-maven-plugin.version>2.5</versions-maven-plugin.version>-->
+        <mysql-connector.version>8.0.28</mysql-connector.version>
+        <docker.image.prefix>renanzazula</docker.image.prefix>
+        <docker.image.name>${project.artifactId}</docker.image.name>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectKey>standard-app</sonar.projectKey>
-        <sonar.organization>renanzazula-bitbucket</sonar.organization>
+        <sonar.organization>renanzazula-github</sonar.organization>
         <sonar.login>454127241003dd57a450435ac7290feccf5fc17f</sonar.login>
     </properties>
 
@@ -80,6 +82,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>3.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -88,6 +91,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <version>6.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -109,9 +113,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-connector.version}</version>
+    </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -175,6 +180,11 @@
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>${cglib-nodep.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.9.1</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -247,31 +257,43 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>cobertura-maven-plugin</artifactId>-->
-                <!--<version>${cobertura-maven-plugin.version}</version>-->
-                <!--<configuration>-->
-                    <!--<formats>-->
-                        <!--<format>html</format>-->
-                        <!--<format>xml</format>-->
-                    <!--</formats>-->
-                    <!--<check />-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.sonarsource.scanner.maven</groupId>-->
-                <!--<artifactId>sonar-maven-plugin</artifactId>-->
-                <!--<version>3.3.0.603</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>verify</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>sonar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.3.0.603</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sonar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${docker.image.prefix}/${docker.image.name}</name>
+                            <alias>${project.artifactId}</alias>
+                            <build>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <dockerFile>${project.basedir}/docker/docker-app/Dockerfile</dockerFile>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <reporting>
