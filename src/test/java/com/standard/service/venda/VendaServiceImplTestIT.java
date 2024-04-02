@@ -9,20 +9,20 @@ import com.standard.service.caixa.PosService;
 import com.standard.service.caixa.PosServiceImpl;
 import com.standard.service.categoria.CategoryService;
 import com.standard.service.categoria.CategoryServiceImpl;
-import com.standard.service.dominio.DominioService;
-import com.standard.service.dominio.DominioServiceImpl;
-import com.standard.service.formaDePagamento.FormaDePagamentoService;
-import com.standard.service.formaDePagamento.FormaDePagamentoServiceImpl;
-import com.standard.service.fornecedor.FornecedorService;
-import com.standard.service.fornecedor.FornecedorServiceImpl;
-import com.standard.service.marca.MarcaService;
-import com.standard.service.marca.MarcaServiceImpl;
-import com.standard.service.medida.MedidaService;
-import com.standard.service.medida.MedidaServiceImpl;
+import com.standard.service.dominio.DomainService;
+import com.standard.service.dominio.DomainServiceImpl;
+import com.standard.service.formaDePagamento.PaymentMethodService;
+import com.standard.service.formaDePagamento.PaymentMethodServiceImpl;
+import com.standard.service.fornecedor.ProviderService;
+import com.standard.service.fornecedor.ProviderServiceImpl;
+import com.standard.service.marca.BrandService;
+import com.standard.service.marca.BrandServiceImpl;
+import com.standard.service.medida.MeasureService;
+import com.standard.service.medida.MeasureServiceImpl;
 import com.standard.service.produto.ProdutoService;
 import com.standard.service.produto.ProdutoServiceImpl;
-import com.standard.service.subcategoria.SubcategoriaService;
-import com.standard.service.subcategoria.SubcategoriaServiceImpl;
+import com.standard.service.subcategoria.SubcategoryService;
+import com.standard.service.subcategoria.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +45,7 @@ public class VendaServiceImplTestIT extends BaseTest {
     private VendaRepository vendaRepository;
 
     @Autowired
-    private FormaDePagamentoRepository formaDePagamentoRepository;
+    private PaymentMethodRepository paymentMethodRepository;
 
     @Autowired
     private PosRepository posRepository;
@@ -54,22 +54,22 @@ public class VendaServiceImplTestIT extends BaseTest {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private MedidaRepository medidaRepository;
+    private MeasureRepository measureRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private SubcategoriaRepository subcategoriaRepository;
+    private SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    private MarcaRepository marcaRepository;
+    private BrandRepository brandRepository;
 
     @Autowired
-    private DominioRepository dominioRepository;
+    private DomainRepository domainRepository;
 
     @Autowired
-    private FornecedorRepository fornecedorRepository;
+    private ProviderRepository providerRepository;
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -81,16 +81,16 @@ public class VendaServiceImplTestIT extends BaseTest {
     private ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
 
 
-    private MarcaService marcaService;
-    private FornecedorService fornecedorService;
+    private BrandService brandService;
+    private ProviderService providerService;
     private ProdutoService produtoService;
-    private SubcategoriaService subcategoriaService;
+    private SubcategoryService subcategoryService;
     private CategoryService categoryService;
-    private DominioService dominioService;
-    private MedidaService medidaService;
+    private DomainService domainService;
+    private MeasureService measureService;
     private VendaService vendaService;
     private PosService posService;
-    private FormaDePagamentoService formaDePagamentoService;
+    private PaymentMethodService paymentMethodService;
 
     // Fixme: later
     CustomerEntity clienteEntity = null;
@@ -100,31 +100,31 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         posService =  new PosServiceImpl(posRepository);
 
-        marcaService = new MarcaServiceImpl(marcaRepository);
-        subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository, subcategoriaRepository);
-        fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
-        dominioService = new DominioServiceImpl(dominioRepository);
-        medidaService = new MedidaServiceImpl(medidaRepository, categoryRepository,
-                subcategoriaRepository, marcaRepository);
+        brandService = new BrandServiceImpl(brandRepository);
+        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+        categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
+        providerService = new ProviderServiceImpl(providerRepository);
+        domainService = new DomainServiceImpl(domainRepository);
+        measureService = new MeasureServiceImpl(measureRepository, categoryRepository,
+                subcategoryRepository, brandRepository);
 
-        produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
-                dominioRepository, fornecedorRepository,
-                categoryRepository, subcategoriaRepository,
-                marcaRepository, itensTipoMedidaRepository);
+        produtoService = new ProdutoServiceImpl(produtoRepository, measureRepository,
+                domainRepository, providerRepository,
+                categoryRepository, subcategoryRepository,
+                brandRepository, itensTipoMedidaRepository);
 
-        vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, posRepository,
+        vendaService = new VendaServiceImpl(vendaRepository, paymentMethodRepository, posRepository,
                 customerRepository, produtoHasItensTipoMedidaRepository, posService);
 
         clienteEntity = new CustomerEntity();
         customerRepository.save(clienteEntity);
 
         Customer customer = new Customer();
-        customer.setId(clienteEntity.getCodigo());
+        customer.setId(clienteEntity.getId());
 
-        formaDePagamentoService  = new FormaDePagamentoServiceImpl(formaDePagamentoRepository);
+        paymentMethodService = new PaymentMethodServiceImpl(paymentMethodRepository);
         setUpFormasDePagamento();
-        formasDePagamento = formaDePagamentoService.incluir(formasDePagamento);
+        paymentMethod = paymentMethodService.save(paymentMethod);
 
 
         pos = new Pos();
@@ -133,13 +133,13 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         // requeridos
         setUpMarca();
-        marca = marcaService.incluir(marca);
+        brand = brandService.save(brand);
 
         setUpFornecedor();
-        fornecedor = fornecedorService.incluir(fornecedor);
+        provider = providerService.save(provider);
 
         setUpSubCategoria();
-        subcategory = subcategoriaService.save(subcategory);
+        subcategory = subcategoryService.save(subcategory);
 
         setUpCategoria();
         category.setSubcategories(new ArrayList<>());
@@ -147,15 +147,15 @@ public class VendaServiceImplTestIT extends BaseTest {
         category = categoryService.save(category);
 
         setUpDominio();
-        dominio = dominioService.incluir(dominio);
+        domain = domainService.save(domain);
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategory(subcategory);
-        medida.setCategory(category);
-        medida.setMarca(marca);
-        medida.setItensTipoMedida(itensTipoMedida);
-        medida = medidaService.incluir(medida);
+        measure.setSubcategory(subcategory);
+        measure.setCategory(category);
+        measure.setBrand(brand);
+        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        measure = measureService.save(measure);
 
         //quantadade, dominio e item Medida
         setUpProdutoHasItensTipoMedida();
@@ -163,10 +163,10 @@ public class VendaServiceImplTestIT extends BaseTest {
         // campos comuns
         setUpProduto();
 
-        produto.setMarca(marca);
-        produto.setFornecedor(fornecedor);
+        produto.setBrand(brand);
+        produto.setProvider(provider);
         produto.setCategory(category);
-        produto.setMedida(medida);
+        produto.setMeasure(measure);
         produto.setSubcategory(subcategory);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
         produto = produtoService.incluir(produto);
@@ -185,12 +185,12 @@ public class VendaServiceImplTestIT extends BaseTest {
         venda.setStatus(StatusVendaEnum.EFETUDA);
         venda.setPos(new Pos());
         venda.setPos(pos);
-        venda.setFormaDePagamento(formasDePagamento);
+        venda.setFormaDePagamento(paymentMethod);
         venda.setCustomer(customer);
         VendaHasItemProduto vendaHasItemProduto = new VendaHasItemProduto();
 
         ProdutoHasItensTipoMedida produtoHasItensTipoMedida = new ProdutoHasItensTipoMedida();
-        produtoHasItensTipoMedida.setItensTipoMedida(medida.getItensTipoMedida().get(0));
+        produtoHasItensTipoMedida.setItemsTypeMeasure(measure.getItemsTypeMeasure().get(0));
         produtoHasItensTipoMedida.setProduto(produto);
         produtoHasItensTipoMedida.setQuantidade(QUANTIDADE_PRODUTOS_VENDA);
         produtoHasItensTipoMedida.setValorUnitario(VALOR_UNITARIO);

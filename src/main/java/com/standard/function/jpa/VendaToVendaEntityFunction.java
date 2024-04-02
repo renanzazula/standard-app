@@ -28,8 +28,8 @@ public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> 
             output.setPagamento(input.getPagamento());
             output.setValorTotal(input.getValorTotal());
 
-            if (input.getFormaDePagamento() != null) {
-                output.setFormaDePagamento(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity.apply(input.getFormaDePagamento()));
+            if (input.getPaymentMethod() != null) {
+                output.setFormaDePagamento(JpaFunctions.paymentMethodToPaymentMethodEntity.apply(input.getPaymentMethod()));
             }
             if (input.getCustomer() != null) {
                 output.setCustomer(JpaFunctions.customerToCustomerEntity.apply(input.getCustomer()));

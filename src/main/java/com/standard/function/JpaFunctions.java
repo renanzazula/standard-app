@@ -9,14 +9,14 @@ public class JpaFunctions {
 
     public static final CategoryToCategoryEntityFunction categoryToCategoryEntity = new CategoryToCategoryEntityFunction();
     public static final SubCategoryToSubCategoryEntityFunction subcategoryToSubCategoryEntity = new SubCategoryToSubCategoryEntityFunction();
-    public static final FornecedorToFornecedorEntityFunction fornecedortoFornecedorEntity = new FornecedorToFornecedorEntityFunction();
-    public static final MarcaToMarcaEntityFunction marcaToMarcaEntity = new MarcaToMarcaEntityFunction();
-    public static final MedidaToMedidaEntityFunction medidaToMedidaEntity = new MedidaToMedidaEntityFunction();
+    public static final ProviderToProviderEntityFunction providerToProviderEntity = new ProviderToProviderEntityFunction();
+    public static final BrandToBrandEntityFunction brandToBrandEntity = new BrandToBrandEntityFunction();
+    public static final MeasureToMeasureEntityFunction measureToMeasureEntity = new MeasureToMeasureEntityFunction();
     public static final ItensTipoMedidaToItensTipoMedidaEntityFunction itensTipoMedidaToItensTipoMedidaEntity = new ItensTipoMedidaToItensTipoMedidaEntityFunction();
     public static final ProdutoToProdutoEntityFunction produtoToProdutoEntity = new ProdutoToProdutoEntityFunction();
-    public static final FormaDePagamentoToFormaDePagamentoEntityFunction formasDePagamentoToFormaDePagamentoEntity = new FormaDePagamentoToFormaDePagamentoEntityFunction();
+    public static final PaymentMethodToPaymentMethodEntityFunction paymentMethodToPaymentMethodEntity = new PaymentMethodToPaymentMethodEntityFunction();
     public static final ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity = new ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction();
-    public static final DominioToDominioEntityFunction dominioToDominioEntity = new DominioToDominioEntityFunction();
+    public static final DomainToDomainEntityFunction domainToDomainEntity = new DomainToDomainEntityFunction();
     public static final VendaToVendaEntityFunction vendaToVendaEntity = new VendaToVendaEntityFunction();
     public static final CustomerToCustomerEntityFunction customerToCustomerEntity = new CustomerToCustomerEntityFunction();
     public static final PosToPosEntityFunction posToPosEntity = new PosToPosEntityFunction();

@@ -1,7 +1,7 @@
 package com.standard.repository;
 
 
-import com.standard.entity.FormaDePagamentoEntity;
+import com.standard.entity.PaymentMethodEntity;
 import com.standard.entity.VendaEntity;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -21,8 +21,8 @@ class VendaSpecification implements Specification<VendaEntity> {
 
         Predicate p = cb.conjunction();
 
-        if (venda.getCodigo() != null) {
-            p.getExpressions().add(cb.equal(root.get("codigo"), venda.getCodigo()));
+        if (venda.getId() != null) {
+            p.getExpressions().add(cb.equal(root.get("codigo"), venda.getId()));
         }
 
         if (venda.getData() != null) {
@@ -36,9 +36,9 @@ class VendaSpecification implements Specification<VendaEntity> {
         }
         // TODO: Cliente
 
-        if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
-            Join<VendaEntity, FormaDePagamentoEntity> sq = root.join("formaDePagamento");
-            p.getExpressions().add(cb.equal(sq.get("codigo"), venda.getFormaDePagamento().getCodigo()));
+        if (venda.getPaymentMethod() != null && venda.getPaymentMethod().getId() != null) {
+            Join<VendaEntity, PaymentMethodEntity> sq = root.join("paymentMethod");
+            p.getExpressions().add(cb.equal(sq.get("codigo"), venda.getPaymentMethod().getId()));
         }
         return p;
     }

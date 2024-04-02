@@ -18,7 +18,7 @@ public class Venda implements Serializable {
 
 	private Long codigo;
 
-	// @JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
+	//@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
 	private LocalDateTime data;
 
 	// @JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
@@ -56,8 +56,8 @@ public class Venda implements Serializable {
 	private Customer customer;
 
 	private List<Produto> produtos;
-	private FormasDePagamento formaDePagamento;
-	private List<FormasDePagamento> formasDePagamento;
+	private PaymentMethod formaDePagamento;
+	private List<PaymentMethod> paymentMethod;
 	private List<VendaHasItemProduto> vendaHasItemProduto;
 	
 	public Venda(Long codigo) {

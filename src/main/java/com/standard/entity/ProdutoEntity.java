@@ -40,7 +40,7 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     @Column(name = "descricao", length = 45)
     private String descricao;
 
-//    @NotNull TODO: verificar pq preciso do preco do produto se tenho os outros precos abaixo
+//    @NotNull TODO: list de prices base on configuration
     @Column(name = "preco")
     private Double preco;
 
@@ -88,13 +88,13 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "marca_id", updatable = false)
-    private MarcaEntity marca;
+    @JoinColumn(name = "brand_id", updatable = false)
+    private BrandEntity brand;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fornecedor_id")
-    private FornecedorEntity fornecedor;
+    @JoinColumn(name = "provider_id")
+    private ProviderEntity provider;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
@@ -103,13 +103,13 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "medida_id")
-    private MedidaEntity medida;
+    @JoinColumn(name = "measure_id")
+    private MeasureEntity measure;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subcategory_id")
-    private SubcategoryEntity subcategoria;
+    private SubcategoryEntity subcategory;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "produto_id")

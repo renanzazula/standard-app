@@ -1,23 +1,23 @@
 package com.standard.service.produto;
 
 import com.standard.BaseTest;
-import com.standard.domain.Fornecedor;
-import com.standard.domain.Marca;
+import com.standard.domain.Provider;
+import com.standard.domain.Brand;
 import com.standard.domain.Produto;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.*;
 import com.standard.service.categoria.CategoryService;
 import com.standard.service.categoria.CategoryServiceImpl;
-import com.standard.service.dominio.DominioService;
-import com.standard.service.dominio.DominioServiceImpl;
-import com.standard.service.fornecedor.FornecedorService;
-import com.standard.service.fornecedor.FornecedorServiceImpl;
-import com.standard.service.marca.MarcaService;
-import com.standard.service.marca.MarcaServiceImpl;
-import com.standard.service.medida.MedidaService;
-import com.standard.service.medida.MedidaServiceImpl;
-import com.standard.service.subcategoria.SubcategoriaService;
-import com.standard.service.subcategoria.SubcategoriaServiceImpl;
+import com.standard.service.dominio.DomainService;
+import com.standard.service.dominio.DomainServiceImpl;
+import com.standard.service.fornecedor.ProviderService;
+import com.standard.service.fornecedor.ProviderServiceImpl;
+import com.standard.service.marca.BrandService;
+import com.standard.service.marca.BrandServiceImpl;
+import com.standard.service.medida.MeasureService;
+import com.standard.service.medida.MeasureServiceImpl;
+import com.standard.service.subcategoria.SubcategoryService;
+import com.standard.service.subcategoria.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,22 +38,22 @@ public class ProdutoServiceImplTestIT extends BaseTest {
 
 
     @Autowired
-    private MedidaRepository medidaRepository;
+    private MeasureRepository measureRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private SubcategoriaRepository subcategoriaRepository;
+    private SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    private MarcaRepository marcaRepository;
+    private BrandRepository brandRepository;
 
     @Autowired
-    private DominioRepository dominioRepository;
+    private DomainRepository domainRepository;
 
     @Autowired
-    private FornecedorRepository fornecedorRepository;
+    private ProviderRepository providerRepository;
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -61,40 +61,40 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     @Autowired
     private ItensTipoMedidaRepository itensTipoMedidaRepository;
 
-    private MarcaService marcaService;
-    private FornecedorService fornecedorService;
+    private BrandService brandService;
+    private ProviderService providerService;
     private ProdutoService produtoService;
-    private SubcategoriaService subcategoriaService;
+    private SubcategoryService subcategoryService;
     private CategoryService categoryService;
-    private DominioService dominioService;
-    private MedidaService medidaService;
+    private DomainService domainService;
+    private MeasureService measureService;
 
 
 
     @BeforeEach
     public void setUp() {
 
-        marcaService = new MarcaServiceImpl(marcaRepository);
-        subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository, subcategoriaRepository);
-        fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
-        dominioService = new DominioServiceImpl(dominioRepository);
-        medidaService = new MedidaServiceImpl(medidaRepository, categoryRepository, subcategoriaRepository,
-                marcaRepository);
-        produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
-                dominioRepository, fornecedorRepository,
-                categoryRepository, subcategoriaRepository,
-                marcaRepository, itensTipoMedidaRepository);
+        brandService = new BrandServiceImpl(brandRepository);
+        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+        categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
+        providerService = new ProviderServiceImpl(providerRepository);
+        domainService = new DomainServiceImpl(domainRepository);
+        measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository,
+                brandRepository);
+        produtoService = new ProdutoServiceImpl(produtoRepository, measureRepository,
+                domainRepository, providerRepository,
+                categoryRepository, subcategoryRepository,
+                brandRepository, itensTipoMedidaRepository);
 
         // requeridos
         setUpMarca();
-        marca = marcaService.incluir(marca);
+        brand = brandService.save(brand);
 
         setUpFornecedor();
-        fornecedor = fornecedorService.incluir(fornecedor);
+        provider = providerService.save(provider);
 
         setUpSubCategoria();
-        subcategory = subcategoriaService.save(subcategory);
+        subcategory = subcategoryService.save(subcategory);
 
         setUpCategoria();
         category.setSubcategories(new ArrayList<>());
@@ -102,15 +102,15 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         category = categoryService.save(category);
 
         setUpDominio();
-        dominio = dominioService.incluir(dominio);
+        domain = domainService.save(domain);
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategory(subcategory);
-        medida.setCategory(category);
-        medida.setMarca(marca);
-        medida.setItensTipoMedida(itensTipoMedida);
-        medida = medidaService.incluir(medida);
+        measure.setSubcategory(subcategory);
+        measure.setCategory(category);
+        measure.setBrand(brand);
+        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        measure = measureService.save(measure);
 
         //quantadade, dominio e item Medida
         setUpProdutoHasItensTipoMedida();
@@ -118,10 +118,10 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         // campos comuns
         setUpProduto();
 
-        produto.setMarca(marca);
-        produto.setFornecedor(fornecedor);
+        produto.setBrand(brand);
+        produto.setProvider(provider);
         produto.setCategory(category);
-        produto.setMedida(medida);
+        produto.setMeasure(measure);
         produto.setSubcategory(subcategory);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
 
@@ -170,21 +170,21 @@ public class ProdutoServiceImplTestIT extends BaseTest {
         assertEquals(found.getPorcentagem(), updated.getPorcentagem());
         assertEquals(found.getPorcentagemDesconto(), updated.getPorcentagemDesconto());
 
-        assertMarca(found.getMarca(), updated.getMarca());
+        assertMarca(found.getBrand(), updated.getBrand());
         assertCategoria(found.getCategory(), updated.getCategory());
         assertSubCategoria(found.getSubcategory(), updated.getSubcategory());
-        assertFornecedor(found.getFornecedor(), updated.getFornecedor());
-        assertMarcaSubCategoriaCategoriaValor(found.getMedida());
+        assertFornecedor(found.getProvider(), updated.getProvider());
+        assertMarcaSubCategoriaCategoriaValor(found.getMeasure());
         assertEquals(found.getProdutoHasItensTipoMedida().size(), updated.getProdutoHasItensTipoMedida().size());
 
         for (int i = 0; i < found.getProdutoHasItensTipoMedida().size(); i++) {
 
-            assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDominios().size(),
-                    updated.getProdutoHasItensTipoMedida().get(i).getDominios().size());
+            assertEquals(found.getProdutoHasItensTipoMedida().get(i).getDomains().size(),
+                    updated.getProdutoHasItensTipoMedida().get(i).getDomains().size());
 
-            for (int j = 0; j < found.getProdutoHasItensTipoMedida().get(i).getDominios().size(); j++) {
-                assertDominios(found.getProdutoHasItensTipoMedida().get(i).getDominios().get(j),
-                        updated.getProdutoHasItensTipoMedida().get(i).getDominios().get(j));
+            for (int j = 0; j < found.getProdutoHasItensTipoMedida().get(i).getDomains().size(); j++) {
+                assertDominios(found.getProdutoHasItensTipoMedida().get(i).getDomains().get(j),
+                        updated.getProdutoHasItensTipoMedida().get(i).getDomains().get(j));
             }
 
             assertEquals(found.getProdutoHasItensTipoMedida().get(i).getQuantidade(),
@@ -193,8 +193,8 @@ public class ProdutoServiceImplTestIT extends BaseTest {
             assertEquals(found.getProdutoHasItensTipoMedida().get(i).getValorUnitario(),
                     updated.getProdutoHasItensTipoMedida().get(i).getValorUnitario());
 
-            assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor(),
-                    updated.getProdutoHasItensTipoMedida().get(0).getItensTipoMedida().getValor());
+            assertEquals(found.getProdutoHasItensTipoMedida().get(0).getItemsTypeMeasure().getValor(),
+                    updated.getProdutoHasItensTipoMedida().get(0).getItemsTypeMeasure().getValor());
 
         }
 
@@ -203,23 +203,23 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     @Test
     public void alterar_produto_Marca() {
 
-        Marca marcaToUpdate = new Marca();
-        marcaToUpdate.setNome(NOME + "_update");
-        marcaToUpdate.setDescricao(DESCRICAO + "_update");
-        marcaToUpdate = marcaService.incluir(marcaToUpdate);
+        Brand brandToUpdate = new Brand();
+        brandToUpdate.setNome(NOME + "_update");
+        brandToUpdate.setDescricao(DESCRICAO + "_update");
+        brandToUpdate = brandService.save(brandToUpdate);
 
         produto = produtoService.incluir(produto);
 
         Produto found = produtoService.consultarByCodigo(produto.getCodigo());
-        found.setMarca(marcaToUpdate);
+        found.setBrand(brandToUpdate);
 
         Produto updated = produtoService.alterar(produto.getCodigo(), found);
 
-        assertMarca(updated.getMarca(), marcaToUpdate);
+        assertMarca(updated.getBrand(), brandToUpdate);
 
-        assertNotEquals(updated.getMarca().getCodigo(), marca.getCodigo());
-        assertNotEquals(updated.getMarca().getNome(), marca.getNome());
-        assertNotEquals(updated.getMarca().getDescricao(), marca.getDescricao());
+        assertNotEquals(updated.getBrand().getCodigo(), brand.getCodigo());
+        assertNotEquals(updated.getBrand().getNome(), brand.getNome());
+        assertNotEquals(updated.getBrand().getDescricao(), brand.getDescricao());
 
     }
 
@@ -236,23 +236,23 @@ public class ProdutoServiceImplTestIT extends BaseTest {
     @Test
     public void alterar_produto_Fornecedor() {
 
-        Fornecedor fornecedorToUpdate = new Fornecedor();
-        fornecedorToUpdate.setNome(NOME + "_update");
-        fornecedorToUpdate.setDescricao(DESCRICAO + "_update");
-        fornecedorToUpdate = fornecedorService.incluir(fornecedorToUpdate);
+        Provider providerToUpdate = new Provider();
+        providerToUpdate.setNome(NOME + "_update");
+        providerToUpdate.setDescricao(DESCRICAO + "_update");
+        providerToUpdate = providerService.save(providerToUpdate);
 
         produto = produtoService.incluir(produto);
 
         Produto found = produtoService.consultarByCodigo(produto.getCodigo());
-        found.setFornecedor(fornecedorToUpdate);
+        found.setProvider(providerToUpdate);
 
         Produto updated = produtoService.alterar(produto.getCodigo(), found);
 
-        assertFornecedor(updated.getFornecedor(), fornecedorToUpdate);
+        assertFornecedor(updated.getProvider(), providerToUpdate);
 
-        assertNotEquals(updated.getFornecedor().getCodigo(), fornecedor.getCodigo());
-        assertNotEquals(updated.getFornecedor().getNome(), fornecedor.getNome());
-        assertNotEquals(updated.getFornecedor().getDescricao(), fornecedor.getDescricao());
+        assertNotEquals(updated.getProvider().getCodigo(), provider.getCodigo());
+        assertNotEquals(updated.getProvider().getNome(), provider.getNome());
+        assertNotEquals(updated.getProvider().getDescricao(), provider.getDescricao());
 
     }
 

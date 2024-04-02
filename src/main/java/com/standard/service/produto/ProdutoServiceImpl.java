@@ -1,7 +1,7 @@
 package com.standard.service.produto;
 
 import com.standard.domain.Produto;
-import com.standard.entity.DominioEntity;
+import com.standard.entity.DomainEntity;
 import com.standard.entity.ProdutoEntity;
 import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
 import com.standard.enums.StatusEnum;
@@ -20,25 +20,25 @@ import java.util.stream.Collectors;
 public class ProdutoServiceImpl implements ProdutoService {
 
 	private final ProdutoRepository produtoRepository;
-	private final MedidaRepository medidaRepository;
-	private final DominioRepository dominioRepository;
-	private final FornecedorRepository fornecedorRepository;
+	private final MeasureRepository measureRepository;
+	private final DomainRepository domainRepository;
+	private final ProviderRepository providerRepository;
 	private final CategoryRepository categoryRepository;
-	private final SubcategoriaRepository subcategoriaRepository;
-	private final MarcaRepository marcaRepository;
+	private final SubcategoryRepository subcategoryRepository;
+	private final BrandRepository brandRepository;
 	private final ItensTipoMedidaRepository itensTipoMedidaRepository;
 
-    public ProdutoServiceImpl(ProdutoRepository produtoRepository, MedidaRepository medidaRepository,
-							  DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,
-							  CategoryRepository categoryRepository, SubcategoriaRepository subcategoriaRepository,
-							  MarcaRepository marcaRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, MeasureRepository measureRepository,
+							  DomainRepository domainRepository, ProviderRepository providerRepository,
+							  CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository,
+							  BrandRepository brandRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
         this.produtoRepository = produtoRepository;
-        this.medidaRepository = medidaRepository;
-        this.dominioRepository = dominioRepository;
-        this.fornecedorRepository = fornecedorRepository;
+        this.measureRepository = measureRepository;
+        this.domainRepository = domainRepository;
+        this.providerRepository = providerRepository;
         this.categoryRepository = categoryRepository;
-        this.subcategoriaRepository = subcategoriaRepository;
-        this.marcaRepository = marcaRepository;
+        this.subcategoryRepository = subcategoryRepository;
+        this.brandRepository = brandRepository;
         this.itensTipoMedidaRepository = itensTipoMedidaRepository;
     }
 
@@ -60,12 +60,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setPorcentagem(produto.getPorcentagem());
 		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
 
-		if (produto.getMedida() != null && produto.getMedida().getCodigo() != null) {
-			produtoDB.setMedida(medidaRepository.getOne(produto.getMedida().getCodigo()));
+		if (produto.getMeasure() != null && produto.getMeasure().getId() != null) {
+			produtoDB.setMeasure(measureRepository.getOne(produto.getMeasure().getId()));
 		}
 
-		if (produto.getFornecedor() != null && produto.getFornecedor().getCodigo() != null) {
-			produtoDB.setFornecedor(fornecedorRepository.getOne(produto.getFornecedor().getCodigo()));
+		if (produto.getProvider() != null && produto.getProvider().getCodigo() != null) {
+			produtoDB.setProvider(providerRepository.getOne(produto.getProvider().getCodigo()));
 		}
 
 		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
@@ -73,11 +73,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 		}
 
 		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
-			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategory().getCodigo()));
+			produtoDB.setSubcategory(subcategoryRepository.getOne(produto.getSubcategory().getCodigo()));
 		}
 
-		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
-			produtoDB.setMarca(marcaRepository.getOne(produto.getMarca().getCodigo()));
+		if (produto.getBrand() != null && produto.getBrand().getCodigo() != null) {
+			produtoDB.setBrand(brandRepository.getOne(produto.getBrand().getCodigo()));
 		}
         getProdutoHasItensTipoMedida(produto, produtoDB);
         return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
@@ -90,16 +90,16 @@ public class ProdutoServiceImpl implements ProdutoService {
                 ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = new ProdutoHasItensTipoMedidaEntity();
 
                 produtoHasItensTipoMedida.setQuantidade(phitm.getQuantidade());
-                Set<DominioEntity> dominiosDB = new HashSet<>();
-                if(phitm.getDominios() != null) {
-                    phitm.getDominios().forEach(dominio -> {
+                Set<DomainEntity> dominiosDB = new HashSet<>();
+                if(phitm.getDomains() != null) {
+                    phitm.getDomains().forEach(dominio -> {
                         if(dominio.getCodigo() != null) {
-                            dominiosDB.add(dominioRepository.getOne(dominio.getCodigo()));
+                            dominiosDB.add(domainRepository.getOne(dominio.getCodigo()));
                         }
                     });
                 }
-                produtoHasItensTipoMedida.setDominios(dominiosDB);
-                produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItensTipoMedida().getCodigo()));
+                produtoHasItensTipoMedida.setDomains(dominiosDB);
+                produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItemsTypeMeasure().getId()));
                 set.add(produtoHasItensTipoMedida);
             });
             produtoDB.setProdutoHasItensTipoMedida(new HashSet<>());
@@ -126,12 +126,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
 
 
-		if (produto.getMedida() != null && produto.getMedida().getCodigo() != null) {
-			produtoDB.setMedida(medidaRepository.getOne(produto.getMedida().getCodigo()));
+		if (produto.getMeasure() != null && produto.getMeasure().getId() != null) {
+			produtoDB.setMeasure(measureRepository.getOne(produto.getMeasure().getId()));
 		}
 
-		if (produto.getFornecedor() != null && produto.getFornecedor().getCodigo() != null) {
-			produtoDB.setFornecedor(fornecedorRepository.getOne(produto.getFornecedor().getCodigo()));
+		if (produto.getProvider() != null && produto.getProvider().getCodigo() != null) {
+			produtoDB.setProvider(providerRepository.getOne(produto.getProvider().getCodigo()));
 		}
 
 		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
@@ -139,14 +139,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 		}
 
 		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
-			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategory().getCodigo()));
+			produtoDB.setSubcategory(subcategoryRepository.getOne(produto.getSubcategory().getCodigo()));
 		}
 
-		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
-			produtoDB.setMarca(marcaRepository.getOne(produto.getMarca().getCodigo()));
+		if (produto.getBrand() != null && produto.getBrand().getCodigo() != null) {
+			produtoDB.setBrand(brandRepository.getOne(produto.getBrand().getCodigo()));
 		}
 
-		produtoDB.getProdutoHasItensTipoMedida().forEach(d -> d.getDominios().clear() );
+		produtoDB.getProdutoHasItensTipoMedida().forEach(d -> d.getDomains().clear() );
 		produtoDB.getProdutoHasItensTipoMedida().clear();
         getProdutoHasItensTipoMedida(produto, produtoDB);
 		return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));

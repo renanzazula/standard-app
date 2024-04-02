@@ -1,28 +1,28 @@
 package com.standard.function.jpa;
 
-import com.standard.domain.ItensTipoMedida;
-import com.standard.entity.ItensTipoMedidaEntity;
+import com.standard.domain.ItemsTypeMeasure;
+import com.standard.entity.ItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
 
-public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<ItensTipoMedidaEntity, ItensTipoMedida> {
+public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<ItemsTypeMeasureEntity, ItemsTypeMeasure> {
 
 	@Override
-	public ItensTipoMedida apply(ItensTipoMedidaEntity input) {
-		ItensTipoMedida output = new ItensTipoMedida();
+	public ItemsTypeMeasure apply(ItemsTypeMeasureEntity input) {
+		ItemsTypeMeasure output = new ItemsTypeMeasure();
 		if(input != null) {
-			output.setCodigo(input.getId());
+			output.setId(input.getId());
 			output.setValor(input.getValor());
 
-			if (input.getCategoria() != null) {
-				output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategoria()));
+			if (input.getCategory() != null) {
+				output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
 			}
-			if (input.getSubcategoria() != null) {
-				output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategoria()));
+			if (input.getSubcategory() != null) {
+				output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategory()));
 			}
-			if (input.getMarca() != null) {
-				output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
+			if (input.getBrand() != null) {
+				output.setBrand(JpaFunctions.brandToBrandEntity.apply(input.getBrand()));
 			}
 
 		}

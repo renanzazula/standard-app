@@ -20,10 +20,10 @@ public class ProdutoHasItensTipoMedida implements Serializable {
     private static final long serialVersionUID = -6612762288260227887L;
 
     private Long codigo;
-    private List<Dominio> dominios;
+    private List<Domain> domains;
     private Integer quantidade;
     private Double valorUnitario;
-    private ItensTipoMedida itensTipoMedida;
+    private ItemsTypeMeasure itemsTypeMeasure;
     private Produto produto;
     @JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
     private Date data;

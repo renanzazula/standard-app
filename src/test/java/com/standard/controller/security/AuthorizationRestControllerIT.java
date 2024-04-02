@@ -2,7 +2,7 @@ package com.standard.controller.security;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import com.standard.controller.CategoriaController;
+import com.standard.controller.CategoryController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllOrdersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamCustomer")
          void testGetAllOrdersAccessForbiddenForCustomer(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllOrdersAccessForbiddenForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -54,7 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllOrdersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }
@@ -68,7 +68,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllCustomersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -78,7 +78,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamCustomer")
          void testGetAllCustomersAccessSuccessForCustomer(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -88,7 +88,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllCustomersForbiddenForForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -97,7 +97,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllCustomersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }
@@ -111,7 +111,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllCustomersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -121,7 +121,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamCustomer")
          void testGetAllCustomersAccessSuccessForCustomer(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -131,7 +131,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllCustomersForbiddenForForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .with(httpBasic(user, pwd))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -140,7 +140,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllCustomersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoriaController.BASE_URL)
+            mockMvc.perform(get(CategoryController.BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }

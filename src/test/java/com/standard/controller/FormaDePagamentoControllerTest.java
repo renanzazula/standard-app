@@ -1,7 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.FormasDePagamento;
-import com.standard.service.formaDePagamento.FormaDePagamentoService;
+import com.standard.domain.PaymentMethod;
+import com.standard.service.formaDePagamento.PaymentMethodService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,16 +26,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {FormasDePagamentoController.class})
+@WebMvcTest(controllers = {PaymentMethodController.class})
 public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @MockBean
-    FormaDePagamentoService service;
+    PaymentMethodService service;
 
     @Autowired
     MockMvc mockMvc;
 
-    private FormasDePagamento obj = null;
+    private PaymentMethod obj = null;
 
     @BeforeEach
     public void setUp() {
@@ -45,7 +45,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
                 .apply(springSecurity())
                 .build();
         
-        obj = new FormasDePagamento();
+        obj = new PaymentMethod();
         obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
@@ -53,13 +53,13 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultar() throws Exception {
-        FormasDePagamento formaDePagamento2 = new FormasDePagamento();
+        PaymentMethod formaDePagamento2 = new PaymentMethod();
         formaDePagamento2.setCodigo(2L);
         formaDePagamento2.setNome("bob");
 
-        List<FormasDePagamento> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
-        when(service.consultar()).thenReturn(formaDePagamentos);
-        mockMvc.perform(get(FormasDePagamentoController.BASE_URL)
+        List<PaymentMethod> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
+        when(service.findAll()).thenReturn(formaDePagamentos);
+        mockMvc.perform(get(PaymentMethodController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -68,8 +68,8 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
-        mockMvc.perform(get(FormasDePagamentoController.BASE_URL + "/1")
+        when(service.findById(obj.getCodigo())).thenReturn(obj);
+        mockMvc.perform(get(PaymentMethodController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -79,8 +79,8 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.incluir(obj)).thenReturn(obj);
-        mockMvc.perform(post(FormasDePagamentoController.BASE_URL)
+        when(service.save(obj)).thenReturn(obj);
+        mockMvc.perform(post(PaymentMethodController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
@@ -91,7 +91,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(FormasDePagamentoController.BASE_URL + "/1")
+        mockMvc.perform(delete(PaymentMethodController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -99,8 +99,8 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1L, obj)).thenReturn(obj);
-        mockMvc.perform(put(FormasDePagamentoController.BASE_URL + "/1")
+        when(service.update(1L, obj)).thenReturn(obj);
+        mockMvc.perform(put(PaymentMethodController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))

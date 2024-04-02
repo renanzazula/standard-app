@@ -69,8 +69,8 @@ public @Data class VendaEntity extends BaseAuditEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "formasDePagamento_id")
-	private FormaDePagamentoEntity formaDePagamento;
+	@JoinColumn(name = "paymentMethod_id")
+	private PaymentMethodEntity paymentMethod;
 
 	@NotNull
 	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)

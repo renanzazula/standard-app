@@ -44,25 +44,25 @@ public class BaseTest {
     private static final long CODIGO = 1L;
     
     // obj commons
-    protected FormasDePagamento formasDePagamento = null;
+    protected PaymentMethod paymentMethod = null;
     protected Venda venda = null;
     protected Pos pos = null;
-    protected Marca marca = null;
+    protected Brand brand = null;
     protected Subcategory subcategory = null;
     protected Category category = null;
-    protected Fornecedor fornecedor = null;
-    protected Medida medida = null;
-    protected List<ItensTipoMedida> itensTipoMedida = null;
-    protected Dominio dominio = null;
+    protected Provider provider = null;
+    protected Measure measure = null;
+    protected List<ItemsTypeMeasure> itemsTypeMeasure = null;
+    protected Domain domain = null;
     protected Produto produto = null;
     protected List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida = null;
-    protected ItensTipoMedida itenTipoMedida = null;
+    protected ItemsTypeMeasure itenTipoMedida = null;
     protected ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
 
     protected void setUpMarca() {
-        marca = new Marca();
-        marca.setNome(NOME);
-        marca.setDescricao(DESCRICAO);
+        brand = new Brand();
+        brand.setNome(NOME);
+        brand.setDescricao(DESCRICAO);
     }
 
     protected void setUpSubCategoria() {
@@ -79,30 +79,30 @@ public class BaseTest {
     }
 
     protected void setUpFormasDePagamento(){
-        formasDePagamento = new FormasDePagamento();
-        formasDePagamento.setNome(NOME);
-        formasDePagamento.setDescricao(DESCRICAO);
-        formasDePagamento.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
+        paymentMethod = new PaymentMethod();
+        paymentMethod.setNome(NOME);
+        paymentMethod.setDescricao(DESCRICAO);
+        paymentMethod.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
     }
 
     protected void setUpFornecedor() {
-        fornecedor = new Fornecedor();
-        fornecedor.setCodigo(1L);
-        fornecedor.setNome(NOME);
-        fornecedor.setDescricao(DESCRICAO);
+        provider = new Provider();
+        provider.setCodigo(1L);
+        provider.setNome(NOME);
+        provider.setDescricao(DESCRICAO);
     }
 
     protected void setUpMedida() {
-        medida = new Medida();
+        measure = new Measure();
         // medida.setCodigo(1l);
-        medida.setNome(NOME);
-        medida.setDescricao(DESCRICAO);
+        measure.setNome(NOME);
+        measure.setDescricao(DESCRICAO);
     }
 
     protected void setUpItensTipoMedida() {
-        itensTipoMedida = new ArrayList<>();
+        itemsTypeMeasure = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            itenTipoMedida = new ItensTipoMedida();
+            itenTipoMedida = new ItemsTypeMeasure();
             switch (i) {
                 case 1:
                     itenTipoMedida.setValor(VALOR_P);
@@ -117,16 +117,16 @@ public class BaseTest {
                     itenTipoMedida.setValor(VALOR_XL);
                     break;
             }
-            itensTipoMedida.add(itenTipoMedida);
+            itemsTypeMeasure.add(itenTipoMedida);
         }
     }
 
     protected void setUpDominio() {
-        dominio = new Dominio();
-        dominio.setCodigo(CODIGO);
-        dominio.setNome(NOME);
-        dominio.setDescricao(DESCRICAO);
-        dominio.setChecked(true);
+        domain = new Domain();
+        domain.setCodigo(CODIGO);
+        domain.setNome(NOME);
+        domain.setDescricao(DESCRICAO);
+        domain.setChecked(true);
     }
 
     protected void setUpProdutoHasItensTipoMedida() {
@@ -135,9 +135,9 @@ public class BaseTest {
         for (int i = 1; i < 5; i++) {
             produtoHasItenTipoMedida = new ProdutoHasItensTipoMedida();
             produtoHasItenTipoMedida.setQuantidade(QUANTIDADE);
-            produtoHasItenTipoMedida.setDominios(new ArrayList<>());
-            produtoHasItenTipoMedida.getDominios().add(dominio);
-            produtoHasItenTipoMedida.setItensTipoMedida(medida.getItensTipoMedida().get(j));
+            produtoHasItenTipoMedida.setDomains(new ArrayList<>());
+            produtoHasItenTipoMedida.getDomains().add(domain);
+            produtoHasItenTipoMedida.setItemsTypeMeasure(measure.getItemsTypeMeasure().get(j));
             produtoHasItensTipoMedida.add(produtoHasItenTipoMedida);
             j++;
         }
@@ -162,23 +162,23 @@ public class BaseTest {
         // fixme: medida.setfoto
     }
 
-    protected void assertMarcaSubCategoriaCategoriaValor(Medida medida) {
-        for (int j = 0; j < medida.getItensTipoMedida().size(); j++) {
+    protected void assertMarcaSubCategoriaCategoriaValor(Measure measure) {
+        for (int j = 0; j < measure.getItemsTypeMeasure().size(); j++) {
 
-            Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
-            assertMarca(marcaFound, marca);
+            Brand brandFound = measure.getItemsTypeMeasure().get(j).getBrand();
+            assertMarca(brandFound, brand);
 
-            Subcategory subcategoryFound = medida.getItensTipoMedida().get(j).getSubcategory();
+            Subcategory subcategoryFound = measure.getItemsTypeMeasure().get(j).getSubcategory();
             assertSubCategoria(subcategoryFound, subcategory);
 
-            Category categoryFound = medida.getItensTipoMedida().get(j).getCategory();
+            Category categoryFound = measure.getItemsTypeMeasure().get(j).getCategory();
             assertCategoria(categoryFound, category);
 
-            assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
+            assertEquals(measure.getItemsTypeMeasure().get(j).getValor(), measure.getItemsTypeMeasure().get(j).getValor());
         }
     }
 
-    protected void assertMarca(Marca expected, Marca found) {
+    protected void assertMarca(Brand expected, Brand found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
@@ -196,13 +196,13 @@ public class BaseTest {
         assertEquals(expected.getDescricao(), found.getDescricao());
     }
 
-    protected void assertFornecedor(Fornecedor expected, Fornecedor found) {
+    protected void assertFornecedor(Provider expected, Provider found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
     }
 
-    protected void assertDominios(Dominio expected, Dominio found) {
+    protected void assertDominios(Domain expected, Domain found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
@@ -212,16 +212,16 @@ public class BaseTest {
     private void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
         for (int i = 0; i < found.size(); i++) {
             assertEquals(found.get(i).getCodigo(), produto.get(i).getCodigo());
-            assertEquals(found.get(i).getDominios().size(),
-                    produto.get(i).getDominios().size());
+            assertEquals(found.get(i).getDomains().size(),
+                    produto.get(i).getDomains().size());
 
-            for (int j = 0; j < found.get(i).getDominios().size(); j++) {
-                assertDominios(found.get(i).getDominios().get(j),
-                        produto.get(i).getDominios().get(j));
+            for (int j = 0; j < found.get(i).getDomains().size(); j++) {
+                assertDominios(found.get(i).getDomains().get(j),
+                        produto.get(i).getDomains().get(j));
             }
             assertEquals(found.get(i).getQuantidade(), produto.get(i).getQuantidade());
             assertEquals(found.get(i).getValorUnitario(), produto.get(i).getValorUnitario());
-            assertEquals(found.get(i).getItensTipoMedida().getValor(), produto.get(i).getItensTipoMedida().getValor());
+            assertEquals(found.get(i).getItemsTypeMeasure().getValor(), produto.get(i).getItemsTypeMeasure().getValor());
 
         }
     }
@@ -241,20 +241,20 @@ public class BaseTest {
         assertEquals(found.getPeso(), expected.getPeso());
         assertEquals(found.getPorcentagem(), expected.getPorcentagem());
         assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
-        assertMarca(found.getMarca(), expected.getMarca());
+        assertMarca(found.getBrand(), expected.getBrand());
         assertCategoria(found.getCategory(), expected.getCategory());
         assertSubCategoria(found.getSubcategory(), expected.getSubcategory());
-        assertFornecedor(found.getFornecedor(), expected.getFornecedor());
-        assertMarcaSubCategoriaCategoriaValor(found.getMedida());
+        assertFornecedor(found.getProvider(), expected.getProvider());
+        assertMarcaSubCategoriaCategoriaValor(found.getMeasure());
         assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());
         assertProdutoHasItensTipoMedida(found.getProdutoHasItensTipoMedida(), expected.getProdutoHasItensTipoMedida());
     }
 
-    protected void asserItensTipoMedida(ItensTipoMedida found, ItensTipoMedida expected) {
-        assertEquals(found.getCodigo(), expected.getCodigo());
+    protected void asserItensTipoMedida(ItemsTypeMeasure found, ItemsTypeMeasure expected) {
+        assertEquals(found.getId(), expected.getId());
         assertEquals(found.getValor(), expected.getValor());
-        assertEquals(found.getMedida(), expected.getMedida());
-        assertEquals(found.getMarca(), expected.getMarca());
+        assertEquals(found.getMeasure(), expected.getMeasure());
+        assertEquals(found.getBrand(), expected.getBrand());
         assertEquals(found.getCategory(), expected.getCategory());
         assertEquals(found.getSubcategory(), expected.getSubcategory());
     }

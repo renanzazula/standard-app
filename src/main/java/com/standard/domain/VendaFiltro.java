@@ -24,6 +24,6 @@ public class VendaFiltro implements Serializable {
 
     private String status;
     private Customer customer;
-    private FormasDePagamento formaDePagamento;
+    private PaymentMethod formaDePagamento;
 
 }

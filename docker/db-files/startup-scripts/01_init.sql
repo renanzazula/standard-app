@@ -185,13 +185,13 @@ LOCK TABLES `config_param` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `dominio`
+-- Table structure for table `domain`
 --
 
-DROP TABLE IF EXISTS `dominio`;
+DROP TABLE IF EXISTS `domain`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dominio` (
+CREATE TABLE `domain` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -207,12 +207,12 @@ CREATE TABLE `dominio` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dominio`
+-- Dumping data for table `domain`
 --
 
-LOCK TABLES `dominio` WRITE;
-/*!40000 ALTER TABLE `dominio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dominio` ENABLE KEYS */;
+LOCK TABLES `domain` WRITE;
+/*!40000 ALTER TABLE `domain` DISABLE KEYS */;
+/*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -306,7 +306,7 @@ CREATE TABLE `itens_tipo_medida` (
   CONSTRAINT `FK2w8y02rdyce862co3hsrddhou` FOREIGN KEY (`categoria_codigo`) REFERENCES `category` (`codigo`),
   CONSTRAINT `FK7qdj4gsx165mjph8ajg8d3toi` FOREIGN KEY (`marca_codigo`) REFERENCES `marca` (`codigo`),
   CONSTRAINT `FKc3ekbeo0ke4uasxd0ttjxe8tw` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategory` (`codigo`),
-  CONSTRAINT `FKrt4q5y4959n38q2ckawen92ik` FOREIGN KEY (`medida_codigo`) REFERENCES `medida` (`codigo`)
+  CONSTRAINT `FKrt4q5y4959n38q2ckawen92ik` FOREIGN KEY (`medida_codigo`) REFERENCES `measure` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -407,13 +407,13 @@ LOCK TABLES `marca` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `medida`
+-- Table structure for table `measure`
 --
 
-DROP TABLE IF EXISTS `medida`;
+DROP TABLE IF EXISTS `measure`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medida` (
+CREATE TABLE `measure` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -429,12 +429,12 @@ CREATE TABLE `medida` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `medida`
+-- Dumping data for table `measure`
 --
 
-LOCK TABLES `medida` WRITE;
-/*!40000 ALTER TABLE `medida` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medida` ENABLE KEYS */;
+LOCK TABLES `measure` WRITE;
+/*!40000 ALTER TABLE `measure` DISABLE KEYS */;
+/*!40000 ALTER TABLE `measure` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -478,7 +478,7 @@ CREATE TABLE `produto` (
   KEY `FKiwd9fe0gfcp0rrts6ifn8mw1b` (`medida_codigo`),
   KEY `FKnd8vfywu4t6sl6yy4614nuuc` (`subcategoria_codigo`),
   CONSTRAINT `FKc1yyrbyl61fympj6ams5ou9qm` FOREIGN KEY (`marca_codigo`) REFERENCES `marca` (`codigo`),
-  CONSTRAINT `FKiwd9fe0gfcp0rrts6ifn8mw1b` FOREIGN KEY (`medida_codigo`) REFERENCES `medida` (`codigo`),
+  CONSTRAINT `FKiwd9fe0gfcp0rrts6ifn8mw1b` FOREIGN KEY (`medida_codigo`) REFERENCES `measure` (`codigo`),
   CONSTRAINT `FKnd8vfywu4t6sl6yy4614nuuc` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategory` (`codigo`),
   CONSTRAINT `FKpvyafr9m7vpu95rd3uq7fja5g` FOREIGN KEY (`fornecedor_codigo`) REFERENCES `fornecedor` (`codigo`),
   CONSTRAINT `FKtfuf17yvliycysg3vt5h0sp2v` FOREIGN KEY (`categoria_codigo`) REFERENCES `category` (`codigo`)
@@ -543,7 +543,7 @@ CREATE TABLE `produto_has_itens_tipo_medida_has_dominio` (
   PRIMARY KEY (`produto_has_itens_tipo_medida_codigo`,`dominio_codigo`),
   KEY `FK7k3c99iu4qy82w8dmy0vwy5u4` (`dominio_codigo`),
   CONSTRAINT `FK2f8eg726fks5l5ml3gvisqob7` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `produto_has_itens_tipo_medida` (`codigo`),
-  CONSTRAINT `FK7k3c99iu4qy82w8dmy0vwy5u4` FOREIGN KEY (`dominio_codigo`) REFERENCES `dominio` (`codigo`)
+  CONSTRAINT `FK7k3c99iu4qy82w8dmy0vwy5u4` FOREIGN KEY (`dominio_codigo`) REFERENCES `domain` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

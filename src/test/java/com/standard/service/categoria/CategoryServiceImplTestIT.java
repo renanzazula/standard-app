@@ -4,9 +4,9 @@ import com.standard.BaseTest;
 import com.standard.domain.Category;
 import com.standard.domain.Subcategory;
 import com.standard.repository.CategoryRepository;
-import com.standard.repository.SubcategoriaRepository;
-import com.standard.service.subcategoria.SubcategoriaService;
-import com.standard.service.subcategoria.SubcategoriaServiceImpl;
+import com.standard.repository.SubcategoryRepository;
+import com.standard.service.subcategoria.SubcategoryService;
+import com.standard.service.subcategoria.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ public class CategoryServiceImplTestIT extends BaseTest {
     private CategoryRepository repository;
 
     @Autowired
-    private SubcategoriaRepository subcategoriaRepository;
+    private SubcategoryRepository subcategoryRepository;
 
     private CategoryService service;
 
@@ -37,15 +37,15 @@ public class CategoryServiceImplTestIT extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        service = new CategoryServiceImpl(repository, subcategoriaRepository);
-        SubcategoriaService subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
+        service = new CategoryServiceImpl(repository, subcategoryRepository);
+        SubcategoryService subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
 
         List<Subcategory> subcategories = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Subcategory subcategory = new Subcategory();
             subcategory.setNome(NOME + "_" + i);
             subcategory.setDescricao(DESCRICAO + "_" + i);
-            subcategories.add(subcategoriaService.save(subcategory));
+            subcategories.add(subcategoryService.save(subcategory));
         }
 
         obj = new Category();

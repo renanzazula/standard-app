@@ -2,12 +2,12 @@ package com.standard.controller;
 
 import com.standard.domain.Produto;
 import com.standard.service.categoria.CategoryService;
-import com.standard.service.dominio.DominioService;
-import com.standard.service.fornecedor.FornecedorService;
-import com.standard.service.marca.MarcaService;
-import com.standard.service.medida.MedidaService;
+import com.standard.service.dominio.DomainService;
+import com.standard.service.fornecedor.ProviderService;
+import com.standard.service.marca.BrandService;
+import com.standard.service.medida.MeasureService;
 import com.standard.service.produto.ProdutoService;
-import com.standard.service.subcategoria.SubcategoriaService;
+import com.standard.service.subcategoria.SubcategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,21 +46,21 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     private CategoryService categoryService;
 
     @MockBean
-    private MedidaService medidaService;
+    private MeasureService measureService;
 
     @MockBean
-    private MarcaService marcaService;
+    private BrandService brandService;
 
     @MockBean
-    private FornecedorService fornecedorService;
-
-
-    @MockBean
-    private SubcategoriaService subcategoriaService;
+    private ProviderService providerService;
 
 
     @MockBean
-    private DominioService dominioService;
+    private SubcategoryService subcategoryService;
+
+
+    @MockBean
+    private DomainService domainService;
 
     @BeforeEach
     public void setUp() {
@@ -73,13 +73,13 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         
         // requeridos
         setUpMarca();
-        when(marcaService.incluir(marca)).thenReturn(marca);
+        when(brandService.save(brand)).thenReturn(brand);
 
         setUpFornecedor();
-        when(fornecedorService.incluir(fornecedor)).thenReturn(fornecedor);
+        when(providerService.save(provider)).thenReturn(provider);
 
         setUpSubCategoria();
-        when(subcategoriaService.save(subcategory)).thenReturn(subcategory);
+        when(subcategoryService.save(subcategory)).thenReturn(subcategory);
 
         setUpCategoria();
         category.setSubcategories(new ArrayList<>());
@@ -87,15 +87,15 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(categoryService.save(category)).thenReturn(category);
 
         setUpDominio();
-        when(dominioService.incluir(dominio)).thenReturn(dominio);
+        when(domainService.save(domain)).thenReturn(domain);
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategory(subcategory);
-        medida.setCategory(category);
-        medida.setMarca(marca);
-        medida.setItensTipoMedida(itensTipoMedida);
-        when(medidaService.incluir(medida)).thenReturn(medida);
+        measure.setSubcategory(subcategory);
+        measure.setCategory(category);
+        measure.setBrand(brand);
+        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        when(measureService.save(measure)).thenReturn(measure);
 
         //quantadade, dominio e item Medida
         setUpProdutoHasItensTipoMedida();
@@ -103,10 +103,10 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         // campos comuns
         setUpProduto();
 
-        produto.setMarca(marca);
-        produto.setFornecedor(fornecedor);
+        produto.setBrand(brand);
+        produto.setProvider(provider);
         produto.setCategory(category);
-        produto.setMedida(medida);
+        produto.setMeasure(measure);
         produto.setSubcategory(subcategory);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
     }

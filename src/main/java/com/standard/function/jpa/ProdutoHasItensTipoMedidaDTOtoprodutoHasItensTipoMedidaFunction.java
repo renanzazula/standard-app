@@ -17,11 +17,11 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         ProdutoHasItensTipoMedida output = new ProdutoHasItensTipoMedida();
         if (input != null) {
             output.setCodigo(input.getId());
-            if (input.getDominios() != null) {
-                output.setDominios(input.getDominios().stream().map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList()));
+            if (input.getDomains() != null) {
+                output.setDomains(input.getDomains().stream().map(JpaFunctions.domainToDomainEntity).collect(Collectors.toList()));
             }
             if (input.getItensTipoMedida() != null) {
-                output.setItensTipoMedida(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItensTipoMedida()));
+                output.setItemsTypeMeasure(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItensTipoMedida()));
             }
 
             output.setProduto(produtoEntityToProduto(input.getProduto()));
@@ -52,24 +52,24 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         output.setPorcentagemDesconto(input.getPorcentagemDesconto());
         output.setDataHoraCadastro(input.getDataHoraCadastro());
 
-        if (input.getFornecedor() != null) {
-            output.setFornecedor(JpaFunctions.fornecedortoFornecedorEntity.apply(input.getFornecedor()));
+        if (input.getProvider() != null) {
+            output.setProvider(JpaFunctions.providerToProviderEntity.apply(input.getProvider()));
         }
 
         if (input.getCategory() != null) {
             output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
         }
 
-        if (input.getSubcategoria() != null) {
-            output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategoria()));
+        if (input.getSubcategory() != null) {
+            output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategory()));
         }
 
-        if (input.getMedida() != null) {
-            output.setMedida(JpaFunctions.medidaToMedidaEntity.apply(input.getMedida()));
+        if (input.getMeasure() != null) {
+            output.setMeasure(JpaFunctions.measureToMeasureEntity.apply(input.getMeasure()));
         }
 
-        if (input.getMarca() != null) {
-            output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));
+        if (input.getBrand() != null) {
+            output.setBrand(JpaFunctions.brandToBrandEntity.apply(input.getBrand()));
         }
         return output;
     }

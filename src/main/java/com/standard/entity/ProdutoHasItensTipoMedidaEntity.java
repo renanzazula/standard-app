@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = {"dominios", "vendaHasItemProduto" })
+@EqualsAndHashCode(exclude = {"domains", "vendaHasItemProduto" })
 @Entity(name = "produto_has_itens_tipo_medida")
 public @Data
 class ProdutoHasItensTipoMedidaEntity extends BaseAuditEntity {
@@ -22,7 +22,7 @@ class ProdutoHasItensTipoMedidaEntity extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "itens_tipo_medida_id", updatable = false)
-    private ItensTipoMedidaEntity itensTipoMedida;
+    private ItemsTypeMeasureEntity itensTipoMedida;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "produto_id")
@@ -31,8 +31,8 @@ class ProdutoHasItensTipoMedidaEntity extends BaseAuditEntity {
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "produto_has_itens_tipo_medida_has_dominio", joinColumns = {
             @JoinColumn(name = "produto_has_itens_tipo_medida_id")}, inverseJoinColumns = {
-            @JoinColumn(name = "dominio_id")})
-    private Set<DominioEntity> dominios;
+            @JoinColumn(name = "domain_id")})
+    private Set<DomainEntity> domains;
 
     @OneToMany(mappedBy = "produtoHasItensTipoMedida", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<VendaHasItemProdutoEntity> vendaHasItemProduto;

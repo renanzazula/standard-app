@@ -19,18 +19,18 @@ import java.util.stream.Collectors;
 public class VendaServiceImpl implements VendaService {
 
     private final VendaRepository vendaRepository;
-    private final FormaDePagamentoRepository formaDePagamentoRepository;
+    private final PaymentMethodRepository paymentMethodRepository;
     private final PosRepository posRepository;
     private final CustomerRepository customerRepository;
     private final ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
     private final PosService posService;
 
-    public VendaServiceImpl(VendaRepository vendaRepository, FormaDePagamentoRepository
-            formaDePagamentoRepository, PosRepository posRepository,
+    public VendaServiceImpl(VendaRepository vendaRepository, PaymentMethodRepository
+            paymentMethodRepository, PosRepository posRepository,
                             CustomerRepository customerRepository,
                             ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository, PosService posService) {
         this.vendaRepository = vendaRepository;
-        this.formaDePagamentoRepository = formaDePagamentoRepository;
+        this.paymentMethodRepository = paymentMethodRepository;
         this.posRepository = posRepository;
         this.customerRepository = customerRepository;
         this.produtoHasItensTipoMedidaRepository = produtoHasItensTipoMedidaRepository;
@@ -50,7 +50,7 @@ public class VendaServiceImpl implements VendaService {
             VendaHasItemProdutoEntity vendaHasItemProdutoDb = new VendaHasItemProdutoEntity();
 
             Long codigo = getProdutoHasItensTipoMedida(
-                    itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(),
+                    itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(),
                     itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 
             ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedidaDb = produtoHasItensTipoMedidaRepository.getOne(codigo);
@@ -94,7 +94,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setTroco(venda.getTroco());
         vendaDB.setPagamento(venda.getPagamento());
         vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
-        vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
+        vendaDB.setPaymentMethod(paymentMethodRepository.getOne(venda.getFormaDePagamento().getCodigo()));
         vendaDB.setCustomer(customerRepository.getOne(Long.valueOf(1))); //venda.getCliente().getCodigo()
     }
 
@@ -107,7 +107,7 @@ public class VendaServiceImpl implements VendaService {
      */
     private void removerProdutoDoEstoque(Venda venda) {
         venda.getVendaHasItemProduto().forEach(itemVenda -> {
-            Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
+            Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
             ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
             produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() - itemVenda.getQuantidade());
             produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
@@ -126,7 +126,7 @@ public class VendaServiceImpl implements VendaService {
      */
     private void adicionarProdutoNoEstoque(Venda venda) {
         venda.getVendaHasItemProduto().forEach(itemVenda -> {
-            Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItensTipoMedida().getCodigo(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
+            Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
             ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
             produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() + itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
             produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
@@ -225,9 +225,9 @@ public class VendaServiceImpl implements VendaService {
 		// vendaEntity.setCustomer(venda.getCustomer());
 
         if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
-            FormaDePagamentoEntity formaDePagamentoEntity = new FormaDePagamentoEntity();
-            formaDePagamentoEntity.setId(venda.getFormaDePagamento().getCodigo());
-            vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
+            PaymentMethodEntity paymentMethodEntity = new PaymentMethodEntity();
+            paymentMethodEntity.setId(venda.getFormaDePagamento().getCodigo());
+            vendaEntity.setPaymentMethod(paymentMethodEntity);
         }
         return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
     }

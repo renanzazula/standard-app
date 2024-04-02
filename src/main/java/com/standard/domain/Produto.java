@@ -48,18 +48,18 @@ public   class Produto implements Serializable {
 	@JsonFormat(pattern=Constants.PATTERN_DATE_TIME_FORMAT)
 	private Date dataHoraCadastro;
 
-	private Fornecedor fornecedor;
-	private Medida medida;
+	private Provider provider;
+	private Measure measure;
 	private Category category;
 	private Subcategory subcategory;
-	private Marca marca;
+	private Brand brand;
 
-	private List<Dominio> dominios;
-	private List<Fornecedor> fornecedores;
+	private List<Domain> domains;
+	private List<Provider> fornecedores;
 	private List<Category> categories;
 	private List<Subcategory> subcategories;
-	private List<Marca> marcas;
-	private List<Medida> medidas;
+	private List<Brand> brands;
+	private List<Measure> measures;
 	private List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida;
  	private Integer quantidadeTotalEstoque;
 			

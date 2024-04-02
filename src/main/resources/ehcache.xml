@@ -8,20 +8,20 @@
     <cache alias="categoriaCache" uses-template="config-cache"/>
     <cache alias="categoriaListCache" uses-template="config-cache"/>
 
-    <cache alias="dominioCache" uses-template="config-cache"/>
-    <cache alias="dominioListCache" uses-template="config-cache"/>
+    <cache alias="domainCache" uses-template="config-cache"/>
+    <cache alias="domainListCache" uses-template="config-cache"/>
 
-    <cache alias="formasDePagamentoCache" uses-template="config-cache"/>
-    <cache alias="formasDePagamentoListCache" uses-template="config-cache"/>
+    <cache alias="paymentMethodCache" uses-template="config-cache"/>
+    <cache alias="paymentMethodListCache" uses-template="config-cache"/>
 
-    <cache alias="fornecedorCache" uses-template="config-cache"/>
-    <cache alias="fornecedorListCache" uses-template="config-cache"/>
+    <cache alias="providerCache" uses-template="config-cache"/>
+    <cache alias="providerListCache" uses-template="config-cache"/>
 
-    <cache alias="marcaCache" uses-template="config-cache"/>
-    <cache alias="marcaListCache" uses-template="config-cache"/>
+    <cache alias="brandCache" uses-template="config-cache"/>
+    <cache alias="brandListCache" uses-template="config-cache"/>
 
-    <cache alias="medidaCache" uses-template="config-cache"/>
-    <cache alias="medidaListCache" uses-template="config-cache"/>
+    <cache alias="measureCache" uses-template="config-cache"/>
+    <cache alias="measureListCache" uses-template="config-cache"/>
 
     <cache alias="subcategoriaCache" uses-template="config-cache"/>
     <cache alias="subcategoriaListCache" uses-template="config-cache"/>
