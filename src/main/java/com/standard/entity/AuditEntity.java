@@ -20,28 +20,28 @@ public class  AuditEntity implements Serializable {
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
-    @Column(name = "data_criacao", updatable = false)
-    private Date dataCriacao;
+    @Column(name = "creation_date", updatable = false)
+    private Date creationDate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIME)
-    @Column(name = "hora_criacao", updatable = false)
-    private Date horaCriacao;
+    @Column(name = "creation_time", updatable = false)
+    private Date creationTime;
 
     @CreatedBy
-    @Column(name = "criado_por", insertable = true, updatable = false)
-    private Long criadorPor;
+    @Column(name = "created_by", insertable = true, updatable = false)
+    private Long createdBy;
 
     @Version
     @Column(name = "version")
     private Long version;
 
     @LastModifiedDate
-    @Column(name = "data_alteracao")
-    private Date dataAlteracao;
+    @Column(name = "last_modified_date")
+    private Date lastModifiedDate;
 
     @LastModifiedBy
-    @Column(name = "alterado_por")
-    private Long alteradoPor;
+    @Column(name = "last_modified_by")
+    private Long lastModifiedBy;
 
 }

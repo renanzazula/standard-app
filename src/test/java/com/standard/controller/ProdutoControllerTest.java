@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Produto;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.service.categoria.CategoryService;
 import com.standard.service.dominio.DominioService;
 import com.standard.service.fornecedor.FornecedorService;
 import com.standard.service.marca.MarcaService;
@@ -25,6 +25,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +43,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     private ProdutoService produtoService;
 
     @MockBean
-    private CategoriaService categoriaService;
+    private CategoryService categoryService;
 
     @MockBean
     private MedidaService medidaService;
@@ -78,20 +79,20 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(fornecedorService.incluir(fornecedor)).thenReturn(fornecedor);
 
         setUpSubCategoria();
-        when(subcategoriaService.incluir(subcategoria)).thenReturn(subcategoria);
+        when(subcategoriaService.save(subcategory)).thenReturn(subcategory);
 
         setUpCategoria();
-        categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subcategoria);
-        when(categoriaService.incluir(categoria)).thenReturn(categoria);
+        category.setSubcategories(new ArrayList<>());
+        category.getSubcategories().add(subcategory);
+        when(categoryService.save(category)).thenReturn(category);
 
         setUpDominio();
         when(dominioService.incluir(dominio)).thenReturn(dominio);
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subcategoria);
-        medida.setCategoria(categoria);
+        medida.setSubcategory(subcategory);
+        medida.setCategory(category);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
         when(medidaService.incluir(medida)).thenReturn(medida);
@@ -104,9 +105,9 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
 
         produto.setMarca(marca);
         produto.setFornecedor(fornecedor);
-        produto.setCategoria(categoria);
+        produto.setCategory(category);
         produto.setMedida(medida);
-        produto.setSubcategoria(subcategoria);
+        produto.setSubcategory(subcategory);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
     }
 
@@ -121,8 +122,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
         when(produtoService.consultar()).thenReturn(produtos);
 
         mockMvc.perform(get(ProdutoController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -134,8 +134,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     public void testConsultarByCodigo() throws Exception {
         when(produtoService.consultarByCodigo(produto.getCodigo())).thenReturn(produto);
         mockMvc.perform(get(ProdutoController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -157,8 +156,7 @@ public class ProdutoControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(ProdutoController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

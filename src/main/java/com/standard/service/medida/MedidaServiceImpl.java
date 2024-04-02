@@ -5,7 +5,7 @@ import com.standard.domain.Produto;
 import com.standard.entity.*;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.CategoriaRepository;
+import com.standard.repository.CategoryRepository;
 import com.standard.repository.MarcaRepository;
 import com.standard.repository.MedidaRepository;
 import com.standard.repository.SubcategoriaRepository;
@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 public class MedidaServiceImpl implements MedidaService {
 
 	private final MedidaRepository medidaRepository;
-	private final CategoriaRepository categoriaRepository;
+	private final CategoryRepository categoryRepository;
 	private final SubcategoriaRepository subcategoriaRepository;
 	private final MarcaRepository marcaRepository;
 
-    public MedidaServiceImpl(MedidaRepository medidaRepository, CategoriaRepository categoriaRepository,
+    public MedidaServiceImpl(MedidaRepository medidaRepository, CategoryRepository categoryRepository,
 							 SubcategoriaRepository subcategoriaRepository, MarcaRepository marcaRepository) {
         this.medidaRepository = medidaRepository;
-        this.categoriaRepository = categoriaRepository;
+        this.categoryRepository = categoryRepository;
         this.subcategoriaRepository = subcategoriaRepository;
         this.marcaRepository = marcaRepository;
     }
@@ -67,8 +67,8 @@ public class MedidaServiceImpl implements MedidaService {
 	private void itensMedidaBuild(Medida medida, Set<ItensTipoMedidaEntity> itensSet) {
 		medida.getItensTipoMedida().forEach(itensMedida -> {
 			ItensTipoMedidaEntity itens = new ItensTipoMedidaEntity();
-			itens.setCategoria(categoriaRepository.getOne(medida.getCategoria().getCodigo()));
-			itens.setSubcategoria(subcategoriaRepository.getOne(medida.getSubcategoria().getCodigo()));
+			itens.setCategoria(categoryRepository.getOne(medida.getCategory().getCodigo()));
+			itens.setSubcategoria(subcategoriaRepository.getOne(medida.getSubcategory().getCodigo()));
 			if (medida.getMarca() != null) {
 				itens.setMarca(marcaRepository.getOne(medida.getMarca().getCodigo()));
 			}
@@ -104,21 +104,20 @@ public class MedidaServiceImpl implements MedidaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Medida> consultarByCategoriaSubCategoriaMarca(Produto produto) {
-		CategoriaEntity categoria = null;
-		SubcategoriaEntity subcategoria = null;
+		CategoryEntity categoria = null;
+		SubcategoryEntity subcategory = null;
 		MarcaEntity marca = null;
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
 			marca = marcaRepository.getOne(produto.getMarca().getCodigo());
 		}
-		if (produto.getCategoria().getSubcategorias() != null && produto.getSubcategoria().getCodigo() != null) {
-			subcategoria = subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo());
+		if (produto.getCategory().getSubcategories() != null && produto.getSubcategory().getCodigo() != null) {
+			subcategory = subcategoriaRepository.getOne(produto.getSubcategory().getCodigo());
 		}
-		if (produto.getCategoria() != null && produto.getCategoria().getCodigo() != null) {
-			categoria = categoriaRepository.getOne(produto.getCategoria().getCodigo());
+		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
+			categoria = categoryRepository.getOne(produto.getCategory().getCodigo());
 		}
 		return medidaRepository
-				.findByItensTipoMedidaCategoriaAndItensTipoMedidaSubcategoriaAndAndItensTipoMedidaMarca(categoria,
-						subcategoria, marca)
+				.findByItensTipoMedidaCategoryAndItensTipoMedidaSubcategoryAndAndItensTipoMedidaMarca(categoria, subcategory, marca)
 				.stream().map(JpaFunctions.medidaToMedidaEntity).collect(Collectors.toList());
 
 	}

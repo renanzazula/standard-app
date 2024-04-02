@@ -23,20 +23,20 @@ public class ProdutoServiceImpl implements ProdutoService {
 	private final MedidaRepository medidaRepository;
 	private final DominioRepository dominioRepository;
 	private final FornecedorRepository fornecedorRepository;
-	private final CategoriaRepository categoriaRepository;
+	private final CategoryRepository categoryRepository;
 	private final SubcategoriaRepository subcategoriaRepository;
 	private final MarcaRepository marcaRepository;
 	private final ItensTipoMedidaRepository itensTipoMedidaRepository;
 
     public ProdutoServiceImpl(ProdutoRepository produtoRepository, MedidaRepository medidaRepository,
 							  DominioRepository dominioRepository, FornecedorRepository fornecedorRepository,
-							  CategoriaRepository categoriaRepository, SubcategoriaRepository subcategoriaRepository,
+							  CategoryRepository categoryRepository, SubcategoriaRepository subcategoriaRepository,
 							  MarcaRepository marcaRepository, ItensTipoMedidaRepository itensTipoMedidaRepository) {
         this.produtoRepository = produtoRepository;
         this.medidaRepository = medidaRepository;
         this.dominioRepository = dominioRepository;
         this.fornecedorRepository = fornecedorRepository;
-        this.categoriaRepository = categoriaRepository;
+        this.categoryRepository = categoryRepository;
         this.subcategoriaRepository = subcategoriaRepository;
         this.marcaRepository = marcaRepository;
         this.itensTipoMedidaRepository = itensTipoMedidaRepository;
@@ -46,7 +46,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Transactional
 	public Produto incluir(Produto produto) {
 		ProdutoEntity produtoDB = new ProdutoEntity();
-		produtoDB.setCodigo(produto.getCodigo());
+		produtoDB.setId(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
 		produtoDB.setNome(produto.getNome());
 		produtoDB.setStatus(StatusEnum.ATIVO);
@@ -68,12 +68,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setFornecedor(fornecedorRepository.getOne(produto.getFornecedor().getCodigo()));
 		}
 
-		if (produto.getCategoria() != null && produto.getCategoria().getCodigo() != null) {
-			produtoDB.setCategoria(categoriaRepository.getOne(produto.getCategoria().getCodigo()));
+		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
+			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getCodigo()));
 		}
 
-		if (produto.getSubcategoria() != null && produto.getSubcategoria().getCodigo() != null) {
-			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo()));
+		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
+			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategory().getCodigo()));
 		}
 
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {
@@ -111,7 +111,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Transactional
 	public Produto alterar(Long codigo, Produto produto) {
 		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
-		produtoDB.setCodigo(produto.getCodigo());
+		produtoDB.setId(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
 		produtoDB.setNome(produto.getNome());
 		produtoDB.setStatus(produto.getStatus());
@@ -134,12 +134,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setFornecedor(fornecedorRepository.getOne(produto.getFornecedor().getCodigo()));
 		}
 
-		if (produto.getCategoria() != null && produto.getCategoria().getCodigo() != null) {
-			produtoDB.setCategoria(categoriaRepository.getOne(produto.getCategoria().getCodigo()));
+		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
+			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getCodigo()));
 		}
 
-		if (produto.getSubcategoria() != null && produto.getSubcategoria().getCodigo() != null) {
-			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategoria().getCodigo()));
+		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
+			produtoDB.setSubcategoria(subcategoriaRepository.getOne(produto.getSubcategory().getCodigo()));
 		}
 
 		if (produto.getMarca() != null && produto.getMarca().getCodigo() != null) {

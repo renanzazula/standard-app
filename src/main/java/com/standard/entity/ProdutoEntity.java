@@ -19,8 +19,8 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     private static final long serialVersionUID = 2203862074139518315L;
 
     /**
-     * codigo -> sequencial (from dataBase) marca_codigo fornecedor_codigo
-     * categoria_codigo subcategoria_codigo medida_codigo flagSite -> : LFB -> loja
+     * id -> sequencial (from dataBase) marca_id fornecedor_id
+     * categoria_id subcategoria_id medida_id flagSite -> : LFB -> loja
      * fisica born : LOW -> loja online Wix
      */
     @NotNull
@@ -88,31 +88,31 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "marca_codigo", updatable = false)
+    @JoinColumn(name = "marca_id", updatable = false)
     private MarcaEntity marca;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fornecedor_codigo")
+    @JoinColumn(name = "fornecedor_id")
     private FornecedorEntity fornecedor;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoria_codigo")
-    private CategoriaEntity categoria;
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "medida_codigo")
+    @JoinColumn(name = "medida_id")
     private MedidaEntity medida;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subcategoria_codigo")
-    private SubcategoriaEntity subcategoria;
+    @JoinColumn(name = "subcategory_id")
+    private SubcategoryEntity subcategoria;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "produto_codigo")
+    @JoinColumn(name = "produto_id")
     private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
 
 }

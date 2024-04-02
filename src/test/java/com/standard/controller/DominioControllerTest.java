@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -61,8 +62,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
         List<Dominio> dominios = Arrays.asList(obj, dominio2);
         when(service.consultar()).thenReturn(dominios);
         mockMvc.perform(get(DominioController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -72,8 +72,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
         mockMvc.perform(get(DominioController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -84,8 +83,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     public void testIncluir() throws Exception {
         when(service.incluir(obj)).thenReturn(obj);
         mockMvc.perform(post(DominioController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
@@ -96,8 +94,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(DominioController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -106,8 +103,7 @@ public class DominioControllerTest extends AbstractRestControllerTest {
     public void testAlterar() throws Exception {
         when(service.alterar(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(DominioController.BASE_URL+"/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())

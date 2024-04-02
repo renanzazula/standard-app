@@ -52,8 +52,8 @@ public class Venda implements Serializable {
 	private Double pagamento;
 
 	private StatusVendaEnum status;
-	private Caixa caixa;
-	private Cliente cliente;
+	private Pos pos;
+	private Customer customer;
 
 	private List<Produto> produtos;
 	private FormasDePagamento formaDePagamento;

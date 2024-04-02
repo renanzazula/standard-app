@@ -19,6 +19,6 @@ public class Retirada implements Serializable {
 	private Date data;
 	private Date hora;
 	private Double valor;
-	private Caixa caixa;
+	private Pos pos;
  
 }

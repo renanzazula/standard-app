@@ -15,7 +15,7 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
     public Produto apply(ProdutoEntity input) {
         Produto output = new Produto();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             output.setBarCode(input.getBarCode());
             output.setNome(input.getNome());
             output.setStatus(input.getStatus());
@@ -34,12 +34,12 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
                 output.setFornecedor(JpaFunctions.fornecedortoFornecedorEntity.apply(input.getFornecedor()));
             }
 
-            if (input.getCategoria() != null) {
-                output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+            if (input.getCategory() != null) {
+                output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
             }
 
             if (input.getSubcategoria() != null) {
-                output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+                output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategoria()));
             }
 
             if (input.getMedida() != null) {
@@ -53,7 +53,7 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
             if (input.getProdutoHasItensTipoMedida() != null) {
                 output.setProdutoHasItensTipoMedida(input.getProdutoHasItensTipoMedida()
                         .stream()
-                        .sorted(Comparator.comparing(ProdutoHasItensTipoMedidaEntity::getCodigo))
+                        .sorted(Comparator.comparing(ProdutoHasItensTipoMedidaEntity::getId))
                         .map(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity).collect(Collectors.toList()));
             }
         }

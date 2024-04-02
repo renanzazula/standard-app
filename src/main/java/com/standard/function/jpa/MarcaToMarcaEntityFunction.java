@@ -11,7 +11,7 @@ public class MarcaToMarcaEntityFunction implements Function<MarcaEntity, Marca> 
 	public Marca apply(MarcaEntity input) {
 		Marca output = new Marca();
 		if (input != null) {
-			output.setCodigo(input.getCodigo());
+			output.setCodigo(input.getId());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 			output.setStatus(input.getStatus());

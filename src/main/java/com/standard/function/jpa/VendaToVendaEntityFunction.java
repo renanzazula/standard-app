@@ -13,7 +13,7 @@ public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> 
     public Venda apply(VendaEntity input) {
         Venda output = new Venda();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             output.setData(input.getData());
             output.setHora(input.getHora());
             output.setValorTotal(input.getValorTotal());
@@ -31,12 +31,12 @@ public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> 
             if (input.getFormaDePagamento() != null) {
                 output.setFormaDePagamento(JpaFunctions.formasDePagamentoToFormaDePagamentoEntity.apply(input.getFormaDePagamento()));
             }
-            if (input.getCliente() != null) {
-                output.setCliente(JpaFunctions.clienteToClienteEntity.apply(input.getCliente()));
+            if (input.getCustomer() != null) {
+                output.setCustomer(JpaFunctions.customerToCustomerEntity.apply(input.getCustomer()));
             }
 
-            if (input.getCaixa() != null) {
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+            if (input.getPos() != null) {
+                output.setPos(JpaFunctions.posToPosEntity.apply(input.getPos()));
             }
 
             if (input.getVendaHasItemProduto() != null) {

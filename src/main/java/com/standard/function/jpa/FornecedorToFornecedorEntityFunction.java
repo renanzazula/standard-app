@@ -11,7 +11,7 @@ public class FornecedorToFornecedorEntityFunction implements Function<Fornecedor
     public Fornecedor apply(FornecedorEntity input) {
         Fornecedor output = new Fornecedor();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             output.setNome(input.getNome());
             output.setDescricao(input.getDescricao());
         }

@@ -12,15 +12,15 @@ public class RecebimentoEntityToRecebimentoFunction implements Function<Recebime
     public Recebimento apply(RecebimentoEntity input) {
         Recebimento output = new Recebimento();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             output.setNome(input.getNome());
             output.setDescricao(input.getDescricao());
             output.setValor(input.getValor());
-            if(input.getCaixa() != null){
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+            if(input.getPos() != null){
+                output.setPos(JpaFunctions.posToPosEntity.apply(input.getPos()));
             }
-            if(input.getCliente() != null){
-                output.setCliente(JpaFunctions.clienteToClienteEntity.apply(input.getCliente()));
+            if(input.getCustomer() != null){
+                output.setCustomer(JpaFunctions.customerToCustomerEntity.apply(input.getCustomer()));
             }
         }
         return output;

@@ -16,23 +16,23 @@ public @Data class ItensTipoMedidaEntity extends BaseAuditEntity {
 	private String valor;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "medida_codigo")
+	@JoinColumn(name = "medida_id")
 	private MedidaEntity medida;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "marca_codigo")
+	@JoinColumn(name = "marca_id")
 	private MarcaEntity marca;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "categoria_codigo")
-	private CategoriaEntity categoria;
+	@JoinColumn(name = "category_id")
+	private CategoryEntity categoria;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "subcategoria_codigo")
-	private SubcategoriaEntity subcategoria;
+	@JoinColumn(name = "subcategory_id")
+	private SubcategoryEntity subcategoria;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "itens_tipo_medida_codigo")
+	@JoinColumn(name = "itens_tipo_medida_id")
 	private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
  
 }

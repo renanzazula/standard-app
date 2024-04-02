@@ -1,7 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.Categoria;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.domain.Category;
+import com.standard.service.categoria.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -19,36 +19,36 @@ public class CategoriaController {
 
     public static final String  BASE_URL = "/private/v1/categoria";
 
-    private final CategoriaService categoriaService;
+    private final CategoryService categoryService;
 
     @GetMapping({""})
     @ApiOperation(value = "retorna todas categorias")
-    public ResponseEntity<List<Categoria>> consultar() {
-        return new ResponseEntity<>(categoriaService.consultar(), HttpStatus.OK);
+    public ResponseEntity<List<Category>> consultar() {
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{codigo}"})
     @ApiOperation(value = "retorna todas categorias by codigo")
-    public ResponseEntity<Categoria> consultarByCodigo(@PathVariable Long codigo) {
-        return new ResponseEntity<>(categoriaService.consultarByCodigo(codigo), HttpStatus.OK);
+    public ResponseEntity<Category> consultarByCodigo(@PathVariable Long codigo) {
+        return new ResponseEntity<>(categoryService.findById(codigo), HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Categoria> incluir(@RequestBody Categoria dominio) {
-        return new ResponseEntity<>(categoriaService.incluir(dominio), HttpStatus.CREATED);
+    public ResponseEntity<Category> incluir(@RequestBody Category dominio) {
+        return new ResponseEntity<>(categoryService.save(dominio), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long codigo) {
-        categoriaService.excluir(codigo);
+        categoryService.delete(codigo);
     }
 
     @PutMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Categoria> alterar(@PathVariable Long codigo, @RequestBody Categoria dominio) {
-        return new ResponseEntity<>(categoriaService.alterar(codigo, dominio), HttpStatus.OK);
+    public ResponseEntity<Category> alterar(@PathVariable Long codigo, @RequestBody Category dominio) {
+        return new ResponseEntity<>(categoryService.update(codigo, dominio), HttpStatus.OK);
     }
 }
 

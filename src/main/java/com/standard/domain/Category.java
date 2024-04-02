@@ -12,13 +12,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categoria implements Serializable {
+public class Category implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 	private Long codigo;
 	private String nome;
 	private String descricao;
-	private List<Subcategoria> subcategorias;
+	private List<Subcategory> subcategories;
 
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
 	private Date data;

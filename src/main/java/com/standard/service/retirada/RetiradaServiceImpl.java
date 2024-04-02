@@ -3,7 +3,7 @@ package com.standard.service.retirada;
 import com.standard.domain.Retirada;
 import com.standard.entity.RetiradaEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.CaixaRepository;
+import com.standard.repository.PosRepository;
 import com.standard.repository.RetiradaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 public class RetiradaServiceImpl implements RetiradaService {
 
     private RetiradaRepository repository;
-    private CaixaRepository caixaRepository;
+    private PosRepository posRepository;
 
-    public RetiradaServiceImpl(RetiradaRepository retiradaRepository, CaixaRepository caixaRepository) {
+    public RetiradaServiceImpl(RetiradaRepository retiradaRepository, PosRepository posRepository) {
         this.repository = retiradaRepository;
-        this.caixaRepository = caixaRepository;
+        this.posRepository = posRepository;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RetiradaServiceImpl implements RetiradaService {
         RetiradaEntity retiradaDB = new RetiradaEntity();
         retiradaDB.setDescricao(obj.getDescricao());
         retiradaDB.setValor(obj.getValor());
-        retiradaDB.setCaixa(caixaRepository.getOne(obj.getCaixa().getCodigo()));
+        retiradaDB.setCaixa(posRepository.getOne(obj.getPos().getCodigo()));
         return JpaFunctions.retiradaEntityToRetirada.apply(repository.saveAndFlush(retiradaDB));
     }
 
@@ -36,7 +36,7 @@ public class RetiradaServiceImpl implements RetiradaService {
         RetiradaEntity retiradaDB = repository.getOne(codigo);
         retiradaDB.setDescricao(obj.getDescricao());
         retiradaDB.setValor(obj.getValor());
-        retiradaDB.setCaixa(caixaRepository.getOne(obj.getCaixa().getCodigo()));
+        retiradaDB.setCaixa(posRepository.getOne(obj.getPos().getCodigo()));
         return JpaFunctions.retiradaEntityToRetirada.apply(repository.saveAndFlush(retiradaDB));
     }
 

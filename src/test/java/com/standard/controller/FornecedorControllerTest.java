@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,8 +55,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
         List<Fornecedor> fornecedors = Arrays.asList(fornecedor, fornecedor2);
         when(service.consultar()).thenReturn(fornecedors);
         mockMvc.perform(get(FornecedorController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -65,8 +65,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(fornecedor.getCodigo())).thenReturn(fornecedor);
         mockMvc.perform(get(FornecedorController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -77,8 +76,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
     public void testIncluir() throws Exception {
         when(service.incluir(fornecedor)).thenReturn(fornecedor);
         mockMvc.perform(post(FornecedorController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(fornecedor)))
                 .andExpect(status().isCreated())
@@ -89,8 +87,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(FornecedorController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -99,8 +96,7 @@ public class FornecedorControllerTest extends AbstractRestControllerTest {
     public void testAlterar() throws Exception {
         when(service.alterar(1L,fornecedor)).thenReturn(fornecedor);
         mockMvc.perform(put(FornecedorController.BASE_URL+"/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(fornecedor)))
                 .andExpect(status().isOk())

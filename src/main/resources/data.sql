@@ -1,21 +1,21 @@
 
-INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'HARDWARE','HARDWARE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (2,'CLOTHING','CLOTHING', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `categoria` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (3,'FOOTWEAR','FOOTWEAR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `category` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'HARDWARE','HARDWARE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `category` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (2,'CLOTHING','CLOTHING', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `category` (`codigo`, `descricao`, `nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (3,'FOOTWEAR','FOOTWEAR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'0','0', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (6,'ACCESSORIES','ACCESSORIES', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (7,'BEARINGS','BEARINGS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (8,'DECKS','DECKS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (9,'GRIPTAPE','GRIPTAPE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (10,'TRUCKS','TRUCKS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (11,'WHEELS','WHEELS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (12,'CAPS','CAPS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (13,'HOODIE','HOODIE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (14,'JACKETS','JACKETS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (15,'T-SHIRT','T-SHIRT', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (16,'MENS SHOE SIZE','MENS SHOE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `subcategoria` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (17,'MENS SHOE SIZE','WOMENS SHOE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1,'0','0', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (6,'ACCESSORIES','ACCESSORIES', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (7,'BEARINGS','BEARINGS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (8,'DECKS','DECKS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (9,'GRIPTAPE','GRIPTAPE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (10,'TRUCKS','TRUCKS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (11,'WHEELS','WHEELS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (12,'CAPS','CAPS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (13,'HOODIE','HOODIE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (14,'JACKETS','JACKETS', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (15,'T-SHIRT','T-SHIRT', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (16,'MENS SHOE SIZE','MENS SHOE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `subcategory` (`codigo`,`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (17,'MENS SHOE SIZE','WOMENS SHOE', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 
 INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,6);
 INSERT INTO `categoria_has_subcategoria` (`categoria_codigo`,`subcategoria_codigo`) VALUES (1,7);
@@ -116,8 +116,16 @@ INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, 
 INSERT INTO `itens_tipo_medida` (categoria_codigo, marca_codigo, medida_codigo, subcategoria_codigo, valor) values (3, null, 1, 16, '13');
 
 INSERT INTO `fornecedor` (`descricao`,`nome`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES ('FORNECEDOR','FORNECEDOR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `cliente` (`codigo`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1, 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `caixa` (`codigo`,`alterado_por`,`criado_por`,`data_alteracao`,`data_criacao`,`hora_criacao`,`version`,`data_abertura`,`data_fechamento`,`hora_abertura`,`hora_fechamento`,`status`,`total`,`total_desconto`,`total_vendas`,`valor_final`,`valor_inicial`)VALUES (null,null,null,null,CURRENT_TIMESTAMP(),null,0,CURRENT_TIMESTAMP(),null,CURRENT_TIMESTAMP(),null,'A',0,0,0,0,5.0);
+INSERT INTO `customer` (`codigo`, `alterado_por`, `criado_por`, `data_alteracao`, `data_criacao`, `hora_criacao`, `version`) VALUES (1, 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
+INSERT INTO `pos` (`codigo`,`alterado_por`,`criado_por`,`data_alteracao`,`data_criacao`,`hora_criacao`,`version`,`data_abertura`,`data_fechamento`,`hora_abertura`,`hora_fechamento`,`status`,`total`,`total_desconto`,`total_vendas`,`valor_final`,`valor_inicial`)VALUES (null,null,null,null,CURRENT_TIMESTAMP(),null,0,CURRENT_TIMESTAMP(),null,CURRENT_TIMESTAMP(),null,'A',0,0,0,0,5.0);
+
+INSERT INTO `user`(`id`,`username`,`password`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`, `use_google_2fa`) VALUES(2, 'user',     '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', true, true, true, true, false);
+INSERT INTO `user`(`id`,`username`,`password`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`, `use_google_2fa`) VALUES(3, 'customer', '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', true, true, true, true, false);
+INSERT INTO `user`(`id`,`username`,`password`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`, `use_google_2fa`) VALUES(1, 'admin',    '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', true, true, true, true, false);
+
+INSERT INTO `user_pass`(`id`, `password`, `user_id`) VALUES (2, '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 2);
+INSERT INTO `user_pass`(`id`, `password`, `user_id`) VALUES (3, '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 3);
+INSERT INTO `user_pass`(`id`, `password`, `user_id`) VALUES (1, '{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 1);
 
 INSERT INTO `authority`(`ID`,`ROLE`) VALUES(0, 'ADMIN');
 INSERT INTO `authority`(`ID`,`ROLE`) VALUES(1, 'USER');
@@ -125,6 +133,22 @@ INSERT INTO `authority`(`ID`,`ROLE`) VALUES(2, 'CUSTUMER');
 
 INSERT INTO `user`(`ID`,`ACCOUNT_NON_EXPIRED`,`ACCOUNT_NON_LOCKED`,`CREDENTIALS_NON_EXPIRED`,`ENABLED`,`PASSWORD`,`USERNAME`) VALUES (1, true,true,true,true, 'standard','{bcrypt10}$2a$10$Aype7wLEB5fMRUUEImlcnuCEtxhoAe2vmCmfbBUzs3qF3Qhwuyksm');
 INSERT INTO `user_authority`(`USER_ID`, `AUTHORITY_ID`) VALUES (1, 0);
+
+INSERT INTO `role` (`id`,`name`) VALUES(1, 'ADMIN');
+INSERT INTO `role` (`id`,`name`) VALUES(2, 'USER');     -- user application internal
+INSERT INTO `role` (`id`,`name`) VALUES(3, 'CUSTOMER'); -- user application external or second role
+
+INSERT INTO `authority`(`id`,`permission`) VALUES (1,  'ORDER_OPEN');
+INSERT INTO `authority`(`id`,`permission`) VALUES (2,  'ORDER_ADD');
+INSERT INTO `authority`(`id`,`permission`) VALUES (3,  'ORDER_REMOVE');
+
+INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(1, 1);
+INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(2, 1);
+INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(3, 1);
+
+INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(1, 1);
+INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(2, 2);
+INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(3, 3);
 
 
 

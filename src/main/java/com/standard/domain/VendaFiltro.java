@@ -23,7 +23,7 @@ public class VendaFiltro implements Serializable {
     private Date data;
 
     private String status;
-    private Cliente cliente;
+    private Customer customer;
     private FormasDePagamento formaDePagamento;
 
 }

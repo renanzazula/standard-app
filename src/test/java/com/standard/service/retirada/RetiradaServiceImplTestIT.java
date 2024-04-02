@@ -1,11 +1,11 @@
 package com.standard.service.retirada;
 
 import com.standard.BaseTest;
-import com.standard.domain.Caixa;
+import com.standard.domain.Pos;
 import com.standard.domain.Retirada;
-import com.standard.repository.CaixaRepository;
+import com.standard.repository.PosRepository;
 import com.standard.repository.RetiradaRepository;
-import com.standard.service.caixa.CaixaServiceImpl;
+import com.standard.service.caixa.PosServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,26 +26,26 @@ public class RetiradaServiceImplTestIT extends BaseTest {
     @Autowired
     private RetiradaRepository repository;
     @Autowired
-    private CaixaRepository caixaRepository;
+    private PosRepository posRepository;
 
-    private CaixaServiceImpl caixaService;
+    private PosServiceImpl caixaService;
     private RetiradaServiceImpl service;
 
     private Retirada retirada;
 
     @BeforeEach
     void setUp() {
-        caixaService =  new CaixaServiceImpl(caixaRepository);
+        caixaService =  new PosServiceImpl(posRepository);
 
-        caixa = new Caixa();
-        caixa.setValorInicial(5.0);
-        caixa = caixaService.abrirCaixa(caixa);
+        pos = new Pos();
+        pos.setValorInicial(5.0);
+        pos = caixaService.openPos(pos);
 
-        service = new RetiradaServiceImpl(repository, caixaRepository);
+        service = new RetiradaServiceImpl(repository, posRepository);
         retirada = new Retirada();
         retirada.setDescricao(DESCRICAO);
         retirada.setValor(10.0);
-        retirada.setCaixa(caixa);
+        retirada.setPos(pos);
         retirada = service.incluir(retirada);
     }
 
@@ -66,7 +66,7 @@ public class RetiradaServiceImplTestIT extends BaseTest {
         Retirada update = service.consultarByCodigo(retirada.getCodigo());
         update.setValor(20.0);
         update.setDescricao(DESCRICAO_UPDATE);
-        update.setCaixa(caixa);
+        update.setPos(pos);
 
         Retirada updated = service.alterar(retirada.getCodigo(), update);
         assertEquals(updated.getDescricao(), update.getDescricao());

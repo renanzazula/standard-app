@@ -26,7 +26,7 @@ public class Recebimento implements Serializable {
 	private Date hora;
 
 	private Double valor;
-	private Caixa caixa;
-	private Cliente cliente;
+	private Pos pos;
+	private Customer customer;
 
 }

@@ -1,19 +1,19 @@
 package com.standard.service.subcategoria;
 
-import com.standard.domain.Subcategoria;
+import com.standard.domain.Subcategory;
 
 import java.util.List;
 
 public interface SubcategoriaService {
 
-	Subcategoria incluir(Subcategoria objc);
+	Subcategory save(Subcategory objc);
 
-	Subcategoria alterar(Long codigo, Subcategoria objc);
+	Subcategory update(Long codigo, Subcategory objc);
 
-	void excluir(Long codigo);
+	void delete(Long codigo);
 	
-	List<Subcategoria> consultar();
+	List<Subcategory> consultar();
 
-	Subcategoria consultarByCodigo(Long codigo);
+	Subcategory consultarByCodigo(Long codigo);
 	
 }

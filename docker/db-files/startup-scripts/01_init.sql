@@ -39,13 +39,13 @@ LOCK TABLES `authority` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `caixa`
+-- Table structure for table `pos`
 --
 
-DROP TABLE IF EXISTS `caixa`;
+DROP TABLE IF EXISTS `pos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `caixa` (
+CREATE TABLE `pos` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -68,22 +68,22 @@ CREATE TABLE `caixa` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `caixa`
+-- Dumping data for table `pos`
 --
 
-LOCK TABLES `caixa` WRITE;
-/*!40000 ALTER TABLE `caixa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `caixa` ENABLE KEYS */;
+LOCK TABLES `pos` WRITE;
+/*!40000 ALTER TABLE `pos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `categoria`
+-- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `categoria`;
+DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categoria` (
+CREATE TABLE `category` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -99,12 +99,12 @@ CREATE TABLE `categoria` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categoria`
+-- Dumping data for table `category`
 --
 
-LOCK TABLES `categoria` WRITE;
-/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -119,8 +119,8 @@ CREATE TABLE `categoria_has_subcategoria` (
   `subcategoria_codigo` bigint NOT NULL,
   PRIMARY KEY (`categoria_codigo`,`subcategoria_codigo`),
   KEY `FKd96wgnlj5knwjqa7fw565cb6f` (`subcategoria_codigo`),
-  CONSTRAINT `FKd96wgnlj5knwjqa7fw565cb6f` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategoria` (`codigo`),
-  CONSTRAINT `FKg8iod4rvlhb8ssh6vdw282bkv` FOREIGN KEY (`categoria_codigo`) REFERENCES `categoria` (`codigo`)
+  CONSTRAINT `FKd96wgnlj5knwjqa7fw565cb6f` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategory` (`codigo`),
+  CONSTRAINT `FKg8iod4rvlhb8ssh6vdw282bkv` FOREIGN KEY (`categoria_codigo`) REFERENCES `category` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,13 +134,13 @@ LOCK TABLES `categoria_has_subcategoria` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cliente`
+-- Table structure for table `customer`
 --
 
-DROP TABLE IF EXISTS `cliente`;
+DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cliente` (
+CREATE TABLE `customer` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -153,12 +153,12 @@ CREATE TABLE `cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cliente`
+-- Dumping data for table `customer`
 --
 
-LOCK TABLES `cliente` WRITE;
-/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -303,9 +303,9 @@ CREATE TABLE `itens_tipo_medida` (
   KEY `FK7qdj4gsx165mjph8ajg8d3toi` (`marca_codigo`),
   KEY `FKrt4q5y4959n38q2ckawen92ik` (`medida_codigo`),
   KEY `FKc3ekbeo0ke4uasxd0ttjxe8tw` (`subcategoria_codigo`),
-  CONSTRAINT `FK2w8y02rdyce862co3hsrddhou` FOREIGN KEY (`categoria_codigo`) REFERENCES `categoria` (`codigo`),
+  CONSTRAINT `FK2w8y02rdyce862co3hsrddhou` FOREIGN KEY (`categoria_codigo`) REFERENCES `category` (`codigo`),
   CONSTRAINT `FK7qdj4gsx165mjph8ajg8d3toi` FOREIGN KEY (`marca_codigo`) REFERENCES `marca` (`codigo`),
-  CONSTRAINT `FKc3ekbeo0ke4uasxd0ttjxe8tw` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategoria` (`codigo`),
+  CONSTRAINT `FKc3ekbeo0ke4uasxd0ttjxe8tw` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategory` (`codigo`),
   CONSTRAINT `FKrt4q5y4959n38q2ckawen92ik` FOREIGN KEY (`medida_codigo`) REFERENCES `medida` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -479,9 +479,9 @@ CREATE TABLE `produto` (
   KEY `FKnd8vfywu4t6sl6yy4614nuuc` (`subcategoria_codigo`),
   CONSTRAINT `FKc1yyrbyl61fympj6ams5ou9qm` FOREIGN KEY (`marca_codigo`) REFERENCES `marca` (`codigo`),
   CONSTRAINT `FKiwd9fe0gfcp0rrts6ifn8mw1b` FOREIGN KEY (`medida_codigo`) REFERENCES `medida` (`codigo`),
-  CONSTRAINT `FKnd8vfywu4t6sl6yy4614nuuc` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategoria` (`codigo`),
+  CONSTRAINT `FKnd8vfywu4t6sl6yy4614nuuc` FOREIGN KEY (`subcategoria_codigo`) REFERENCES `subcategory` (`codigo`),
   CONSTRAINT `FKpvyafr9m7vpu95rd3uq7fja5g` FOREIGN KEY (`fornecedor_codigo`) REFERENCES `fornecedor` (`codigo`),
-  CONSTRAINT `FKtfuf17yvliycysg3vt5h0sp2v` FOREIGN KEY (`categoria_codigo`) REFERENCES `categoria` (`codigo`)
+  CONSTRAINT `FKtfuf17yvliycysg3vt5h0sp2v` FOREIGN KEY (`categoria_codigo`) REFERENCES `category` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -579,8 +579,8 @@ CREATE TABLE `recebimento` (
   PRIMARY KEY (`codigo`),
   KEY `FKkd71q7664qvorwu0e9ilwhetp` (`caixa_codigo`),
   KEY `FK7gm81ocgo627b5pjl316rs28u` (`cliente_codigo`),
-  CONSTRAINT `FK7gm81ocgo627b5pjl316rs28u` FOREIGN KEY (`cliente_codigo`) REFERENCES `cliente` (`codigo`),
-  CONSTRAINT `FKkd71q7664qvorwu0e9ilwhetp` FOREIGN KEY (`caixa_codigo`) REFERENCES `caixa` (`codigo`)
+  CONSTRAINT `FK7gm81ocgo627b5pjl316rs28u` FOREIGN KEY (`cliente_codigo`) REFERENCES `customer` (`codigo`),
+  CONSTRAINT `FKkd71q7664qvorwu0e9ilwhetp` FOREIGN KEY (`caixa_codigo`) REFERENCES `pos` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -613,7 +613,7 @@ CREATE TABLE `retirada` (
   `caixa_codigo` bigint NOT NULL,
   PRIMARY KEY (`codigo`),
   KEY `FK4p04dhtoghxk1dlcqsgc8668e` (`caixa_codigo`),
-  CONSTRAINT `FK4p04dhtoghxk1dlcqsgc8668e` FOREIGN KEY (`caixa_codigo`) REFERENCES `caixa` (`codigo`)
+  CONSTRAINT `FK4p04dhtoghxk1dlcqsgc8668e` FOREIGN KEY (`caixa_codigo`) REFERENCES `pos` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -676,13 +676,13 @@ LOCK TABLES `role_authority` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `subcategoria`
+-- Table structure for table `subcategory`
 --
 
-DROP TABLE IF EXISTS `subcategoria`;
+DROP TABLE IF EXISTS `subcategory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `subcategoria` (
+CREATE TABLE `subcategory` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -698,12 +698,12 @@ CREATE TABLE `subcategoria` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `subcategoria`
+-- Dumping data for table `subcategory`
 --
 
-LOCK TABLES `subcategoria` WRITE;
-/*!40000 ALTER TABLE `subcategoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `subcategoria` ENABLE KEYS */;
+LOCK TABLES `subcategory` WRITE;
+/*!40000 ALTER TABLE `subcategory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `subcategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -842,8 +842,8 @@ CREATE TABLE `venda` (
   KEY `FKcpovrb0jietoi8io1hu7y3w1i` (`caixa_codigo`),
   KEY `FK7fxgfskuip18oucp6s7p0iygu` (`cliente_codigo`),
   KEY `FKs2fb3901rfrvqljjqftv59ulw` (`formas_de_pagamento_codigo`),
-  CONSTRAINT `FK7fxgfskuip18oucp6s7p0iygu` FOREIGN KEY (`cliente_codigo`) REFERENCES `cliente` (`codigo`),
-  CONSTRAINT `FKcpovrb0jietoi8io1hu7y3w1i` FOREIGN KEY (`caixa_codigo`) REFERENCES `caixa` (`codigo`),
+  CONSTRAINT `FK7fxgfskuip18oucp6s7p0iygu` FOREIGN KEY (`cliente_codigo`) REFERENCES `customer` (`codigo`),
+  CONSTRAINT `FKcpovrb0jietoi8io1hu7y3w1i` FOREIGN KEY (`caixa_codigo`) REFERENCES `pos` (`codigo`),
   CONSTRAINT `FKs2fb3901rfrvqljjqftv59ulw` FOREIGN KEY (`formas_de_pagamento_codigo`) REFERENCES `forma_de_pagamento` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -16,7 +16,7 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
     public ProdutoHasItensTipoMedida apply(ProdutoHasItensTipoMedidaEntity input) {
         ProdutoHasItensTipoMedida output = new ProdutoHasItensTipoMedida();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             if (input.getDominios() != null) {
                 output.setDominios(input.getDominios().stream().map(JpaFunctions.dominioToDominioEntity).collect(Collectors.toList()));
             }
@@ -37,7 +37,7 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
      */
     private Produto produtoEntityToProduto(ProdutoEntity input) {
         Produto output = new Produto();
-        output.setCodigo(input.getCodigo());
+        output.setCodigo(input.getId());
         output.setBarCode(input.getBarCode());
         output.setNome(input.getNome());
         output.setStatus(input.getStatus());
@@ -56,12 +56,12 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
             output.setFornecedor(JpaFunctions.fornecedortoFornecedorEntity.apply(input.getFornecedor()));
         }
 
-        if (input.getCategoria() != null) {
-            output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+        if (input.getCategory() != null) {
+            output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
         }
 
         if (input.getSubcategoria() != null) {
-            output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+            output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategoria()));
         }
 
         if (input.getMedida() != null) {

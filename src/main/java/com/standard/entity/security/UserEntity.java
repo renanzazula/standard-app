@@ -1,5 +1,6 @@
 package com.standard.entity.security;
 
+import com.standard.entity.CustomerEntity;
 import lombok.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,10 +27,8 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @Column(name = "username")
     private String username;
-
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -41,9 +40,9 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private Set<RoleEntity> roles;
 
-    //fix order venta cliente
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    private CustomerEntity customer;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CustomerEntity customer;
 
     @Builder.Default
     @Column(name = "accountNonExpired")
@@ -91,7 +90,7 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
 
     @Override
     public void eraseCredentials() {
-        // TODO document why this method is empty
+        // Spring security will use this on the context, so this method we don't need to implement.
     }
 
 }

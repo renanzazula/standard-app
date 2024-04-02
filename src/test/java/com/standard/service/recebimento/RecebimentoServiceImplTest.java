@@ -1,14 +1,15 @@
 package com.standard.service.recebimento;
 
 import com.standard.BaseTest;
-import com.standard.domain.Caixa;
-import com.standard.domain.Cliente;
+import com.standard.domain.Pos;
+import com.standard.domain.Customer;
 import com.standard.domain.Recebimento;
-import com.standard.entity.ClienteEntity;
-import com.standard.repository.CaixaRepository;
-import com.standard.repository.ClienteRepository;
+
+import com.standard.entity.CustomerEntity;
+import com.standard.repository.PosRepository;
+import com.standard.repository.CustomerRepository;
 import com.standard.repository.RecebimentoRepository;
-import com.standard.service.caixa.CaixaServiceImpl;
+import com.standard.service.caixa.PosServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,43 +30,43 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class RecebimentoServiceImplTest extends BaseTest {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private RecebimentoRepository recebimentoRepository;
 
     @Autowired
-    private CaixaRepository caixaRepository;
+    private PosRepository posRepository;
 
     private RecebimentoServiceImpl recebimentoService;
-    private CaixaServiceImpl caixaService;
+    private PosServiceImpl caixaService;
 
     // Fixme: later
-    ClienteEntity clienteEntity = null;
+    CustomerEntity clienteEntity = null;
 
     Recebimento recebimento = null;
 
     @BeforeEach
     void setUp() {
-        caixaService =  new CaixaServiceImpl(caixaRepository);
-        recebimentoService = new RecebimentoServiceImpl(recebimentoRepository, caixaRepository, clienteRepository);
+        caixaService =  new PosServiceImpl(posRepository);
+        recebimentoService = new RecebimentoServiceImpl(recebimentoRepository, posRepository, customerRepository);
 
-        clienteEntity = new ClienteEntity();
-        clienteRepository.save(clienteEntity);
+        clienteEntity = new CustomerEntity();
+        customerRepository.save(clienteEntity);
 
-        Cliente cliente = new Cliente();
-        cliente.setCodigo(clienteEntity.getCodigo());
+        Customer customer = new Customer();
+        customer.setId(clienteEntity.getCodigo());
 
-        caixa = new Caixa();
-        caixa.setValorInicial(5.0);
-        caixa = caixaService.abrirCaixa(caixa);
+        pos = new Pos();
+        pos.setValorInicial(5.0);
+        pos = caixaService.openPos(pos);
 
         recebimento = new Recebimento();
         recebimento.setNome(NOME);
         recebimento.setDescricao(DESCRICAO);
         recebimento.setValor(10.0);
-        recebimento.setCaixa(caixa);
-        recebimento.setCliente(cliente);
+        recebimento.setPos(pos);
+        recebimento.setCustomer(customer);
 
     }
 

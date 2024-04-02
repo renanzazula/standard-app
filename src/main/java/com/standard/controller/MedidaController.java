@@ -1,8 +1,8 @@
 package com.standard.controller;
 
-import com.standard.domain.Categoria;
+import com.standard.domain.Category;
 import com.standard.domain.Medida;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.service.categoria.CategoryService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class MedidaController {
 
     public static final String BASE_URL = "/private/v1/medida";
 
-    private final CategoriaService categoriaService;
+    private final CategoryService categoryService;
     private final MarcaService marcaService;
     private final MedidaService medidaService;
 
@@ -51,13 +51,13 @@ public class MedidaController {
 
     private Medida carregaMedida(Medida medida) {
         medida.setMarcas(marcaService.consultar());
-        medida.setCategorias(categoriaService.consultar());
+        medida.setCategories(categoryService.findAll());
         if (medida.getItensTipoMedida() != null) {
             if (medida.getItensTipoMedida().size() > 0) {
                 if (medida.getItensTipoMedida().get(0) != null) {
-                    if (medida.getItensTipoMedida().get(0).getCategoria() != null) {
-                        Categoria categoria = medida.getItensTipoMedida().get(0).getCategoria();
-                        medida.setSubcategorias(categoriaService.consultarByCodigo(categoria.getCodigo()).getSubcategorias());
+                    if (medida.getItensTipoMedida().get(0).getCategory() != null) {
+                        Category category = medida.getItensTipoMedida().get(0).getCategory();
+                        medida.setSubcategories(categoryService.findById(category.getCodigo()).getSubcategories());
                     }
                 }
             }

@@ -22,10 +22,10 @@ public @Data class RecebimentoEntity extends BaseAuditEntity {
 	private Double valor;
 
 	@ManyToOne
-	@JoinColumn(name = "caixa_codigo")
-	private CaixaEntity caixa;
+	@JoinColumn(name = "pos_id")
+	private PosEntity pos;
 
 	@ManyToOne
-	@JoinColumn(name = "cliente_codigo")
-	private ClienteEntity cliente;
+	@JoinColumn(name = "customer_id")
+	private CustomerEntity customer;
 }

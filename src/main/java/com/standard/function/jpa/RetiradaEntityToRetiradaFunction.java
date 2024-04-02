@@ -10,13 +10,13 @@ public class RetiradaEntityToRetiradaFunction implements java.util.function.Func
     public Retirada apply(RetiradaEntity input) {
         Retirada output = new Retirada();
         if (input != null) {
-            output.setCodigo(input.getCodigo());
+            output.setCodigo(input.getId());
             output.setDescricao(input.getDescricao());
             output.setValor(input.getValor());
-            output.setData(input.getDataCriacao());
-            output.setHora(input.getHoraCriacao());
+            output.setData(input.getCreationDate());
+            output.setHora(input.getCreationTime());
             if(input.getCaixa() != null){
-                output.setCaixa(JpaFunctions.caixaToCaixaEntity.apply(input.getCaixa()));
+                output.setPos(JpaFunctions.posToPosEntity.apply(input.getCaixa()));
             }
         }
         return output;

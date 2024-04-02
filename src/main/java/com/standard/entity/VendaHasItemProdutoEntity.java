@@ -12,16 +12,16 @@ public @Data class VendaHasItemProdutoEntity extends BaseAuditEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "venda_has_item_produto_codigo")
-	private Long codigo;
+	@Column(name = "venda_has_item_produto_id")
+	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "venda_codigo")
+	@JoinColumn(name = "venda_id")
 	private VendaEntity venda;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "produto_has_itens_tipo_medida_codigo", updatable = false)
-	@OrderBy("codigo")
+	@JoinColumn(name = "produto_has_itens_tipo_medida_id", updatable = false)
+	@OrderBy("id")
 	private ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida;
 
 	@Column(name = "valor_unitario")

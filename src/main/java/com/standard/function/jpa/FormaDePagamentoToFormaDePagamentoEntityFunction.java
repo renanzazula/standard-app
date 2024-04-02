@@ -11,12 +11,12 @@ public class FormaDePagamentoToFormaDePagamentoEntityFunction implements Functio
 	public FormasDePagamento apply(FormaDePagamentoEntity input) {
 		FormasDePagamento output = new FormasDePagamento();
 		if(input != null) {
-			output.setCodigo(input.getCodigo());
+			output.setCodigo(input.getId());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 			output.setPorcentagemDesconto(input.getPorcentagemDesconto());
-			output.setData(input.getDataCriacao());
-			output.setHora(input.getHoraCriacao());
+			output.setData(input.getCreationDate());
+			output.setHora(input.getCreationTime());
 		}
 		return output;
 	}

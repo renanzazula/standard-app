@@ -2,15 +2,15 @@ package com.standard.function.jpa;
 
 import java.util.function.Function;
 
-import com.standard.entity.CaixaEntity;
-import com.standard.domain.Caixa;
+import com.standard.entity.PosEntity;
+import com.standard.domain.Pos;
 
-public class CaixaToCaixaEntityFunction implements Function<CaixaEntity, Caixa> {
+public class PosToPosEntityFunction implements Function<PosEntity, Pos> {
 
 	@Override
-	public Caixa apply(CaixaEntity input) {
-		Caixa output = new Caixa();		
-		output.setCodigo(input.getCodigo());
+	public Pos apply(PosEntity input) {
+		Pos output = new Pos();
+		output.setCodigo(input.getId());
 		output.setDataAbertura(input.getDataAbertura());
 		output.setHoraAbertura(input.getHoraAbertura());		
 		output.setDataFechamento(input.getDataFechamento());

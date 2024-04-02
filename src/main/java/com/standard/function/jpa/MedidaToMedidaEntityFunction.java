@@ -13,7 +13,7 @@ public class MedidaToMedidaEntityFunction implements Function<MedidaEntity, Medi
 	public Medida apply(MedidaEntity input) {
 		Medida output = new Medida();
 		if (input != null) {
-			output.setCodigo(input.getCodigo());
+			output.setCodigo(input.getId());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 

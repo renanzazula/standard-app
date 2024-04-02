@@ -11,7 +11,7 @@ public class DominioToDominioEntityFunction  implements Function<DominioEntity, 
 	public Dominio apply(DominioEntity input) {
 		Dominio output = new Dominio();
 		if(input != null){
-			output.setCodigo(input.getCodigo());
+			output.setCodigo(input.getId());
 			output.setNome(input.getNome());
 			output.setDescricao(input.getDescricao());
 		}

@@ -59,17 +59,17 @@ public @Data class VendaEntity extends BaseAuditEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "caixa_codigo")
-	private CaixaEntity caixa;
+	@JoinColumn(name = "pos_id")
+	private PosEntity pos;
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "cliente_codigo")
-	private ClienteEntity cliente;
+	@JoinColumn(name = "customer_id")
+	private CustomerEntity customer;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "formasDePagamento_codigo")
+	@JoinColumn(name = "formasDePagamento_id")
 	private FormaDePagamentoEntity formaDePagamento;
 
 	@NotNull

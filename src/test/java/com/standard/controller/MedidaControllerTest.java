@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Medida;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.service.categoria.CategoryService;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.medida.MedidaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +21,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -34,7 +35,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     MedidaService service;
 
     @MockBean
-    CategoriaService categoriaService;
+    CategoryService categoryService;
 
     @MockBean
     MarcaService marcaService;
@@ -63,8 +64,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
         List<Medida> medidas = Arrays.asList(medida, medida2);
         when(service.consultar()).thenReturn(medidas);
         mockMvc.perform(get(MedidaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -75,8 +75,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
         setUpMedida();
         when(service.consultarByCodigo(medida.getCodigo())).thenReturn(medida);
         mockMvc.perform(get(MedidaController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
                 //.andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -87,8 +86,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     public void testIncluir() throws Exception {
         when(service.incluir(medida)).thenReturn(medida);
         mockMvc.perform(post(MedidaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(medida)))
                 .andExpect(status().isCreated())
@@ -99,8 +97,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(MedidaController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -109,8 +106,7 @@ public class MedidaControllerTest extends AbstractRestControllerTest {
     public void testAlterar() throws Exception {
         when(service.alterar(1L, medida)).thenReturn(medida);
         mockMvc.perform(put(MedidaController.BASE_URL+"/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(medida)))
                 .andExpect(status().isOk())

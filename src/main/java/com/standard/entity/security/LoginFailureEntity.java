@@ -26,9 +26,6 @@ public @Data class LoginFailureEntity implements Serializable {
 
     private String username;
 
-    @ManyToOne
-    private UserEntity user;
-
     @Column(name = "sourceIp")
     private String sourceIp;
 

@@ -2,11 +2,7 @@ package com.standard;
 
 import com.standard.domain.*;
 import com.standard.enums.StatusEnum;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -50,10 +46,10 @@ public class BaseTest {
     // obj commons
     protected FormasDePagamento formasDePagamento = null;
     protected Venda venda = null;
-    protected Caixa caixa = null;
+    protected Pos pos = null;
     protected Marca marca = null;
-    protected Subcategoria subcategoria = null;
-    protected Categoria categoria = null;
+    protected Subcategory subcategory = null;
+    protected Category category = null;
     protected Fornecedor fornecedor = null;
     protected Medida medida = null;
     protected List<ItensTipoMedida> itensTipoMedida = null;
@@ -70,16 +66,16 @@ public class BaseTest {
     }
 
     protected void setUpSubCategoria() {
-        subcategoria = new Subcategoria();
-        subcategoria.setNome(NOME);
-        subcategoria.setDescricao(DESCRICAO);
+        subcategory = new Subcategory();
+        subcategory.setNome(NOME);
+        subcategory.setDescricao(DESCRICAO);
     }
 
     protected void setUpCategoria() {
-        categoria = new Categoria();
-        categoria.setCodigo(1L);
-        categoria.setNome(NOME);
-        categoria.setDescricao(DESCRICAO);
+        category = new Category();
+        category.setCodigo(1L);
+        category.setNome(NOME);
+        category.setDescricao(DESCRICAO);
     }
 
     protected void setUpFormasDePagamento(){
@@ -172,11 +168,11 @@ public class BaseTest {
             Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
             assertMarca(marcaFound, marca);
 
-            Subcategoria subcategoriaFound = medida.getItensTipoMedida().get(j).getSubcategoria();
-            assertSubCategoria(subcategoriaFound, subcategoria);
+            Subcategory subcategoryFound = medida.getItensTipoMedida().get(j).getSubcategory();
+            assertSubCategoria(subcategoryFound, subcategory);
 
-            Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
-            assertCategoria(categoriaFound, categoria);
+            Category categoryFound = medida.getItensTipoMedida().get(j).getCategory();
+            assertCategoria(categoryFound, category);
 
             assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
         }
@@ -188,13 +184,13 @@ public class BaseTest {
         assertEquals(expected.getDescricao(), found.getDescricao());
     }
 
-    protected void assertCategoria(Categoria expected, Categoria found) {
+    protected void assertCategoria(Category expected, Category found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
     }
 
-    protected void assertSubCategoria(Subcategoria expected, Subcategoria found) {
+    protected void assertSubCategoria(Subcategory expected, Subcategory found) {
         assertEquals(expected.getCodigo(), found.getCodigo());
         assertEquals(expected.getNome(), found.getNome());
         assertEquals(expected.getDescricao(), found.getDescricao());
@@ -246,8 +242,8 @@ public class BaseTest {
         assertEquals(found.getPorcentagem(), expected.getPorcentagem());
         assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
         assertMarca(found.getMarca(), expected.getMarca());
-        assertCategoria(found.getCategoria(), expected.getCategoria());
-        assertSubCategoria(found.getSubcategoria(), expected.getSubcategoria());
+        assertCategoria(found.getCategory(), expected.getCategory());
+        assertSubCategoria(found.getSubcategory(), expected.getSubcategory());
         assertFornecedor(found.getFornecedor(), expected.getFornecedor());
         assertMarcaSubCategoriaCategoriaValor(found.getMedida());
         assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());
@@ -259,8 +255,8 @@ public class BaseTest {
         assertEquals(found.getValor(), expected.getValor());
         assertEquals(found.getMedida(), expected.getMedida());
         assertEquals(found.getMarca(), expected.getMarca());
-        assertEquals(found.getCategoria(), expected.getCategoria());
-        assertEquals(found.getSubcategoria(), expected.getSubcategoria());
+        assertEquals(found.getCategory(), expected.getCategory());
+        assertEquals(found.getSubcategory(), expected.getSubcategory());
     }
     
     

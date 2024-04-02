@@ -2,13 +2,13 @@ package com.standard.service.venda;
 
 import com.standard.BaseTest;
 import com.standard.domain.*;
-import com.standard.entity.ClienteEntity;
+import com.standard.entity.CustomerEntity;
 import com.standard.enums.StatusVendaEnum;
 import com.standard.repository.*;
-import com.standard.service.caixa.CaixaService;
-import com.standard.service.caixa.CaixaServiceImpl;
-import com.standard.service.categoria.CategoriaService;
-import com.standard.service.categoria.CategoriaServiceImpl;
+import com.standard.service.caixa.PosService;
+import com.standard.service.caixa.PosServiceImpl;
+import com.standard.service.categoria.CategoryService;
+import com.standard.service.categoria.CategoryServiceImpl;
 import com.standard.service.dominio.DominioService;
 import com.standard.service.dominio.DominioServiceImpl;
 import com.standard.service.formaDePagamento.FormaDePagamentoService;
@@ -29,7 +29,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -49,16 +48,16 @@ public class VendaServiceImplTestIT extends BaseTest {
     private FormaDePagamentoRepository formaDePagamentoRepository;
 
     @Autowired
-    private CaixaRepository caixaRepository;
+    private PosRepository posRepository;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private MedidaRepository medidaRepository;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private SubcategoriaRepository subcategoriaRepository;
@@ -86,51 +85,51 @@ public class VendaServiceImplTestIT extends BaseTest {
     private FornecedorService fornecedorService;
     private ProdutoService produtoService;
     private SubcategoriaService subcategoriaService;
-    private CategoriaService categoriaService;
+    private CategoryService categoryService;
     private DominioService dominioService;
     private MedidaService medidaService;
     private VendaService vendaService;
-    private CaixaService caixaService;
+    private PosService posService;
     private FormaDePagamentoService formaDePagamentoService;
 
     // Fixme: later
-    ClienteEntity clienteEntity = null;
+    CustomerEntity clienteEntity = null;
 
     @BeforeEach
     public void setUp() {
 
-        caixaService =  new CaixaServiceImpl(caixaRepository);
+        posService =  new PosServiceImpl(posRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
         subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
-        categoriaService = new CategoriaServiceImpl(categoriaRepository, subcategoriaRepository);
+        categoryService = new CategoryServiceImpl(categoryRepository, subcategoriaRepository);
         fornecedorService = new FornecedorServiceImpl(fornecedorRepository);
         dominioService = new DominioServiceImpl(dominioRepository);
-        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
+        medidaService = new MedidaServiceImpl(medidaRepository, categoryRepository,
                 subcategoriaRepository, marcaRepository);
 
         produtoService = new ProdutoServiceImpl(produtoRepository, medidaRepository,
                 dominioRepository, fornecedorRepository,
-                categoriaRepository, subcategoriaRepository,
+                categoryRepository, subcategoriaRepository,
                 marcaRepository, itensTipoMedidaRepository);
 
-        vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, caixaRepository,
-                clienteRepository, produtoHasItensTipoMedidaRepository, caixaService);
+        vendaService = new VendaServiceImpl(vendaRepository, formaDePagamentoRepository, posRepository,
+                customerRepository, produtoHasItensTipoMedidaRepository, posService);
 
-        clienteEntity = new ClienteEntity();
-        clienteRepository.save(clienteEntity);
+        clienteEntity = new CustomerEntity();
+        customerRepository.save(clienteEntity);
 
-        Cliente cliente = new Cliente();
-        cliente.setCodigo(clienteEntity.getCodigo());
+        Customer customer = new Customer();
+        customer.setId(clienteEntity.getCodigo());
 
         formaDePagamentoService  = new FormaDePagamentoServiceImpl(formaDePagamentoRepository);
         setUpFormasDePagamento();
         formasDePagamento = formaDePagamentoService.incluir(formasDePagamento);
 
 
-        caixa = new Caixa();
-        caixa.setValorInicial(5.0);
-        caixa = caixaService.abrirCaixa(caixa);
+        pos = new Pos();
+        pos.setValorInicial(5.0);
+        pos = posService.openPos(pos);
 
         // requeridos
         setUpMarca();
@@ -140,20 +139,20 @@ public class VendaServiceImplTestIT extends BaseTest {
         fornecedor = fornecedorService.incluir(fornecedor);
 
         setUpSubCategoria();
-        subcategoria = subcategoriaService.incluir(subcategoria);
+        subcategory = subcategoriaService.save(subcategory);
 
         setUpCategoria();
-        categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subcategoria);
-        categoria = categoriaService.incluir(categoria);
+        category.setSubcategories(new ArrayList<>());
+        category.getSubcategories().add(subcategory);
+        category = categoryService.save(category);
 
         setUpDominio();
         dominio = dominioService.incluir(dominio);
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subcategoria);
-        medida.setCategoria(categoria);
+        medida.setSubcategory(subcategory);
+        medida.setCategory(category);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
         medida = medidaService.incluir(medida);
@@ -166,9 +165,9 @@ public class VendaServiceImplTestIT extends BaseTest {
 
         produto.setMarca(marca);
         produto.setFornecedor(fornecedor);
-        produto.setCategoria(categoria);
+        produto.setCategory(category);
         produto.setMedida(medida);
-        produto.setSubcategoria(subcategoria);
+        produto.setSubcategory(subcategory);
         produto.setProdutoHasItensTipoMedida(produtoHasItensTipoMedida);
         produto = produtoService.incluir(produto);
 
@@ -184,10 +183,10 @@ public class VendaServiceImplTestIT extends BaseTest {
         venda.setTroco(10.0);
         venda.setPagamento(10.0);
         venda.setStatus(StatusVendaEnum.EFETUDA);
-        venda.setCaixa(new Caixa());
-        venda.setCaixa(caixa);
+        venda.setPos(new Pos());
+        venda.setPos(pos);
         venda.setFormaDePagamento(formasDePagamento);
-        venda.setCliente(cliente);
+        venda.setCustomer(customer);
         VendaHasItemProduto vendaHasItemProduto = new VendaHasItemProduto();
 
         ProdutoHasItensTipoMedida produtoHasItensTipoMedida = new ProdutoHasItensTipoMedida();

@@ -1,9 +1,9 @@
 package com.standard.service.categoria;
 
 import com.standard.BaseTest;
-import com.standard.domain.Categoria;
-import com.standard.domain.Subcategoria;
-import com.standard.repository.CategoriaRepository;
+import com.standard.domain.Category;
+import com.standard.domain.Subcategory;
+import com.standard.repository.CategoryRepository;
 import com.standard.repository.SubcategoriaRepository;
 import com.standard.service.subcategoria.SubcategoriaService;
 import com.standard.service.subcategoria.SubcategoriaServiceImpl;
@@ -23,44 +23,44 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CategoriaServiceImplTestIT extends BaseTest {
+public class CategoryServiceImplTestIT extends BaseTest {
 
     @Autowired
-    private CategoriaRepository repository;
+    private CategoryRepository repository;
 
     @Autowired
     private SubcategoriaRepository subcategoriaRepository;
 
-    private CategoriaService service;
+    private CategoryService service;
 
-    private Categoria obj = null;
+    private Category obj = null;
 
     @BeforeEach
     public void setUp() {
-        service = new CategoriaServiceImpl(repository, subcategoriaRepository);
+        service = new CategoryServiceImpl(repository, subcategoriaRepository);
         SubcategoriaService subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
 
-        List<Subcategoria> subcategorias = new ArrayList<>();
+        List<Subcategory> subcategories = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            Subcategoria subcategoria = new Subcategoria();
-            subcategoria.setNome(NOME + "_" + i);
-            subcategoria.setDescricao(DESCRICAO + "_" + i);
-            subcategorias.add(subcategoriaService.incluir(subcategoria));
+            Subcategory subcategory = new Subcategory();
+            subcategory.setNome(NOME + "_" + i);
+            subcategory.setDescricao(DESCRICAO + "_" + i);
+            subcategories.add(subcategoriaService.save(subcategory));
         }
 
-        obj = new Categoria();
+        obj = new Category();
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
-        obj.setSubcategorias(subcategorias);
-        obj = service.incluir(obj);
+        obj.setSubcategories(subcategories);
+        obj = service.save(obj);
     }
 
     @Test
     public void incluir() {
-        Categoria saved = service.incluir(obj);
+        Category saved = service.save(obj);
         assertNotNull(saved);
 
-        Categoria found = service.consultarByCodigo(saved.getCodigo());
+        Category found = service.findById(saved.getCodigo());
         assertEquals(found.getCodigo(), saved.getCodigo());
         assertEquals(found.getNome(), saved.getNome());
         assertEquals(found.getDescricao(), saved.getDescricao());
@@ -68,12 +68,12 @@ public class CategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void alterar() {
-        Categoria update = service.consultarByCodigo(obj.getCodigo());
+        Category update = service.findById(obj.getCodigo());
         assertNotNull(update);
         update.setNome(NOME_UPDATE);
         update.setDescricao(DESCRICAO_UPDATE);
 
-        Categoria updated = service.alterar(update.getCodigo(), update);
+        Category updated = service.update(update.getCodigo(), update);
         assertEquals(update.getCodigo(), updated.getCodigo());
         assertEquals(update.getNome(), updated.getNome());
         assertEquals(update.getDescricao(), updated.getDescricao());
@@ -81,24 +81,24 @@ public class CategoriaServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultar() {
-        List<Categoria> found = service.consultar();
+        List<Category> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
     public void consultarByCodigo() {
-        Categoria found = service.consultarByCodigo(obj.getCodigo());
+        Category found = service.findById(obj.getCodigo());
         assertNotNull(found);
         assertEquals(found.getCodigo(), obj.getCodigo());
     }
 
     @Test
     public void excluir() {
-        Categoria delete = service.consultarByCodigo(obj.getCodigo());
+        Category delete = service.findById(obj.getCodigo());
         assertNotNull(delete);
-        service.excluir(delete.getCodigo());
+        service.delete(delete.getCodigo());
 
-        Categoria found = service.consultarByCodigo(obj.getCodigo());
+        Category found = service.findById(obj.getCodigo());
         assertNull(found.getCodigo());
         assertNull(found.getNome());
         assertNull(found.getDescricao());

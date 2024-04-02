@@ -21,17 +21,17 @@ class ProdutoHasItensTipoMedidaEntity extends BaseAuditEntity {
     private Double valorUnitario;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "itens_tipo_medida_codigo", updatable = false)
+    @JoinColumn(name = "itens_tipo_medida_id", updatable = false)
     private ItensTipoMedidaEntity itensTipoMedida;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "produto_codigo")
+    @JoinColumn(name = "produto_id")
     private ProdutoEntity produto;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "produto_has_itens_tipo_medida_has_dominio", joinColumns = {
-            @JoinColumn(name = "produto_has_itens_tipo_medida_codigo")}, inverseJoinColumns = {
-            @JoinColumn(name = "dominio_codigo")})
+            @JoinColumn(name = "produto_has_itens_tipo_medida_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "dominio_id")})
     private Set<DominioEntity> dominios;
 
     @OneToMany(mappedBy = "produtoHasItensTipoMedida", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

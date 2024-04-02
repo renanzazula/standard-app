@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public   class Subcategoria implements Serializable {
+public   class Subcategory implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 

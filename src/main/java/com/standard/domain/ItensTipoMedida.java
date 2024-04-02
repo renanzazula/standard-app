@@ -19,7 +19,7 @@ public class ItensTipoMedida implements Serializable {
 	private String valor;
 	private Medida medida;
 	private Marca marca;
-	private Categoria categoria;
-	private Subcategoria subcategoria;
+	private Category category;
+	private Subcategory subcategory;
 
 }

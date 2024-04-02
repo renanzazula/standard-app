@@ -3,8 +3,8 @@ package com.standard.service.recebimento;
 import com.standard.domain.Recebimento;
 import com.standard.entity.RecebimentoEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.CaixaRepository;
-import com.standard.repository.ClienteRepository;
+import com.standard.repository.PosRepository;
+import com.standard.repository.CustomerRepository;
 import com.standard.repository.RecebimentoRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 public class RecebimentoServiceImpl implements RecebimentoService {
 
     private RecebimentoRepository repository;
-    private CaixaRepository caixaRepository;
-    private ClienteRepository clienteRepository;
+    private PosRepository posRepository;
+    private CustomerRepository customerRepository;
 
-    public RecebimentoServiceImpl(RecebimentoRepository repository, CaixaRepository caixaRepository, ClienteRepository clienteRepository) {
+    public RecebimentoServiceImpl(RecebimentoRepository repository, PosRepository posRepository, CustomerRepository customerRepository) {
         this.repository = repository;
-        this.caixaRepository = caixaRepository;
-        this.clienteRepository = clienteRepository;
+        this.posRepository = posRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -32,11 +32,11 @@ public class RecebimentoServiceImpl implements RecebimentoService {
         entity.setNome(recebimento.getNome());
         entity.setDescricao(recebimento.getDescricao());
         entity.setValor(recebimento.getValor());
-        if(recebimento.getCaixa() != null){
-            entity.setCaixa(caixaRepository.getOne(recebimento.getCaixa().getCodigo()));
+        if(recebimento.getPos() != null){
+            entity.setPos(posRepository.getOne(recebimento.getPos().getCodigo()));
         }
-        if(recebimento.getCliente() != null){
-            entity.setCliente(clienteRepository.getOne(recebimento.getCliente().getCodigo()));
+        if(recebimento.getCustomer() != null){
+            entity.setCustomer(customerRepository.getOne(recebimento.getCustomer().getId()));
         }
         return JpaFunctions.recebimentoEntityToRecebimento.apply(repository.saveAndFlush(entity));
     }
@@ -48,12 +48,12 @@ public class RecebimentoServiceImpl implements RecebimentoService {
         entity.setNome(recebimento.getNome());
         entity.setDescricao(recebimento.getDescricao());
         entity.setValor(recebimento.getValor());
-        if(recebimento.getCaixa() != null){
-            entity.setCaixa(caixaRepository.getOne(recebimento.getCaixa().getCodigo()));
+        if(recebimento.getPos() != null){
+            entity.setPos(posRepository.getOne(recebimento.getPos().getCodigo()));
         }
-        if(recebimento.getCliente() != null){
-            entity.setCliente(clienteRepository.getOne(recebimento.getCliente().getCodigo()));
-        }
+//        if(recebimento.getCliente() != null){
+//            entity.setCliente(clienteRepository.getOne(recebimento.getCliente().getCodigo()));
+//        }
         return JpaFunctions.recebimentoEntityToRecebimento.apply(repository.saveAndFlush(entity));
     }
 

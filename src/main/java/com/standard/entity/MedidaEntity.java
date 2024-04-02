@@ -28,7 +28,7 @@ class MedidaEntity extends BaseAuditEntity {
     private StatusEnum status;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "medida_codigo")
-    @OrderBy("codigo")
+    @JoinColumn(name = "medida_id")
+    @OrderBy("id")
     private Set<ItensTipoMedidaEntity> itensTipoMedida;
 }

@@ -6,7 +6,7 @@ import com.standard.entity.*;
 import com.standard.enums.StatusVendaEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.*;
-import com.standard.service.caixa.CaixaService;
+import com.standard.service.caixa.PosService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,21 +20,21 @@ public class VendaServiceImpl implements VendaService {
 
     private final VendaRepository vendaRepository;
     private final FormaDePagamentoRepository formaDePagamentoRepository;
-    private final CaixaRepository caixaRepository;
-    private final ClienteRepository clienteRepository;
+    private final PosRepository posRepository;
+    private final CustomerRepository customerRepository;
     private final ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository;
-    private final CaixaService caixaService;
+    private final PosService posService;
 
     public VendaServiceImpl(VendaRepository vendaRepository, FormaDePagamentoRepository
-            formaDePagamentoRepository, CaixaRepository caixaRepository,
-                            ClienteRepository clienteRepository,
-                            ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository, CaixaService caixaService) {
+            formaDePagamentoRepository, PosRepository posRepository,
+                            CustomerRepository customerRepository,
+                            ProdutoHasItensTipoMedidaRepository produtoHasItensTipoMedidaRepository, PosService posService) {
         this.vendaRepository = vendaRepository;
         this.formaDePagamentoRepository = formaDePagamentoRepository;
-        this.caixaRepository = caixaRepository;
-        this.clienteRepository = clienteRepository;
+        this.posRepository = posRepository;
+        this.customerRepository = customerRepository;
         this.produtoHasItensTipoMedidaRepository = produtoHasItensTipoMedidaRepository;
-        this.caixaService = caixaService;
+        this.posService = posService;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setQuantidade(quantidadeTotalItensVenda);
         vendaToVendaDB(venda, vendaDB, venda.getSubTotal());
 
-        CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
-        vendaDB.setCaixa(caixa);
+        PosEntity caixa = posRepository.getLastPos();
+        vendaDB.setPos(caixa);
 
         Venda vResult = null;
 //		FIXME: 
@@ -95,7 +95,7 @@ public class VendaServiceImpl implements VendaService {
         vendaDB.setPagamento(venda.getPagamento());
         vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
         vendaDB.setFormaDePagamento(formaDePagamentoRepository.getOne(venda.getFormaDePagamento().getCodigo()));
-        vendaDB.setCliente(clienteRepository.getOne(Long.valueOf(1))); //venda.getCliente().getCodigo()
+        vendaDB.setCustomer(customerRepository.getOne(Long.valueOf(1))); //venda.getCliente().getCodigo()
     }
 
     /**
@@ -135,7 +135,7 @@ public class VendaServiceImpl implements VendaService {
 
     private Long getProdutoHasItensTipoMedida(Long itemTipoMedidaCodigo, Long produtoCodigo) {
         ProdutoHasItensTipoMedidaEntity ent = produtoHasItensTipoMedidaRepository.findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo);
-        return ent.getCodigo();
+        return ent.getId();
     }
 
     @Override
@@ -144,15 +144,15 @@ public class VendaServiceImpl implements VendaService {
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
         vendaDB.setQuantidade(venda.getQuantidade());
         vendaToVendaDB(venda, vendaDB, venda.getValorTotal());
-        vendaDB.setCaixa(caixaRepository.getOne(venda.getCaixa().getCodigo()));
+        vendaDB.setPos(posRepository.getOne(venda.getPos().getCodigo()));
         return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
     }
 
     @Override
     public Venda alterarStatusVendaParaEfetuada(Venda venda) {
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
-        CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
-        vendaDB.setCaixa(caixa);
+        PosEntity caixa = posRepository.getLastPos();
+        vendaDB.setPos(caixa);
 
         Venda vResult = null;
         if (caixa != null) {
@@ -162,7 +162,7 @@ public class VendaServiceImpl implements VendaService {
                 vResult = JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
 
                 // Update valor total caixa
-                caixaService.updateValorCaixa(caixa, venda);
+                posService.updateAmountPos(caixa, venda);
 
                 // Efetuar baixa no estoque...
                 removerProdutoDoEstoque(venda);
@@ -173,8 +173,8 @@ public class VendaServiceImpl implements VendaService {
 
     public Venda alterarStatusVendaParaNaoRealizada(Venda venda) {
         VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
-        CaixaEntity caixa = caixaRepository.buscarUltimoCaixa();
-        vendaDB.setCaixa(caixa);
+        PosEntity caixa = posRepository.getLastPos();
+        vendaDB.setPos(caixa);
         Venda vResult = null;
         if (caixa != null) {
             if (caixa.getStatus().name().equals("A")) {
@@ -211,7 +211,7 @@ public class VendaServiceImpl implements VendaService {
         VendaEntity vendaEntity = new VendaEntity();
 
         if (venda.getCodigo() != null) {
-            vendaEntity.setCodigo(venda.getCodigo());
+            vendaEntity.setId(venda.getCodigo());
         }
 
         if (venda.getData() != null) {
@@ -222,11 +222,11 @@ public class VendaServiceImpl implements VendaService {
             vendaEntity.setStatus(venda.getStatus());
         }
         // TODO:
-//		vendaEntity.setCliente(venda.getCliente());
+		// vendaEntity.setCustomer(venda.getCustomer());
 
         if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
             FormaDePagamentoEntity formaDePagamentoEntity = new FormaDePagamentoEntity();
-            formaDePagamentoEntity.setCodigo(venda.getFormaDePagamento().getCodigo());
+            formaDePagamentoEntity.setId(venda.getFormaDePagamento().getCodigo());
             vendaEntity.setFormaDePagamento(formaDePagamentoEntity);
         }
         return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());

@@ -1,7 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.Categoria;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.domain.Category;
+import com.standard.service.categoria.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,10 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {CategoriaController.class})
-public class CategoriaControllerTest extends AbstractRestControllerTest {
+public class CategoryControllerTest extends AbstractRestControllerTest {
 
     @MockBean
-    CategoriaService service;
+    CategoryService service;
 
     @Autowired
     MockMvc mockMvc;
@@ -47,44 +48,42 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
     
     @Test
     void testTryToAccessPrivateUnauthorizedGet() throws Exception{
-        mockMvc.perform(get(CategoriaController.BASE_URL))
+        mockMvc.perform(get(CategoriaController.BASE_URL)
+                .with(httpBasic("admin", "spring")))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void testTryToAccessPrivateAuthorizedIsOkGet() throws Exception{
         mockMvc.perform(post(CategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(categoria)))
+                .content(asJsonString(category)))
                 .andExpect(status().isCreated()); 
     }
 
     @Test
     void testTryToAccessPrivateAuthorizedIsOkPost() throws Exception{
         mockMvc.perform(post(CategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(categoria)))
+                .content(asJsonString(category)))
                 .andExpect(status().isCreated());
     }
     
     
     @Test
     public void testConsultar() throws Exception {
-        Categoria categoria2 = new Categoria();
-        categoria2.setCodigo(2L);
-        categoria2.setNome("bob");
+        Category category2 = new Category();
+        category2.setCodigo(2L);
+        category2.setNome("bob");
 
-        List<Categoria> categorias = Arrays.asList(categoria, categoria2);
+        List<Category> categories = Arrays.asList(category, category2);
         
-        when(service.consultar()).thenReturn(categorias);
+        when(service.findAll()).thenReturn(categories);
         
         mockMvc.perform(get(CategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -93,12 +92,11 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.incluir(categoria)).thenReturn(categoria);
+        when(service.save(category)).thenReturn(category);
         mockMvc.perform(post(CategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(categoria)))
+                .content(asJsonString(category)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
@@ -107,20 +105,18 @@ public class CategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(CategoriaController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1L,categoria)).thenReturn(categoria);
+        when(service.update(1L, category)).thenReturn(category);
         mockMvc.perform(put(CategoriaController.BASE_URL+"/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(categoria)))
+                .content(asJsonString(category)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
                 .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));

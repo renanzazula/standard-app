@@ -1,7 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.Subcategoria;
-import com.standard.service.categoria.CategoriaService;
+import com.standard.domain.Subcategory;
+import com.standard.service.categoria.CategoryService;
 import com.standard.service.subcategoria.SubcategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +20,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -27,19 +28,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {SubCategoriaController.class})
-public class SubCategoriaControllerTest extends AbstractRestControllerTest {
+public class SubCategoryControllerTest extends AbstractRestControllerTest {
 
     @MockBean
     SubcategoriaService service;
 
     @MockBean
-    CategoriaService categoriaService;
+    CategoryService categoryService;
 
 
     @Autowired
     MockMvc mockMvc;
 
-    private Subcategoria obj = null;
+    private Subcategory obj = null;
 
     @BeforeEach
     public void setUp() {
@@ -49,7 +50,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
                 .apply(springSecurity())
                 .build();
         
-        obj = new Subcategoria();
+        obj = new Subcategory();
         obj.setCodigo(1L);
         obj.setNome(NOME);
         obj.setDescricao(DESCRICAO);
@@ -57,15 +58,14 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultar() throws Exception {
-        Subcategoria subcategoria2 = new Subcategoria();
-        subcategoria2.setCodigo(2L);
-        subcategoria2.setNome("bob");
+        Subcategory subcategory2 = new Subcategory();
+        subcategory2.setCodigo(2L);
+        subcategory2.setNome("bob");
 
-        List<Subcategoria> subcategorias = Arrays.asList(obj, subcategoria2);
-        when(service.consultar()).thenReturn(subcategorias);
+        List<Subcategory> subcategories = Arrays.asList(obj, subcategory2);
+        when(service.consultar()).thenReturn(subcategories);
         mockMvc.perform(get(SubCategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -75,8 +75,7 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     public void testConsultarByCodigo() throws Exception {
         when(service.consultarByCodigo(obj.getCodigo())).thenReturn(obj);
         mockMvc.perform(get(SubCategoriaController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nome", equalTo(NOME)))
@@ -85,10 +84,9 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.incluir(obj)).thenReturn(obj);
+        when(service.save(obj)).thenReturn(obj);
         mockMvc.perform(post(SubCategoriaController.BASE_URL)
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
@@ -99,18 +97,16 @@ public class SubCategoriaControllerTest extends AbstractRestControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(SubCategoriaController.BASE_URL + "/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testAlterar() throws Exception {
-        when(service.alterar(1L,obj)).thenReturn(obj);
+        when(service.update(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(SubCategoriaController.BASE_URL+"/1")
-                .header(API_KEY, API_KEY_VALUE)
-                .header(API_SECRET, API_SECRET_VALUE)
+                .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())

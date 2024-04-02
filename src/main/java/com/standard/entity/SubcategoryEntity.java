@@ -8,9 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "categoria")
-@Entity(name = "subcategoria")
-public @Data class SubcategoriaEntity extends BaseAuditEntity {
+@EqualsAndHashCode(exclude = "category")
+@Entity(name = "subcategory")
+public @Data class SubcategoryEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
@@ -26,7 +26,7 @@ public @Data class SubcategoriaEntity extends BaseAuditEntity {
 	@Column(name = "status")
 	private StatusEnum status;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "subcategoriasSet")
-	private Set<CategoriaEntity> categoria;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "subcategories")
+	private Set<CategoryEntity> category;
 
 }

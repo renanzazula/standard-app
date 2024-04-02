@@ -9,7 +9,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
 import java.io.Serializable;
 import java.util.Date;
 
-public @Data class Caixa implements Serializable {
+public @Data class Pos implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 

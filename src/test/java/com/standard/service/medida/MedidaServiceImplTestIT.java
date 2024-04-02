@@ -1,16 +1,16 @@
 package com.standard.service.medida;
 
 import com.standard.BaseTest;
-import com.standard.domain.Categoria;
+import com.standard.domain.Category;
 import com.standard.domain.Marca;
 import com.standard.domain.Medida;
-import com.standard.domain.Subcategoria;
-import com.standard.repository.CategoriaRepository;
+import com.standard.domain.Subcategory;
+import com.standard.repository.CategoryRepository;
 import com.standard.repository.MarcaRepository;
 import com.standard.repository.MedidaRepository;
 import com.standard.repository.SubcategoriaRepository;
-import com.standard.service.categoria.CategoriaService;
-import com.standard.service.categoria.CategoriaServiceImpl;
+import com.standard.service.categoria.CategoryService;
+import com.standard.service.categoria.CategoryServiceImpl;
 import com.standard.service.marca.MarcaService;
 import com.standard.service.marca.MarcaServiceImpl;
 import com.standard.service.subcategoria.SubcategoriaService;
@@ -38,7 +38,7 @@ public class MedidaServiceImplTestIT extends BaseTest {
     private MedidaRepository medidaRepository;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private SubcategoriaRepository subcategoriaRepository;
@@ -49,33 +49,33 @@ public class MedidaServiceImplTestIT extends BaseTest {
     private MarcaService marcaService;
     private MedidaService medidaService;
     private SubcategoriaService subcategoriaService;
-    private CategoriaService categoriaService;
+    private CategoryService categoryService;
 
     @BeforeEach
     public void setUp() {
-        medidaService = new MedidaServiceImpl(medidaRepository, categoriaRepository,
+        medidaService = new MedidaServiceImpl(medidaRepository, categoryRepository,
                 subcategoriaRepository, marcaRepository);
 
         marcaService = new MarcaServiceImpl(marcaRepository);
         subcategoriaService = new SubcategoriaServiceImpl(subcategoriaRepository);
-        categoriaService = new CategoriaServiceImpl(categoriaRepository, subcategoriaRepository);
+        categoryService = new CategoryServiceImpl(categoryRepository, subcategoriaRepository);
 
         setUpMarca();
         marca = marcaService.incluir(marca);
 
         setUpSubCategoria();
-        subcategoria = subcategoriaService.incluir(subcategoria);
+        subcategory = subcategoriaService.save(subcategory);
 
         setUpCategoria();
-        categoria.setSubcategorias(new ArrayList<>());
-        categoria.getSubcategorias().add(subcategoria);
-        categoria = categoriaService.incluir(categoria);
+        category.setSubcategories(new ArrayList<>());
+        category.getSubcategories().add(subcategory);
+        category = categoryService.save(category);
 
 
         setUpItensTipoMedida();
         setUpMedida();
-        medida.setSubcategoria(subcategoria);
-        medida.setCategoria(categoria);
+        medida.setSubcategory(subcategory);
+        medida.setCategory(category);
         medida.setMarca(marca);
         medida.setItensTipoMedida(itensTipoMedida);
 
@@ -107,8 +107,8 @@ public class MedidaServiceImplTestIT extends BaseTest {
         marcaUpdate = marcaService.incluir(marcaUpdate);
 
         Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
-        toUpdate.setCategoria(categoria);
-        toUpdate.setSubcategoria(subcategoria);
+        toUpdate.setCategory(category);
+        toUpdate.setSubcategory(subcategory);
         toUpdate.setMarca(marcaUpdate);
 
         Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
@@ -129,25 +129,25 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
         medida = medidaService.incluir(medida);
 
-        Subcategoria subcategoriaUpdate = new Subcategoria();
-        subcategoriaUpdate.setNome(NOME_UPDATE);
-        subcategoriaUpdate.setDescricao(DESCRICAO_UPDATE);
-        subcategoriaUpdate = subcategoriaService.incluir(subcategoriaUpdate);
+        Subcategory subcategoryUpdate = new Subcategory();
+        subcategoryUpdate.setNome(NOME_UPDATE);
+        subcategoryUpdate.setDescricao(DESCRICAO_UPDATE);
+        subcategoryUpdate = subcategoriaService.save(subcategoryUpdate);
 
         Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
-        toUpdate.setCategoria(categoria);
-        toUpdate.setSubcategoria(subcategoriaUpdate);
+        toUpdate.setCategory(category);
+        toUpdate.setSubcategory(subcategoryUpdate);
         toUpdate.setMarca(marca);
 
         Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
 
         for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
-            Subcategoria subcategoriaFound = updated.getItensTipoMedida().get(i).getSubcategoria();
-            assertSubCategoria(subcategoriaFound, subcategoriaUpdate);
+            Subcategory subcategoryFound = updated.getItensTipoMedida().get(i).getSubcategory();
+            assertSubCategoria(subcategoryFound, subcategoryUpdate);
 
-            assertNotEquals(subcategoriaUpdate.getCodigo(), subcategoria.getCodigo());
-            assertNotEquals(subcategoriaUpdate.getNome(), subcategoria.getNome());
-            assertNotEquals(subcategoriaUpdate.getDescricao(), subcategoria.getDescricao());
+            assertNotEquals(subcategoryUpdate.getCodigo(), subcategory.getCodigo());
+            assertNotEquals(subcategoryUpdate.getNome(), subcategory.getNome());
+            assertNotEquals(subcategoryUpdate.getDescricao(), subcategory.getDescricao());
         }
 
     }
@@ -157,27 +157,27 @@ public class MedidaServiceImplTestIT extends BaseTest {
 
         medida = medidaService.incluir(medida);
 
-        Categoria categoriaUpdate = new Categoria();
-        categoriaUpdate.setNome(NOME_UPDATE);
-        categoriaUpdate.setDescricao(DESCRICAO_UPDATE);
-        categoriaUpdate.setSubcategorias(new ArrayList<>());
-        categoriaUpdate.getSubcategorias().add(subcategoria);
-        categoriaUpdate = categoriaService.incluir(categoriaUpdate);
+        Category categoryUpdate = new Category();
+        categoryUpdate.setNome(NOME_UPDATE);
+        categoryUpdate.setDescricao(DESCRICAO_UPDATE);
+        categoryUpdate.setSubcategories(new ArrayList<>());
+        categoryUpdate.getSubcategories().add(subcategory);
+        categoryUpdate = categoryService.save(categoryUpdate);
 
         Medida toUpdate = medidaService.consultarByCodigo(medida.getCodigo());
-        toUpdate.setCategoria(categoriaUpdate);
-        toUpdate.setSubcategoria(subcategoria);
+        toUpdate.setCategory(categoryUpdate);
+        toUpdate.setSubcategory(subcategory);
         toUpdate.setMarca(marca);
 
         Medida updated = medidaService.alterar(medida.getCodigo(), toUpdate);
 
         for (int i = 0; i < updated.getItensTipoMedida().size(); i++) {
-            Categoria categoriaFound = updated.getItensTipoMedida().get(i).getCategoria();
-            assertCategoria(categoriaFound, categoriaUpdate);
+            Category categoryFound = updated.getItensTipoMedida().get(i).getCategory();
+            assertCategoria(categoryFound, categoryUpdate);
 
-            assertNotEquals(categoriaFound.getCodigo(), categoria.getCodigo());
-            assertNotEquals(categoriaFound.getNome(), categoria.getNome());
-            assertNotEquals(categoriaFound.getDescricao(), categoria.getDescricao());
+            assertNotEquals(categoryFound.getCodigo(), category.getCodigo());
+            assertNotEquals(categoryFound.getNome(), category.getNome());
+            assertNotEquals(categoryFound.getDescricao(), category.getDescricao());
         }
     }
 

@@ -2,7 +2,7 @@ package com.standard.service.caixa;
 
 import org.junit.jupiter.api.Test;
 
-class CaixaServiceImplTest {
+class PosServiceImplTest {
 
     @Test
     void carregarCaixa() {

@@ -12,14 +12,14 @@ public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<
 	public ItensTipoMedida apply(ItensTipoMedidaEntity input) {
 		ItensTipoMedida output = new ItensTipoMedida();
 		if(input != null) {
-			output.setCodigo(input.getCodigo());
+			output.setCodigo(input.getId());
 			output.setValor(input.getValor());
 
 			if (input.getCategoria() != null) {
-				output.setCategoria(JpaFunctions.categoriaToCategoriaEntity.apply(input.getCategoria()));
+				output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategoria()));
 			}
 			if (input.getSubcategoria() != null) {
-				output.setSubcategoria(JpaFunctions.subcategoriaToSubCategoriaEntity.apply(input.getSubcategoria()));
+				output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategoria()));
 			}
 			if (input.getMarca() != null) {
 				output.setMarca(JpaFunctions.marcaToMarcaEntity.apply(input.getMarca()));

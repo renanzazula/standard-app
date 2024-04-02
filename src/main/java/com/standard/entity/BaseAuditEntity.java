@@ -16,7 +16,7 @@ public class BaseAuditEntity extends AuditEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "codigo")
-    private Long codigo;
+    @Column(name = "id")
+    private Long id;
 
 }

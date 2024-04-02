@@ -29,12 +29,12 @@ public class Medida implements Serializable {
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
 	private Date hora;
 
-	private Categoria categoria;
-	private Subcategoria subcategoria;
+	private Category category;
+	private Subcategory subcategory;
 	private Marca marca;
 	
-	private List<Categoria> categorias;
-	private List<Subcategoria> subcategorias;
+	private List<Category> categories;
+	private List<Subcategory> subcategories;
 	private List<Marca> marcas;
 	private List<ItensTipoMedida> itensTipoMedida;
 
