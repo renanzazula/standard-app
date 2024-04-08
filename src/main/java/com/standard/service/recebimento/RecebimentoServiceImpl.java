@@ -29,9 +29,9 @@ public class RecebimentoServiceImpl implements RecebimentoService {
     public Recebimento incluir(Recebimento recebimento) {
         RecebimentoEntity entity =  new RecebimentoEntity();
         entity.setCodigo(recebimento.getCodigo());
-        entity.setNome(recebimento.getNome());
-        entity.setDescricao(recebimento.getDescricao());
-        entity.setValor(recebimento.getValor());
+        entity.setName(recebimento.getNome());
+        entity.setDescription(recebimento.getDescricao());
+        entity.setAmount(recebimento.getValor());
         if(recebimento.getPos() != null){
             entity.setPos(posRepository.getOne(recebimento.getPos().getCodigo()));
         }
@@ -45,9 +45,9 @@ public class RecebimentoServiceImpl implements RecebimentoService {
     public Recebimento alterar(Long codigo, Recebimento recebimento) {
         RecebimentoEntity entity = repository.getOne(codigo);
         entity.setCodigo(recebimento.getCodigo());
-        entity.setNome(recebimento.getNome());
-        entity.setDescricao(recebimento.getDescricao());
-        entity.setValor(recebimento.getValor());
+        entity.setName(recebimento.getNome());
+        entity.setDescription(recebimento.getDescricao());
+        entity.setAmount(recebimento.getValor());
         if(recebimento.getPos() != null){
             entity.setPos(posRepository.getOne(recebimento.getPos().getCodigo()));
         }

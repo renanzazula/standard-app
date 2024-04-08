@@ -26,8 +26,8 @@ public class BrandServiceImpl implements BrandService {
 	@Transactional
 	public Brand save(Brand entity) {
 		BrandEntity brandDB = new BrandEntity();
-		brandDB.setDescricao(entity.getDescricao());
-		brandDB.setNome(entity.getNome());
+		brandDB.setDescription(entity.getDescricao());
+		brandDB.setName(entity.getNome());
 		return JpaFunctions.brandToBrandEntity.apply(repository.save(brandDB));
 	}
 
@@ -35,8 +35,8 @@ public class BrandServiceImpl implements BrandService {
 	@Transactional
 	public Brand update(Long id, Brand entity) {
 		BrandEntity brandDB = repository.getById(id);
-		brandDB.setDescricao(entity.getDescricao());
-		brandDB.setNome(entity.getNome());
+		brandDB.setDescription(entity.getDescricao());
+		brandDB.setName(entity.getNome());
 		return JpaFunctions.brandToBrandEntity.apply(repository.saveAndFlush(brandDB));
 	}
 

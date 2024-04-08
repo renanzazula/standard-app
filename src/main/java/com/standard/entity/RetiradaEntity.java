@@ -14,12 +14,12 @@ public @Data class RetiradaEntity extends BaseAuditEntity {
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	@NotNull
-	@Column(name = "descricao")
-	private String descricao;
+	@Column(name = "description")
+	private String description;
 
 	@NotNull
-	@Column(name = "valor")
-	private Double valor;
+	@Column(name = "amount")
+	private Double amount;
 
 	@NotNull
 	@ManyToOne

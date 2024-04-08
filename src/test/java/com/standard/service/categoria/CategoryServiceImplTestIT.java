@@ -49,8 +49,8 @@ public class CategoryServiceImplTestIT extends BaseTest {
         }
 
         obj = new Category();
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        obj.setName(NOME);
+        obj.setDescription(DESCRICAO);
         obj.setSubcategories(subcategories);
         obj = service.save(obj);
     }
@@ -60,23 +60,23 @@ public class CategoryServiceImplTestIT extends BaseTest {
         Category saved = service.save(obj);
         assertNotNull(saved);
 
-        Category found = service.findById(saved.getCodigo());
-        assertEquals(found.getCodigo(), saved.getCodigo());
-        assertEquals(found.getNome(), saved.getNome());
-        assertEquals(found.getDescricao(), saved.getDescricao());
+        Category found = service.findById(saved.getId());
+        assertEquals(found.getId(), saved.getId());
+        assertEquals(found.getName(), saved.getName());
+        assertEquals(found.getDescription(), saved.getDescription());
     }
 
     @Test
     public void alterar() {
-        Category update = service.findById(obj.getCodigo());
+        Category update = service.findById(obj.getId());
         assertNotNull(update);
-        update.setNome(NOME_UPDATE);
-        update.setDescricao(DESCRICAO_UPDATE);
+        update.setName(NOME_UPDATE);
+        update.setDescription(DESCRICAO_UPDATE);
 
-        Category updated = service.update(update.getCodigo(), update);
-        assertEquals(update.getCodigo(), updated.getCodigo());
-        assertEquals(update.getNome(), updated.getNome());
-        assertEquals(update.getDescricao(), updated.getDescricao());
+        Category updated = service.update(update.getId(), update);
+        assertEquals(update.getId(), updated.getId());
+        assertEquals(update.getName(), updated.getName());
+        assertEquals(update.getDescription(), updated.getDescription());
     }
 
     @Test
@@ -87,20 +87,20 @@ public class CategoryServiceImplTestIT extends BaseTest {
 
     @Test
     public void consultarByCodigo() {
-        Category found = service.findById(obj.getCodigo());
+        Category found = service.findById(obj.getId());
         assertNotNull(found);
-        assertEquals(found.getCodigo(), obj.getCodigo());
+        assertEquals(found.getId(), obj.getId());
     }
 
     @Test
     public void excluir() {
-        Category delete = service.findById(obj.getCodigo());
+        Category delete = service.findById(obj.getId());
         assertNotNull(delete);
-        service.delete(delete.getCodigo());
+        service.delete(delete.getId());
 
-        Category found = service.findById(obj.getCodigo());
-        assertNull(found.getCodigo());
-        assertNull(found.getNome());
-        assertNull(found.getDescricao());
+        Category found = service.findById(obj.getId());
+        assertNull(found.getId());
+        assertNull(found.getName());
+        assertNull(found.getDescription());
     }
 }

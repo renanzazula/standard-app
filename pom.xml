@@ -47,10 +47,10 @@
         <junit-platform.version>5.3.1</junit-platform.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
-        <jaxb.version>2.3.0.1</jaxb.version>
         <junit-jupiter-api.version>5.3.1</junit-jupiter-api.version>
         <maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
         <cglib-nodep.version>3.2.9</cglib-nodep.version>
+        <jaxb.version>2.3.0.1</jaxb.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
         <mysql-connector.version>8.0.28</mysql-connector.version>
         <docker.image.prefix>renanzazula</docker.image.prefix>

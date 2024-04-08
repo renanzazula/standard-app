@@ -73,9 +73,9 @@ public class BaseTest {
 
     protected void setUpCategoria() {
         category = new Category();
-        category.setCodigo(1L);
-        category.setNome(NOME);
-        category.setDescricao(DESCRICAO);
+        category.setId(1L);
+        category.setName(NOME);
+        category.setDescription(DESCRICAO);
     }
 
     protected void setUpFormasDePagamento(){
@@ -185,9 +185,9 @@ public class BaseTest {
     }
 
     protected void assertCategoria(Category expected, Category found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
     protected void assertSubCategoria(Subcategory expected, Subcategory found) {

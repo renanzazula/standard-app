@@ -2,20 +2,20 @@ package com.standard.function.jpa;
 
 import java.util.function.Function;
 
-import com.standard.entity.VendaHasItemProdutoEntity;
+import com.standard.entity.OrderHasItemProductEntity;
 import com.standard.function.JpaFunctions;
 import com.standard.domain.VendaHasItemProduto;
 
 public class VendaHasItemProdutoToVendaHasItemProdutoEntityFunction
-		implements Function<VendaHasItemProdutoEntity, VendaHasItemProduto> {
+		implements Function<OrderHasItemProductEntity, VendaHasItemProduto> {
 
 	@Override
-	public VendaHasItemProduto apply(VendaHasItemProdutoEntity input) {
+	public VendaHasItemProduto apply(OrderHasItemProductEntity input) {
 		VendaHasItemProduto output = new VendaHasItemProduto();
-		if (input != null && input.getProdutoHasItensTipoMedida() != null) {
-			output.setProdutoHasItensTipoMedida(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity.apply(input.getProdutoHasItensTipoMedida()));
-			output.setValorUnitario(input.getValorUnitario());
-			output.setQuantidade(input.getQuantidade());
+		if (input != null && input.getProductHasItemsTypeMeasure() != null) {
+			output.setProdutoHasItensTipoMedida(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity.apply(input.getProductHasItemsTypeMeasure()));
+			output.setValorUnitario(input.getUnitValue());
+			output.setQuantidade(input.getQuantity());
 		}
 		return output;
 	}

@@ -22,14 +22,14 @@ public @Data class CustomerEntity extends BaseAuditEntity {
     private UUID apiKey;
 
     @OneToMany(mappedBy = "customer")
-    private Set<VendaEntity> orderRequests;
+    private Set<OrderEntity> orderRequests;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserEntity> users;
 
     // recebimento
     @OneToMany(mappedBy = "customer")
-    private Set<VendaEntity> vendas;
+    private Set<OrderEntity> order;
 //
 //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private Set<UserEntity> users;

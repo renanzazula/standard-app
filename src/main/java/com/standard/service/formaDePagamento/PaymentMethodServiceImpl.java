@@ -37,9 +37,9 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     }
 
     private PaymentMethod getPaymentMethod(PaymentMethod objct, PaymentMethodEntity paymentMethodDB) {
-        paymentMethodDB.setNome(objct.getNome());
-        paymentMethodDB.setDescricao(objct.getDescricao());
-        paymentMethodDB.setPorcentagemDesconto(objct.getPorcentagemDesconto());
+        paymentMethodDB.setName(objct.getNome());
+        paymentMethodDB.setDescription(objct.getDescricao());
+        paymentMethodDB.setDiscountPercent(objct.getPorcentagemDesconto());
         paymentMethodRepository.saveAndFlush(paymentMethodDB);
         return JpaFunctions.paymentMethodToPaymentMethodEntity.apply(paymentMethodRepository.saveAndFlush(paymentMethodDB));
     }

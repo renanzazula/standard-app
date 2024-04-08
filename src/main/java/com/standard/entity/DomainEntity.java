@@ -16,18 +16,18 @@ public @Data class DomainEntity extends BaseAuditEntity{
 	private static final long serialVersionUID = -4933949406995695753L;
 
 	@NotNull
-	@Column(name = "nome", length = 45)
-	private String nome;
+	@Column(name = "name", length = 45)
+	private String name;
 
 	@NotNull
-	@Column(name = "descricao", length = 45)
-	private String descricao;
+	@Column(name = "description", length = 45)
+	private String description;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private StatusEnum status;
 
 	@ManyToMany(mappedBy = "domains")
-	private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida; 
+	private Set<ProductHasItemsTypeMeasureEntity> productHasItemsTypeMeasure;
 
 }

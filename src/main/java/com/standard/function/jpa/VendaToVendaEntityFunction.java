@@ -1,32 +1,32 @@
 package com.standard.function.jpa;
 
 import com.standard.domain.Venda;
-import com.standard.entity.VendaEntity;
+import com.standard.entity.OrderEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> {
+public class VendaToVendaEntityFunction implements Function<OrderEntity, Venda> {
 
     @Override
-    public Venda apply(VendaEntity input) {
+    public Venda apply(OrderEntity input) {
         Venda output = new Venda();
         if (input != null) {
             output.setCodigo(input.getId());
-            output.setData(input.getData());
-            output.setHora(input.getHora());
-            output.setValorTotal(input.getValorTotal());
+            output.setData(input.getCreationDate());
+            output.setHora(input.getCreationTime());
+            output.setValorTotal(input.getTotalAmount());
             output.setStatus(input.getStatus());
-            output.setQuantidade(input.getQuantidade());
+            output.setQuantidade(input.getQuantity());
             output.setSubTotal(input.getSubTotal());
-            output.setValorPendente(input.getValorPendente());
-            output.setValorPago(input.getValorPago());
-            output.setDesconto(input.getDesconto());
-            output.setTotalApagar(input.getTotalApagar());
-            output.setTroco(input.getTroco());
+            output.setValorPendente(input.getPendingAmount());
+            output.setValorPago(input.getPaidAmount());
+            output.setDesconto(input.getDiscount());
+            output.setTotalApagar(input.getTotalAmountToPaid());
+            output.setTroco(input.getChange());
             output.setPagamento(input.getPagamento());
-            output.setValorTotal(input.getValorTotal());
+            output.setValorTotal(input.getTotalAmount());
 
             if (input.getPaymentMethod() != null) {
                 output.setFormaDePagamento(JpaFunctions.paymentMethodToPaymentMethodEntity.apply(input.getPaymentMethod()));
@@ -39,8 +39,8 @@ public class VendaToVendaEntityFunction implements Function<VendaEntity, Venda> 
                 output.setPos(JpaFunctions.posToPosEntity.apply(input.getPos()));
             }
 
-            if (input.getVendaHasItemProduto() != null) {
-                output.setVendaHasItemProduto(input.getVendaHasItemProduto().stream().map(JpaFunctions.vendaHasItemProdutoToVendaHasItemEntity).collect(Collectors.toList()));
+            if (input.getOrderHasItemProduct() != null) {
+                output.setVendaHasItemProduto(input.getOrderHasItemProduct().stream().map(JpaFunctions.vendaHasItemProdutoToVendaHasItemEntity).collect(Collectors.toList()));
             }
 
         }

@@ -2,22 +2,22 @@ package com.standard.repository;
 
 
 import com.standard.entity.PaymentMethodEntity;
-import com.standard.entity.VendaEntity;
+import com.standard.entity.OrderEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 
-class VendaSpecification implements Specification<VendaEntity> {
+class VendaSpecification implements Specification<OrderEntity> {
 
-    private final VendaEntity venda;
+    private final OrderEntity venda;
 
-    public VendaSpecification(VendaEntity venda) {
+    public VendaSpecification(OrderEntity venda) {
         super();
         this.venda = venda;
     }
 
     @Override
-    public Predicate toPredicate(Root<VendaEntity> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 
         Predicate p = cb.conjunction();
 
@@ -25,8 +25,8 @@ class VendaSpecification implements Specification<VendaEntity> {
             p.getExpressions().add(cb.equal(root.get("codigo"), venda.getId()));
         }
 
-        if (venda.getData() != null) {
-            p.getExpressions().add(cb.equal(root.get("data"), venda.getData()));
+        if (venda.getCreationDate() != null) {
+            p.getExpressions().add(cb.equal(root.get("data"), venda.getCreationDate()));
         }
 
         if (venda.getStatus() != null) {
@@ -37,7 +37,7 @@ class VendaSpecification implements Specification<VendaEntity> {
         // TODO: Cliente
 
         if (venda.getPaymentMethod() != null && venda.getPaymentMethod().getId() != null) {
-            Join<VendaEntity, PaymentMethodEntity> sq = root.join("paymentMethod");
+            Join<OrderEntity, PaymentMethodEntity> sq = root.join("paymentMethod");
             p.getExpressions().add(cb.equal(sq.get("codigo"), venda.getPaymentMethod().getId()));
         }
         return p;

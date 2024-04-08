@@ -75,8 +75,8 @@ public class CategoryControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         Category category2 = new Category();
-        category2.setCodigo(2L);
-        category2.setNome("bob");
+        category2.setId(2L);
+        category2.setName("bob");
 
         List<Category> categories = Arrays.asList(category, category2);
         

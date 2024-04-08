@@ -1,12 +1,12 @@
 package com.standard.repository;
 
-import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
+import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProdutoHasItensTipoMedidaRepository extends JpaRepository<ProdutoHasItensTipoMedidaEntity, Long> {
+public interface ProdutoHasItensTipoMedidaRepository extends JpaRepository<ProductHasItemsTypeMeasureEntity, Long> {
 
-    ProdutoHasItensTipoMedidaEntity findByItensTipoMedidaCodigoAndProdutoCodigo(Long itemTipoMedidaCodigo,
-                                                                                Long produtoCodigo);
+    ProductHasItemsTypeMeasureEntity findByItensTipoMedidaCodigoAndProdutoCodigo(Long itemTipoMedidaCodigo,
+                                                                                 Long produtoCodigo);
 }

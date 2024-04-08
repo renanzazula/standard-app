@@ -42,28 +42,28 @@ public class VendaServiceImpl implements VendaService {
     public Venda incluir(Venda venda) {
 
         Integer quantidadeTotalItensVenda = 0;
-        VendaEntity vendaDB = new VendaEntity();
+        OrderEntity vendaDB = new OrderEntity();
 
         // itens medida
-        Set<VendaHasItemProdutoEntity> vendaHasItemProdutoSet = new HashSet<>();
+        Set<OrderHasItemProductEntity> vendaHasItemProdutoSet = new HashSet<>();
         for (VendaHasItemProduto itemVenda : venda.getVendaHasItemProduto()) {
-            VendaHasItemProdutoEntity vendaHasItemProdutoDb = new VendaHasItemProdutoEntity();
+            OrderHasItemProductEntity vendaHasItemProdutoDb = new OrderHasItemProductEntity();
 
             Long codigo = getProdutoHasItensTipoMedida(
                     itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(),
                     itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
 
-            ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedidaDb = produtoHasItensTipoMedidaRepository.getOne(codigo);
+            ProductHasItemsTypeMeasureEntity produtoHasItensTipoMedidaDb = produtoHasItensTipoMedidaRepository.getOne(codigo);
             quantidadeTotalItensVenda = (quantidadeTotalItensVenda + itemVenda.getQuantidade());
-            vendaHasItemProdutoDb.setQuantidade(itemVenda.getQuantidade());
-            vendaHasItemProdutoDb.setValorUnitario(produtoHasItensTipoMedidaDb.getValorUnitario());
-            vendaHasItemProdutoDb.setProdutoHasItensTipoMedida(produtoHasItensTipoMedidaDb);
-            vendaHasItemProdutoDb.setVenda(vendaDB);
+            vendaHasItemProdutoDb.setQuantity(itemVenda.getQuantidade());
+            vendaHasItemProdutoDb.setUnitValue(produtoHasItensTipoMedidaDb.getUnitValue());
+            vendaHasItemProdutoDb.setProductHasItemsTypeMeasure(produtoHasItensTipoMedidaDb);
+            vendaHasItemProdutoDb.setOrder(vendaDB);
             vendaHasItemProdutoSet.add(vendaHasItemProdutoDb);
         }
 
-        vendaDB.setVendaHasItemProduto(vendaHasItemProdutoSet);
-        vendaDB.setQuantidade(quantidadeTotalItensVenda);
+        vendaDB.setOrderHasItemProduct(vendaHasItemProdutoSet);
+        vendaDB.setQuantity(quantidadeTotalItensVenda);
         vendaToVendaDB(venda, vendaDB, venda.getSubTotal());
 
         PosEntity caixa = posRepository.getLastPos();
@@ -85,31 +85,31 @@ public class VendaServiceImpl implements VendaService {
         return vResult;
     }
 
-    private void vendaToVendaDB(Venda venda, VendaEntity vendaDB, Double subTotal) {
+    private void vendaToVendaDB(Venda venda, OrderEntity vendaDB, Double subTotal) {
         vendaDB.setSubTotal(venda.getSubTotal());
-        vendaDB.setValorPendente(venda.getValorPendente());
-        vendaDB.setValorPago(venda.getValorPago());
-        vendaDB.setDesconto(venda.getDesconto());
-        vendaDB.setTotalApagar(venda.getTotalApagar());
-        vendaDB.setTroco(venda.getTroco());
+        vendaDB.setPendingAmount(venda.getValorPendente());
+        vendaDB.setPaidAmount(venda.getValorPago());
+        vendaDB.setDiscount(venda.getDesconto());
+        vendaDB.setTotalAmountToPaid(venda.getTotalApagar());
+        vendaDB.setChange(venda.getTroco());
         vendaDB.setPagamento(venda.getPagamento());
-        vendaDB.setValorTotal(subTotal); // posso considerar valor total é sub total venda... TODO: validar
+        vendaDB.setTotalAmount(subTotal); // posso considerar valor total é sub total venda... TODO: validar
         vendaDB.setPaymentMethod(paymentMethodRepository.getOne(venda.getFormaDePagamento().getCodigo()));
         vendaDB.setCustomer(customerRepository.getOne(Long.valueOf(1))); //venda.getCliente().getCodigo()
     }
 
     /**
-     * Remove quantidade tabela produto_has_itens_tipo_medida
+     * Remove quantidade tabela product_has_items_type_measure
      * <p>
-     * produto_has_itens_tipo_medida
+     * product_has_items_type_measure
      *
      * @param venda
      */
     private void removerProdutoDoEstoque(Venda venda) {
         venda.getVendaHasItemProduto().forEach(itemVenda -> {
             Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
-            ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
-            produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() - itemVenda.getQuantidade());
+            ProductHasItemsTypeMeasureEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
+            produtoHasItensTipoMedida.setQuantity(produtoHasItensTipoMedida.getQuantity() - itemVenda.getQuantidade());
             produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
         });
     }
@@ -118,31 +118,31 @@ public class VendaServiceImpl implements VendaService {
     /**
      * este methodo quando uma pesso quer devolver o produto, a venda sera para status
      * <p>
-     * adiciona quantidade tabela produto_has_itens_tipo_medida
+     * adiciona quantidade tabela product_has_items_type_measure
      * <p>
-     * produto_has_itens_tipo_medida
+     * product_has_items_type_measure
      *
      * @param venda
      */
     private void adicionarProdutoNoEstoque(Venda venda) {
         venda.getVendaHasItemProduto().forEach(itemVenda -> {
             Long codigo = getProdutoHasItensTipoMedida(itemVenda.getProdutoHasItensTipoMedida().getItemsTypeMeasure().getId(), itemVenda.getProdutoHasItensTipoMedida().getProduto().getCodigo());
-            ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
-            produtoHasItensTipoMedida.setQuantidade(produtoHasItensTipoMedida.getQuantidade() + itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
+            ProductHasItemsTypeMeasureEntity produtoHasItensTipoMedida = produtoHasItensTipoMedidaRepository.getOne(codigo);
+            produtoHasItensTipoMedida.setQuantity(produtoHasItensTipoMedida.getQuantity() + itemVenda.getProdutoHasItensTipoMedida().getQuantidade());
             produtoHasItensTipoMedidaRepository.saveAndFlush(produtoHasItensTipoMedida);
         });
     }
 
     private Long getProdutoHasItensTipoMedida(Long itemTipoMedidaCodigo, Long produtoCodigo) {
-        ProdutoHasItensTipoMedidaEntity ent = produtoHasItensTipoMedidaRepository.findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo);
+        ProductHasItemsTypeMeasureEntity ent = produtoHasItensTipoMedidaRepository.findByItensTipoMedidaCodigoAndProdutoCodigo(itemTipoMedidaCodigo, produtoCodigo);
         return ent.getId();
     }
 
     @Override
     @Transactional
     public Venda alterar(Venda venda) {
-        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
-        vendaDB.setQuantidade(venda.getQuantidade());
+        OrderEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        vendaDB.setQuantity(venda.getQuantidade());
         vendaToVendaDB(venda, vendaDB, venda.getValorTotal());
         vendaDB.setPos(posRepository.getOne(venda.getPos().getCodigo()));
         return JpaFunctions.vendaToVendaEntity.apply(vendaRepository.saveAndFlush(vendaDB));
@@ -150,7 +150,7 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     public Venda alterarStatusVendaParaEfetuada(Venda venda) {
-        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        OrderEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
         PosEntity caixa = posRepository.getLastPos();
         vendaDB.setPos(caixa);
 
@@ -172,7 +172,7 @@ public class VendaServiceImpl implements VendaService {
     }
 
     public Venda alterarStatusVendaParaNaoRealizada(Venda venda) {
-        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        OrderEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
         PosEntity caixa = posRepository.getLastPos();
         vendaDB.setPos(caixa);
         Venda vResult = null;
@@ -188,7 +188,7 @@ public class VendaServiceImpl implements VendaService {
     @Override
     @Transactional
     public void cancelar(Venda venda) {
-        VendaEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
+        OrderEntity vendaDB = vendaRepository.getOne(venda.getCodigo());
         vendaDB.setStatus(StatusVendaEnum.CANCELADO);
         vendaRepository.saveAndFlush(vendaDB);
     }
@@ -208,18 +208,18 @@ public class VendaServiceImpl implements VendaService {
     @Override
     @Transactional(readOnly = true)
     public List<Venda> filtrarVenda(Venda venda) {
-        VendaEntity vendaEntity = new VendaEntity();
+        OrderEntity orderEntity = new OrderEntity();
 
         if (venda.getCodigo() != null) {
-            vendaEntity.setId(venda.getCodigo());
+            orderEntity.setId(venda.getCodigo());
         }
 
         if (venda.getData() != null) {
-            vendaEntity.setData(venda.getData());
+            orderEntity.setCreationDate(venda.getData());
         }
 
         if (venda.getStatus() != null) {
-            vendaEntity.setStatus(venda.getStatus());
+            orderEntity.setStatus(venda.getStatus());
         }
         // TODO:
 		// vendaEntity.setCustomer(venda.getCustomer());
@@ -227,9 +227,9 @@ public class VendaServiceImpl implements VendaService {
         if (venda.getFormaDePagamento() != null && venda.getFormaDePagamento().getCodigo() != null) {
             PaymentMethodEntity paymentMethodEntity = new PaymentMethodEntity();
             paymentMethodEntity.setId(venda.getFormaDePagamento().getCodigo());
-            vendaEntity.setPaymentMethod(paymentMethodEntity);
+            orderEntity.setPaymentMethod(paymentMethodEntity);
         }
-        return vendaRepository.filter(vendaEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
+        return vendaRepository.filter(orderEntity).stream().map(JpaFunctions.vendaToVendaEntity).collect(Collectors.toList());
     }
 
 }

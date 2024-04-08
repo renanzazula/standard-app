@@ -27,8 +27,8 @@ public class DomainServiceImpl implements DomainService {
 	@Transactional
 	public Domain save(Domain entity) {
 		DomainEntity domainDB = new DomainEntity();
-		domainDB.setDescricao(entity.getDescricao());
-		domainDB.setNome(entity.getNome());
+		domainDB.setDescription(entity.getDescricao());
+		domainDB.setName(entity.getNome());
 		return JpaFunctions.domainToDomainEntity.apply(repository.save(domainDB));
 	}
 
@@ -36,8 +36,8 @@ public class DomainServiceImpl implements DomainService {
 	@Transactional
 	public Domain update(Long id, Domain domain) {
 		DomainEntity domainDB = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
-		Objects.requireNonNull(domainDB).setDescricao(domain.getDescricao());
-		domainDB.setNome(domain.getNome());
+		Objects.requireNonNull(domainDB).setDescription(domain.getDescricao());
+		domainDB.setName(domain.getNome());
 		return JpaFunctions.domainToDomainEntity.apply(repository.save(domainDB));
 	}
 

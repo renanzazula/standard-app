@@ -32,14 +32,14 @@ public class PosServiceImpl implements PosService {
 	@Transactional
 	public Pos openPos(Pos pos) {
 		PosEntity posEntity = new PosEntity();
-		posEntity.setValorInicial(pos.getValorInicial());
-		posEntity.setValorFinal((double) 0);
+		posEntity.setOpenAmount(pos.getValorInicial());
+		posEntity.setCloseAmount((double) 0);
 		posEntity.setTotal((double) 0);
-		posEntity.setTotalDesconto((double) 0);
-		posEntity.setTotalVendas((double) 0);
+		posEntity.setTotalDiscount((double) 0);
+		posEntity.setTotalOrders((double) 0);
 		posEntity.setStatus(StatusPOSEnum.A);
-		posEntity.setDataAbertura(new Date());
-		posEntity.setHoraAbertura(new Date());
+		posEntity.setOpenDate(new Date());
+		posEntity.setOpenTime(new Date());
 		return  JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
 	}
 
@@ -48,8 +48,8 @@ public class PosServiceImpl implements PosService {
 	public Pos closePos(Pos pos) {
 		PosEntity posEntity = repository.getOne(pos.getCodigo());
 		posEntity.setStatus(StatusPOSEnum.F);
-		posEntity.setDataFechamento(new Date());
-		posEntity.setHoraFechamento(new Date());
+		posEntity.setCloseDate(new Date());
+		posEntity.setCloseTime(new Date());
 		return  JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
 	}	
 
@@ -85,15 +85,15 @@ public class PosServiceImpl implements PosService {
 	public Pos updateAmountPos(PosEntity pos, Venda venda) {
 		PosEntity posEntity = repository.getOne(pos.getId());
 		
-		posEntity.setTotalDesconto(posEntity.getTotalDesconto() + venda.getDesconto() );
-		Double totalVendas = posEntity.getTotalVendas() + venda.getValorPago();
-		posEntity.setTotalVendas(totalVendas);
+		posEntity.setTotalDiscount(posEntity.getTotalDiscount() + venda.getDesconto() );
+		Double totalVendas = posEntity.getTotalOrders() + venda.getValorPago();
+		posEntity.setTotalOrders(totalVendas);
 		
 
-		if(pos.getValorInicial() == null) {
+		if(pos.getOpenAmount() == null) {
 			posEntity.setTotal(totalVendas + (double) 0);
 		}else {
-			posEntity.setTotal(totalVendas + pos.getValorInicial());
+			posEntity.setTotal(totalVendas + pos.getOpenAmount());
 		}
 		
 		return JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));

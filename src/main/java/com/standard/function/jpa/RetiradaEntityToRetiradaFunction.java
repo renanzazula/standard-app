@@ -11,8 +11,8 @@ public class RetiradaEntityToRetiradaFunction implements java.util.function.Func
         Retirada output = new Retirada();
         if (input != null) {
             output.setCodigo(input.getId());
-            output.setDescricao(input.getDescricao());
-            output.setValor(input.getValor());
+            output.setDescricao(input.getDescription());
+            output.setValor(input.getAmount());
             output.setData(input.getCreationDate());
             output.setHora(input.getCreationTime());
             if(input.getCaixa() != null){

@@ -20,12 +20,12 @@ public @Data class PaymentMethodEntity extends BaseAuditEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Column(name = "nome", length = 45)
-	private String nome;
+	@Column(name = "name", length = 45)
+	private String name;
 
 	@NotNull
-	@Column(name = "descricao", length = 45)
-	private String descricao;
+	@Column(name = "description", length = 45)
+	private String description;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
@@ -34,7 +34,7 @@ public @Data class PaymentMethodEntity extends BaseAuditEntity {
 	@NotNull
 	@Min(0)
 	@Max(100)
-	@Column(name = "porcentagemDesconto")
-	private int porcentagemDesconto;
+	@Column(name = "discountPercent")
+	private int discountPercent;
 
 }

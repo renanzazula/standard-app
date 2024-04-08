@@ -158,8 +158,8 @@ public class MeasureServiceImplTestIT extends BaseTest {
         measure = measureService.save(measure);
 
         Category categoryUpdate = new Category();
-        categoryUpdate.setNome(NOME_UPDATE);
-        categoryUpdate.setDescricao(DESCRICAO_UPDATE);
+        categoryUpdate.setName(NOME_UPDATE);
+        categoryUpdate.setDescription(DESCRICAO_UPDATE);
         categoryUpdate.setSubcategories(new ArrayList<>());
         categoryUpdate.getSubcategories().add(subcategory);
         categoryUpdate = categoryService.save(categoryUpdate);
@@ -175,9 +175,9 @@ public class MeasureServiceImplTestIT extends BaseTest {
             Category categoryFound = updated.getItemsTypeMeasure().get(i).getCategory();
             assertCategoria(categoryFound, categoryUpdate);
 
-            assertNotEquals(categoryFound.getCodigo(), category.getCodigo());
-            assertNotEquals(categoryFound.getNome(), category.getNome());
-            assertNotEquals(categoryFound.getDescricao(), category.getDescricao());
+            assertNotEquals(categoryFound.getId(), category.getId());
+            assertNotEquals(categoryFound.getName(), category.getName());
+            assertNotEquals(categoryFound.getDescription(), category.getDescription());
         }
     }
 

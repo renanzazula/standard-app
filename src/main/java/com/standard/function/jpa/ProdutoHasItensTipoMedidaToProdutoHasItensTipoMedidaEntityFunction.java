@@ -3,8 +3,8 @@ package com.standard.function.jpa;
 import com.standard.domain.Produto;
 import com.standard.domain.ProdutoHasItensTipoMedida;
 import com.standard.entity.DomainEntity;
-import com.standard.entity.ProdutoEntity;
-import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
+import com.standard.entity.ProductEntity;
+import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.Comparator;
@@ -12,10 +12,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
-		implements Function<ProdutoHasItensTipoMedidaEntity, ProdutoHasItensTipoMedida> {
+		implements Function<ProductHasItemsTypeMeasureEntity, ProdutoHasItensTipoMedida> {
 
 	@Override
-	public ProdutoHasItensTipoMedida apply(ProdutoHasItensTipoMedidaEntity input) {
+	public ProdutoHasItensTipoMedida apply(ProductHasItemsTypeMeasureEntity input) {
 		ProdutoHasItensTipoMedida output = new ProdutoHasItensTipoMedida();
 		if (input != null) {
 			output.setCodigo(input.getId());
@@ -25,16 +25,16 @@ public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 						.sorted(Comparator.comparing(DomainEntity::getId))
 						.map(JpaFunctions.domainToDomainEntity).collect(Collectors.toList()));
 			}
-			if (input.getItensTipoMedida() != null) {
-				output.setItemsTypeMeasure(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItensTipoMedida()));
+			if (input.getItemsTypeMeasure() != null) {
+				output.setItemsTypeMeasure(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItemsTypeMeasure()));
 			}
 
-			if (input.getProduto() != null) {
-				output.setProduto(produtoEntityToProduto(input.getProduto()));
+			if (input.getProduct() != null) {
+				output.setProduto(produtoEntityToProduto(input.getProduct()));
 			}
 
-			output.setQuantidade(input.getQuantidade());
-			output.setValorUnitario(input.getValorUnitario());
+			output.setQuantidade(input.getQuantity());
+			output.setValorUnitario(input.getUnitValue());
 		}
 		return output;
 	}
@@ -44,22 +44,22 @@ public class ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction
 	 * @param input
 	 * @return
 	 */
-	private Produto produtoEntityToProduto(ProdutoEntity input){
+	private Produto produtoEntityToProduto(ProductEntity input){
 		Produto output = new Produto();
 		output.setCodigo(input.getId());
 		output.setBarCode(input.getBarCode());
-		output.setNome(input.getNome());
+		output.setNome(input.getName());
 		output.setStatus(input.getStatus());
-		output.setDescricao(input.getDescricao());
-		output.setPreco(input.getPreco());
-		output.setPrecoVenda(input.getPrecoVenda());
-		output.setPrecoCusto(input.getPrecoCusto());
-		output.setPrecoOferta(input.getPrecoOferta());
-		output.setDesconto(input.getDesconto());
-		output.setPeso(input.getPeso());
-		output.setPorcentagem(input.getPorcentagem());
-		output.setPorcentagemDesconto(input.getPorcentagemDesconto());
-		output.setDataHoraCadastro(input.getDataHoraCadastro());
+		output.setDescricao(input.getDescription());
+		output.setPreco(input.getPrice());
+		output.setPrecoVenda(input.getSalePrice());
+		output.setPrecoCusto(input.getCostPrice());
+		output.setPrecoOferta(input.getDiscountPrice());
+		output.setDesconto(input.getDiscount());
+		output.setPeso(input.getWeight());
+		output.setPorcentagem(input.getPercent());
+		output.setPorcentagemDesconto(input.getDiscountPercent());
+		output.setDataHoraCadastro(input.getCreationDateTime());
 		
 		if(input.getProvider() != null) {
 			output.setProvider(JpaFunctions.providerToProviderEntity.apply(input.getProvider()));

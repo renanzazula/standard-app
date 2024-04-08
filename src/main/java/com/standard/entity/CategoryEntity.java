@@ -15,12 +15,12 @@ public @Data class CategoryEntity extends BaseAuditEntity {
 
 	@NotNull
 	@Size(max = 45)
-	@Column(name = "nome", length = 45)
-	private String nome;
+	@Column(name = "name", length = 45)
+	private String name;
 
 	@Size(max = 45)
-	@Column(name = "descricao", length = 45)
-	private String descricao;
+	@Column(name = "description", length = 45)
+	private String description;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")

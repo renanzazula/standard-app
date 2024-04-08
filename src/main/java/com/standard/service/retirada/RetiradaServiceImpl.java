@@ -25,8 +25,8 @@ public class RetiradaServiceImpl implements RetiradaService {
     @Override
     public Retirada incluir(Retirada obj) {
         RetiradaEntity retiradaDB = new RetiradaEntity();
-        retiradaDB.setDescricao(obj.getDescricao());
-        retiradaDB.setValor(obj.getValor());
+        retiradaDB.setDescription(obj.getDescricao());
+        retiradaDB.setAmount(obj.getValor());
         retiradaDB.setCaixa(posRepository.getOne(obj.getPos().getCodigo()));
         return JpaFunctions.retiradaEntityToRetirada.apply(repository.saveAndFlush(retiradaDB));
     }
@@ -34,8 +34,8 @@ public class RetiradaServiceImpl implements RetiradaService {
     @Override
     public Retirada alterar(Long codigo, Retirada obj) {
         RetiradaEntity retiradaDB = repository.getOne(codigo);
-        retiradaDB.setDescricao(obj.getDescricao());
-        retiradaDB.setValor(obj.getValor());
+        retiradaDB.setDescription(obj.getDescricao());
+        retiradaDB.setAmount(obj.getValor());
         retiradaDB.setCaixa(posRepository.getOne(obj.getPos().getCodigo()));
         return JpaFunctions.retiradaEntityToRetirada.apply(repository.saveAndFlush(retiradaDB));
     }

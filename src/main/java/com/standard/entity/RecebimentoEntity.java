@@ -12,14 +12,14 @@ public @Data class RecebimentoEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	@Column(name = "nome")
-	private String nome;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "descricao")
-	private String descricao;
+	@Column(name = "description")
+	private String description;
 
-	@Column(name = "valor")
-	private Double valor;
+	@Column(name = "amount")
+	private Double amount;
 
 	@ManyToOne
 	@JoinColumn(name = "pos_id")

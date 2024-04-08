@@ -12,9 +12,9 @@ public class CategoryToCategoryEntityFunction implements java.util.function.Func
     public Category apply(CategoryEntity input) {
         Category output = new Category();
         if (input != null) {
-            output.setCodigo(input.getId());
-            output.setNome(input.getNome());
-            output.setDescricao(input.getDescricao());
+            output.setId(input.getId());
+            output.setName(input.getName());
+            output.setDescription(input.getDescription());
             if (input.getSubcategories() != null) {
                 output.setSubcategories(input.getSubcategories().stream().map(JpaFunctions.subcategoryToSubCategoryEntity).collect(Collectors.toList()));
             }

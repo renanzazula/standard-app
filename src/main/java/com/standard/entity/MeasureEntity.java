@@ -20,8 +20,8 @@ class MeasureEntity extends BaseAuditEntity {
     private String nome;
 
     @NotNull
-    @Column(name = "descricao", length = 45)
-    private String descricao;
+    @Column(name = "description", length = 45)
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

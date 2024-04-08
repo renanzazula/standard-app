@@ -39,7 +39,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Transactional
 	public Measure save(Measure measure) {
 		MeasureEntity measureDB = new MeasureEntity();
-		measureDB.setDescricao(measure.getDescricao());
+		measureDB.setDescription(measure.getDescricao());
 		measureDB.setNome(measure.getNome());
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
@@ -53,7 +53,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Transactional
 	public Measure update(Long id, Measure measure) {
 		MeasureEntity medidaDB = measureRepository.getById(id);
-		medidaDB.setDescricao(measure.getDescricao());
+		medidaDB.setDescription(measure.getDescricao());
 		medidaDB.setNome(measure.getNome());
 		medidaDB.getItensTipoMedida().clear();
 		if (measure.getItemsTypeMeasure() != null) {
@@ -67,12 +67,12 @@ public class MeasureServiceImpl implements MeasureService {
 	private void itensMedidaBuild(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
 		measure.getItemsTypeMeasure().forEach(itensMedida -> {
 			ItemsTypeMeasureEntity itens = new ItemsTypeMeasureEntity();
-			itens.setCategory(categoryRepository.getById(measure.getCategory().getCodigo()));
+			itens.setCategory(categoryRepository.getById(measure.getCategory().getId()));
 			itens.setSubcategory(subcategoryRepository.getById(measure.getSubcategory().getCodigo()));
 			if (measure.getBrand() != null) {
 				itens.setBrand(brandRepository.getById(measure.getBrand().getCodigo()));
 			}
-			itens.setValor(itensMedida.getValor());
+			itens.setAmount(itensMedida.getValor());
 			itensSet.add(itens);
 		});
 	}
@@ -113,8 +113,8 @@ public class MeasureServiceImpl implements MeasureService {
 		if (produto.getCategory().getSubcategories() != null && produto.getSubcategory().getCodigo() != null) {
 			subcategory = subcategoryRepository.getById(produto.getSubcategory().getCodigo());
 		}
-		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
-			categoria = categoryRepository.getById(produto.getCategory().getCodigo());
+		if (produto.getCategory() != null && produto.getCategory().getId() != null) {
+			categoria = categoryRepository.getById(produto.getCategory().getId());
 		}
 		return measureRepository
 				.findByItensTipoMedidaCategoryAndItensTipoMedidaSubcategoryAndItensTipoMedidaBrand(categoria, subcategory, marca)

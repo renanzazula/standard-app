@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
-@Entity(name = "produto")
-@EqualsAndHashCode(exclude = "produtoHasItensTipoMedida")
-public @Data class ProdutoEntity extends BaseAuditEntity {
+@Entity(name = "product")
+@EqualsAndHashCode(exclude = "productHasItemsTypeMeasure")
+public @Data class ProductEntity extends BaseAuditEntity {
 
     private static final long serialVersionUID = 2203862074139518315L;
 
@@ -28,8 +28,8 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     private String barCode;
 
     @NotNull
-    @Column(name = "nome", length = 45)
-    private String nome;
+    @Column(name = "name", length = 45)
+    private String name;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -37,54 +37,54 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     private StatusEnum status;
 
     @NotNull
-    @Column(name = "descricao", length = 45)
-    private String descricao;
+    @Column(name = "description", length = 45)
+    private String description;
 
 //    @NotNull TODO: list de prices base on configuration
-    @Column(name = "preco")
-    private Double preco;
+    @Column(name = "price")
+    private Double price;
 
     @NotNull
-    @Column(name = "precoVenda")
-    private Double precoVenda;
+    @Column(name = "salePrice")
+    private Double salePrice;
 
     @NotNull
-    @Column(name = "precoCusto")
-    private Double precoCusto;
+    @Column(name = "costPrice")
+    private Double costPrice;
 
     @NotNull
-    @Column(name = "precoOferta")
-    private Double precoOferta;
+    @Column(name = "discountPrice")
+    private Double discountPrice;
 
     @NotNull
-    @Column(name = "desconto")
-    private Double desconto;
+    @Column(name = "discount")
+    private Double discount;
 
     @NotNull
-    @Column(name = "peso")
-    private Double peso;
-
-    @NotNull
-    @Min(0)
-    @Max(100)
-    @Column(name = "porcentagem")
-    private Integer porcentagem;
+    @Column(name = "weight")
+    private Double weight;
 
     @NotNull
     @Min(0)
     @Max(100)
-    @Column(name = "porcentagemDesconto")
-    private Integer porcentagemDesconto;
+    @Column(name = "percent")
+    private Integer percent;
+
+    @NotNull
+    @Min(0)
+    @Max(100)
+    @Column(name = "discountPercent")
+    private Integer discountPercent;
 
     @Lob
-    @Column(name = "foto", columnDefinition = "BLOB")
-    private byte[] foto;
+    @Column(name = "photo", columnDefinition = "BLOB")
+    private byte[] photo;
 
     // fixme: data hora separar
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "dataHoraCadastro")
-    private Date dataHoraCadastro;
+    @Column(name = "creationDateTime")
+    private Date creationDateTime;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
@@ -112,7 +112,7 @@ public @Data class ProdutoEntity extends BaseAuditEntity {
     private SubcategoryEntity subcategory;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "produto_id")
-    private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
+    @JoinColumn(name = "product_id")
+    private Set<ProductHasItemsTypeMeasureEntity> productHasItemsTypeMeasure;
 
 }

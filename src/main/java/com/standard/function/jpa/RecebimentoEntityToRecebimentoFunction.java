@@ -13,9 +13,9 @@ public class RecebimentoEntityToRecebimentoFunction implements Function<Recebime
         Recebimento output = new Recebimento();
         if (input != null) {
             output.setCodigo(input.getId());
-            output.setNome(input.getNome());
-            output.setDescricao(input.getDescricao());
-            output.setValor(input.getValor());
+            output.setNome(input.getName());
+            output.setDescricao(input.getDescription());
+            output.setValor(input.getAmount());
             if(input.getPos() != null){
                 output.setPos(JpaFunctions.posToPosEntity.apply(input.getPos()));
             }

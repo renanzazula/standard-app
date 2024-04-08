@@ -27,8 +27,8 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Transactional
 	public Subcategory save(Subcategory entity) {
 		SubcategoryEntity subcategoryDB = new SubcategoryEntity();
-		subcategoryDB.setNome(entity.getNome());
-		subcategoryDB.setDescricao(entity.getDescricao());
+		subcategoryDB.setName(entity.getNome());
+		subcategoryDB.setDescription(entity.getDescricao());
 		return JpaFunctions.subcategoryToSubCategoryEntity.apply(repository.saveAndFlush(subcategoryDB));
 	}
 
@@ -36,8 +36,8 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Transactional
 	public Subcategory update(Long id, Subcategory entity) {
 		SubcategoryEntity subcategoryDB = repository.findById(entity.getCodigo()).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
-		Objects.requireNonNull(subcategoryDB).setDescricao(entity.getDescricao());
-		subcategoryDB.setNome(entity.getNome());
+		Objects.requireNonNull(subcategoryDB).setDescription(entity.getDescricao());
+		subcategoryDB.setName(entity.getNome());
 		return JpaFunctions.subcategoryToSubCategoryEntity.apply(repository.saveAndFlush(subcategoryDB));
 	}
 

@@ -26,8 +26,8 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional
     public Provider save(Provider entity) {
         ProviderEntity providerDB = new ProviderEntity();
-        providerDB.setDescricao(entity.getDescricao());
-        providerDB.setNome(entity.getNome());
+        providerDB.setDescription(entity.getDescricao());
+        providerDB.setName(entity.getNome());
         return JpaFunctions.providerToProviderEntity.apply(repository.saveAndFlush(providerDB));
     }
 
@@ -35,8 +35,8 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional
     public Provider update(Long id, Provider entity) {
         ProviderEntity providerDB = repository.getOne(id);
-        providerDB.setDescricao(entity.getDescricao());
-        providerDB.setNome(entity.getNome());
+        providerDB.setDescription(entity.getDescricao());
+        providerDB.setName(entity.getNome());
         return JpaFunctions.providerToProviderEntity.apply(repository.saveAndFlush(providerDB));
     }
 

@@ -13,7 +13,7 @@ public class ItensTipoMedidaToItensTipoMedidaEntityFunction implements Function<
 		ItemsTypeMeasure output = new ItemsTypeMeasure();
 		if(input != null) {
 			output.setId(input.getId());
-			output.setValor(input.getValor());
+			output.setValor(input.getAmount());
 
 			if (input.getCategory() != null) {
 				output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));

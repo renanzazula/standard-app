@@ -7,17 +7,17 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "items_type_measure")
-@EqualsAndHashCode(exclude="produtoHasItensTipoMedida")
+@EqualsAndHashCode(exclude="productHasItemsTypeMeasure")
 public @Data class ItemsTypeMeasureEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	@Column(name = "valor")
-	private String valor;
+	@Column(name = "amount")
+	private String amount;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "measure_id")
-	private MeasureEntity medida;
+	private MeasureEntity measure;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "brand_id")
@@ -33,6 +33,6 @@ public @Data class ItemsTypeMeasureEntity extends BaseAuditEntity {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "itens_tipo_medida_id")
-	private Set<ProdutoHasItensTipoMedidaEntity> produtoHasItensTipoMedida;
+	private Set<ProductHasItemsTypeMeasureEntity> productHasItemsTypeMeasure;
  
 }

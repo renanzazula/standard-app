@@ -15,7 +15,7 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 		if (input != null) {
 			output.setId(input.getId());
 			output.setNome(input.getNome());
-			output.setDescricao(input.getDescricao());
+			output.setDescricao(input.getDescription());
 
 			if (input.getItensTipoMedida() != null) {
 				output.setItemsTypeMeasure(input.getItensTipoMedida().stream().map(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity).collect(Collectors.toList()));

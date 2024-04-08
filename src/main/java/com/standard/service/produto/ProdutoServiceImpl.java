@@ -2,8 +2,8 @@ package com.standard.service.produto;
 
 import com.standard.domain.Produto;
 import com.standard.entity.DomainEntity;
-import com.standard.entity.ProdutoEntity;
-import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
+import com.standard.entity.ProductEntity;
+import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.*;
@@ -45,20 +45,20 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Override
 	@Transactional
 	public Produto incluir(Produto produto) {
-		ProdutoEntity produtoDB = new ProdutoEntity();
+		ProductEntity produtoDB = new ProductEntity();
 		produtoDB.setId(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
-		produtoDB.setNome(produto.getNome());
+		produtoDB.setName(produto.getNome());
 		produtoDB.setStatus(StatusEnum.ATIVO);
-		produtoDB.setDescricao(produto.getDescricao());
-		produtoDB.setPreco(produto.getPreco());
-		produtoDB.setPrecoVenda(produto.getPrecoVenda());
-		produtoDB.setPrecoCusto(produto.getPrecoCusto());
-		produtoDB.setPrecoOferta(produto.getPrecoOferta());
-		produtoDB.setDesconto(produto.getDesconto());
-		produtoDB.setPeso(produto.getPeso());
-		produtoDB.setPorcentagem(produto.getPorcentagem());
-		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
+		produtoDB.setDescription(produto.getDescricao());
+		produtoDB.setPrice(produto.getPreco());
+		produtoDB.setSalePrice(produto.getPrecoVenda());
+		produtoDB.setCostPrice(produto.getPrecoCusto());
+		produtoDB.setDiscountPrice(produto.getPrecoOferta());
+		produtoDB.setDiscount(produto.getDesconto());
+		produtoDB.setWeight(produto.getPeso());
+		produtoDB.setPercent(produto.getPorcentagem());
+		produtoDB.setDiscountPercent(produto.getPorcentagemDesconto());
 
 		if (produto.getMeasure() != null && produto.getMeasure().getId() != null) {
 			produtoDB.setMeasure(measureRepository.getOne(produto.getMeasure().getId()));
@@ -68,8 +68,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setProvider(providerRepository.getOne(produto.getProvider().getCodigo()));
 		}
 
-		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
-			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getCodigo()));
+		if (produto.getCategory() != null && produto.getCategory().getId() != null) {
+			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getId()));
 		}
 
 		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
@@ -83,13 +83,13 @@ public class ProdutoServiceImpl implements ProdutoService {
         return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
 
-    private void getProdutoHasItensTipoMedida(Produto produto, ProdutoEntity produtoDB) {
+    private void getProdutoHasItensTipoMedida(Produto produto, ProductEntity produtoDB) {
         if (produto.getProdutoHasItensTipoMedida() != null) {
-            Set<ProdutoHasItensTipoMedidaEntity> set = new HashSet<>();
+            Set<ProductHasItemsTypeMeasureEntity> set = new HashSet<>();
             produto.getProdutoHasItensTipoMedida().forEach(phitm -> {
-                ProdutoHasItensTipoMedidaEntity produtoHasItensTipoMedida = new ProdutoHasItensTipoMedidaEntity();
+                ProductHasItemsTypeMeasureEntity produtoHasItensTipoMedida = new ProductHasItemsTypeMeasureEntity();
 
-                produtoHasItensTipoMedida.setQuantidade(phitm.getQuantidade());
+                produtoHasItensTipoMedida.setQuantity(phitm.getQuantidade());
                 Set<DomainEntity> dominiosDB = new HashSet<>();
                 if(phitm.getDomains() != null) {
                     phitm.getDomains().forEach(dominio -> {
@@ -99,31 +99,31 @@ public class ProdutoServiceImpl implements ProdutoService {
                     });
                 }
                 produtoHasItensTipoMedida.setDomains(dominiosDB);
-                produtoHasItensTipoMedida.setItensTipoMedida(itensTipoMedidaRepository.getOne(phitm.getItemsTypeMeasure().getId()));
+                produtoHasItensTipoMedida.setItemsTypeMeasure(itensTipoMedidaRepository.getOne(phitm.getItemsTypeMeasure().getId()));
                 set.add(produtoHasItensTipoMedida);
             });
-            produtoDB.setProdutoHasItensTipoMedida(new HashSet<>());
-            produtoDB.getProdutoHasItensTipoMedida().addAll(set);
+            produtoDB.setProductHasItemsTypeMeasure(new HashSet<>());
+            produtoDB.getProductHasItemsTypeMeasure().addAll(set);
         }
     }
 
     @Override
 	@Transactional
 	public Produto alterar(Long codigo, Produto produto) {
-		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
+		ProductEntity produtoDB = produtoRepository.getOne(codigo);
 		produtoDB.setId(produto.getCodigo());
 		produtoDB.setBarCode(produto.getBarCode());
-		produtoDB.setNome(produto.getNome());
+		produtoDB.setName(produto.getNome());
 		produtoDB.setStatus(produto.getStatus());
-		produtoDB.setDescricao(produto.getDescricao());
-		produtoDB.setPreco(produto.getPreco());
-		produtoDB.setPrecoVenda(produto.getPrecoVenda());
-		produtoDB.setPrecoCusto(produto.getPrecoCusto());
-		produtoDB.setPrecoOferta(produto.getPrecoOferta());
-		produtoDB.setDesconto(produto.getDesconto());
-		produtoDB.setPeso(produto.getPeso());
-		produtoDB.setPorcentagem(produto.getPorcentagem());
-		produtoDB.setPorcentagemDesconto(produto.getPorcentagemDesconto());
+		produtoDB.setDescription(produto.getDescricao());
+		produtoDB.setPrice(produto.getPreco());
+		produtoDB.setSalePrice(produto.getPrecoVenda());
+		produtoDB.setCostPrice(produto.getPrecoCusto());
+		produtoDB.setDiscountPrice(produto.getPrecoOferta());
+		produtoDB.setDiscount(produto.getDesconto());
+		produtoDB.setWeight(produto.getPeso());
+		produtoDB.setPercent(produto.getPorcentagem());
+		produtoDB.setDiscountPercent(produto.getPorcentagemDesconto());
 
 
 		if (produto.getMeasure() != null && produto.getMeasure().getId() != null) {
@@ -134,8 +134,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setProvider(providerRepository.getOne(produto.getProvider().getCodigo()));
 		}
 
-		if (produto.getCategory() != null && produto.getCategory().getCodigo() != null) {
-			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getCodigo()));
+		if (produto.getCategory() != null && produto.getCategory().getId() != null) {
+			produtoDB.setCategory(categoryRepository.getOne(produto.getCategory().getId()));
 		}
 
 		if (produto.getSubcategory() != null && produto.getSubcategory().getCodigo() != null) {
@@ -146,8 +146,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDB.setBrand(brandRepository.getOne(produto.getBrand().getCodigo()));
 		}
 
-		produtoDB.getProdutoHasItensTipoMedida().forEach(d -> d.getDomains().clear() );
-		produtoDB.getProdutoHasItensTipoMedida().clear();
+		produtoDB.getProductHasItemsTypeMeasure().forEach(d -> d.getDomains().clear() );
+		produtoDB.getProductHasItemsTypeMeasure().clear();
         getProdutoHasItensTipoMedida(produto, produtoDB);
 		return JpaFunctions.produtoToProdutoEntity.apply(produtoRepository.saveAndFlush(produtoDB));
 	}
@@ -155,7 +155,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	@Transactional
 	public void excluir(Long codigo) {
-		ProdutoEntity produtoDB = produtoRepository.getOne(codigo);
+		ProductEntity produtoDB = produtoRepository.getOne(codigo);
 		produtoDB.setStatus(StatusEnum.INATIVO);
 		produtoRepository.saveAndFlush(produtoDB);
 	}
@@ -163,14 +163,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	@Transactional(readOnly = true)
 	public Produto consultarByCodigo(Long codigo) {
-		ProdutoEntity p = produtoRepository.getOne(codigo);
+		ProductEntity p = produtoRepository.getOne(codigo);
 		return JpaFunctions.produtoToProdutoEntity.apply(p);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Produto consultarByBarCode(String barcode) {
-		Optional<ProdutoEntity> p = produtoRepository.findByBarCode(barcode.trim());
+		Optional<ProductEntity> p = produtoRepository.findByBarCode(barcode.trim());
 		if(p.isPresent()){
 			return JpaFunctions.produtoToProdutoEntity.apply(p.get());
 		}else{

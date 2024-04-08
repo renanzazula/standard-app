@@ -1,34 +1,34 @@
 package com.standard.function.jpa;
 
 import com.standard.domain.Produto;
-import com.standard.entity.ProdutoEntity;
-import com.standard.entity.ProdutoHasItensTipoMedidaEntity;
+import com.standard.entity.ProductEntity;
+import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, Produto> {
+public class ProdutoToProdutoEntityFunction implements Function<ProductEntity, Produto> {
 
     @Override
-    public Produto apply(ProdutoEntity input) {
+    public Produto apply(ProductEntity input) {
         Produto output = new Produto();
         if (input != null) {
             output.setCodigo(input.getId());
             output.setBarCode(input.getBarCode());
-            output.setNome(input.getNome());
+            output.setNome(input.getName());
             output.setStatus(input.getStatus());
-            output.setDescricao(input.getDescricao());
-            output.setPreco(input.getPreco());
-            output.setPrecoVenda(input.getPrecoVenda());
-            output.setPrecoCusto(input.getPrecoCusto());
-            output.setPrecoOferta(input.getPrecoOferta());
-            output.setDesconto(input.getDesconto());
-            output.setPeso(input.getPeso());
-            output.setPorcentagem(input.getPorcentagem());
-            output.setPorcentagemDesconto(input.getPorcentagemDesconto());
-            output.setDataHoraCadastro(input.getDataHoraCadastro());
+            output.setDescricao(input.getDescription());
+            output.setPreco(input.getPrice());
+            output.setPrecoVenda(input.getSalePrice());
+            output.setPrecoCusto(input.getCostPrice());
+            output.setPrecoOferta(input.getDiscountPrice());
+            output.setDesconto(input.getDiscount());
+            output.setPeso(input.getWeight());
+            output.setPorcentagem(input.getPercent());
+            output.setPorcentagemDesconto(input.getDiscountPercent());
+            output.setDataHoraCadastro(input.getCreationDateTime());
 
             if (input.getProvider() != null) {
                 output.setProvider(JpaFunctions.providerToProviderEntity.apply(input.getProvider()));
@@ -50,10 +50,10 @@ public class ProdutoToProdutoEntityFunction implements Function<ProdutoEntity, P
                 output.setBrand(JpaFunctions.brandToBrandEntity.apply(input.getBrand()));
             }
 
-            if (input.getProdutoHasItensTipoMedida() != null) {
-                output.setProdutoHasItensTipoMedida(input.getProdutoHasItensTipoMedida()
+            if (input.getProductHasItemsTypeMeasure() != null) {
+                output.setProdutoHasItensTipoMedida(input.getProductHasItemsTypeMeasure()
                         .stream()
-                        .sorted(Comparator.comparing(ProdutoHasItensTipoMedidaEntity::getId))
+                        .sorted(Comparator.comparing(ProductHasItemsTypeMeasureEntity::getId))
                         .map(JpaFunctions.produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity).collect(Collectors.toList()));
             }
         }

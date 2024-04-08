@@ -15,42 +15,42 @@ public @Data class PosEntity extends BaseAuditEntity  {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(name = "dataAbertura")
-	private Date dataAbertura;
+	@Column(name = "openDate")
+	private Date openDate;
 	 
 	@NotNull
 	@Temporal(TemporalType.TIME)
-	@Column(name = "horaAbertura")
-	private Date horaAbertura;
+	@Column(name = "openTime")
+	private Date openTime;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "dataFechamento")
-	private Date dataFechamento;
+	@Column(name = "closeDate")
+	private Date closeDate;
 
 	@Temporal(TemporalType.TIME)
-	@Column(name = "horaFechamento")
-	private Date horaFechamento;
+	@Column(name = "closeTime")
+	private Date closeTime;
 
 	@NotNull
 	@ColumnDefault(value = "0")
-	@Column(name = "valorInicial")
-	private Double valorInicial;
+	@Column(name = "openAmount")
+	private Double openAmount;
 
 	@ColumnDefault(value = "0")
 	@Column(name = "valorFinal")
-	private Double valorFinal;
+	private Double closeAmount;
 
 	@ColumnDefault(value = "0")
 	@Column(name = "totalVendas")
-	private Double totalVendas;
+	private Double totalOrders;
 
 	@ColumnDefault(value = "0")
 	@Column(name = "total")
 	private Double total;
 
 	@ColumnDefault(value = "0")
-	@Column(name = "totalDesconto")
-	private Double totalDesconto;
+	@Column(name = "totalDiscount")
+	private Double totalDiscount;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")

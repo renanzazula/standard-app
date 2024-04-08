@@ -33,8 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public Category save(Category category) {
 		CategoryEntity categoryDB = new CategoryEntity();
-		categoryDB.setDescricao(category.getDescricao());
-		categoryDB.setNome(category.getNome());
+		categoryDB.setDescription(category.getDescription());
+		categoryDB.setName(category.getName());
 		if(category.getSubcategories() != null) {
 			Set<SubcategoryEntity> subcategories = new HashSet<>();
 			category.getSubcategories().forEach(sub -> subcategories.add(subcategoryRepository.getOne(sub.getCodigo())));
@@ -47,8 +47,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public Category update(Long id, Category category) {
 		CategoryEntity categoryDB = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
-		Objects.requireNonNull(categoryDB).setDescricao(category.getDescricao());
-		categoryDB.setNome(category.getNome());
+		Objects.requireNonNull(categoryDB).setDescription(category.getDescription());
+		categoryDB.setName(category.getName());
 		categoryDB.getSubcategories().clear();
 		Set<SubcategoryEntity> subcategoriaSet = new HashSet<>();
 		category.getSubcategories().forEach(sub -> subcategoriaSet.add(subcategoryRepository.getOne(sub.getCodigo())));

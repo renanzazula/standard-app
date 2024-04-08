@@ -15,12 +15,12 @@ public @Data class SubcategoryEntity extends BaseAuditEntity {
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	@NotNull
-	@Column(name = "nome", length = 45)
-	private String nome;
+	@Column(name = "name", length = 45)
+	private String name;
 
 	@NotNull
-	@Column(name = "descricao", length = 45)
-	private String descricao;
+	@Column(name = "description", length = 45)
+	private String description;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")

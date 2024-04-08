@@ -495,13 +495,13 @@ LOCK TABLES `produto` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produto_has_itens_tipo_medida`
+-- Table structure for table `product_has_items_type_measure`
 --
 
-DROP TABLE IF EXISTS `produto_has_itens_tipo_medida`;
+DROP TABLE IF EXISTS `product_has_items_type_measure`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `produto_has_itens_tipo_medida` (
+CREATE TABLE `product_has_items_type_measure` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -522,12 +522,12 @@ CREATE TABLE `produto_has_itens_tipo_medida` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `produto_has_itens_tipo_medida`
+-- Dumping data for table `product_has_items_type_measure`
 --
 
-LOCK TABLES `produto_has_itens_tipo_medida` WRITE;
-/*!40000 ALTER TABLE `produto_has_itens_tipo_medida` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produto_has_itens_tipo_medida` ENABLE KEYS */;
+LOCK TABLES `product_has_items_type_measure` WRITE;
+/*!40000 ALTER TABLE `product_has_items_type_measure` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_has_items_type_measure` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -542,7 +542,7 @@ CREATE TABLE `produto_has_itens_tipo_medida_has_dominio` (
   `dominio_codigo` bigint NOT NULL,
   PRIMARY KEY (`produto_has_itens_tipo_medida_codigo`,`dominio_codigo`),
   KEY `FK7k3c99iu4qy82w8dmy0vwy5u4` (`dominio_codigo`),
-  CONSTRAINT `FK2f8eg726fks5l5ml3gvisqob7` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `produto_has_itens_tipo_medida` (`codigo`),
+  CONSTRAINT `FK2f8eg726fks5l5ml3gvisqob7` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `product_has_items_type_measure` (`codigo`),
   CONSTRAINT `FK7k3c99iu4qy82w8dmy0vwy5u4` FOREIGN KEY (`dominio_codigo`) REFERENCES `domain` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -879,7 +879,7 @@ CREATE TABLE `venda_has_item_produto` (
   PRIMARY KEY (`codigo`),
   KEY `FK3koi1qe1xc9m4grgfpebvxutw` (`produto_has_itens_tipo_medida_codigo`),
   KEY `FKngotbekt6jdb6l2qnionsxnrk` (`venda_codigo`),
-  CONSTRAINT `FK3koi1qe1xc9m4grgfpebvxutw` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `produto_has_itens_tipo_medida` (`codigo`),
+  CONSTRAINT `FK3koi1qe1xc9m4grgfpebvxutw` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `product_has_items_type_measure` (`codigo`),
   CONSTRAINT `FKngotbekt6jdb6l2qnionsxnrk` FOREIGN KEY (`venda_codigo`) REFERENCES `venda` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
