@@ -1,0 +1,63 @@
+package com.standard.service.provider;
+
+import com.standard.domain.Provider;
+import com.standard.entity.ProviderEntity;
+import com.standard.enums.StatusEnum;
+import com.standard.function.JpaFunctions;
+import com.standard.repository.ProviderRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class ProviderServiceImpl implements ProviderService {
+
+    private final ProviderRepository providerRepository;
+
+    @Override
+    @Transactional
+    public Provider create(Provider entity) {
+        ProviderEntity providerDB = new ProviderEntity();
+        providerDB.setDescription(entity.getDescription());
+        providerDB.setName(entity.getName());
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
+    }
+
+    @Override
+    @Transactional
+    public Provider update(Long id, Provider entity) {
+        ProviderEntity providerDB = providerRepository.getOne(id);
+        providerDB.setDescription(entity.getDescription());
+        providerDB.setName(entity.getName());
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        ProviderEntity providerDB = providerRepository.getOne(id);
+        providerDB.setStatus(StatusEnum.INATIVO);
+        providerRepository.save(providerDB);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "providerListCache", condition = "#showInventoryOnHand == false")
+    public List<Provider> findAll() {
+        return providerRepository.findAll().stream().map(JpaFunctions.providerToProviderEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "providerCache", key = "#id", condition = "#showInventoryOnHand == false")
+    public Provider findById(Long id) {
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+    }
+
+}

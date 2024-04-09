@@ -2,10 +2,10 @@ package com.standard.controller;
 
 import com.standard.domain.ItemsTypeMeasure;
 import com.standard.domain.Measure;
-import com.standard.domain.Produto;
-import com.standard.domain.ProdutoHasItensTipoMedida;
-import com.standard.service.medida.MeasureService;
-import com.standard.service.produto.ProdutoService;
+import com.standard.domain.Product;
+import com.standard.domain.ProductHasItemsTypeMeasure;
+import com.standard.service.measure.MeasureService;
+import com.standard.service.product.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +21,18 @@ public class ItemsTypeMeasureController {
     public static final String BASE_URL = "/private/v1/itensMedida";
 
     private final MeasureService measureService;
-    private final ProdutoService produtoService;
+    private final ProductService productService;
 
     // fixme: separar end point...
     @RequestMapping(value = "/ajaxConsultarItensMedidaByCategoria")
-    public ResponseEntity<List<Measure>> ajaxConsultarItensMedidaByCategoria(@RequestBody Produto produto) {
-        return new ResponseEntity<>(measureService.findByCategorySubcategoryBrand(produto), HttpStatus.OK);
+    public ResponseEntity<List<Measure>> ajaxConsultarItensMedidaByCategoria(@RequestBody Product product) {
+        return new ResponseEntity<>(measureService.findByCategorySubcategoryBrand(product), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byProduct/{id}")
-    public  ResponseEntity<List<ProdutoHasItensTipoMedida>> ajaxFindItemsTypeMeasureByMeasureByProductId(@PathVariable String id) {
-        Produto productDB = produtoService.consultarByCodigo(Long.valueOf(id));
-        return new ResponseEntity<>(productDB.getProdutoHasItensTipoMedida(), HttpStatus.OK);
+    public  ResponseEntity<List<ProductHasItemsTypeMeasure>> ajaxFindItemsTypeMeasureByMeasureByProductId(@PathVariable String id) {
+        Product productDB = productService.getById(Long.valueOf(id));
+        return new ResponseEntity<>(productDB.getProductHasItemsTypeMeasure(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byMeasure/{id}")

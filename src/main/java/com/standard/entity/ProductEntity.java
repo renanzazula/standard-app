@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity(name = "product")
-@EqualsAndHashCode(exclude = "productHasItemsTypeMeasure")
+@EqualsAndHashCode(exclude = "productHasItemsTypeMeasure", callSuper = false)
 public @Data class ProductEntity extends BaseAuditEntity {
 
     private static final long serialVersionUID = 2203862074139518315L;

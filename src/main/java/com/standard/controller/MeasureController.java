@@ -1,10 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.Category;
 import com.standard.domain.Measure;
-import com.standard.service.categoria.CategoryService;
-import com.standard.service.marca.BrandService;
-import com.standard.service.medida.MeasureService;
+import com.standard.service.measure.MeasureService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +30,7 @@ public class MeasureController {
 
     @PostMapping
     public ResponseEntity<Measure> save(@RequestBody Measure measure) {
-        return new ResponseEntity<>(measureService.save(measure), HttpStatus.CREATED);
+        return new ResponseEntity<>(measureService.create(measure), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

@@ -14,11 +14,11 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 		Measure output = new Measure();
 		if (input != null) {
 			output.setId(input.getId());
-			output.setNome(input.getNome());
+			output.setNome(input.getName());
 			output.setDescricao(input.getDescription());
 
-			if (input.getItensTipoMedida() != null) {
-				output.setItemsTypeMeasure(input.getItensTipoMedida().stream().map(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity).collect(Collectors.toList()));
+			if (input.getItemsTypeMeasure() != null) {
+				output.setItemsTypeMeasure(input.getItemsTypeMeasure().stream().map(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity).collect(Collectors.toList()));
 			}
 		}
 		return output;

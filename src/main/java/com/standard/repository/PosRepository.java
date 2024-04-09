@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PosRepository extends JpaRepository<PosEntity, Long> {
 
-    @Query(value = "SELECT codigo FROM pos ORDER BY codigo DESC LIMIT 0, 1", nativeQuery = true)
+    @Query(value = "SELECT id FROM pos ORDER BY id DESC LIMIT 0, 1", nativeQuery = true)
     Long generateLastPosId();
 
-    @Query(value = "SELECT * FROM pos where status = 'A' ORDER BY id DESC LIMIT 0, 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM pos where id = 'A' ORDER BY id DESC LIMIT 0, 1", nativeQuery = true)
     PosEntity getLastPos();
 
 

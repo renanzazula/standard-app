@@ -16,8 +16,8 @@ class VendaHasProduto implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 	private Long codigo;
-	private Venda venda;
-	private Produto produto;
+	private Order order;
+	private Product product;
 	
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double valorUnitario;

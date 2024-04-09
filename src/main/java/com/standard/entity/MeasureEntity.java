@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "itensTipoMedida")
+@EqualsAndHashCode(exclude = "itemsTypeMeasure", callSuper = false)
 @Entity(name = "measure")
 public @Data
 class MeasureEntity extends BaseAuditEntity {
@@ -16,8 +16,8 @@ class MeasureEntity extends BaseAuditEntity {
     private static final long serialVersionUID = -6612762288260227887L;
 
     @NotNull
-    @Column(name = "nome", length = 45)
-    private String nome;
+    @Column(name = "name", length = 45)
+    private String name;
 
     @NotNull
     @Column(name = "description", length = 45)
@@ -30,5 +30,5 @@ class MeasureEntity extends BaseAuditEntity {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "measure_id")
     @OrderBy("id")
-    private Set<ItemsTypeMeasureEntity> itensTipoMedida;
+    private Set<ItemsTypeMeasureEntity> itemsTypeMeasure;
 }

@@ -2,7 +2,7 @@ package com.standard.controller;
 
 
 import com.standard.domain.Domain;
-import com.standard.service.dominio.DomainService;
+import com.standard.service.domain.DomainService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class DomainController {
 
     @PostMapping
     public ResponseEntity<Domain> save(@RequestBody Domain domain) {
-        return new ResponseEntity<>(domainService.save(domain), HttpStatus.CREATED);
+        return new ResponseEntity<>(domainService.create(domain), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

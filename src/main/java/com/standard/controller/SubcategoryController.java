@@ -2,8 +2,8 @@ package com.standard.controller;
 
 import com.standard.domain.Category;
 import com.standard.domain.Subcategory;
-import com.standard.service.categoria.CategoryService;
-import com.standard.service.subcategoria.SubcategoryService;
+import com.standard.service.category.CategoryService;
+import com.standard.service.subcategory.SubcategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class SubcategoryController {
 
     @PostMapping
     public ResponseEntity<Subcategory> save(@RequestBody Subcategory subcategory) {
-        return new ResponseEntity<>(subcategoryService.save(subcategory), HttpStatus.CREATED);
+        return new ResponseEntity<>(subcategoryService.create(subcategory), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

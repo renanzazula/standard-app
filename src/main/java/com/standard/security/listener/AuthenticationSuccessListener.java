@@ -27,7 +27,7 @@ public class AuthenticationSuccessListener {
             token = (UsernamePasswordAuthenticationToken) event.getSource();
             if (token.getPrincipal() instanceof UserEntity user) {
                 user = (UserEntity) token.getPrincipal();
-                build.userId(user.getId()).username(user.getUsername());
+                build.user(user);
                 log.debug("User name logged in: " + user.getUsername());
             }
 

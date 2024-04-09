@@ -1,6 +1,6 @@
 package com.standard.encoding;
 
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.util.DigestUtils;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PasswordEncodingTests {
 
@@ -50,7 +52,7 @@ public class PasswordEncodingTests {
         System.out.println(ldap.encode("tiger"));
         String encodedPwd = ldap.encode(PASSWORD);
 
-        Assert.assertTrue(ldap.matches(PASSWORD, encodedPwd ));
+        assertTrue(ldap.matches(PASSWORD, encodedPwd ));
 
     }
 

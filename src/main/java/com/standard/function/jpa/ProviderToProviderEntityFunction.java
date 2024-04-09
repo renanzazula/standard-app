@@ -11,9 +11,9 @@ public class ProviderToProviderEntityFunction implements Function<ProviderEntity
     public Provider apply(ProviderEntity input) {
         Provider output = new Provider();
         if (input != null) {
-            output.setCodigo(input.getId());
-            output.setNome(input.getName());
-            output.setDescricao(input.getDescription());
+            output.setId(input.getId());
+            output.setName(input.getName());
+            output.setDescription(input.getDescription());
         }
         return output;
     }

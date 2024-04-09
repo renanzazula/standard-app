@@ -6,10 +6,9 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = {"domains", "vendaHasItemProduto" })
+@EqualsAndHashCode(exclude = {"domains", "orderHasItemProduct" }, callSuper = false)
 @Entity(name = "product_has_items_type_measure")
-public @Data
-class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
+public @Data class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
 
     private static final long serialVersionUID = -6612762288260227887L;
 

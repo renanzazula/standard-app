@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Domain;
-import com.standard.service.dominio.DomainService;
+import com.standard.service.domain.DomainService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,17 +47,17 @@ public class DomainControllerTest extends AbstractRestControllerTest {
         
 
         obj = new Domain();
-        obj.setCodigo(1L);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        obj.setId(1L);
+        obj.setName(NOME);
+        obj.setDescription(DESCRICAO);
         obj.setChecked(true);
     }
 
     @Test
     public void testConsultar() throws Exception {
         Domain domain2 = new Domain();
-        domain2.setCodigo(2L);
-        domain2.setNome("bob");
+        domain2.setId(2L);
+        domain2.setName("bob");
 
         List<Domain> domains = Arrays.asList(obj, domain2);
         when(service.findAll()).thenReturn(domains);
@@ -70,7 +70,7 @@ public class DomainControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.findById(obj.getCodigo())).thenReturn(obj);
+        when(service.findById(obj.getId())).thenReturn(obj);
         mockMvc.perform(get(DomainController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -81,7 +81,7 @@ public class DomainControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(obj)).thenReturn(obj);
+        when(service.create(obj)).thenReturn(obj);
         mockMvc.perform(post(DomainController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

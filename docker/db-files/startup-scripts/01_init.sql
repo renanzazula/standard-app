@@ -438,13 +438,13 @@ LOCK TABLES `measure` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produto`
+-- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `produto`;
+DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `produto` (
+CREATE TABLE `product` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -486,12 +486,12 @@ CREATE TABLE `produto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `produto`
+-- Dumping data for table `product`
 --
 
-LOCK TABLES `produto` WRITE;
-/*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produto` ENABLE KEYS */;
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -517,7 +517,7 @@ CREATE TABLE `product_has_items_type_measure` (
   KEY `FK8ia63yfyhfqlbwb77mkssssgd` (`itens_tipo_medida_codigo`),
   KEY `FKqjya8flllhojml0d9mnevq0rq` (`produto_codigo`),
   CONSTRAINT `FK8ia63yfyhfqlbwb77mkssssgd` FOREIGN KEY (`itens_tipo_medida_codigo`) REFERENCES `itens_tipo_medida` (`codigo`),
-  CONSTRAINT `FKqjya8flllhojml0d9mnevq0rq` FOREIGN KEY (`produto_codigo`) REFERENCES `produto` (`codigo`)
+  CONSTRAINT `FKqjya8flllhojml0d9mnevq0rq` FOREIGN KEY (`produto_codigo`) REFERENCES `product` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -809,13 +809,13 @@ LOCK TABLES `user_session` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `venda`
+-- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `venda`;
+DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `venda` (
+CREATE TABLE `order` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -849,12 +849,12 @@ CREATE TABLE `venda` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `venda`
+-- Dumping data for table `order`
 --
 
-LOCK TABLES `venda` WRITE;
-/*!40000 ALTER TABLE `venda` DISABLE KEYS */;
-/*!40000 ALTER TABLE `venda` ENABLE KEYS */;
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -880,7 +880,7 @@ CREATE TABLE `venda_has_item_produto` (
   KEY `FK3koi1qe1xc9m4grgfpebvxutw` (`produto_has_itens_tipo_medida_codigo`),
   KEY `FKngotbekt6jdb6l2qnionsxnrk` (`venda_codigo`),
   CONSTRAINT `FK3koi1qe1xc9m4grgfpebvxutw` FOREIGN KEY (`produto_has_itens_tipo_medida_codigo`) REFERENCES `product_has_items_type_measure` (`codigo`),
-  CONSTRAINT `FKngotbekt6jdb6l2qnionsxnrk` FOREIGN KEY (`venda_codigo`) REFERENCES `venda` (`codigo`)
+  CONSTRAINT `FKngotbekt6jdb6l2qnionsxnrk` FOREIGN KEY (`venda_codigo`) REFERENCES `order` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

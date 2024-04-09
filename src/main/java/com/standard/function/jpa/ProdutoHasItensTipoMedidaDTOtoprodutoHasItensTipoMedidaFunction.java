@@ -1,7 +1,7 @@
 package com.standard.function.jpa;
 
-import com.standard.domain.Produto;
-import com.standard.domain.ProdutoHasItensTipoMedida;
+import com.standard.domain.Product;
+import com.standard.domain.ProductHasItemsTypeMeasure;
 import com.standard.entity.ProductEntity;
 import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
@@ -10,23 +10,23 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
-        implements Function<ProductHasItemsTypeMeasureEntity, ProdutoHasItensTipoMedida> {
+        implements Function<ProductHasItemsTypeMeasureEntity, ProductHasItemsTypeMeasure> {
 
     @Override
-    public ProdutoHasItensTipoMedida apply(ProductHasItemsTypeMeasureEntity input) {
-        ProdutoHasItensTipoMedida output = new ProdutoHasItensTipoMedida();
+    public ProductHasItemsTypeMeasure apply(ProductHasItemsTypeMeasureEntity input) {
+        ProductHasItemsTypeMeasure output = new ProductHasItemsTypeMeasure();
         if (input != null) {
-            output.setCodigo(input.getId());
+            output.setId(input.getId());
             if (input.getDomains() != null) {
                 output.setDomains(input.getDomains().stream().map(JpaFunctions.domainToDomainEntity).collect(Collectors.toList()));
             }
             if (input.getItemsTypeMeasure() != null) {
-                output.setItemsTypeMeasure(JpaFunctions.itensTipoMedidaToItensTipoMedidaEntity.apply(input.getItemsTypeMeasure()));
+                output.setItemsTypeMeasure(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity.apply(input.getItemsTypeMeasure()));
             }
 
-            output.setProduto(produtoEntityToProduto(input.getProduct()));
-            output.setQuantidade(input.getQuantity());
-            output.setValorUnitario(input.getUnitValue());
+            output.setProduct(produtoEntityToProduto(input.getProduct()));
+            output.setQuantity(input.getQuantity());
+            output.setUnitValue(input.getUnitValue());
         }
         return output;
     }
@@ -35,22 +35,22 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
      * @param input
      * @return
      */
-    private Produto produtoEntityToProduto(ProductEntity input) {
-        Produto output = new Produto();
-        output.setCodigo(input.getId());
+    private Product produtoEntityToProduto(ProductEntity input) {
+        Product output = new Product();
+        output.setId(input.getId());
         output.setBarCode(input.getBarCode());
-        output.setNome(input.getName());
+        output.setName(input.getName());
         output.setStatus(input.getStatus());
-        output.setDescricao(input.getDescription());
-        output.setPreco(input.getPrice());
-        output.setPrecoVenda(input.getSalePrice());
-        output.setPrecoCusto(input.getCostPrice());
-        output.setPrecoOferta(input.getDiscountPrice());
-        output.setDesconto(input.getDiscount());
-        output.setPeso(input.getWeight());
-        output.setPorcentagem(input.getPercent());
-        output.setPorcentagemDesconto(input.getDiscountPercent());
-        output.setDataHoraCadastro(input.getCreationDateTime());
+        output.setDescription(input.getDescription());
+        output.setPrice(input.getPrice());
+        output.setSalePrice(input.getSalePrice());
+        output.setCostPrice(input.getCostPrice());
+        output.setDiscountPrice(input.getDiscountPrice());
+        output.setDiscount(input.getDiscount());
+        output.setWeight(input.getWeight());
+        output.setPercent(input.getPercent());
+        output.setDiscountPercent(input.getDiscountPercent());
+        output.setCreationDateTime(input.getCreationDateTime());
 
         if (input.getProvider() != null) {
             output.setProvider(JpaFunctions.providerToProviderEntity.apply(input.getProvider()));

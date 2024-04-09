@@ -1,9 +1,9 @@
 package com.standard.controller;
 
 import com.standard.domain.Measure;
-import com.standard.service.categoria.CategoryService;
-import com.standard.service.marca.BrandService;
-import com.standard.service.medida.MeasureService;
+import com.standard.service.category.CategoryService;
+import com.standard.service.brand.BrandService;
+import com.standard.service.measure.MeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -84,7 +84,7 @@ public class MeasureControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(measure)).thenReturn(measure);
+        when(service.create(measure)).thenReturn(measure);
         mockMvc.perform(post(MeasureController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

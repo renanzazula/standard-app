@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface LoginFailureRepository extends JpaRepository<LoginFailureEntity, Long> {
 
-    List<LoginFailureEntity> findAllByUserIdAndCreatedDateAfter(Long userId, Timestamp timestamp);
+   List<LoginFailureEntity> findAllByUserIdAndCreatedDateAfter(Long userId, Timestamp timestamp);
 }

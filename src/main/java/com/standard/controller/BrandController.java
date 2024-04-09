@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Brand;
-import com.standard.service.marca.BrandService;
+import com.standard.service.brand.BrandService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class BrandController {
 
 	@PostMapping
 	public ResponseEntity<Brand> save(@RequestBody Brand obj){
-		return new ResponseEntity<>(brandService.save(obj), HttpStatus.CREATED);
+		return new ResponseEntity<>(brandService.create(obj), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping({"/{id}"})

@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Category;
-import com.standard.service.categoria.CategoryService;
+import com.standard.service.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -92,7 +92,7 @@ public class CategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(category)).thenReturn(category);
+        when(service.create(category)).thenReturn(category);
         mockMvc.perform(post(CategoryController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

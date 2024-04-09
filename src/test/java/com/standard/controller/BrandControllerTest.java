@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Brand;
-import com.standard.service.marca.BrandService;
+import com.standard.service.brand.BrandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,16 +45,16 @@ public class BrandControllerTest extends AbstractRestControllerTest {
                 .build();
         
         obj = new Brand();
-        obj.setCodigo(1L);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        obj.setId(1L);
+        obj.setName(NOME);
+        obj.setDescription(DESCRICAO);
     }
 
     @Test
     public void testConsultar() throws Exception {
         Brand brand2 = new Brand();
-        brand2.setCodigo(2L);
-        brand2.setNome("bob");
+        brand2.setId(2L);
+        brand2.setName("bob");
 
         List<Brand> brands = Arrays.asList(obj, brand2);
         when(service.findAll()).thenReturn(brands);
@@ -67,7 +67,7 @@ public class BrandControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.findById(obj.getCodigo())).thenReturn(obj);
+        when(service.findById(obj.getId())).thenReturn(obj);
         mockMvc.perform(get(BrandController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -78,7 +78,7 @@ public class BrandControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(obj)).thenReturn(obj);
+        when(service.create(obj)).thenReturn(obj);
         mockMvc.perform(post(BrandController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

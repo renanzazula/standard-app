@@ -1,6 +1,6 @@
 package com.standard.entity;
 
-import com.standard.enums.StatusVendaEnum;
+import com.standard.enums.OrderStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,19 +11,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "orderHasItemProduct")
+@EqualsAndHashCode(exclude = "orderHasItemProduct", callSuper = false)
 @Entity(name = "order")
 public @Data class OrderEntity extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -6612762288260227887L;
-
-	@CreationTimestamp
-	@Column(name = "creationDate")
-	private LocalDateTime creationDate;
-
-	@CreationTimestamp
-	@Column(name = "creationTime")
-	private LocalDateTime creationTime;
 
 	@Column(name = "totalAmount")
 	private Double totalAmount;
@@ -55,7 +47,7 @@ public @Data class OrderEntity extends BaseAuditEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private StatusVendaEnum status;
+	private OrderStatusEnum status;
 
 	@NotNull
 	@ManyToOne

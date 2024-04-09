@@ -11,9 +11,9 @@ public class SubCategoryToSubCategoryEntityFunction implements Function<Subcateg
 	public Subcategory apply(SubcategoryEntity input) {
 		Subcategory output = new Subcategory();
 		if (input != null) {
-			output.setCodigo(input.getId());
-			output.setNome(input.getName());
-			output.setDescricao(input.getDescription());
+			output.setId(input.getId());
+			output.setName(input.getName());
+			output.setDescription(input.getDescription());
 		}
 		return output;
 	}

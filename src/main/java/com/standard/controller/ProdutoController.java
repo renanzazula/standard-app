@@ -1,7 +1,7 @@
 package com.standard.controller;
 
-import com.standard.domain.Produto;
-import com.standard.service.produto.ProdutoService;
+import com.standard.domain.Product;
+import com.standard.service.product.ProductService;
 import com.standard.util.DoubleFormat;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,37 +17,37 @@ public class ProdutoController {
 
     public static final String BASE_URL = "/private/v1/produto";
 
-    private final ProdutoService produtoService;
+    private final ProductService productService;
 
     @GetMapping({""})
-    public ResponseEntity<List<Produto>> consultar() {
-        return new ResponseEntity<>(produtoService.consultar(), HttpStatus.OK);
+    public ResponseEntity<List<Product>> consultar() {
+        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{codigo}"})
-    public ResponseEntity<Produto> consultarByCodigo(@PathVariable Long codigo) {
-        return new ResponseEntity<>(produtoService.consultarByCodigo(codigo), HttpStatus.OK);
+    public ResponseEntity<Product> consultarByCodigo(@PathVariable Long codigo) {
+        return new ResponseEntity<>(productService.getById(codigo), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Produto> incluir(@RequestBody Produto produto) {
-        return new ResponseEntity<>(produtoService.incluir(produto), HttpStatus.CREATED);
+    public ResponseEntity<Product> incluir(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{codigo}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long codigo) {
-        produtoService.excluir(codigo);
+        productService.delete(codigo);
     }
 
     @PutMapping({"/{codigo}"})
-    public ResponseEntity<Produto> alterar(@PathVariable Long codigo, @RequestBody Produto produto) {
-        return new ResponseEntity<>(produtoService.alterar(codigo, produto), HttpStatus.OK);
+    public ResponseEntity<Product> alterar(@PathVariable Long codigo, @RequestBody Product product) {
+        return new ResponseEntity<>(productService.update(codigo, product), HttpStatus.OK);
     }
 
     @GetMapping(value = "/addicionarProduto/{barCode}")
-    public ResponseEntity<Produto> addicionarProduto(@PathVariable String barCode) {
-        return new ResponseEntity<>(produtoService.consultarByBarCode(barCode), HttpStatus.OK);
+    public ResponseEntity<Product> addicionarProduto(@PathVariable String barCode) {
+        return new ResponseEntity<>(productService.getByBarCode(barCode), HttpStatus.OK);
     }
 
     @GetMapping("/calcular/desconto/{porcentagem}/{valor}/{precoVenda}")

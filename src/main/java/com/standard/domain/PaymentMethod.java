@@ -16,14 +16,14 @@ public class PaymentMethod implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long codigo;
-	private String nome;
-	private String descricao;
-	private Integer porcentagemDesconto;
+	private Long id;
+	private String name;
+	private String description;
+	private Integer discountPercent;
 
     @JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private Date data;
+	private Date creationDate;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date hora;
+	private Date creationTime;
 }

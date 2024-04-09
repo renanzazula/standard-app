@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Category;
-import com.standard.service.categoria.CategoryService;
+import com.standard.service.category.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,7 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Category> save(@RequestBody Category category) {
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryService.create(category), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

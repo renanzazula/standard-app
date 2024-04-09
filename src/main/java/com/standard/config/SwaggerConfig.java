@@ -13,9 +13,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-@EnableSwagger2
-@Configuration
-@Profile({"local"})
+///@EnableSwagger2
+//@Configuration
+//@Profile({"local"})
 public class SwaggerConfig {
 
     @Bean

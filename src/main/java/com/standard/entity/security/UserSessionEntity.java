@@ -20,7 +20,7 @@ public @Data class UserSessionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "user_id", length = 64)
+    @Column(name = "userId", length = 64)
     private String userId;
 
     @Column(name = "active_sessions", length = 1024)

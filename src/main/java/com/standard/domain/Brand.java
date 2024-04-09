@@ -17,9 +17,9 @@ public class Brand implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	private Long codigo;
-	private String nome;
-	private String descricao;
+	private Long id;
+	private String name;
+	private String description;
 	private StatusEnum status;
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
 	private Date data;

@@ -1,8 +1,8 @@
 package com.standard.controller;
 
 import com.standard.domain.Subcategory;
-import com.standard.service.categoria.CategoryService;
-import com.standard.service.subcategoria.SubcategoryService;
+import com.standard.service.category.CategoryService;
+import com.standard.service.subcategory.SubcategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,16 +51,16 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
                 .build();
         
         obj = new Subcategory();
-        obj.setCodigo(1L);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        obj.setId(1L);
+        obj.setName(NOME);
+        obj.setDescription(DESCRICAO);
     }
 
     @Test
     public void testConsultar() throws Exception {
         Subcategory subcategory2 = new Subcategory();
-        subcategory2.setCodigo(2L);
-        subcategory2.setNome("bob");
+        subcategory2.setId(2L);
+        subcategory2.setName("bob");
 
         List<Subcategory> subcategories = Arrays.asList(obj, subcategory2);
         when(service.findAll()).thenReturn(subcategories);
@@ -73,7 +73,7 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.findById(obj.getCodigo())).thenReturn(obj);
+        when(service.findById(obj.getId())).thenReturn(obj);
         mockMvc.perform(get(SubcategoryController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -84,7 +84,7 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(obj)).thenReturn(obj);
+        when(service.create(obj)).thenReturn(obj);
         mockMvc.perform(post(SubcategoryController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

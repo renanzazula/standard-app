@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.PaymentMethod;
-import com.standard.service.formaDePagamento.PaymentMethodService;
+import com.standard.service.paymentmethod.PaymentMethodService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class PaymentMethodController {
 
     @PostMapping
     public ResponseEntity<PaymentMethod> save(@RequestBody PaymentMethod obj) {
-        return new ResponseEntity<>(paymentMethodService.save(obj), HttpStatus.CREATED);
+        return new ResponseEntity<>(paymentMethodService.create(obj), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

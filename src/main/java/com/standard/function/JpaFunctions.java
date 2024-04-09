@@ -12,16 +12,19 @@ public class JpaFunctions {
     public static final ProviderToProviderEntityFunction providerToProviderEntity = new ProviderToProviderEntityFunction();
     public static final BrandToBrandEntityFunction brandToBrandEntity = new BrandToBrandEntityFunction();
     public static final MeasureToMeasureEntityFunction measureToMeasureEntity = new MeasureToMeasureEntityFunction();
-    public static final ItensTipoMedidaToItensTipoMedidaEntityFunction itensTipoMedidaToItensTipoMedidaEntity = new ItensTipoMedidaToItensTipoMedidaEntityFunction();
-    public static final ProdutoToProdutoEntityFunction produtoToProdutoEntity = new ProdutoToProdutoEntityFunction();
+    public static final ItemsTypeMeasureToItemsTypeMeasureEntityFunction itemsTypeMeasureToItemsTypeMeasureEntity = new ItemsTypeMeasureToItemsTypeMeasureEntityFunction();
+    public static final ProductToProdctEntityFunction productToProductEntity = new ProductToProdctEntityFunction();
     public static final PaymentMethodToPaymentMethodEntityFunction paymentMethodToPaymentMethodEntity = new PaymentMethodToPaymentMethodEntityFunction();
-    public static final ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity = new ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction();
+    public static final ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction productHasItemsTypeMeasureToProductHasItemsTypeMeasureEntity = new ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction();
     public static final DomainToDomainEntityFunction domainToDomainEntity = new DomainToDomainEntityFunction();
-    public static final VendaToVendaEntityFunction vendaToVendaEntity = new VendaToVendaEntityFunction();
+    public static final OrderToOrderEntityFunction orderToOrderEntity = new OrderToOrderEntityFunction();
     public static final CustomerToCustomerEntityFunction customerToCustomerEntity = new CustomerToCustomerEntityFunction();
     public static final PosToPosEntityFunction posToPosEntity = new PosToPosEntityFunction();
-    public static final VendaHasItemProdutoToVendaHasItemProdutoEntityFunction vendaHasItemProdutoToVendaHasItemEntity = new VendaHasItemProdutoToVendaHasItemProdutoEntityFunction();
-    public static final RetiradaEntityToRetiradaFunction retiradaEntityToRetirada = new RetiradaEntityToRetiradaFunction();
-    public static final RecebimentoEntityToRecebimentoFunction recebimentoEntityToRecebimento = new RecebimentoEntityToRecebimentoFunction();
+    public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProdutoToOrderHasItemProdutoEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
+    public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction();
+    public static final PayBackEntityToPayBackFunction payBackEntityToPayBack = new PayBackEntityToPayBackFunction();
+
+    public static final UserEntityToUserAdapter userEntityToUserDtoAdapter = new UserEntityToUserAdapter();
+    public static final AuthorityEntityToAuthorityAdapter authorityEntityToAuthorityDtoAdapter = new AuthorityEntityToAuthorityAdapter();
 
 }

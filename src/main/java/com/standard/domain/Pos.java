@@ -13,34 +13,34 @@ public @Data class Pos implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
-	private Long codigo;
+	private Long id;
 
 	@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private Date dataAbertura;
+	private Date openDate;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date horaAbertura;
+	private Date openTime;
 
 	@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private Date dataFechamento;
+	private Date closeDate;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date horaFechamento;
+	private Date closeTime;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
-	private Double valorInicial;
+	private Double openAmount;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
-	private Double valorFinal;
+	private Double closeAmount;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double total;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
-	private Double totalVendas;
+	private Double totalOrders;
 
 	@NumberFormat(style=Style.CURRENCY, pattern=Constants.PATTERN_NUMBER_FORMAT)
-	private Double totalDesconto;
+	private Double totalDiscount;
 	 
 	private String status;
 

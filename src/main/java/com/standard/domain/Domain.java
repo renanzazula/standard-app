@@ -21,13 +21,13 @@ public class Domain implements Serializable {
     private static final long serialVersionUID = -4933949406995695753L;
 
     @ApiModelProperty(value = "codigo")
-    private Long codigo;
+    private Long id;
 
     @ApiModelProperty(value = "nome", required = true)
-    private String nome;
+    private String name;
 
     @ApiModelProperty(value = "descricao", required = true)
-    private String descricao;
+    private String description;
 
     @ApiModelProperty(value = "ativo", notes = "ativo = true, nao ativo = false", required = true)
     private boolean checked;

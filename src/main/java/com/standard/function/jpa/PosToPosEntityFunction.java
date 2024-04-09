@@ -10,16 +10,16 @@ public class PosToPosEntityFunction implements Function<PosEntity, Pos> {
 	@Override
 	public Pos apply(PosEntity input) {
 		Pos output = new Pos();
-		output.setCodigo(input.getId());
-		output.setDataAbertura(input.getOpenDate());
-		output.setHoraAbertura(input.getOpenTime());
-		output.setDataFechamento(input.getCloseDate());
-		output.setHoraFechamento(input.getCloseTime());
-		output.setValorInicial(input.getOpenAmount());
-		output.setValorFinal(input.getCloseAmount());
+		output.setId(input.getId());
+		output.setOpenDate(input.getOpenDate());
+		output.setOpenTime(input.getOpenTime());
+		output.setCloseDate(input.getCloseDate());
+		output.setCloseTime(input.getCloseTime());
+		output.setOpenAmount(input.getOpenAmount());
+		output.setCloseAmount(input.getCloseAmount());
 		output.setTotal(input.getTotal());
-		output.setTotalVendas(input.getTotalOrders());
-		output.setTotalDesconto(input.getTotalDiscount());
+		output.setTotalOrders(input.getTotalOrders());
+		output.setTotalDiscount(input.getTotalDiscount());
 		output.setStatus(input.getStatus().name());		
 		return output;
 	}

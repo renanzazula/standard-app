@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.PaymentMethod;
-import com.standard.service.formaDePagamento.PaymentMethodService;
+import com.standard.service.paymentmethod.PaymentMethodService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,16 +46,16 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
                 .build();
         
         obj = new PaymentMethod();
-        obj.setCodigo(1L);
-        obj.setNome(NOME);
-        obj.setDescricao(DESCRICAO);
+        obj.setId(1L);
+        obj.setName(NOME);
+        obj.setDescription(DESCRICAO);
     }
 
     @Test
     public void testConsultar() throws Exception {
         PaymentMethod formaDePagamento2 = new PaymentMethod();
-        formaDePagamento2.setCodigo(2L);
-        formaDePagamento2.setNome("bob");
+        formaDePagamento2.setId(2L);
+        formaDePagamento2.setName("bob");
 
         List<PaymentMethod> formaDePagamentos = Arrays.asList(obj, formaDePagamento2);
         when(service.findAll()).thenReturn(formaDePagamentos);
@@ -68,7 +68,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.findById(obj.getCodigo())).thenReturn(obj);
+        when(service.findById(obj.getId())).thenReturn(obj);
         mockMvc.perform(get(PaymentMethodController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -79,7 +79,7 @@ public class FormaDePagamentoControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(obj)).thenReturn(obj);
+        when(service.create(obj)).thenReturn(obj);
         mockMvc.perform(post(PaymentMethodController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

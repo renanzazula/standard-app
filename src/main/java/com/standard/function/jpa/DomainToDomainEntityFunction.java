@@ -11,9 +11,9 @@ public class DomainToDomainEntityFunction implements Function<DomainEntity, Doma
 	public Domain apply(DomainEntity input) {
 		Domain output = new Domain();
 		if(input != null){
-			output.setCodigo(input.getId());
-			output.setNome(input.getName());
-			output.setDescricao(input.getDescription());
+			output.setId(input.getId());
+			output.setName(input.getName());
+			output.setDescription(input.getDescription());
 		}
 		return output;
 	}

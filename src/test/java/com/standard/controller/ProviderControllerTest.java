@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Provider;
-import com.standard.service.fornecedor.ProviderService;
+import com.standard.service.provider.ProviderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,8 +49,8 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
     @Test
     public void testConsultar() throws Exception {
         Provider provider2 = new Provider();
-        provider2.setCodigo(2L);
-        provider2.setNome("bob");
+        provider2.setId(2L);
+        provider2.setName("bob");
 
         List<Provider> providers = Arrays.asList(provider, provider2);
         when(service.findAll()).thenReturn(providers);
@@ -63,7 +63,7 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testConsultarByCodigo() throws Exception {
-        when(service.findById(provider.getCodigo())).thenReturn(provider);
+        when(service.findById(provider.getId())).thenReturn(provider);
         mockMvc.perform(get(ProviderController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -74,7 +74,7 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testIncluir() throws Exception {
-        when(service.save(provider)).thenReturn(provider);
+        when(service.create(provider)).thenReturn(provider);
         mockMvc.perform(post(ProviderController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)

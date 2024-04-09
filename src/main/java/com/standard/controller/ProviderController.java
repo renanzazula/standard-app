@@ -1,7 +1,7 @@
 package com.standard.controller;
 
 import com.standard.domain.Provider;
-import com.standard.service.fornecedor.ProviderService;
+import com.standard.service.provider.ProviderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class ProviderController {
 
     @PostMapping
     public ResponseEntity<Provider> save(@RequestBody Provider obj) {
-        return new ResponseEntity<>(providerService.save(obj), HttpStatus.CREATED);
+        return new ResponseEntity<>(providerService.create(obj), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})

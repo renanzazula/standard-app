@@ -45,7 +45,7 @@ public class BaseTest {
     
     // obj commons
     protected PaymentMethod paymentMethod = null;
-    protected Venda venda = null;
+    protected Order order = null;
     protected Pos pos = null;
     protected Brand brand = null;
     protected Subcategory subcategory = null;
@@ -54,21 +54,21 @@ public class BaseTest {
     protected Measure measure = null;
     protected List<ItemsTypeMeasure> itemsTypeMeasure = null;
     protected Domain domain = null;
-    protected Produto produto = null;
-    protected List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida = null;
+    protected Product product = null;
+    protected List<ProductHasItemsTypeMeasure> productHasItemsTypeMeasure = null;
     protected ItemsTypeMeasure itenTipoMedida = null;
-    protected ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
+    protected ProductHasItemsTypeMeasure produtoHasItenTipoMedida = null;
 
     protected void setUpMarca() {
         brand = new Brand();
-        brand.setNome(NOME);
-        brand.setDescricao(DESCRICAO);
+        brand.setName(NOME);
+        brand.setDescription(DESCRICAO);
     }
 
     protected void setUpSubCategoria() {
         subcategory = new Subcategory();
-        subcategory.setNome(NOME);
-        subcategory.setDescricao(DESCRICAO);
+        subcategory.setName(NOME);
+        subcategory.setDescription(DESCRICAO);
     }
 
     protected void setUpCategoria() {
@@ -80,16 +80,16 @@ public class BaseTest {
 
     protected void setUpFormasDePagamento(){
         paymentMethod = new PaymentMethod();
-        paymentMethod.setNome(NOME);
-        paymentMethod.setDescricao(DESCRICAO);
-        paymentMethod.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
+        paymentMethod.setName(NOME);
+        paymentMethod.setDescription(DESCRICAO);
+        paymentMethod.setDiscountPercent(PORCENTAGEM_DESCONTO);
     }
 
     protected void setUpFornecedor() {
         provider = new Provider();
-        provider.setCodigo(1L);
-        provider.setNome(NOME);
-        provider.setDescricao(DESCRICAO);
+        provider.setId(1L);
+        provider.setName(NOME);
+        provider.setDescription(DESCRICAO);
     }
 
     protected void setUpMedida() {
@@ -105,16 +105,16 @@ public class BaseTest {
             itenTipoMedida = new ItemsTypeMeasure();
             switch (i) {
                 case 1:
-                    itenTipoMedida.setValor(VALOR_P);
+                    itenTipoMedida.setAmount(VALOR_P);
                     break;
                 case 2:
-                    itenTipoMedida.setValor(VALOR_L);
+                    itenTipoMedida.setAmount(VALOR_L);
                     break;
                 case 3:
-                    itenTipoMedida.setValor(VALOR_X);
+                    itenTipoMedida.setAmount(VALOR_X);
                     break;
                 case 4:
-                    itenTipoMedida.setValor(VALOR_XL);
+                    itenTipoMedida.setAmount(VALOR_XL);
                     break;
             }
             itemsTypeMeasure.add(itenTipoMedida);
@@ -123,42 +123,42 @@ public class BaseTest {
 
     protected void setUpDominio() {
         domain = new Domain();
-        domain.setCodigo(CODIGO);
-        domain.setNome(NOME);
-        domain.setDescricao(DESCRICAO);
+        domain.setId(CODIGO);
+        domain.setName(NOME);
+        domain.setDescription(DESCRICAO);
         domain.setChecked(true);
     }
 
     protected void setUpProdutoHasItensTipoMedida() {
-        produtoHasItensTipoMedida = new ArrayList<>();
+        productHasItemsTypeMeasure = new ArrayList<>();
         int j = 0;
         for (int i = 1; i < 5; i++) {
-            produtoHasItenTipoMedida = new ProdutoHasItensTipoMedida();
-            produtoHasItenTipoMedida.setQuantidade(QUANTIDADE);
+            produtoHasItenTipoMedida = new ProductHasItemsTypeMeasure();
+            produtoHasItenTipoMedida.setQuantity(QUANTIDADE);
             produtoHasItenTipoMedida.setDomains(new ArrayList<>());
             produtoHasItenTipoMedida.getDomains().add(domain);
             produtoHasItenTipoMedida.setItemsTypeMeasure(measure.getItemsTypeMeasure().get(j));
-            produtoHasItensTipoMedida.add(produtoHasItenTipoMedida);
+            productHasItemsTypeMeasure.add(produtoHasItenTipoMedida);
             j++;
         }
     }
 
     protected void setUpProduto() {
-        produto = new Produto();
-        produto.setCodigo(1L);
-        produto.setBarCode(BAR_0_CODE);
-        produto.setNome(NOME);
-        produto.setStatus(StatusEnum.ATIVO);
-        produto.setDescricao(DESCRICAO);
-        produto.setPreco(10d);
-        produto.setPrecoVenda(10d);
-        produto.setPreco(10d);
-        produto.setPrecoCusto(10d);
-        produto.setPrecoOferta(10d);
-        produto.setDesconto(10d);
-        produto.setPeso(10d);
-        produto.setPorcentagem(1);
-        produto.setPorcentagemDesconto(1);
+        product = new Product();
+        product.setId(1L);
+        product.setBarCode(BAR_0_CODE);
+        product.setName(NOME);
+        product.setStatus(StatusEnum.ATIVO);
+        product.setDescription(DESCRICAO);
+        product.setPrice(10d);
+        product.setSalePrice(10d);
+        product.setPrice(10d);
+        product.setCostPrice(10d);
+        product.setDiscountPrice(10d);
+        product.setDiscount(10d);
+        product.setWeight(10d);
+        product.setPercent(1);
+        product.setDiscountPercent(1);
         // fixme: medida.setfoto
     }
 
@@ -174,14 +174,14 @@ public class BaseTest {
             Category categoryFound = measure.getItemsTypeMeasure().get(j).getCategory();
             assertCategoria(categoryFound, category);
 
-            assertEquals(measure.getItemsTypeMeasure().get(j).getValor(), measure.getItemsTypeMeasure().get(j).getValor());
+            assertEquals(measure.getItemsTypeMeasure().get(j).getAmount(), measure.getItemsTypeMeasure().get(j).getAmount());
         }
     }
 
     protected void assertMarca(Brand expected, Brand found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
     protected void assertCategoria(Category expected, Category found) {
@@ -191,27 +191,27 @@ public class BaseTest {
     }
 
     protected void assertSubCategoria(Subcategory expected, Subcategory found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
     protected void assertFornecedor(Provider expected, Provider found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
     protected void assertDominios(Domain expected, Domain found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
         assertEquals(expected.isChecked(), found.isChecked());
     }
 
-    private void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
+    private void assertProdutoHasItensTipoMedida(List<ProductHasItemsTypeMeasure> produto, List<ProductHasItemsTypeMeasure> found) {
         for (int i = 0; i < found.size(); i++) {
-            assertEquals(found.get(i).getCodigo(), produto.get(i).getCodigo());
+            assertEquals(found.get(i).getId(), produto.get(i).getId());
             assertEquals(found.get(i).getDomains().size(),
                     produto.get(i).getDomains().size());
 
@@ -219,40 +219,40 @@ public class BaseTest {
                 assertDominios(found.get(i).getDomains().get(j),
                         produto.get(i).getDomains().get(j));
             }
-            assertEquals(found.get(i).getQuantidade(), produto.get(i).getQuantidade());
-            assertEquals(found.get(i).getValorUnitario(), produto.get(i).getValorUnitario());
-            assertEquals(found.get(i).getItemsTypeMeasure().getValor(), produto.get(i).getItemsTypeMeasure().getValor());
+            assertEquals(found.get(i).getQuantity(), produto.get(i).getQuantity());
+            assertEquals(found.get(i).getUnitValue(), produto.get(i).getUnitValue());
+            assertEquals(found.get(i).getItemsTypeMeasure().getAmount(), produto.get(i).getItemsTypeMeasure().getAmount());
 
         }
     }
 
-    protected void assertProduto(Produto found, Produto expected) {
-        assertEquals(found.getCodigo(), expected.getCodigo());
+    protected void assertProduto(Product found, Product expected) {
+        assertEquals(found.getId(), expected.getId());
         assertEquals(found.getBarCode(), expected.getBarCode());
-        assertEquals(found.getNome(), expected.getNome());
+        assertEquals(found.getName(), expected.getName());
         assertEquals(found.getStatus(), expected.getStatus());
-        assertEquals(found.getDescricao(), expected.getDescricao());
-        assertEquals(found.getPreco(), expected.getPreco());
-        assertEquals(found.getPrecoVenda(), expected.getPrecoVenda());
-        assertEquals(found.getPreco(), expected.getPreco());
-        assertEquals(found.getPrecoCusto(), expected.getPrecoCusto());
-        assertEquals(found.getPrecoOferta(), expected.getPrecoOferta());
-        assertEquals(found.getDesconto(), expected.getDesconto());
-        assertEquals(found.getPeso(), expected.getPeso());
-        assertEquals(found.getPorcentagem(), expected.getPorcentagem());
-        assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
+        assertEquals(found.getDescription(), expected.getDescription());
+        assertEquals(found.getPrice(), expected.getPrice());
+        assertEquals(found.getSalePrice(), expected.getSalePrice());
+        assertEquals(found.getPrice(), expected.getPrice());
+        assertEquals(found.getCostPrice(), expected.getCostPrice());
+        assertEquals(found.getDiscountPrice(), expected.getDiscountPrice());
+        assertEquals(found.getDiscount(), expected.getDiscount());
+        assertEquals(found.getWeight(), expected.getWeight());
+        assertEquals(found.getPercent(), expected.getPercent());
+        assertEquals(found.getDiscountPercent(), expected.getDiscountPercent());
         assertMarca(found.getBrand(), expected.getBrand());
         assertCategoria(found.getCategory(), expected.getCategory());
         assertSubCategoria(found.getSubcategory(), expected.getSubcategory());
         assertFornecedor(found.getProvider(), expected.getProvider());
         assertMarcaSubCategoriaCategoriaValor(found.getMeasure());
-        assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());
-        assertProdutoHasItensTipoMedida(found.getProdutoHasItensTipoMedida(), expected.getProdutoHasItensTipoMedida());
+        assertEquals(found.getProductHasItemsTypeMeasure().size(), expected.getProductHasItemsTypeMeasure().size());
+        assertProdutoHasItensTipoMedida(found.getProductHasItemsTypeMeasure(), expected.getProductHasItemsTypeMeasure());
     }
 
     protected void asserItensTipoMedida(ItemsTypeMeasure found, ItemsTypeMeasure expected) {
         assertEquals(found.getId(), expected.getId());
-        assertEquals(found.getValor(), expected.getValor());
+        assertEquals(found.getAmount(), expected.getAmount());
         assertEquals(found.getMeasure(), expected.getMeasure());
         assertEquals(found.getBrand(), expected.getBrand());
         assertEquals(found.getCategory(), expected.getCategory());
