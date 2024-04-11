@@ -21,10 +21,11 @@ public class Measure implements Serializable {
 
 	private Long id;
 	private String nome;
-	private String descricao;
+	private String description;
+	private String status;
 
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
-	private Date data;
+	private Date date;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
 	private Date hora;
@@ -38,8 +39,4 @@ public class Measure implements Serializable {
 	private List<Brand> brands;
 	private List<ItemsTypeMeasure> itemsTypeMeasure;
 
-	 
-
-	
-	
 }

@@ -28,8 +28,9 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+
 @Configuration
+@AllArgsConstructor
 public class SecurityBeans {
 
     private final UserSessionService userSessionService;

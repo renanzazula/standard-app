@@ -2,6 +2,7 @@ package com.standard.service.paymentmethod;
 
 import com.standard.BaseTest;
 import com.standard.domain.PaymentMethod;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.PaymentMethodRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -17,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
 public class PaymentMethodServiceImplTestIT extends BaseTest {
 
     @Autowired
@@ -34,7 +37,7 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+    public void create() {
         PaymentMethod saved = service.create(paymentMethod);
         assertNotNull(saved);
         PaymentMethod found = service.findById(saved.getId());
@@ -45,7 +48,7 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    public void update() {
         PaymentMethod update = service.findById(paymentMethod.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -60,20 +63,20 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+    public void findAll() {
         List<PaymentMethod> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+    public void findById() {
         PaymentMethod found = service.findById(paymentMethod.getId());
         assertNotNull(found);
         assertEquals(found.getId(), paymentMethod.getId());
     }
 
     @Test
-    public void excluir() {
+    public void delete() {
 
         PaymentMethod delete = service.findById(paymentMethod.getId());
         assertNotNull(delete);
@@ -81,9 +84,6 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         PaymentMethod found = service.findById(paymentMethod.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
-        assertNull(found.getDiscountPercent());
+        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
     }
 }

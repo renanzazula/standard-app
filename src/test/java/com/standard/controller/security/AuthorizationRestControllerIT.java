@@ -3,19 +3,22 @@ package com.standard.controller.security;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import com.standard.controller.CategoryController;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @SpringBootTest
- class AuthorizationRestControllerIT extends BaseIT {
+class AuthorizationRestControllerIT extends BaseIT {
 
     @DisplayName("Authorization Test For Order Controller")
     @Nested

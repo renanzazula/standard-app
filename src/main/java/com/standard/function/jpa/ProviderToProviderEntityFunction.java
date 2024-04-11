@@ -13,6 +13,7 @@ public class ProviderToProviderEntityFunction implements Function<ProviderEntity
         if (input != null) {
             output.setId(input.getId());
             output.setName(input.getName());
+            output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
             output.setDescription(input.getDescription());
         }
         return output;

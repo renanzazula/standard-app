@@ -2,6 +2,7 @@ package com.standard.service.subcategory;
 
 import com.standard.BaseTest;
 import com.standard.domain.Subcategory;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.SubcategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,27 +10,28 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-@DataJpaTest()
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class SubcategoryServiceImplTestIT extends BaseTest {
+@DataJpaTest
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+ class SubcategoryServiceImplTestIT extends BaseTest {
 
     @Autowired
     private SubcategoryRepository repository;
 
     private SubcategoryService service;
 
-
-
     @BeforeEach
-    public void setUp() {
+     void setUp() {
         service = new SubcategoryServiceImpl(repository);
         subcategory = new Subcategory();
         subcategory.setName(NOME);
@@ -38,9 +40,9 @@ public class SubcategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+     void create() {
         Subcategory saved = service.create(subcategory);
-        
+
         assertNotNull(saved);
 
         Subcategory found = service.findById(saved.getId());
@@ -50,7 +52,7 @@ public class SubcategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+     void update() {
         Subcategory update = service.findById(subcategory.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -63,30 +65,25 @@ public class SubcategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+     void findAll() {
         List<Subcategory> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+     void findById() {
         Subcategory found = service.findById(subcategory.getId());
         assertNotNull(found);
         assertEquals(found.getId(), subcategory.getId());
     }
 
     @Test
-    public void excluir() {
-
+     void delete() {
         Subcategory delete = service.findById(subcategory.getId());
         assertNotNull(delete);
-
         service.delete(delete.getId());
-
         Subcategory found = service.findById(subcategory.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
+        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
     }
-    
+
 }

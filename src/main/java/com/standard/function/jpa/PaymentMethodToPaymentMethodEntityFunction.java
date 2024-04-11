@@ -14,9 +14,10 @@ public class PaymentMethodToPaymentMethodEntityFunction implements Function<Paym
 			output.setId(input.getId());
 			output.setName(input.getName());
 			output.setDescription(input.getDescription());
-			output.setDiscountPercent(input.getDiscountPercent());
 			output.setCreationDate(input.getCreationDate());
 			output.setCreationTime(input.getCreationTime());
+			output.setDiscountPercent(input.getDiscountPercent());
+			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
 		}
 		return output;
 	}

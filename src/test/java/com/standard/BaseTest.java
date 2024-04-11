@@ -2,8 +2,6 @@ package com.standard;
 
 import com.standard.domain.*;
 import com.standard.enums.StatusEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BaseTest {
 
-    @Autowired
-    protected WebApplicationContext wac;
-    
+
     protected static final String API_KEY = "Api-Key";
     protected static final String API_SECRET = "Api-Secret";
     protected static final String API_KEY_VALUE = "standard";
@@ -96,7 +92,7 @@ public class BaseTest {
         measure = new Measure();
         // medida.setCodigo(1l);
         measure.setNome(NOME);
-        measure.setDescricao(DESCRICAO);
+        measure.setDescription(DESCRICAO);
     }
 
     protected void setUpItensTipoMedida() {

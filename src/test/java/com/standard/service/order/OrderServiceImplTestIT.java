@@ -5,25 +5,25 @@ import com.standard.domain.*;
 import com.standard.entity.CustomerEntity;
 import com.standard.enums.OrderStatusEnum;
 import com.standard.repository.*;
-import com.standard.service.pos.PosService;
-import com.standard.service.pos.PosServiceImpl;
+import com.standard.service.brand.BrandService;
+import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.category.CategoryService;
 import com.standard.service.category.CategoryServiceImpl;
 import com.standard.service.domain.DomainService;
 import com.standard.service.domain.DomainServiceImpl;
-import com.standard.service.paymentmethod.PaymentMethodService;
-import com.standard.service.paymentmethod.PaymentMethodServiceImpl;
-import com.standard.service.provider.ProviderService;
-import com.standard.service.provider.ProviderServiceImpl;
-import com.standard.service.brand.BrandService;
-import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.measure.MeasureService;
 import com.standard.service.measure.MeasureServiceImpl;
+import com.standard.service.paymentmethod.PaymentMethodService;
+import com.standard.service.paymentmethod.PaymentMethodServiceImpl;
+import com.standard.service.pos.PosService;
+import com.standard.service.pos.PosServiceImpl;
 import com.standard.service.product.ProductService;
+import com.standard.service.product.ProductServiceImpl;
+import com.standard.service.provider.ProviderService;
+import com.standard.service.provider.ProviderServiceImpl;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -37,49 +37,36 @@ import java.util.List;
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class OrderServiceImplTestIT extends BaseTest {
 
-public class OrderServiceImplTestIT extends BaseTest {
-
+    // Fixme: later
+    CustomerEntity clienteEntity = null;
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
-
     @Autowired
     private PosRepository posRepository;
-
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private MeasureRepository measureRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private SubcategoryRepository subcategoryRepository;
-
     @Autowired
     private BrandRepository brandRepository;
-
     @Autowired
     private DomainRepository domainRepository;
-
     @Autowired
     private ProviderRepository providerRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ItemsTypeMeasureRepository itemsTypeMeasureRepository;
-
     @Autowired
     private ProductHasItemsTypeMeasureRepository productHasItemsTypeMeasureRepository;
-
-
     private BrandService brandService;
     private ProviderService providerService;
     private ProductService productService;
@@ -91,13 +78,10 @@ public class OrderServiceImplTestIT extends BaseTest {
     private PosService posService;
     private PaymentMethodService paymentMethodService;
 
-    // Fixme: later
-    CustomerEntity clienteEntity = null;
-
     @BeforeEach
-    public void setUp() {
+    void setUp() {
 
-        posService =  new PosServiceImpl(posRepository);
+        posService = new PosServiceImpl(posRepository);
 
         brandService = new BrandServiceImpl(brandRepository);
         subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
@@ -107,10 +91,9 @@ public class OrderServiceImplTestIT extends BaseTest {
         measureService = new MeasureServiceImpl(measureRepository, categoryRepository,
                 subcategoryRepository, brandRepository);
 
-//        productService = new ProductServiceImpl(productRepository, measureRepository,
-//                domainRepository, providerRepository,
-//                categoryRepository, subcategoryRepository,
-//                brandRepository, itemsTypeMeasureRepository);
+        productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository,
+                providerRepository, categoryRepository, subcategoryRepository,
+                itemsTypeMeasureRepository);
 
         orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository,
                 customerRepository, productHasItemsTypeMeasureRepository, posService);
@@ -195,34 +178,9 @@ public class OrderServiceImplTestIT extends BaseTest {
         productHasItemsTypeMeasure.setUnitValue(VALOR_UNITARIO);
         orderHasItemProduct.setProductHasItemsTypeMeasure(productHasItemsTypeMeasure);
 
-        List<OrderHasItemProduct> vendaHasItensProdutos = new ArrayList<>();
-        vendaHasItensProdutos.add(orderHasItemProduct);
-        order.setOrderHasItemProduct(vendaHasItensProdutos);
+        List<OrderHasItemProduct> orderHasItemProducts = new ArrayList<>();
+        orderHasItemProducts.add(orderHasItemProduct);
+        order.setOrderHasItemProduct(orderHasItemProducts);
     }
 
-    @Test
-    public void incluir() {
-        orderService.create(order);
-    }
-
-    @Test
-    public void alterar() {
-    }
-
-    @Test
-    public void cancelar() {
-    }
-
-    @Test
-    public void consultarByCodigo() {
-    }
-
-    @Test
-    public void consultar() {
-        orderService.findAll();
-    }
-
-    @Test
-    public void filtrarVenda() {
-    }
 }

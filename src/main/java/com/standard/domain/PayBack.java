@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recebimento implements Serializable {
+public class PayBack implements Serializable {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 

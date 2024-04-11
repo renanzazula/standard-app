@@ -557,13 +557,13 @@ LOCK TABLES `produto_has_itens_tipo_medida_has_dominio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `recebimento`
+-- Table structure for table `payBack`
 --
 
-DROP TABLE IF EXISTS `recebimento`;
+DROP TABLE IF EXISTS `payBack`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `recebimento` (
+CREATE TABLE `payBack` (
   `codigo` bigint NOT NULL AUTO_INCREMENT,
   `alterado_por` bigint DEFAULT NULL,
   `criado_por` bigint DEFAULT NULL,
@@ -585,12 +585,12 @@ CREATE TABLE `recebimento` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `recebimento`
+-- Dumping data for table `payBack`
 --
 
-LOCK TABLES `recebimento` WRITE;
-/*!40000 ALTER TABLE `recebimento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recebimento` ENABLE KEYS */;
+LOCK TABLES `payBack` WRITE;
+/*!40000 ALTER TABLE `payBack` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payBack` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

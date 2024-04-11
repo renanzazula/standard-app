@@ -1,18 +1,18 @@
 package com.standard.service.payback;
 
-import com.standard.domain.Recebimento;
+import com.standard.domain.PayBack;
 
 import java.util.List;
 
 public interface PayBackService {
 
-    Recebimento create(Recebimento objct);
+    PayBack create(PayBack objct);
 
-    Recebimento update(Long id, Recebimento objct);
+    PayBack update(Long id, PayBack objct);
 
     void delete(Long id);
 
-    List<Recebimento> findAll();
+    List<PayBack> findAll();
 
-    Recebimento getById(Long id);
+    PayBack getById(Long id);
 }

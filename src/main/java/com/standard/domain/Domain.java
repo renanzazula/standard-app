@@ -20,13 +20,13 @@ public class Domain implements Serializable {
      */
     private static final long serialVersionUID = -4933949406995695753L;
 
-    @ApiModelProperty(value = "codigo")
+    @ApiModelProperty(value = "id")
     private Long id;
 
     @ApiModelProperty(value = "nome", required = true)
     private String name;
 
-    @ApiModelProperty(value = "descricao", required = true)
+    @ApiModelProperty(value = "description", required = true)
     private String description;
 
     @ApiModelProperty(value = "ativo", notes = "ativo = true, nao ativo = false", required = true)
@@ -37,4 +37,6 @@ public class Domain implements Serializable {
 
     @JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
     private Date hora;
+
+    private String status;
 }

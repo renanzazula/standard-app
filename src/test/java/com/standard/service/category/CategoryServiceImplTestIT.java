@@ -3,27 +3,28 @@ package com.standard.service.category;
 import com.standard.BaseTest;
 import com.standard.domain.Category;
 import com.standard.domain.Subcategory;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.CategoryRepository;
 import com.standard.repository.SubcategoryRepository;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CategoryServiceImplTestIT extends BaseTest {
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+class CategoryServiceImplTestIT extends BaseTest {
 
     @Autowired
     private CategoryRepository repository;
@@ -36,7 +37,7 @@ public class CategoryServiceImplTestIT extends BaseTest {
     private Category obj = null;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new CategoryServiceImpl(repository, subcategoryRepository);
         SubcategoryService subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
 
@@ -56,7 +57,7 @@ public class CategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+    void create() {
         Category saved = service.create(obj);
         assertNotNull(saved);
 
@@ -67,7 +68,7 @@ public class CategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    void update() {
         Category update = service.findById(obj.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -80,27 +81,30 @@ public class CategoryServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+    void findAll() {
         List<Category> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+    void findById() {
         Category found = service.findById(obj.getId());
         assertNotNull(found);
         assertEquals(found.getId(), obj.getId());
     }
 
     @Test
-    public void excluir() {
-        Category delete = service.findById(obj.getId());
-        assertNotNull(delete);
-        service.delete(delete.getId());
+    void delete() {
+        List<Category> foundList = service.findAll();
+        assertNotNull(foundList);
 
-        Category found = service.findById(obj.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
+        for (Category category : foundList) {
+            Category delete = service.findById(category.getId());
+            assertNotNull(delete);
+            service.delete(delete.getId());
+
+            Category found = service.findById(delete.getId());
+            assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
+        }
     }
 }

@@ -1,40 +1,39 @@
 package com.standard.service.product;
 
 import com.standard.BaseTest;
+import com.standard.domain.Brand;
 import com.standard.domain.Product;
 import com.standard.domain.Provider;
-import com.standard.domain.Brand;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.*;
+import com.standard.service.brand.BrandService;
+import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.category.CategoryService;
 import com.standard.service.category.CategoryServiceImpl;
 import com.standard.service.domain.DomainService;
 import com.standard.service.domain.DomainServiceImpl;
-import com.standard.service.provider.ProviderService;
-import com.standard.service.provider.ProviderServiceImpl;
-import com.standard.service.brand.BrandService;
-import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.measure.MeasureService;
 import com.standard.service.measure.MeasureServiceImpl;
+import com.standard.service.provider.ProviderService;
+import com.standard.service.provider.ProviderServiceImpl;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ProductServiceImplTestIT extends BaseTest {
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+ class ProductServiceImplTestIT extends BaseTest {
 
 
     @Autowired
@@ -70,9 +69,8 @@ public class ProductServiceImplTestIT extends BaseTest {
     private MeasureService measureService;
 
 
-
     @BeforeEach
-    public void setUp() {
+    void setUp() {
 
         brandService = new BrandServiceImpl(brandRepository);
         subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
@@ -81,10 +79,10 @@ public class ProductServiceImplTestIT extends BaseTest {
         domainService = new DomainServiceImpl(domainRepository);
         measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository,
                 brandRepository);
-//        productService = new ProductServiceImpl(productRepository, measureRepository,
-//                domainRepository, providerRepository,
-//                categoryRepository, subcategoryRepository,
-//                brandRepository, itemsTypeMeasureRepository);
+
+        productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository,
+                providerRepository, categoryRepository, subcategoryRepository,
+                itemsTypeMeasureRepository);
 
         // requeridos
         setUpMarca();
@@ -129,14 +127,14 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+     void create() {
         Product productSave = productService.create(product);
         Product found = productService.getById(productSave.getId());
         assertProduto(found, productSave);
     }
 
     @Test
-    public void alterar() {
+     void update() {
         product = productService.create(product);
 
         Product found = productService.getById(product.getId());
@@ -201,7 +199,7 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar_produto_Marca() {
+     void updateProductAndBrand() {
 
         Brand brandToUpdate = new Brand();
         brandToUpdate.setName(NOME + "_update");
@@ -224,17 +222,17 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar_produto_Categoria() {
+     void updateProductCategory() {
         // TODO:
     }
 
     @Test
-    public void alterar_produto_SubCategoria() {
+     void updateProductSubCategory() {
         // TODO:
     }
 
     @Test
-    public void alterar_produto_Fornecedor() {
+     void updateProductProvide() {
 
         Provider providerToUpdate = new Provider();
         providerToUpdate.setName(NOME + "_update");
@@ -257,16 +255,19 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void excluir() {
+     void delete() {
         product = productService.create(product);
+        Product toDelete = productService.getById(product.getId());
+        assertNotNull(toDelete);
+        productService.delete(toDelete.getId());
+
         Product found = productService.getById(product.getId());
-        assertNotNull(found);
-        productService.delete(found.getId());
+        assertEquals(found.getStatus(), StatusEnum.INATIVO);
     }
 
 
     @Test
-    public void consultarByCodigo() {
+     void getById() {
         product = productService.create(product);
         Product found = productService.getById(product.getId());
         assertNotNull(found);
@@ -274,7 +275,7 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultarByBarCode() {
+     void getByBarCode() {
         product = productService.create(product);
         Product found = productService.getByBarCode(product.getBarCode());
         assertNotNull(found);
@@ -282,7 +283,7 @@ public class ProductServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+     void findAll() {
         product = productService.create(product);
         List<Product> products = productService.findAll();
         assertNotNull(products);

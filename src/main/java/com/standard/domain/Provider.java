@@ -19,6 +19,7 @@ public class Provider implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	private String status;
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
 	private Date data;
 

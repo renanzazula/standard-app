@@ -1,16 +1,16 @@
 package com.standard.function.jpa;
 
-import com.standard.domain.Recebimento;
+import com.standard.domain.PayBack;
 import com.standard.entity.PayBackEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
 
-public class PayBackEntityToPayBackFunction implements Function<PayBackEntity, Recebimento> {
+public class PayBackEntityToPayBackFunction implements Function<PayBackEntity, PayBack> {
 
     @Override
-    public Recebimento apply(PayBackEntity input) {
-        Recebimento output = new Recebimento();
+    public PayBack apply(PayBackEntity input) {
+        PayBack output = new PayBack();
         if (input != null) {
             output.setId(input.getId());
             output.setName(input.getName());

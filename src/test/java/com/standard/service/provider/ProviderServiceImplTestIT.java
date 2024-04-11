@@ -2,6 +2,7 @@ package com.standard.service.provider;
 
 import com.standard.BaseTest;
 import com.standard.domain.Provider;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.ProviderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -17,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
 public class ProviderServiceImplTestIT extends BaseTest {
 
     @Autowired
@@ -34,7 +37,7 @@ public class ProviderServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+    public void create() {
         Provider saved = service.create(provider);
         assertNotNull(saved);
 
@@ -45,7 +48,7 @@ public class ProviderServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    public void update() {
         Provider update = service.findById(provider.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -58,30 +61,26 @@ public class ProviderServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+    public void findAll() {
         List<Provider> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+    public void findById() {
         Provider found = service.findById(provider.getId());
         assertNotNull(found);
         assertEquals(found.getId(), provider.getId());
     }
 
     @Test
-    public void excluir() {
-
+    public void delete() {
         Provider delete = service.findById(provider.getId());
         assertNotNull(delete);
 
         service.delete(delete.getId());
-
         Provider found = service.findById(provider.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
+        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
     }
 
 }

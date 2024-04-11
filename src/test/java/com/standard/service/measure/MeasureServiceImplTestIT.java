@@ -1,38 +1,40 @@
 package com.standard.service.measure;
 
 import com.standard.BaseTest;
-import com.standard.domain.Category;
 import com.standard.domain.Brand;
+import com.standard.domain.Category;
 import com.standard.domain.Measure;
 import com.standard.domain.Subcategory;
-import com.standard.repository.CategoryRepository;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.BrandRepository;
+import com.standard.repository.CategoryRepository;
 import com.standard.repository.MeasureRepository;
 import com.standard.repository.SubcategoryRepository;
-import com.standard.service.category.CategoryService;
-import com.standard.service.category.CategoryServiceImpl;
 import com.standard.service.brand.BrandService;
 import com.standard.service.brand.BrandServiceImpl;
+import com.standard.service.category.CategoryService;
+import com.standard.service.category.CategoryServiceImpl;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MeasureServiceImplTestIT extends BaseTest {
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+class MeasureServiceImplTestIT extends BaseTest {
 
+    @Autowired
+    private BrandRepository brandRepository;
 
     @Autowired
     private MeasureRepository measureRepository;
@@ -43,16 +45,13 @@ public class MeasureServiceImplTestIT extends BaseTest {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
 
-    @Autowired
-    private BrandRepository brandRepository;
-
     private BrandService brandService;
     private MeasureService measureService;
-    private SubcategoryService subcategoryService;
     private CategoryService categoryService;
+    private SubcategoryService subcategoryService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         measureService = new MeasureServiceImpl(measureRepository, categoryRepository,
                 subcategoryRepository, brandRepository);
 
@@ -82,7 +81,7 @@ public class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void incluir() {
+    void create() {
         Measure measureSave = measureService.create(measure);
         assertEquals(measureSave.getItemsTypeMeasure().size(), measure.getItemsTypeMeasure().size());
 
@@ -92,12 +91,12 @@ public class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    void alterar() {
         // todo:
     }
 
     @Test
-    public void alterarMarca() {
+    void updateBrand() {
 
         measure = measureService.create(measure);
 
@@ -125,7 +124,7 @@ public class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterarSubCategoria() {
+    void updateSubCategory() {
 
         measure = measureService.create(measure);
 
@@ -153,8 +152,7 @@ public class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterarCategoria() {
-
+    void updateCategory() {
         measure = measureService.create(measure);
 
         Category categoryUpdate = new Category();
@@ -170,7 +168,6 @@ public class MeasureServiceImplTestIT extends BaseTest {
         toUpdate.setBrand(brand);
 
         Measure updated = measureService.update(measure.getId(), toUpdate);
-
         for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
             Category categoryFound = updated.getItemsTypeMeasure().get(i).getCategory();
             assertCategoria(categoryFound, categoryUpdate);
@@ -182,39 +179,34 @@ public class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void excluir() {
+    void delete() {
         measure = measureService.create(measure);
-
         Measure delete = measureService.findById(measure.getId());
         assertNotNull(delete);
 
         measureService.delete(delete.getId());
-
         Measure found = measureService.findById(measure.getId());
-        assertNull(found.getId());
-        assertNull(found.getNome());
-        assertNull(found.getDescricao());
-
+        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
     }
 
     @Test
-    public void consultar() {
+    void findAll() {
         List<Measure> measures = measureService.findAll();
         assertNotNull(measures);
     }
 
     @Test
-    public void consultarByCodigo() {
+    void findById() {
         measure = measureService.create(measure);
         Measure measureFound = measureService.findById(measure.getId());
         assertEquals(measureFound.getId(), measure.getId());
         assertEquals(measureFound.getNome(), measure.getNome());
-        assertEquals(measureFound.getDescricao(), measure.getDescricao());
+        assertEquals(measureFound.getDescription(), measure.getDescription());
         assertMarcaSubCategoriaCategoriaValor(measureFound);
     }
 
     @Test
-    public void consultarByCategoriaSubCategoriaMarca() {
+    void findByCategorySubcategoryAndBrand() {
         // TODO
     }
 }

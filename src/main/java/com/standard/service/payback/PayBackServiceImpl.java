@@ -1,6 +1,6 @@
 package com.standard.service.payback;
 
-import com.standard.domain.Recebimento;
+import com.standard.domain.PayBack;
 import com.standard.entity.PayBackEntity;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.PosRepository;
@@ -22,23 +22,23 @@ public class PayBackServiceImpl implements PayBackService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public Recebimento create(Recebimento recebimento) {
+    public PayBack create(PayBack payBack) {
         PayBackEntity entity =  new PayBackEntity();
-        entity.setId(recebimento.getId());
-        entity.setName(recebimento.getName());
-        entity.setDescription(recebimento.getDescription());
-        entity.setAmount(recebimento.getValor());
-        if(recebimento.getPos() != null){
-            entity.setPos(posRepository.getOne(recebimento.getPos().getId()));
+        entity.setId(payBack.getId());
+        entity.setName(payBack.getName());
+        entity.setDescription(payBack.getDescription());
+        entity.setAmount(payBack.getValor());
+        if(payBack.getPos() != null){
+            entity.setPos(posRepository.getOne(payBack.getPos().getId()));
         }
-        if(recebimento.getCustomer() != null){
-            entity.setCustomer(customerRepository.getOne(recebimento.getCustomer().getId()));
+        if(payBack.getCustomer() != null){
+            entity.setCustomer(customerRepository.getOne(payBack.getCustomer().getId()));
         }
         return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.saveAndFlush(entity));
     }
 
     @Override
-    public Recebimento update(Long id, Recebimento payBack) {
+    public PayBack update(Long id, PayBack payBack) {
         PayBackEntity entity = payBackRepository.getById(id);
         entity.setId(payBack.getId());
         entity.setName(payBack.getName());
@@ -59,12 +59,12 @@ public class PayBackServiceImpl implements PayBackService {
     }
 
     @Override
-    public List<Recebimento> findAll() {
+    public List<PayBack> findAll() {
         return payBackRepository.findAll().stream().map(JpaFunctions.payBackEntityToPayBack).collect(Collectors.toList());
     }
 
     @Override
-    public Recebimento getById(Long id) {
+    public PayBack getById(Long id) {
         return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
     }
 }

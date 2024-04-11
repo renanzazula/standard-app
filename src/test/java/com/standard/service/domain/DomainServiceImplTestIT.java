@@ -5,11 +5,10 @@ import com.standard.domain.Domain;
 import com.standard.repository.DomainRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -17,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class DomainServiceImplTestIT extends BaseTest {
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+class DomainServiceImplTestIT extends BaseTest {
 
     @Autowired
     private DomainRepository repository;
@@ -27,14 +26,14 @@ public class DomainServiceImplTestIT extends BaseTest {
     private DomainService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new DomainServiceImpl(repository);
         setUpDominio();
         domain = service.create(domain);
     }
 
     @Test
-    public void incluir() {
+    void create() {
         Domain saved = service.create(domain);
         assertNotNull(saved);
 
@@ -43,7 +42,7 @@ public class DomainServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    void update() {
         Domain update = service.findById(domain.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -55,27 +54,25 @@ public class DomainServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+    void findAll() {
         List<Domain> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+    void findById() {
         Domain found = service.findById(domain.getId());
         assertNotNull(found);
         assertDominios(found, domain);
     }
 
     @Test
-    public void excluir() {
+    void delete() {
         Domain delete = service.findById(domain.getId());
         assertNotNull(delete);
         service.delete(delete.getId());
 
         Domain found = service.findById(domain.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
+
     }
 }

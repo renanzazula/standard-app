@@ -2,24 +2,25 @@ package com.standard.service.brand;
 
 import com.standard.BaseTest;
 import com.standard.domain.Brand;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.BrandRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest()
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BrandServiceImplTestIT extends BaseTest {
+@DataJpaTest
+@Sql("/scripts/dataset.sql")
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+class BrandServiceImplTestIT extends BaseTest {
 
     @Autowired
     private BrandRepository repository;
@@ -27,14 +28,14 @@ public class BrandServiceImplTestIT extends BaseTest {
     private BrandService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new BrandServiceImpl(repository);
         setUpMarca();
         brand = service.create(brand);
     }
 
     @Test
-    public void incluir() {
+    void create() {
         Brand saved = service.create(brand);
         assertNotNull(saved);
 
@@ -45,7 +46,7 @@ public class BrandServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void alterar() {
+    void update() {
         Brand update = service.findById(brand.getId());
         assertNotNull(update);
         update.setName(NOME_UPDATE);
@@ -58,20 +59,20 @@ public class BrandServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void consultar() {
+    void findAll() {
         List<Brand> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void consultarByCodigo() {
+    void findById() {
         Brand found = service.findById(brand.getId());
         assertNotNull(found);
         assertEquals(found.getId(), brand.getId());
     }
 
     @Test
-    public void excluir() {
+    void delete() {
 
         Brand delete = service.findById(brand.getId());
         assertNotNull(delete);
@@ -79,8 +80,6 @@ public class BrandServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         Brand found = service.findById(brand.getId());
-        assertNull(found.getId());
-        assertNull(found.getName());
-        assertNull(found.getDescription());
+        assertEquals(found.getStatus(), StatusEnum.INATIVO);
     }
 }
