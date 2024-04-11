@@ -20,7 +20,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn clean install -DskipTests
+      - run: mvn clean install
 
       - run: mvn dependency:go-offline
 
@@ -28,6 +28,3 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-
-      - store_test_results:
-          path: target/surefire-reports
