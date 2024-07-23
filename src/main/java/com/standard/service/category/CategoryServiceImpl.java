@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public void delete(Long id) {
 		CategoryEntity categoryDB = repository.getOne(id);
 		if(categoryDB != null) {
-			categoryDB.setStatus(StatusEnum.INATIVO);
+			categoryDB.setStatus(StatusEnum.DISABLE);
 		}
 		repository.saveAndFlush(categoryDB);
 	}

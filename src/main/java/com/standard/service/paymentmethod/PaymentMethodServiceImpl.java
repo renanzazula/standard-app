@@ -47,7 +47,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     public void delete(Long id) {
         PaymentMethodEntity paymentMethodDB = paymentMethodRepository.getOne(id);
         if(paymentMethodDB != null) {
-            paymentMethodDB.setStatus(StatusEnum.INATIVO);
+            paymentMethodDB.setStatus(StatusEnum.DISABLE);
         }
         paymentMethodRepository.save(paymentMethodDB);
     }

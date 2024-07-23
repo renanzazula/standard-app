@@ -33,7 +33,7 @@ public class PosServiceImpl implements PosService {
 		posEntity.setTotal((double) 0);
 		posEntity.setTotalDiscount((double) 0);
 		posEntity.setTotalOrders((double) 0);
-		posEntity.setStatus(StatusPOSEnum.A);
+		posEntity.setStatus(StatusPOSEnum.OPEN);
 		posEntity.setOpenDate(new Date());
 		posEntity.setOpenTime(new Date());
 		return  JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
@@ -43,7 +43,7 @@ public class PosServiceImpl implements PosService {
 	@Transactional
 	public Pos closePos(Pos pos) {
 		PosEntity posEntity = repository.getOne(pos.getId());
-		posEntity.setStatus(StatusPOSEnum.F);
+		posEntity.setStatus(StatusPOSEnum.CLOSE);
 		posEntity.setCloseDate(new Date());
 		posEntity.setCloseTime(new Date());
 		return  JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
@@ -65,7 +65,7 @@ public class PosServiceImpl implements PosService {
 			pos.setTotalOrders((double) 0);
 			pos.setTotalDiscount((double) 0);
 			pos.setTotal((double) 0);
-			pos.setStatus(StatusPOSEnum.F.toString());
+			pos.setStatus(StatusPOSEnum.CLOSE.toString());
 			return pos;
  		}
 	}

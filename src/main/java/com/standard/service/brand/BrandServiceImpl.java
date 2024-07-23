@@ -42,7 +42,7 @@ public class BrandServiceImpl implements BrandService {
 	@Transactional
 	public void delete(Long id) {
 		BrandEntity brandDB = brandRepository.getById(id);
-		brandDB.setStatus(StatusEnum.INATIVO);
+		brandDB.setStatus(StatusEnum.DISABLE);
 		brandRepository.save(brandDB);
 	}
 

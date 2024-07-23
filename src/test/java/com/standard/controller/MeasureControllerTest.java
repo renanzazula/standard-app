@@ -54,11 +54,11 @@ public class MeasureControllerTest extends AbstractRestControllerTest {
                 .apply(springSecurity())
                 .build();
 
-        setUpMedida();
+        setUpMeasure();
     }
 
     @Test
-    public void testConsultar() throws Exception {
+    public void testFindAll() throws Exception {
         Measure measure2 = new Measure();
         measure2.setId(2L);
         measure2.setNome("bob");
@@ -73,27 +73,27 @@ public class MeasureControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testConsultarByCodigo() throws Exception {
-        setUpMedida();
+    public void testFindById() throws Exception {
+        setUpMeasure();
         when(service.findById(measure.getId())).thenReturn(measure);
         mockMvc.perform(get(MeasureController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-                //.andExpect(jsonPath("$.nome", equalTo(NOME)))
-                //.andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                //.andExpect(jsonPath("$.name", equalTo(NOME)))
+                //.andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
     }
 
     @Test
-    public void testIncluir() throws Exception {
+    public void testCreate() throws Exception {
         when(service.create(measure)).thenReturn(measure);
         mockMvc.perform(post(MeasureController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
@@ -105,14 +105,14 @@ public class MeasureControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() throws Exception {
+    public void testUpdate() throws Exception {
         when(service.update(1L, measure)).thenReturn(measure);
         mockMvc.perform(put(MeasureController.BASE_URL+"/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 }

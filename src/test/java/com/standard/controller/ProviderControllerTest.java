@@ -45,11 +45,11 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
                 .build();
         
         
-        setUpFornecedor();
+        setUpProvider();
     }
 
     @Test
-    public void testConsultar() throws Exception {
+    public void testFindAll() throws Exception {
         Provider provider2 = new Provider();
         provider2.setId(2L);
         provider2.setName("bob");
@@ -64,26 +64,26 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testConsultarByCodigo() throws Exception {
+    public void testFindById() throws Exception {
         when(service.findById(provider.getId())).thenReturn(provider);
         mockMvc.perform(get(ProviderController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
-    public void testIncluir() throws Exception {
+    public void testCreate() throws Exception {
         when(service.create(provider)).thenReturn(provider);
         mockMvc.perform(post(ProviderController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(provider)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
@@ -95,14 +95,14 @@ public class ProviderControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() throws Exception {
+    public void testUpdate() throws Exception {
         when(service.update(1L, provider)).thenReturn(provider);
         mockMvc.perform(put(ProviderController.BASE_URL+"/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(provider)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 }

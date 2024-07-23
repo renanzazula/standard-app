@@ -76,7 +76,7 @@ public class MeasureServiceImpl implements MeasureService {
 	public void delete(Long id) {
 		MeasureEntity measureDB = measureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if (measureDB != null){
-			measureDB.setStatus(StatusEnum.INATIVO);
+			measureDB.setStatus(StatusEnum.DISABLE);
 		}
         assert measureDB != null;
         measureRepository.save(measureDB);

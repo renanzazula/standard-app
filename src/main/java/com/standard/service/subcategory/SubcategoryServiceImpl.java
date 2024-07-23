@@ -46,7 +46,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	public void delete(Long id) {
 		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if(subcategoryDB != null){
-			subcategoryDB.setStatus(StatusEnum.INATIVO);
+			subcategoryDB.setStatus(StatusEnum.DISABLE);
 		}
 		subcategoryRepository.save(subcategoryDB);
 	}

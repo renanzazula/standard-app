@@ -44,14 +44,14 @@ class CategoryServiceImplTestIT extends BaseTest {
         List<Subcategory> subcategories = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Subcategory subcategory = new Subcategory();
-            subcategory.setName(NOME + "_" + i);
-            subcategory.setDescription(DESCRICAO + "_" + i);
+            subcategory.setName(NAME + "_" + i);
+            subcategory.setDescription(DESCRIPTION + "_" + i);
             subcategories.add(subcategoryService.create(subcategory));
         }
 
         obj = new Category();
-        obj.setName(NOME);
-        obj.setDescription(DESCRICAO);
+        obj.setName(NAME);
+        obj.setDescription(DESCRIPTION);
         obj.setSubcategories(subcategories);
         obj = service.create(obj);
     }
@@ -71,8 +71,8 @@ class CategoryServiceImplTestIT extends BaseTest {
     void update() {
         Category update = service.findById(obj.getId());
         assertNotNull(update);
-        update.setName(NOME_UPDATE);
-        update.setDescription(DESCRICAO_UPDATE);
+        update.setName(NAME_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
 
         Category updated = service.update(update.getId(), update);
         assertEquals(update.getId(), updated.getId());
@@ -104,7 +104,7 @@ class CategoryServiceImplTestIT extends BaseTest {
             service.delete(delete.getId());
 
             Category found = service.findById(delete.getId());
-            assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
+            assertEquals(found.getStatus(), StatusEnum.DISABLE.name());
         }
     }
 }

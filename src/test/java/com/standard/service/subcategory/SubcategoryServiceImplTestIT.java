@@ -6,13 +6,10 @@ import com.standard.enums.StatusEnum;
 import com.standard.repository.SubcategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
@@ -34,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
      void setUp() {
         service = new SubcategoryServiceImpl(repository);
         subcategory = new Subcategory();
-        subcategory.setName(NOME);
-        subcategory.setDescription(DESCRICAO);
+        subcategory.setName(NAME);
+        subcategory.setDescription(DESCRIPTION);
         subcategory = service.create(subcategory);
     }
 
@@ -55,8 +52,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
      void update() {
         Subcategory update = service.findById(subcategory.getId());
         assertNotNull(update);
-        update.setName(NOME_UPDATE);
-        update.setDescription(DESCRICAO_UPDATE);
+        update.setName(NAME_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
 
         Subcategory updated = service.update(update.getId(), update);
         assertEquals(update.getId(), updated.getId());
@@ -83,7 +80,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         assertNotNull(delete);
         service.delete(delete.getId());
         Subcategory found = service.findById(subcategory.getId());
-        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
+        assertEquals(found.getStatus(), StatusEnum.DISABLE.name());
     }
 
 }

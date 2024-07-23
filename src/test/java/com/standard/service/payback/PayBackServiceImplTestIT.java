@@ -39,7 +39,6 @@ class PayBackServiceImplTestIT extends BaseTest {
     private PosRepository posRepository;
 
     private PayBackService payBackService;
-    private PosService posService;
 
     // Fixme: later
     CustomerEntity customerEntity = null;
@@ -48,7 +47,7 @@ class PayBackServiceImplTestIT extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        posService =  new PosServiceImpl(posRepository);
+        PosService posService = new PosServiceImpl(posRepository);
         payBackService = new PayBackServiceImpl(payBackRepository, posRepository, customerRepository);
 
         customerEntity = new CustomerEntity();
@@ -62,8 +61,8 @@ class PayBackServiceImplTestIT extends BaseTest {
         pos = posService.openPos(pos);
 
         payBack = new PayBack();
-        payBack.setName(NOME);
-        payBack.setDescription(DESCRICAO);
+        payBack.setName(NAME);
+        payBack.setDescription(DESCRIPTION);
         payBack.setValor(10.0);
         payBack.setPos(pos);
         payBack.setCustomer(customer);
@@ -87,8 +86,8 @@ class PayBackServiceImplTestIT extends BaseTest {
     void update() {
         payBack = payBackService.create(payBack);
         PayBack toUpdate = payBackService.getById(payBack.getId());
-        toUpdate.setName(NOME_UPDATE);
-        toUpdate.setDescription(DESCRICAO_UPDATE);
+        toUpdate.setName(NAME_UPDATE);
+        toUpdate.setDescription(DESCRIPTION_UPDATE);
         toUpdate.setValor(15.0);
 
         PayBack toUpdated = payBackService.update(payBack.getId(), toUpdate);

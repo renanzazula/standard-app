@@ -54,12 +54,12 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
         
         obj = new Subcategory();
         obj.setId(1L);
-        obj.setName(NOME);
-        obj.setDescription(DESCRICAO);
+        obj.setName(NAME);
+        obj.setDescription(DESCRIPTION);
     }
 
     @Test
-    public void testConsultar() throws Exception {
+    public void testFindAll() throws Exception {
         Subcategory subcategory2 = new Subcategory();
         subcategory2.setId(2L);
         subcategory2.setName("bob");
@@ -74,26 +74,26 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testConsultarByCodigo() throws Exception {
+    public void testFindById() throws Exception {
         when(service.findById(obj.getId())).thenReturn(obj);
         mockMvc.perform(get(SubcategoryController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
-    public void testIncluir() throws Exception {
+    public void testCreate() throws Exception {
         when(service.create(obj)).thenReturn(obj);
         mockMvc.perform(post(SubcategoryController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
@@ -105,14 +105,14 @@ public class SubcategoryControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() throws Exception {
+    public void testUpdate() throws Exception {
         when(service.update(1L,obj)).thenReturn(obj);
         mockMvc.perform(put(SubcategoryController.BASE_URL+"/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 }

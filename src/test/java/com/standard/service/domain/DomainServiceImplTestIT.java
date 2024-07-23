@@ -28,7 +28,7 @@ class DomainServiceImplTestIT extends BaseTest {
     @BeforeEach
     void setUp() {
         service = new DomainServiceImpl(repository);
-        setUpDominio();
+        setUpDomain();
         domain = service.create(domain);
     }
 
@@ -38,19 +38,19 @@ class DomainServiceImplTestIT extends BaseTest {
         assertNotNull(saved);
 
         Domain found = service.findById(saved.getId());
-        assertDominios(saved, found);
+        assertDomain(saved, found);
     }
 
     @Test
     void update() {
         Domain update = service.findById(domain.getId());
         assertNotNull(update);
-        update.setName(NOME_UPDATE);
-        update.setDescription(DESCRICAO_UPDATE);
+        update.setName(NAME_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
         update.setChecked(false);
 
         Domain updated = service.update(update.getId(), update);
-        assertDominios(update, updated);
+        assertDomain(update, updated);
     }
 
     @Test
@@ -63,7 +63,7 @@ class DomainServiceImplTestIT extends BaseTest {
     void findById() {
         Domain found = service.findById(domain.getId());
         assertNotNull(found);
-        assertDominios(found, domain);
+        assertDomain(found, domain);
     }
 
     @Test

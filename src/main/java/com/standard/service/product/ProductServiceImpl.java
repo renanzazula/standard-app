@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 		productDB.setId(product.getId());
 		productDB.setBarCode(product.getBarCode());
 		productDB.setName(product.getName());
-		productDB.setStatus(StatusEnum.ATIVO);
+		productDB.setStatus(StatusEnum.ENABLE);
 		productDB.setDescription(product.getDescription());
 		productDB.setPrice(product.getPrice());
 		productDB.setSalePrice(product.getSalePrice());
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void delete(Long id) {
 		ProductEntity productDB = productRepository.getById(id);
-		productDB.setStatus(StatusEnum.INATIVO);
+		productDB.setStatus(StatusEnum.DISABLE);
 		productRepository.saveAndFlush(productDB);
 	}
 

@@ -85,25 +85,25 @@ import static org.junit.jupiter.api.Assertions.*;
                 itemsTypeMeasureRepository);
 
         // requeridos
-        setUpMarca();
+        setUpBrand();
         brand = brandService.create(brand);
 
-        setUpFornecedor();
+        setUpProvider();
         provider = providerService.create(provider);
 
-        setUpSubCategoria();
+        setUpSubcategory();
         subcategory = subcategoryService.create(subcategory);
 
-        setUpCategoria();
+        setUpCategory();
         category.setSubcategories(new ArrayList<>());
         category.getSubcategories().add(subcategory);
         category = categoryService.create(category);
 
-        setUpDominio();
+        setUpDomain();
         domain = domainService.create(domain);
 
-        setUpItensTipoMedida();
-        setUpMedida();
+        setUpItemsTypeMeasure();
+        setUpMeasure();
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
@@ -111,10 +111,10 @@ import static org.junit.jupiter.api.Assertions.*;
         measure = measureService.create(measure);
 
         //quantadade, dominio e item Medida
-        setUpProdutoHasItensTipoMedida();
+        setUpProductHasItemsTypeMeasure();
 
         // campos comuns
-        setUpProduto();
+        setUpProduct();
 
         product.setBrand(brand);
         product.setProvider(provider);
@@ -130,7 +130,7 @@ import static org.junit.jupiter.api.Assertions.*;
      void create() {
         Product productSave = productService.create(product);
         Product found = productService.getById(productSave.getId());
-        assertProduto(found, productSave);
+        assertProduct(found, productSave);
     }
 
     @Test
@@ -139,9 +139,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
         Product found = productService.getById(product.getId());
         found.setBarCode(BAR_0_CODE + "_update");
-        found.setName(NOME + "_update");
-        found.setStatus(StatusEnum.INATIVO);
-        found.setDescription(DESCRICAO + "_update");
+        found.setName(NAME + "_update");
+        found.setStatus(StatusEnum.DISABLE);
+        found.setDescription(DESCRIPTION + "_update");
         found.setPrice(15d);
         found.setSalePrice(15d);
         found.setPrice(15d);
@@ -168,11 +168,11 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(found.getPercent(), updated.getPercent());
         assertEquals(found.getDiscountPercent(), updated.getDiscountPercent());
 
-        assertMarca(found.getBrand(), updated.getBrand());
-        assertCategoria(found.getCategory(), updated.getCategory());
-        assertSubCategoria(found.getSubcategory(), updated.getSubcategory());
-        assertFornecedor(found.getProvider(), updated.getProvider());
-        assertMarcaSubCategoriaCategoriaValor(found.getMeasure());
+        assertBrand(found.getBrand(), updated.getBrand());
+        assertCategory(found.getCategory(), updated.getCategory());
+        assertSubcategory(found.getSubcategory(), updated.getSubcategory());
+        assertProvider(found.getProvider(), updated.getProvider());
+        assertBrandSubCategoryCategoryAmount(found.getMeasure());
         assertEquals(found.getProductHasItemsTypeMeasure().size(), updated.getProductHasItemsTypeMeasure().size());
 
         for (int i = 0; i < found.getProductHasItemsTypeMeasure().size(); i++) {
@@ -181,7 +181,7 @@ import static org.junit.jupiter.api.Assertions.*;
                     updated.getProductHasItemsTypeMeasure().get(i).getDomains().size());
 
             for (int j = 0; j < found.getProductHasItemsTypeMeasure().get(i).getDomains().size(); j++) {
-                assertDominios(found.getProductHasItemsTypeMeasure().get(i).getDomains().get(j),
+                assertDomain(found.getProductHasItemsTypeMeasure().get(i).getDomains().get(j),
                         updated.getProductHasItemsTypeMeasure().get(i).getDomains().get(j));
             }
 
@@ -202,8 +202,8 @@ import static org.junit.jupiter.api.Assertions.*;
      void updateProductAndBrand() {
 
         Brand brandToUpdate = new Brand();
-        brandToUpdate.setName(NOME + "_update");
-        brandToUpdate.setDescription(DESCRICAO + "_update");
+        brandToUpdate.setName(NAME + "_update");
+        brandToUpdate.setDescription(DESCRIPTION + "_update");
         brandToUpdate = brandService.create(brandToUpdate);
 
         product = productService.create(product);
@@ -213,7 +213,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         Product updated = productService.update(product.getId(), found);
 
-        assertMarca(updated.getBrand(), brandToUpdate);
+        assertBrand(updated.getBrand(), brandToUpdate);
 
         assertNotEquals(updated.getBrand().getId(), brand.getId());
         assertNotEquals(updated.getBrand().getName(), brand.getName());
@@ -235,8 +235,8 @@ import static org.junit.jupiter.api.Assertions.*;
      void updateProductProvide() {
 
         Provider providerToUpdate = new Provider();
-        providerToUpdate.setName(NOME + "_update");
-        providerToUpdate.setDescription(DESCRICAO + "_update");
+        providerToUpdate.setName(NAME + "_update");
+        providerToUpdate.setDescription(DESCRIPTION + "_update");
         providerToUpdate = providerService.create(providerToUpdate);
 
         product = productService.create(product);
@@ -246,7 +246,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         Product updated = productService.update(product.getId(), found);
 
-        assertFornecedor(updated.getProvider(), providerToUpdate);
+        assertProvider(updated.getProvider(), providerToUpdate);
 
         assertNotEquals(updated.getProvider().getId(), provider.getId());
         assertNotEquals(updated.getProvider().getName(), provider.getName());
@@ -262,7 +262,7 @@ import static org.junit.jupiter.api.Assertions.*;
         productService.delete(toDelete.getId());
 
         Product found = productService.getById(product.getId());
-        assertEquals(found.getStatus(), StatusEnum.INATIVO);
+        assertEquals(found.getStatus(), StatusEnum.DISABLE);
     }
 
 

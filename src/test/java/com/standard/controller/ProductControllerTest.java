@@ -73,25 +73,25 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .build();
         
         // requeridos
-        setUpMarca();
+        setUpBrand();
         when(brandService.create(brand)).thenReturn(brand);
 
-        setUpFornecedor();
+        setUpProvider();
         when(providerService.create(provider)).thenReturn(provider);
 
-        setUpSubCategoria();
+        setUpSubcategory();
         when(subcategoryService.create(subcategory)).thenReturn(subcategory);
 
-        setUpCategoria();
+        setUpCategory();
         category.setSubcategories(new ArrayList<>());
         category.getSubcategories().add(subcategory);
         when(categoryService.create(category)).thenReturn(category);
 
-        setUpDominio();
+        setUpDomain();
         when(domainService.create(domain)).thenReturn(domain);
 
-        setUpItensTipoMedida();
-        setUpMedida();
+        setUpItemsTypeMeasure();
+        setUpMeasure();
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
@@ -99,10 +99,10 @@ public class ProductControllerTest extends AbstractRestControllerTest {
         when(measureService.create(measure)).thenReturn(measure);
 
         //quantadade, dominio e item Medida
-        setUpProdutoHasItensTipoMedida();
+        setUpProductHasItemsTypeMeasure();
 
         // campos comuns
-        setUpProduto();
+        setUpProduct();
 
         product.setBrand(brand);
         product.setProvider(provider);
@@ -113,7 +113,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testConsultar() throws Exception {
+    public void testFindAll() throws Exception {
         Product product2 = new Product();
         product2.setId(2L);
         product2.setName("bob");
@@ -127,31 +127,31 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].nome", is(NOME)));
+                .andExpect(jsonPath("$[0].nome", is(NAME)));
         // Todo: others fields
     }
 
     @Test
-    public void testConsultarByCodigo() throws Exception {
+    public void testFindById() throws Exception {
         when(productService.getById(product.getId())).thenReturn(product);
         mockMvc.perform(get(ProdutoController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
-    public void testIncluir() {
+    public void testCreate() {
 //        when(produtoService.incluir(produto)).thenReturn(produto);
 //
 //        mockMvc.perform(post(ProdutoController.BASE_URL)
 //                .contentType(MediaType.APPLICATION_JSON)
 //                .content(asJsonString(produto)))
 //                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-//                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+//                .andExpect(jsonPath("$.name", equalTo(NOME)))
+//                .andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
     }
 
     @Test
@@ -163,14 +163,14 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() {
+    public void testUpdate() {
 //        when(produtoService.alterar(1,medida)).thenReturn(medida);
 //        mockMvc.perform(put(ProdutoController.BASE_URL + "/1")
 //                .contentType(MediaType.APPLICATION_JSON)
 //                .content(asJsonString(medida)))
 //                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-//                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+//                .andExpect(jsonPath("$.name", equalTo(NOME)))
+//                .andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
     }
 
     //

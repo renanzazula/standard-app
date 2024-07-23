@@ -40,7 +40,7 @@ import java.util.List;
 class OrderServiceImplTestIT extends BaseTest {
 
     // Fixme: later
-    CustomerEntity clienteEntity = null;
+    CustomerEntity customerEntity = null;
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
@@ -67,6 +67,7 @@ class OrderServiceImplTestIT extends BaseTest {
     private ItemsTypeMeasureRepository itemsTypeMeasureRepository;
     @Autowired
     private ProductHasItemsTypeMeasureRepository productHasItemsTypeMeasureRepository;
+
     private BrandService brandService;
     private ProviderService providerService;
     private ProductService productService;
@@ -98,14 +99,14 @@ class OrderServiceImplTestIT extends BaseTest {
         orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository,
                 customerRepository, productHasItemsTypeMeasureRepository, posService);
 
-        clienteEntity = new CustomerEntity();
-        customerRepository.save(clienteEntity);
+        customerEntity = new CustomerEntity();
+        customerRepository.save(customerEntity);
 
         Customer customer = new Customer();
-        customer.setId(clienteEntity.getId());
+        customer.setId(customerEntity.getId());
 
         paymentMethodService = new PaymentMethodServiceImpl(paymentMethodRepository);
-        setUpFormasDePagamento();
+        setUpPaymentMethod();
         paymentMethod = paymentMethodService.create(paymentMethod);
 
 
@@ -113,37 +114,37 @@ class OrderServiceImplTestIT extends BaseTest {
         pos.setOpenAmount(5.0);
         pos = posService.openPos(pos);
 
-        // requeridos
-        setUpMarca();
+        // required
+        setUpBrand();
         brand = brandService.create(brand);
 
-        setUpFornecedor();
+        setUpProvider();
         provider = providerService.create(provider);
 
-        setUpSubCategoria();
+        setUpSubcategory();
         subcategory = subcategoryService.create(subcategory);
 
-        setUpCategoria();
+        setUpCategory();
         category.setSubcategories(new ArrayList<>());
         category.getSubcategories().add(subcategory);
         category = categoryService.create(category);
 
-        setUpDominio();
+        setUpDomain();
         domain = domainService.create(domain);
 
-        setUpItensTipoMedida();
-        setUpMedida();
+        setUpItemsTypeMeasure();
+        setUpMeasure();
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
         measure.setItemsTypeMeasure(itemsTypeMeasure);
         measure = measureService.create(measure);
 
-        //quantadade, dominio e item Medida
-        setUpProdutoHasItensTipoMedida();
+        //Quantity, Domain e Item Type Measure
+        setUpProductHasItemsTypeMeasure();
 
         // campos comuns
-        setUpProduto();
+        setUpProduct();
 
         product.setBrand(brand);
         product.setProvider(provider);
@@ -174,8 +175,8 @@ class OrderServiceImplTestIT extends BaseTest {
         ProductHasItemsTypeMeasure productHasItemsTypeMeasure = new ProductHasItemsTypeMeasure();
         productHasItemsTypeMeasure.setItemsTypeMeasure(measure.getItemsTypeMeasure().get(0));
         productHasItemsTypeMeasure.setProduct(product);
-        productHasItemsTypeMeasure.setQuantity(QUANTIDADE_PRODUTOS_VENDA);
-        productHasItemsTypeMeasure.setUnitValue(VALOR_UNITARIO);
+        productHasItemsTypeMeasure.setQuantity(QUANTITY_OF_PRODUCTS);
+        productHasItemsTypeMeasure.setUnitValue(UNIT_VALUE);
         orderHasItemProduct.setProductHasItemsTypeMeasure(productHasItemsTypeMeasure);
 
         List<OrderHasItemProduct> orderHasItemProducts = new ArrayList<>();

@@ -42,7 +42,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional
     public void delete(Long id) {
         ProviderEntity providerDB = providerRepository.getOne(id);
-        providerDB.setStatus(StatusEnum.INATIVO);
+        providerDB.setStatus(StatusEnum.DISABLE);
         providerRepository.save(providerDB);
     }
 

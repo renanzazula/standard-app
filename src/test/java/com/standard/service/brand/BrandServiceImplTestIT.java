@@ -30,7 +30,7 @@ class BrandServiceImplTestIT extends BaseTest {
     @BeforeEach
     void setUp() {
         service = new BrandServiceImpl(repository);
-        setUpMarca();
+        setUpBrand();
         brand = service.create(brand);
     }
 
@@ -49,8 +49,8 @@ class BrandServiceImplTestIT extends BaseTest {
     void update() {
         Brand update = service.findById(brand.getId());
         assertNotNull(update);
-        update.setName(NOME_UPDATE);
-        update.setDescription(DESCRICAO_UPDATE);
+        update.setName(NAME_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
 
         Brand updated = service.update(update.getId(), update);
         assertEquals(update.getId(), updated.getId());
@@ -80,6 +80,6 @@ class BrandServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         Brand found = service.findById(brand.getId());
-        assertEquals(found.getStatus(), StatusEnum.INATIVO);
+        assertEquals(found.getStatus(), StatusEnum.DISABLE);
     }
 }

@@ -59,20 +59,20 @@ class MeasureServiceImplTestIT extends BaseTest {
         subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
         categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 
-        setUpMarca();
+        setUpBrand();
         brand = brandService.create(brand);
 
-        setUpSubCategoria();
+        setUpSubcategory();
         subcategory = subcategoryService.create(subcategory);
 
-        setUpCategoria();
+        setUpCategory();
         category.setSubcategories(new ArrayList<>());
         category.getSubcategories().add(subcategory);
         category = categoryService.create(category);
 
 
-        setUpItensTipoMedida();
-        setUpMedida();
+        setUpItemsTypeMeasure();
+        setUpMeasure();
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
@@ -86,7 +86,7 @@ class MeasureServiceImplTestIT extends BaseTest {
         assertEquals(measureSave.getItemsTypeMeasure().size(), measure.getItemsTypeMeasure().size());
 
         measure = measureService.findById(measureSave.getId());
-        assertMarcaSubCategoriaCategoriaValor(measureSave);
+        assertBrandSubCategoryCategoryAmount(measureSave);
 
     }
 
@@ -101,8 +101,8 @@ class MeasureServiceImplTestIT extends BaseTest {
         measure = measureService.create(measure);
 
         Brand brandUpdate = new Brand();
-        brandUpdate.setName(NOME_UPDATE);
-        brandUpdate.setDescription(DESCRICAO_UPDATE);
+        brandUpdate.setName(NAME_UPDATE);
+        brandUpdate.setDescription(DESCRIPTION_UPDATE);
         brandUpdate = brandService.create(brandUpdate);
 
         Measure toUpdate = measureService.findById(measure.getId());
@@ -114,7 +114,7 @@ class MeasureServiceImplTestIT extends BaseTest {
 
         for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
             Brand brandFound = updated.getItemsTypeMeasure().get(i).getBrand();
-            assertMarca(brandFound, brandUpdate);
+            assertBrand(brandFound, brandUpdate);
 
             assertNotEquals(brandUpdate.getId(), brand.getId());
             assertNotEquals(brandUpdate.getName(), brand.getName());
@@ -129,8 +129,8 @@ class MeasureServiceImplTestIT extends BaseTest {
         measure = measureService.create(measure);
 
         Subcategory subcategoryUpdate = new Subcategory();
-        subcategoryUpdate.setName(NOME_UPDATE);
-        subcategoryUpdate.setDescription(DESCRICAO_UPDATE);
+        subcategoryUpdate.setName(NAME_UPDATE);
+        subcategoryUpdate.setDescription(DESCRIPTION_UPDATE);
         subcategoryUpdate = subcategoryService.create(subcategoryUpdate);
 
         Measure toUpdate = measureService.findById(measure.getId());
@@ -142,7 +142,7 @@ class MeasureServiceImplTestIT extends BaseTest {
 
         for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
             Subcategory subcategoryFound = updated.getItemsTypeMeasure().get(i).getSubcategory();
-            assertSubCategoria(subcategoryFound, subcategoryUpdate);
+            assertSubcategory(subcategoryFound, subcategoryUpdate);
 
             assertNotEquals(subcategoryUpdate.getId(), subcategory.getId());
             assertNotEquals(subcategoryUpdate.getName(), subcategory.getName());
@@ -156,8 +156,8 @@ class MeasureServiceImplTestIT extends BaseTest {
         measure = measureService.create(measure);
 
         Category categoryUpdate = new Category();
-        categoryUpdate.setName(NOME_UPDATE);
-        categoryUpdate.setDescription(DESCRICAO_UPDATE);
+        categoryUpdate.setName(NAME_UPDATE);
+        categoryUpdate.setDescription(DESCRIPTION_UPDATE);
         categoryUpdate.setSubcategories(new ArrayList<>());
         categoryUpdate.getSubcategories().add(subcategory);
         categoryUpdate = categoryService.create(categoryUpdate);
@@ -170,7 +170,7 @@ class MeasureServiceImplTestIT extends BaseTest {
         Measure updated = measureService.update(measure.getId(), toUpdate);
         for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
             Category categoryFound = updated.getItemsTypeMeasure().get(i).getCategory();
-            assertCategoria(categoryFound, categoryUpdate);
+            assertCategory(categoryFound, categoryUpdate);
 
             assertNotEquals(categoryFound.getId(), category.getId());
             assertNotEquals(categoryFound.getName(), category.getName());
@@ -186,7 +186,7 @@ class MeasureServiceImplTestIT extends BaseTest {
 
         measureService.delete(delete.getId());
         Measure found = measureService.findById(measure.getId());
-        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
+        assertEquals(found.getStatus(), StatusEnum.DISABLE.name());
     }
 
     @Test
@@ -202,7 +202,7 @@ class MeasureServiceImplTestIT extends BaseTest {
         assertEquals(measureFound.getId(), measure.getId());
         assertEquals(measureFound.getNome(), measure.getNome());
         assertEquals(measureFound.getDescription(), measure.getDescription());
-        assertMarcaSubCategoriaCategoriaValor(measureFound);
+        assertBrandSubCategoryCategoryAmount(measureFound);
     }
 
     @Test

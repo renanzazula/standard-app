@@ -9,13 +9,10 @@ import com.standard.service.pos.PosServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -48,7 +45,7 @@ public class WithdrawalServiceImplTestIT extends BaseTest {
 
         service = new WithdrawalServiceImpl(repository, posRepository);
         withdrawal = new Withdrawal();
-        withdrawal.setDescription(DESCRICAO);
+        withdrawal.setDescription(DESCRIPTION);
         withdrawal.setAmount(10.0);
         withdrawal.setPos(pos);
         withdrawal = service.create(withdrawal);
@@ -70,7 +67,7 @@ public class WithdrawalServiceImplTestIT extends BaseTest {
     void update() {
         Withdrawal update = service.findById(withdrawal.getId());
         update.setAmount(20.0);
-        update.setDescription(DESCRICAO_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
         update.setPos(pos);
 
         Withdrawal updated = service.update(withdrawal.getId(), update);

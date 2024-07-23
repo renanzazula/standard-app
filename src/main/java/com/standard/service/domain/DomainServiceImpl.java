@@ -44,7 +44,7 @@ public class DomainServiceImpl implements DomainService {
 	public void delete(Long id) {
 		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
 		if(domainDB != null) {
-			domainDB.setStatus(StatusEnum.INATIVO);
+			domainDB.setStatus(StatusEnum.DISABLE);
 		}
 		domainRepository.save(domainDB);
 	}

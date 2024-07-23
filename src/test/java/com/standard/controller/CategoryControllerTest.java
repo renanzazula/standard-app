@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -31,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 class CategoryControllerTest extends AbstractRestControllerTest {
 
     @Autowired
@@ -50,7 +46,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
                 .apply(springSecurity())
                 .build();
 
-        setUpCategoria();
+        setUpCategory();
     }
     
     @Test
@@ -80,7 +76,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
     
     @Test
-    public void testConsultar() throws Exception {
+    public void testFindAll() throws Exception {
         Category category2 = new Category();
         category2.setId(2L);
         category2.setName("bob");
@@ -98,15 +94,15 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
 
     @Test
-    public void testIncluir() throws Exception {
+    public void testCreate() throws Exception {
         when(service.create(category)).thenReturn(category);
         mockMvc.perform(post(CategoryController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
@@ -118,14 +114,14 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testAlterar() throws Exception {
+    public void testUpdate() throws Exception {
         when(service.update(1L, category)).thenReturn(category);
         mockMvc.perform(put(CategoryController.BASE_URL+"/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome", equalTo(NOME)))
-                .andExpect(jsonPath("$.descricao", equalTo(DESCRICAO)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)))
+                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 }

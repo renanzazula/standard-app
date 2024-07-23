@@ -6,13 +6,10 @@ import com.standard.enums.StatusEnum;
 import com.standard.repository.PaymentMethodRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     @BeforeEach
     public void setUp() {
         service = new PaymentMethodServiceImpl(repository);
-        setUpFormasDePagamento();
+        setUpPaymentMethod();
         paymentMethod = service.create(paymentMethod);
     }
 
@@ -51,9 +48,9 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     public void update() {
         PaymentMethod update = service.findById(paymentMethod.getId());
         assertNotNull(update);
-        update.setName(NOME_UPDATE);
-        update.setDescription(DESCRICAO_UPDATE);
-        update.setDiscountPercent(PORCENTAGEM_DESCONTO);
+        update.setName(NAME_UPDATE);
+        update.setDescription(DESCRIPTION_UPDATE);
+        update.setDiscountPercent(DISCOUNT_PERCENT);
 
         PaymentMethod updated = service.update(update.getId(), update);
         assertEquals(update.getId(), updated.getId());
@@ -84,6 +81,6 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         PaymentMethod found = service.findById(paymentMethod.getId());
-        assertEquals(found.getStatus(), StatusEnum.INATIVO.name());
+        assertEquals(found.getStatus(), StatusEnum.DISABLE.name());
     }
 }
