@@ -22,31 +22,34 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping({""})
-    @ApiOperation(value = "retorna todas categorias")
+    @ApiOperation(value = "find all the categories")
     public ResponseEntity<List<Category>> findAll() {
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    @ApiOperation(value = "retorna todas categorias by codigo")
+    @ApiOperation(value = "find categories by id")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Category> save(@RequestBody Category category) {
+    @ApiOperation(value = "create a new category")
+    public ResponseEntity<Category> create(@RequestBody Category category) {
         return new ResponseEntity<>(categoryService.create(category), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "delete category by id")
     public void delete(@PathVariable Long id) {
         categoryService.delete(id);
     }
 
     @PutMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "update category by id")
     public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
         return new ResponseEntity<>(categoryService.update(id, category), HttpStatus.OK);
     }

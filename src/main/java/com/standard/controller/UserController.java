@@ -21,7 +21,7 @@ public class UserController {
 
     public static final String BASE_URL = "/private/v1/users";
 
-    @ApiOperation(value = "User")
+    @ApiOperation(value = "get user")
     @GetMapping({""})
     public ResponseEntity<User> getUser() {
         UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

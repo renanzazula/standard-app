@@ -3,6 +3,7 @@ package com.standard.controller;
 import com.standard.domain.Product;
 import com.standard.service.product.ProductService;
 import com.standard.util.DoubleFormat;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,37 +13,42 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(ProdutoController.BASE_URL)
-public class ProdutoController {
+@RequestMapping(ProductController.BASE_URL)
+public class ProductController {
 
-    public static final String BASE_URL = "/private/v1/produto";
+    public static final String BASE_URL = "/private/v1/product";
 
     private final ProductService productService;
 
     @GetMapping({""})
-    public ResponseEntity<List<Product>> consultar() {
+    @ApiOperation(value = "find all products")
+    public ResponseEntity<List<Product>> findAll() {
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping({"/{codigo}"})
-    public ResponseEntity<Product> consultarByCodigo(@PathVariable Long codigo) {
-        return new ResponseEntity<>(productService.getById(codigo), HttpStatus.OK);
+    @GetMapping({"/{id}"})
+    @ApiOperation(value = "find product by id")
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Product> incluir(@RequestBody Product product) {
+    @ApiOperation(value = "create new product")
+    public ResponseEntity<Product> create(@RequestBody Product product) {
         return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"/{codigo}"})
+    @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long codigo) {
-        productService.delete(codigo);
+    @ApiOperation(value = "delete product by id")
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
     }
 
-    @PutMapping({"/{codigo}"})
-    public ResponseEntity<Product> alterar(@PathVariable Long codigo, @RequestBody Product product) {
-        return new ResponseEntity<>(productService.update(codigo, product), HttpStatus.OK);
+    @PutMapping({"/{id}"})
+    @ApiOperation(value = "update product by id")
+    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
+        return new ResponseEntity<>(productService.update(id, product), HttpStatus.OK);
     }
 
     @GetMapping(value = "/addicionarProduto/{barCode}")
