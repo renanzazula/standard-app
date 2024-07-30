@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @Disabled
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {ProdutoController.class})
+@WebMvcTest(controllers = {ProductController.class})
 public class ProductControllerTest extends AbstractRestControllerTest {
 
     @Autowired
@@ -122,7 +122,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
         when(productService.findAll()).thenReturn(products);
 
-        mockMvc.perform(get(ProdutoController.BASE_URL)
+        mockMvc.perform(get(ProductController.BASE_URL)
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -134,7 +134,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     @Test
     public void testFindById() throws Exception {
         when(productService.getById(product.getId())).thenReturn(product);
-        mockMvc.perform(get(ProdutoController.BASE_URL + "/1")
+        mockMvc.perform(get(ProductController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -156,7 +156,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(ProdutoController.BASE_URL + "/1")
+        mockMvc.perform(delete(ProductController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -183,15 +183,15 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void ajaxConsultarItensMedidaByCategoria() {
+    public void ajaxFindAllItensMedidaByCategoria() {
     }
 
     @Test
-    public void ajaxConsultarItensMedidaByProdutoCodigo() {
+    public void ajaxFindAllItensMedidaByProdutoCodigo() {
     }
 
     @Test
-    public void ajaxConsultarItensMedidaByMedidaCodigo() {
+    public void ajaxFindAllItensMedidaByMedidaCodigo() {
     }
 
     @Test
