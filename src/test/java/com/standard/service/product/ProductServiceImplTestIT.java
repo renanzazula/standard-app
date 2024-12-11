@@ -63,22 +63,17 @@ import static org.junit.jupiter.api.Assertions.*;
     private BrandService brandService;
     private ProviderService providerService;
     private ProductService productService;
-    private SubcategoryService subcategoryService;
-    private CategoryService categoryService;
-    private DomainService domainService;
-    private MeasureService measureService;
 
-
-    @BeforeEach
+	@BeforeEach
     void setUp() {
 
         brandService = new BrandServiceImpl(brandRepository);
-        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
         providerService = new ProviderServiceImpl(providerRepository);
-        domainService = new DomainServiceImpl(domainRepository);
-        measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository,
-                brandRepository);
+
+        SubcategoryService subCategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
+		DomainService domainService = new DomainServiceImpl(domainRepository);
+		MeasureService measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository, brandRepository);
 
         productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository,
                 providerRepository, categoryRepository, subcategoryRepository,
@@ -92,7 +87,7 @@ import static org.junit.jupiter.api.Assertions.*;
         provider = providerService.create(provider);
 
         setUpSubcategory();
-        subcategory = subcategoryService.create(subcategory);
+        subcategory = subCategoryService.create(subcategory);
 
         setUpCategory();
         category.setSubcategories(new ArrayList<>());

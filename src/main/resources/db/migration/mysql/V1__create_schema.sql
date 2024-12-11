@@ -1,0 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS standardDB;
+USE standardDB;
+
+

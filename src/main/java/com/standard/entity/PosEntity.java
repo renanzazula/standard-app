@@ -4,7 +4,12 @@ import com.standard.enums.StatusPOSEnum;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -37,7 +42,7 @@ public @Data class PosEntity extends BaseAuditEntity  {
 	private Double openAmount;
 
 	@ColumnDefault(value = "0")
-	@Column(name = "valorFinal")
+	@Column(name = "closeAmount")
 	private Double closeAmount;
 
 	@ColumnDefault(value = "0")

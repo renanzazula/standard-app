@@ -6,7 +6,14 @@ import com.standard.entity.ProductEntity;
 import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.*;
+import com.standard.repository.BrandRepository;
+import com.standard.repository.CategoryRepository;
+import com.standard.repository.DomainRepository;
+import com.standard.repository.ItemsTypeMeasureRepository;
+import com.standard.repository.MeasureRepository;
+import com.standard.repository.ProductRepository;
+import com.standard.repository.ProviderRepository;
+import com.standard.repository.SubcategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -165,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll() {
-		return productRepository.findAll().stream().map(JpaFunctions.productToProductEntity).collect(Collectors.toList());
+		return productRepository.findAll().stream().map(JpaFunctions.productToProductEntity).toList();
 	}
 
 }

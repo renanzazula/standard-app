@@ -7,7 +7,6 @@ import com.standard.function.JpaFunctions;
 
 import java.util.Comparator;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ProductToProdctEntityFunction implements Function<ProductEntity, Product> {
 
@@ -54,7 +53,7 @@ public class ProductToProdctEntityFunction implements Function<ProductEntity, Pr
                 output.setProductHasItemsTypeMeasure(input.getProductHasItemsTypeMeasure()
                         .stream()
                         .sorted(Comparator.comparing(ProductHasItemsTypeMeasureEntity::getId))
-                        .map(JpaFunctions.productHasItemsTypeMeasureToProductHasItemsTypeMeasureEntity).collect(Collectors.toList()));
+                        .map(JpaFunctions.productHasItemsTypeMeasureToProductHasItemsTypeMeasureEntity).toList());
             }
         }
         return output;

@@ -205,7 +205,7 @@ create table `order`
     last_modified_by     bigint,
     last_modified_date   timestamp,
     version              bigint,
-    change               double,
+    changing               double,
     discount             double,
     paid_amount          double,
     payment              double,
@@ -279,7 +279,7 @@ create table pos
     last_modified_by   bigint,
     last_modified_date timestamp,
     version            bigint,
-    valor_final        double default 0,
+    amount_final       double default 0,
     close_date         date,
     close_time         time,
     open_amount        double default 0 not null,
@@ -288,7 +288,7 @@ create table pos
     status             varchar(255),
     total              double default 0,
     total_discount     double default 0,
-    total_vendas       double default 0,
+    total_sales       double default 0,
     primary key (id)
 );
 

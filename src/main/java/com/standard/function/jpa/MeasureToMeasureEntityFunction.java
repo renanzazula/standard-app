@@ -1,11 +1,10 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import com.standard.domain.Measure;
 import com.standard.entity.MeasureEntity;
 import com.standard.function.JpaFunctions;
+
+import java.util.function.Function;
 
 public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, Measure> {
 
@@ -18,7 +17,7 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 			output.setDescription(input.getDescription());
 			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
 			if (input.getItemsTypeMeasure() != null) {
-				output.setItemsTypeMeasure(input.getItemsTypeMeasure().stream().map(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity).collect(Collectors.toList()));
+				output.setItemsTypeMeasure(input.getItemsTypeMeasure().stream().map(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity).toList());
 			}
 		}
 		return output;

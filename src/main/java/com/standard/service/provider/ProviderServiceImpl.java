@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +31,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     @Transactional
     public Provider update(Long id, Provider entity) {
-        ProviderEntity providerDB = providerRepository.getOne(id);
+        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!"));
         providerDB.setDescription(entity.getDescription());
         providerDB.setName(entity.getName());
         return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
@@ -41,7 +40,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     @Transactional
     public void delete(Long id) {
-        ProviderEntity providerDB = providerRepository.getOne(id);
+        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!"));
         providerDB.setStatus(StatusEnum.DISABLE);
         providerRepository.save(providerDB);
     }
@@ -50,7 +49,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "providerListCache", condition = "#showInventoryOnHand == false")
     public List<Provider> findAll() {
-        return providerRepository.findAll().stream().map(JpaFunctions.providerToProviderEntity).collect(Collectors.toList());
+        return providerRepository.findAll().stream().map(JpaFunctions.providerToProviderEntity).toList();
     }
 
     @Override

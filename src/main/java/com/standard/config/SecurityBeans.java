@@ -1,11 +1,11 @@
 package com.standard.config;
 
+import com.standard.repository.security.UserSessionRepository;
 import com.standard.security.RegisterSessionAuthenticationStrategy;
 import com.standard.security.TimeoutAuthenticationStrategy;
 import com.standard.security.filter.ConcurrentSessionFilter;
-import com.standard.security.handler.LogoutUnregisterHandler;
 import com.standard.security.filter.RedirectSuccessFilter;
-import com.standard.repository.security.UserSessionRepository;
+import com.standard.security.handler.LogoutUnregisterHandler;
 import com.standard.service.configparam.ConfigParamService;
 import com.standard.service.security.UserSessionService;
 import lombok.AllArgsConstructor;

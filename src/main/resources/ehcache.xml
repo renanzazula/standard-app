@@ -5,8 +5,8 @@
         <jsr107:defaults enable-management="true" enable-statistics="true"/>
     </service>
 
-    <cache alias="categoriaCache" uses-template="config-cache"/>
-    <cache alias="categoriaListCache" uses-template="config-cache"/>
+    <cache alias="categoryCache" uses-template="config-cache"/>
+    <cache alias="categoryListCache" uses-template="config-cache"/>
 
     <cache alias="domainCache" uses-template="config-cache"/>
     <cache alias="domainListCache" uses-template="config-cache"/>
@@ -23,8 +23,8 @@
     <cache alias="measureCache" uses-template="config-cache"/>
     <cache alias="measureListCache" uses-template="config-cache"/>
 
-    <cache alias="subcategoriaCache" uses-template="config-cache"/>
-    <cache alias="subcategoriaListCache" uses-template="config-cache"/>
+    <cache alias="subcategoryCache" uses-template="config-cache"/>
+    <cache alias="subcategoryListCache" uses-template="config-cache"/>
 
     <cache-template name="config-cache">
         <expiry>

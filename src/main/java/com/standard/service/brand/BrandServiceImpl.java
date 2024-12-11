@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -31,10 +30,10 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	@Transactional
-	public Brand update(Long id, Brand entity) {
+	public Brand update(Long id, Brand brand) {
 		BrandEntity brandDB = brandRepository.getById(id);
-		brandDB.setDescription(entity.getDescription());
-		brandDB.setName(entity.getName());
+		brandDB.setDescription(brand.getDescription());
+		brandDB.setName(brand.getName());
 		return JpaFunctions.brandToBrandEntity.apply(brandRepository.saveAndFlush(brandDB));
 	}
 
@@ -50,7 +49,7 @@ public class BrandServiceImpl implements BrandService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "brandListCache", condition = "#showInventoryOnHand == false")
 	public List<Brand> findAll() {
-		return brandRepository.findAll().stream().map(JpaFunctions.brandToBrandEntity).collect(Collectors.toList());
+		return brandRepository.findAll().stream().map(JpaFunctions.brandToBrandEntity).toList();
 	}
 
 	@Override

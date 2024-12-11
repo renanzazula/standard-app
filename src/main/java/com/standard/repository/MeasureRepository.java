@@ -1,7 +1,7 @@
 package com.standard.repository;
 
-import com.standard.entity.CategoryEntity;
 import com.standard.entity.BrandEntity;
+import com.standard.entity.CategoryEntity;
 import com.standard.entity.MeasureEntity;
 import com.standard.entity.SubcategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

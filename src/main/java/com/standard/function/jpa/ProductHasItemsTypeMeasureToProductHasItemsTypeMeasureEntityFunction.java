@@ -9,7 +9,6 @@ import com.standard.function.JpaFunctions;
 
 import java.util.Comparator;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction
 		implements Function<ProductHasItemsTypeMeasureEntity, ProductHasItemsTypeMeasure> {
@@ -23,7 +22,7 @@ public class ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunctio
 				output.setDomains(input.getDomains()
 						.stream()
 						.sorted(Comparator.comparing(DomainEntity::getId))
-						.map(JpaFunctions.domainToDomainEntity).collect(Collectors.toList()));
+						.map(JpaFunctions.domainToDomainEntity).toList());
 			}
 			if (input.getItemsTypeMeasure() != null) {
 				output.setItemsTypeMeasure(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity.apply(input.getItemsTypeMeasure()));

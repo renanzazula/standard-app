@@ -1,11 +1,14 @@
 package com.standard.repository;
 
-
-import com.standard.entity.PaymentMethodEntity;
 import com.standard.entity.OrderEntity;
+import com.standard.entity.PaymentMethodEntity;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 class OrderSpecification implements Specification<OrderEntity> {
 

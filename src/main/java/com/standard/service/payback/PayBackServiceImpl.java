@@ -3,15 +3,14 @@ package com.standard.service.payback;
 import com.standard.domain.PayBack;
 import com.standard.entity.PayBackEntity;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.PosRepository;
 import com.standard.repository.CustomerRepository;
 import com.standard.repository.PayBackRepository;
+import com.standard.repository.PosRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,10 +28,10 @@ public class PayBackServiceImpl implements PayBackService {
         entity.setDescription(payBack.getDescription());
         entity.setAmount(payBack.getValor());
         if(payBack.getPos() != null){
-            entity.setPos(posRepository.getOne(payBack.getPos().getId()));
+            entity.setPos(posRepository.findById(payBack.getPos().getId()).orElseThrow(() -> new EntityNotFoundException("POS não encontrado!")));
         }
         if(payBack.getCustomer() != null){
-            entity.setCustomer(customerRepository.getOne(payBack.getCustomer().getId()));
+            entity.setCustomer(customerRepository.findById(payBack.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException("Customer não encontrado!")));
         }
         return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.saveAndFlush(entity));
     }
@@ -45,10 +44,10 @@ public class PayBackServiceImpl implements PayBackService {
         entity.setDescription(payBack.getDescription());
         entity.setAmount(payBack.getValor());
         if(payBack.getPos() != null){
-            entity.setPos(posRepository.getOne(payBack.getPos().getId()));
+            entity.setPos(posRepository.findById(payBack.getPos().getId()).orElseThrow(() -> new EntityNotFoundException("POS não encontrado!")));
         }
         if(payBack.getCustomer() != null){
-            entity.setCustomer(customerRepository.getOne(payBack.getCustomer().getId()));
+            entity.setCustomer(customerRepository.findById(payBack.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException("Customer não encontrado!")));
         }
         return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.saveAndFlush(entity));
     }
@@ -60,11 +59,11 @@ public class PayBackServiceImpl implements PayBackService {
 
     @Override
     public List<PayBack> findAll() {
-        return payBackRepository.findAll().stream().map(JpaFunctions.payBackEntityToPayBack).collect(Collectors.toList());
+        return payBackRepository.findAll().stream().map(JpaFunctions.payBackEntityToPayBack).toList();
     }
 
     @Override
     public PayBack getById(Long id) {
-        return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+        return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("PayBack não encontrado!")));
     }
 }

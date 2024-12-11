@@ -3,7 +3,10 @@ package com.standard.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 

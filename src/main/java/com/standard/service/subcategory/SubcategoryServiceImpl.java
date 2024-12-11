@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class SubcategoryServiceImpl implements SubcategoryService {
@@ -35,7 +34,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	@Transactional
 	public Subcategory update(Long id, Subcategory entity) {
-		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(entity.getId()).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
+		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(entity.getId()).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!"));
 		Objects.requireNonNull(subcategoryDB).setDescription(entity.getDescription());
 		subcategoryDB.setName(entity.getName());
 		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.saveAndFlush(subcategoryDB));
@@ -44,25 +43,23 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
-		if(subcategoryDB != null){
-			subcategoryDB.setStatus(StatusEnum.DISABLE);
-		}
-		subcategoryRepository.save(subcategoryDB);
+		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!"));
+		subcategoryDB.setStatus(StatusEnum.DISABLE);
+		subcategoryRepository.saveAndFlush(subcategoryDB);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "subcategoryListCache", condition = "#showInventoryOnHand == false")
 	public List<Subcategory> findAll() {
-		return subcategoryRepository.findAll().stream().map(JpaFunctions.subcategoryToSubCategoryEntity).collect(Collectors.toList());
+		return subcategoryRepository.findAll().stream().map(JpaFunctions.subcategoryToSubCategoryEntity).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "subcategoriaCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "subcategoryCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Subcategory findById(Long id) {
-		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!")));
 	}
 
 }

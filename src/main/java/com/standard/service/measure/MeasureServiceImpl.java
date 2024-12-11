@@ -2,11 +2,15 @@ package com.standard.service.measure;
 
 import com.standard.domain.Measure;
 import com.standard.domain.Product;
-import com.standard.entity.*;
+import com.standard.entity.BrandEntity;
+import com.standard.entity.CategoryEntity;
+import com.standard.entity.ItemsTypeMeasureEntity;
+import com.standard.entity.MeasureEntity;
+import com.standard.entity.SubcategoryEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.CategoryRepository;
 import com.standard.repository.BrandRepository;
+import com.standard.repository.CategoryRepository;
 import com.standard.repository.MeasureRepository;
 import com.standard.repository.SubcategoryRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +22,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -37,7 +40,7 @@ public class MeasureServiceImpl implements MeasureService {
 		measureDB.setName(measure.getNome());
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
-			itensMedidaBuild(measure, itensSet);
+			itemsTypeMeasureBuild(measure, itensSet);
 			measureDB.setItemsTypeMeasure(itensSet);
 		}
 		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.saveAndFlush(measureDB));
@@ -52,22 +55,22 @@ public class MeasureServiceImpl implements MeasureService {
 		measureDB.getItemsTypeMeasure().clear();
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
-			itensMedidaBuild(measure, itensSet);
+			itemsTypeMeasureBuild(measure, itensSet);
 			measureDB.getItemsTypeMeasure().addAll(itensSet);
 		}
 		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.saveAndFlush(measureDB));
 	}
 
-	private void itensMedidaBuild(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
+	private void itemsTypeMeasureBuild(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
 		measure.getItemsTypeMeasure().forEach(itensMedida -> {
-			ItemsTypeMeasureEntity itens = new ItemsTypeMeasureEntity();
-			itens.setCategory(categoryRepository.getById(measure.getCategory().getId()));
-			itens.setSubcategory(subcategoryRepository.getById(measure.getSubcategory().getId()));
+			ItemsTypeMeasureEntity itemsTypeMeasureEntity = new ItemsTypeMeasureEntity();
+			itemsTypeMeasureEntity.setCategory(categoryRepository.getById(measure.getCategory().getId()));
+			itemsTypeMeasureEntity.setSubcategory(subcategoryRepository.getById(measure.getSubcategory().getId()));
 			if (measure.getBrand() != null) {
-				itens.setBrand(brandRepository.getById(measure.getBrand().getId()));
+				itemsTypeMeasureEntity.setBrand(brandRepository.getById(measure.getBrand().getId()));
 			}
-			itens.setAmount(itensMedida.getAmount());
-			itensSet.add(itens);
+			itemsTypeMeasureEntity.setAmount(itensMedida.getAmount());
+			itensSet.add(itemsTypeMeasureEntity);
 		});
 	}
 
@@ -86,7 +89,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "measureListCache", condition = "#showInventoryOnHand == false")
 	public List<Measure> findAll() {
-		return measureRepository.findAll().stream().map(JpaFunctions.measureToMeasureEntity).collect(Collectors.toList());
+		return measureRepository.findAll().stream().map(JpaFunctions.measureToMeasureEntity).toList();
 	}
 
 	@Override
@@ -117,7 +120,7 @@ public class MeasureServiceImpl implements MeasureService {
 
 		return measureRepository
 				.findByItemsTypeMeasureCategoryAndItemsTypeMeasureSubcategoryAndItemsTypeMeasureBrand(categoryEntity, subcategoryEntity, brandEntity)
-				.stream().map(JpaFunctions.measureToMeasureEntity).collect(Collectors.toList());
+				.stream().map(JpaFunctions.measureToMeasureEntity).toList();
 
 	}
 	

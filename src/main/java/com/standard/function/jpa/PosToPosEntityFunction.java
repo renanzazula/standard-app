@@ -1,9 +1,9 @@
 package com.standard.function.jpa;
 
-import java.util.function.Function;
-
-import com.standard.entity.PosEntity;
 import com.standard.domain.Pos;
+import com.standard.entity.PosEntity;
+
+import java.util.function.Function;
 
 public class PosToPosEntityFunction implements Function<PosEntity, Pos> {
 

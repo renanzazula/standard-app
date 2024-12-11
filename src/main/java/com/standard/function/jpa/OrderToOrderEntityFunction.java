@@ -5,7 +5,6 @@ import com.standard.entity.OrderEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> {
 
@@ -25,7 +24,7 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
             output.setPaidAmount(input.getPaidAmount());
             output.setDiscount(input.getDiscount());
             output.setTotalAmountToPaid(input.getTotalAmountToPaid());
-            output.setChange(input.getChange());
+            output.setChange(input.getChanging());
             output.setPayment(input.getPayment());
 
             if (input.getPaymentMethod() != null) {
@@ -40,7 +39,7 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
             }
 
             if (input.getOrderHasItemProduct() != null) {
-                output.setOrderHasItemProduct(input.getOrderHasItemProduct().stream().map(JpaFunctions.orderHasItemProdutoToOrderHasItemProdutoEntity).collect(Collectors.toList()));
+                output.setOrderHasItemProduct(input.getOrderHasItemProduct().stream().map(JpaFunctions.orderHasItemProdutoToOrderHasItemProdutoEntity).toList());
             }
 
         }

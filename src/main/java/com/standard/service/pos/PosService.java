@@ -16,7 +16,7 @@ public interface PosService {
 
 	Pos getPos(Pos pos);
 
-	Long generateLastPosId();
+	Long getLastPosId();
 
 	Pos updateAmountPos(PosEntity pos, Order order);
 }

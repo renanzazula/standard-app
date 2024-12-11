@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +29,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Override
     @Transactional
     public PaymentMethod update(Long id, PaymentMethod objct) {
-        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.getOne(id);
+        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
         return getPaymentMethod(objct, paymentMethodDB);
     }
 
@@ -45,10 +44,8 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Override
     @Transactional
     public void delete(Long id) {
-        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.getOne(id);
-        if(paymentMethodDB != null) {
-            paymentMethodDB.setStatus(StatusEnum.DISABLE);
-        }
+        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
+        paymentMethodDB.setStatus(StatusEnum.DISABLE);
         paymentMethodRepository.save(paymentMethodDB);
     }
 
@@ -56,8 +53,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "paymentMethodListCache", condition = "#showInventoryOnHand == false")
     public List<PaymentMethod> findAll() {
-        return paymentMethodRepository.findAll().stream().map(JpaFunctions.paymentMethodToPaymentMethodEntity)
-                .collect(Collectors.toList());
+        return paymentMethodRepository.findAll().stream().map(JpaFunctions.paymentMethodToPaymentMethodEntity).toList();
     }
 
     @Override
@@ -65,7 +61,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Cacheable(cacheNames = "paymentMethodCache", key = "#id", condition = "#showInventoryOnHand == false")
     public PaymentMethod findById(Long id) {
         return JpaFunctions.paymentMethodToPaymentMethodEntity
-                .apply(paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+                .apply(paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method  não encontrado!")));
     }
 
 }

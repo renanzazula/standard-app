@@ -1,6 +1,23 @@
 package com.standard.function;
 
-import com.standard.function.jpa.*;
+import com.standard.function.jpa.AuthorityEntityToAuthorityAdapter;
+import com.standard.function.jpa.BrandToBrandEntityFunction;
+import com.standard.function.jpa.CategoryToCategoryEntityFunction;
+import com.standard.function.jpa.CustomerToCustomerEntityFunction;
+import com.standard.function.jpa.DomainToDomainEntityFunction;
+import com.standard.function.jpa.ItemsTypeMeasureToItemsTypeMeasureEntityFunction;
+import com.standard.function.jpa.MeasureToMeasureEntityFunction;
+import com.standard.function.jpa.OrderHasItemProductToOrderHasItemProductEntityFunction;
+import com.standard.function.jpa.OrderToOrderEntityFunction;
+import com.standard.function.jpa.PayBackEntityToPayBackFunction;
+import com.standard.function.jpa.PaymentMethodToPaymentMethodEntityFunction;
+import com.standard.function.jpa.PosToPosEntityFunction;
+import com.standard.function.jpa.ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction;
+import com.standard.function.jpa.ProductToProdctEntityFunction;
+import com.standard.function.jpa.ProviderToProviderEntityFunction;
+import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
+import com.standard.function.jpa.UserEntityToUserAdapter;
+import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
 
 public class JpaFunctions {
 

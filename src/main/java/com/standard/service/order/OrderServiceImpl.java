@@ -2,10 +2,18 @@ package com.standard.service.order;
 
 import com.standard.domain.Order;
 import com.standard.domain.OrderHasItemProduct;
-import com.standard.entity.*;
+import com.standard.entity.OrderEntity;
+import com.standard.entity.OrderHasItemProductEntity;
+import com.standard.entity.PaymentMethodEntity;
+import com.standard.entity.PosEntity;
+import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.enums.OrderStatusEnum;
 import com.standard.function.JpaFunctions;
-import com.standard.repository.*;
+import com.standard.repository.CustomerRepository;
+import com.standard.repository.OrderRepository;
+import com.standard.repository.PaymentMethodRepository;
+import com.standard.repository.PosRepository;
+import com.standard.repository.ProductHasItemsTypeMeasureRepository;
 import com.standard.service.pos.PosService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -81,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setPaidAmount(order.getPaidAmount());
         orderEntity.setDiscount(order.getDiscount());
         orderEntity.setTotalAmountToPaid(order.getTotalAmountToPaid());
-        orderEntity.setChange(order.getChange());
+        orderEntity.setChanging(order.getChange());
         orderEntity.setPayment(order.getPayment());
         orderEntity.setTotalAmount(subTotal); // posso considerar valor total é sub total venda... TODO: validar
         orderEntity.setPaymentMethod(paymentMethodRepository.getById(order.getFormaDePagamento().getId()));
@@ -192,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public List<Order> findAll() {
-        return orderRepository.findAll().stream().map(JpaFunctions.orderToOrderEntity).collect(Collectors.toList());
+        return orderRepository.findAll().stream().map(JpaFunctions.orderToOrderEntity).toList();
     }
 
     @Override
@@ -220,7 +227,7 @@ public class OrderServiceImpl implements OrderService {
             paymentMethodEntity.setId(order.getFormaDePagamento().getId());
             orderEntity.setPaymentMethod(paymentMethodEntity);
         }
-        return orderRepository.filter(orderEntity).stream().map(JpaFunctions.orderToOrderEntity).collect(Collectors.toList());
+        return orderRepository.filter(orderEntity).stream().map(JpaFunctions.orderToOrderEntity).toList();
     }
 
 }

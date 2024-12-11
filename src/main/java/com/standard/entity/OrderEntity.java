@@ -3,11 +3,16 @@ package com.standard.entity;
 import com.standard.enums.OrderStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,8 +40,8 @@ public @Data class OrderEntity extends BaseAuditEntity {
 	@Column(name = "totalAmountToPaid")
 	private Double totalAmountToPaid;
 
-	@Column(name = "change")
-	private Double change;
+	@Column(name = "changing")
+	private Double changing;
 
 	@Column(name = "payment")
 	private Double payment;

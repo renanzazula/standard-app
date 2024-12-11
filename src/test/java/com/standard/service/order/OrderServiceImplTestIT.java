@@ -68,33 +68,22 @@ class OrderServiceImplTestIT extends BaseTest {
     @Autowired
     private ProductHasItemsTypeMeasureRepository productHasItemsTypeMeasureRepository;
 
-    private BrandService brandService;
-    private ProviderService providerService;
-    private ProductService productService;
-    private SubcategoryService subcategoryService;
-    private CategoryService categoryService;
-    private DomainService domainService;
-    private MeasureService measureService;
-    private OrderService orderService;
-    private PosService posService;
-    private PaymentMethodService paymentMethodService;
+	private OrderService orderService;
 
-    @BeforeEach
+	@BeforeEach
     void setUp() {
 
-        posService = new PosServiceImpl(posRepository);
+		PosService posService = new PosServiceImpl(posRepository);
 
-        brandService = new BrandServiceImpl(brandRepository);
-        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
-        providerService = new ProviderServiceImpl(providerRepository);
-        domainService = new DomainServiceImpl(domainRepository);
-        measureService = new MeasureServiceImpl(measureRepository, categoryRepository,
-                subcategoryRepository, brandRepository);
+		BrandService brandService = new BrandServiceImpl(brandRepository);
+		SubcategoryService subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
+		ProviderService providerService = new ProviderServiceImpl(providerRepository);
+		DomainService domainService = new DomainServiceImpl(domainRepository);
+		MeasureService measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository, brandRepository);
 
-        productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository,
-                providerRepository, categoryRepository, subcategoryRepository,
-                itemsTypeMeasureRepository);
+		ProductService productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository, providerRepository, categoryRepository,
+				subcategoryRepository, itemsTypeMeasureRepository);
 
         orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository,
                 customerRepository, productHasItemsTypeMeasureRepository, posService);
@@ -105,7 +94,7 @@ class OrderServiceImplTestIT extends BaseTest {
         Customer customer = new Customer();
         customer.setId(customerEntity.getId());
 
-        paymentMethodService = new PaymentMethodServiceImpl(paymentMethodRepository);
+		PaymentMethodService paymentMethodService = new PaymentMethodServiceImpl(paymentMethodRepository);
         setUpPaymentMethod();
         paymentMethod = paymentMethodService.create(paymentMethod);
 

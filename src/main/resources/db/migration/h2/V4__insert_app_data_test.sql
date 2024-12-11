@@ -116,35 +116,7 @@ INSERT INTO `items_type_measure` (category_id, brand_id, measure_id, subcategory
 
 INSERT INTO `provider` (`name`,`description`, `last_modified_by`, `created_by`, `last_modified_date`, `creation_date`, `creation_time`, `version`) VALUES ('FORNECEDOR','FORNECEDOR', 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO `customer` (`id`, `last_modified_by`, `created_by`, `last_modified_date`, `creation_date`, `creation_time`, `version`) VALUES (1, 0, 0, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
-INSERT INTO `pos` (`id`,`last_modified_by`,`created_by`,`last_modified_date`,`creation_date`,`creation_time`,`version`,`open_date`,`close_date`,`open_time`,`close_time`,`status`,`total`,`total_discount`,`total_vendas`,`amount_final`,`open_amount`)VALUES (null,null,null,null,CURRENT_TIMESTAMP(),null,0,CURRENT_TIMESTAMP(),null,CURRENT_TIMESTAMP(),null,'A',0,0,0,0,5.0);
+INSERT INTO `pos` (`id`,`last_modified_by`,`created_by`,`last_modified_date`,`creation_date`,`creation_time`,`version`,`open_date`,`close_date`,`open_time`,`close_time`,`status`,`total`,`total_discount`,`total_order`,`close_amount`,`open_amount`)VALUES (null,null,null,null,CURRENT_TIMESTAMP(),null,0,CURRENT_TIMESTAMP(),null,CURRENT_TIMESTAMP(),null,'A',0,0,0,0,5.0);
 
-INSERT INTO `user`(`id`,`username`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`) VALUES(2, 'user',      true, true, true, true);
-INSERT INTO `user`(`id`,`username`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`) VALUES(3, 'customer',  true, true, true, true);
-INSERT INTO `user`(`id`,`username`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`) VALUES(1, 'admin',     true, true, true, true);
 
-INSERT INTO `user_pass`(`password`, `user_id`) VALUES ('{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 3);
-INSERT INTO `user_pass`(`password`, `user_id`) VALUES ('{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 2);
-INSERT INTO `user_pass`(`password`, `user_id`) VALUES ('{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 1);
 
-INSERT INTO `authority`(`ID`,`permission`) VALUES(0, 'ADMIN');
-INSERT INTO `authority`(`ID`,`permission`) VALUES(1, 'USER');
-INSERT INTO `authority`(`ID`,`permission`) VALUES(2, 'CUSTUMER');
-
-INSERT INTO `user`(`id`,`account_non_expired`,`account_non_locked`,`credential_non_expired`,`enable`,`username`) VALUES (1, true,true,true,true);
-INSERT INTO `user_authority`(`user_id`, `authority_id`) VALUES (1, 0);
-
-INSERT INTO `role` (`id`,`name`) VALUES(1, 'ADMIN');
-INSERT INTO `role` (`id`,`name`) VALUES(2, 'USER');     -- user application internal
-INSERT INTO `role` (`id`,`name`) VALUES(3, 'CUSTOMER'); -- user application external or second role
-
-INSERT INTO `authority`(`id`,`permission`) VALUES (1,  'ORDER_OPEN');
-INSERT INTO `authority`(`id`,`permission`) VALUES (2,  'ORDER_ADD');
-INSERT INTO `authority`(`id`,`permission`) VALUES (3,  'ORDER_REMOVE');
-
-INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(1, 1);
-INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(2, 1);
-INSERT INTO `role_authority` (`authority_id`, `role_id`) VALUES(3, 1);
-
-INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(1, 1);
-INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(2, 2);
-INSERT INTO `user_role` (`role_id`, `user_id`) VALUES(3, 3);

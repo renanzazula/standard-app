@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -39,12 +38,12 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
     @Override
     public Withdrawal findById(Long id) {
-        return JpaFunctions.withdrawalEntityToWithdrawal.apply(withdrawalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+        return JpaFunctions.withdrawalEntityToWithdrawal.apply(withdrawalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Withdrawal não encontrado!")));
     }
 
     @Override
     public List<Withdrawal> findAll() {
-        return withdrawalRepository.findAll().stream().map(JpaFunctions.withdrawalEntityToWithdrawal).collect(Collectors.toList());
+        return withdrawalRepository.findAll().stream().map(JpaFunctions.withdrawalEntityToWithdrawal).toList();
     }
 
     @Override

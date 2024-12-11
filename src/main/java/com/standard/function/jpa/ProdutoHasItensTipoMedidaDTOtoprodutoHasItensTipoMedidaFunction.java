@@ -7,7 +7,6 @@ import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         implements Function<ProductHasItemsTypeMeasureEntity, ProductHasItemsTypeMeasure> {
@@ -18,7 +17,7 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         if (input != null) {
             output.setId(input.getId());
             if (input.getDomains() != null) {
-                output.setDomains(input.getDomains().stream().map(JpaFunctions.domainToDomainEntity).collect(Collectors.toList()));
+                output.setDomains(input.getDomains().stream().map(JpaFunctions.domainToDomainEntity).toList());
             }
             if (input.getItemsTypeMeasure() != null) {
                 output.setItemsTypeMeasure(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity.apply(input.getItemsTypeMeasure()));
