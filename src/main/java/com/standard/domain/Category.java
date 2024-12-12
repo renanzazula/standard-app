@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Category implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
+
 	private Long id;
 	private String name;
 	private String description;

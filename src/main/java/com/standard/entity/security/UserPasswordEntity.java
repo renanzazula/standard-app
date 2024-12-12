@@ -14,6 +14,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -36,4 +37,20 @@ public class UserPasswordEntity implements Serializable {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserPasswordEntity that = (UserPasswordEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(password, that.password) && Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, password, user);
+    }
 }

@@ -2,8 +2,11 @@ package com.standard.entity.security;
 
 import com.standard.entity.ApplicationType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +17,16 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
-
-@Entity
+@Setter
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "user_session")
-public @Data class UserSessionEntity implements Serializable {
+public class UserSessionEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,17 +46,26 @@ public @Data class UserSessionEntity implements Serializable {
     private ApplicationType application;
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object o)
+    {
+        if (this == o)
             return true;
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UserSessionEntity other = (UserSessionEntity) obj;
-        if (userId == null) {
-            return other.userId == null;
-        } else return userId.equals(other.userId);
+        UserSessionEntity that = (UserSessionEntity) o;
+        return Objects.equals(userId, that.userId) && Objects.equals(activeSessions, that.activeSessions) && Objects.equals(timestamp,
+                that.timestamp) && application == that.application;
     }
 
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(userId, activeSessions, timestamp, application);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "UserSessionEntity{" + "userId='" + userId + '\'' + ", activeSessions='" + activeSessions + '\'' + ", timestamp=" + timestamp + ", application=" + application + '}';
+    }
 }

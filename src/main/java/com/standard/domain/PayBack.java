@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class PayBack implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;

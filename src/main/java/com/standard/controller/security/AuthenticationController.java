@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    public static final String AUTHENTICATION = "/public/v1/users/authenticate";
+    public static final String AUTHENTICATION = "/public/api/v1/authentication";
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;

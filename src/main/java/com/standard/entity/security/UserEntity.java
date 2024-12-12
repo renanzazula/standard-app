@@ -30,15 +30,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
 @Getter
-@Entity
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "user")
 public class UserEntity implements UserDetails, CredentialsContainer, Serializable {
 
@@ -59,7 +59,6 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private Set<RoleEntity> roles;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     private CustomerEntity customer;
@@ -84,6 +83,7 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
     public Set<GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> set = new HashSet<>();
         for (RoleEntity role : this.roles) {
+            set.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
             Set<AuthorityEntity> authorities = role.getAuthorities();
             for (AuthorityEntity authorityEntity : authorities) {
                 SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authorityEntity.getPermission());
@@ -112,5 +112,25 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
     public void eraseCredentials() {
         // Spring security will use this on the context, so this method we don't need to implement.
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserEntity that = (UserEntity) o;
+        return accountNonExpired == that.accountNonExpired && accountNonLocked == that.accountNonLocked && credentialNonExpired == that.credentialNonExpired && enable == that.enable && Objects.equals(
+                id, that.id) && Objects.equals(username, that.username) && Objects.equals(userPassword, that.userPassword) && Objects.equals(roles, that.roles) && Objects.equals(
+                customer, that.customer);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, username, userPassword, roles, customer, accountNonExpired, accountNonLocked, credentialNonExpired, enable);
+    }
+
 
 }

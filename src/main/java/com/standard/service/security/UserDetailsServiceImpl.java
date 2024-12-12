@@ -1,5 +1,6 @@
 package com.standard.service.security;
 
+import com.standard.entity.security.UserEntity;
 import com.standard.repository.security.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +21,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("loadUserByUsername: {}",username);
-        return userRepository.findByUsername(username)
+
+        UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User name: " + username + "not found"));
+
+        return user;
     }
 
 // fix me: all this why?

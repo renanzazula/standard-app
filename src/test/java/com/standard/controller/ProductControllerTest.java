@@ -179,7 +179,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void addicionarProduto() {
+    public void addProduct() {
     }
 
     @Test

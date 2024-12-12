@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -14,9 +15,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class OrderHasItemProduct implements Serializable {
 
-  	/**
-	 * 
-	 */
+
+	@Serial
 	private static final long serialVersionUID = -6408847193452580066L;
 	
 	private ProductHasItemsTypeMeasure productHasItemsTypeMeasure;

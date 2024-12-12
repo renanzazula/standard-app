@@ -7,8 +7,8 @@ INSERT INTO `user_pass`(`password`, `user_id`) VALUES ('{bcrypt}$2a$10$3w//CgAic
 INSERT INTO `user_pass`(`password`, `user_id`) VALUES ('{bcrypt}$2a$10$3w//CgAicchkVo0iCYJ0W.oXv911VdgfHsuS0hFks5joDpFFakUS2', 3);
 
 INSERT INTO `role` (`id`, `name`) VALUES (1, 'ADMIN');
-INSERT INTO `role` (`id`, `name`) VALUES (2, 'USER'); -- user application internal
-INSERT INTO `role` (`id`, `name`) VALUES (3, 'CUSTOMER'); -- user application external or second role
+INSERT INTO `role` (`id`, `name`) VALUES (2, 'USER');       -- user application internal
+INSERT INTO `role` (`id`, `name`) VALUES (3, 'CUSTOMER');   -- user application external or second role
 
 INSERT INTO `authority`(`id`, `permission`) VALUES (1, 'ORDER_OPEN');
 INSERT INTO `authority`(`id`, `permission`) VALUES (2, 'ORDER_ADD');
@@ -18,7 +18,9 @@ INSERT INTO `authority`(`id`, `permission`) VALUES (5, 'ORDER_PRINT');
 INSERT INTO `authority`(`id`, `permission`) VALUES (6, 'ORDER_DELETE');
 INSERT INTO `authority`(`id`, `permission`) VALUES (7, 'ORDER_REOPEN');
 INSERT INTO `authority`(`id`, `permission`) VALUES (8, 'ORDER_SEARCH');
+
 INSERT INTO `authority`(`id`, `permission`) VALUES (9, 'CUSTOMER_SEARCH');
+
 INSERT INTO `authority`(`id`, `permission`) VALUES (10, 'PRODUCT_PRINT');
 INSERT INTO `authority`(`id`, `permission`) VALUES (11, 'PRODUCT_SEARCH');
 INSERT INTO `authority`(`id`, `permission`) VALUES (12, 'PRODUCT_ADD');

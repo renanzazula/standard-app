@@ -22,7 +22,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LogoutFilter logoutFilter;
@@ -43,13 +43,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/swagger-ui.html",
                             "/resources/**",
                             "/swagger-resources/**",
-                            "/api/v1/authentication/login").permitAll();
-                    authorizes.antMatchers("/api/**").authenticated();
+                            "/public/**").permitAll();
+                    authorizes.antMatchers("/private/**").authenticated();
                 })
                 .authorizeRequests().anyRequest().authenticated()
-                .and().csrf().ignoringAntMatchers("/h2-console/**", "/api/**")
+                .and().csrf().ignoringAntMatchers("/h2-console/**", "/public/**")
                 .csrfTokenRepository(csrfTokenRepository)
-                .and().rememberMe().tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService)
+                .and().rememberMe()
+                .tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService)
                 .and().exceptionHandling()
                 .and().sessionManagement()
                 .sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy);

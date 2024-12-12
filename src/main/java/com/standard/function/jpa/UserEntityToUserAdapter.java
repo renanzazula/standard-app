@@ -20,6 +20,7 @@ public class UserEntityToUserAdapter implements Function<UserEntity, User> {
                                 .stream()
                                     .map(JpaFunctions.authorityEntityToAuthorityDtoAdapter)
                                         .collect(Collectors.toSet()));
+
         return dto;
     }
 

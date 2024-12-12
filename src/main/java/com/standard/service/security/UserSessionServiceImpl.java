@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +22,12 @@ public class UserSessionServiceImpl implements UserSessionService {
     @Override
     @Transactional
     public void unregisterUserSession(String uid, String idSessionHashed) {
-        UserSessionEntity userAttribute = userSessionRepository.findById(uid).get();
-        if (userAttribute != null) {
-            String value = buildNewValue(idSessionHashed, userAttribute.getActiveSessions());
-            if (!value.equals(userAttribute.getActiveSessions())) {
-                userAttribute.setActiveSessions(value);
-                userSessionRepository.saveAndFlush(userAttribute);
-                log.debug("unregisterUserSession - removed lastSessionId {} evidence", idSessionHashed);
-            }
+        UserSessionEntity userAttribute = userSessionRepository.findById(uid).orElseThrow(() -> new EntityNotFoundException("User não encontrado!"));
+        String value = buildNewValue(idSessionHashed, userAttribute.getActiveSessions());
+        if (!value.equals(userAttribute.getActiveSessions())) {
+            userAttribute.setActiveSessions(value);
+            userSessionRepository.saveAndFlush(userAttribute);
+            log.debug("unregisterUserSession - removed lastSessionId {} evidence", idSessionHashed);
         }
     }
 

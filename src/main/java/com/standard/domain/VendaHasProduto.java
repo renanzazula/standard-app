@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 class VendaHasProduto implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 	private Long codigo;
 	private Order order;

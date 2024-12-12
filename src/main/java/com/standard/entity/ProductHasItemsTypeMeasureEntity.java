@@ -1,7 +1,10 @@
 package com.standard.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,12 +15,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.io.Serial;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = {"domains", "orderHasItemProduct" }, callSuper = false)
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+// @EqualsAndHashCode(exclude = {"domains", "orderHasItemProduct" }, callSuper = false)
 @Entity(name = "product_has_items_type_measure")
-public @Data class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
+public class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
 
+    @Serial
     private static final long serialVersionUID = -6612762288260227887L;
 
 
@@ -35,7 +46,7 @@ public @Data class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(name = "product_has_items_type_measure_has_domain", joinColumns = {
             @JoinColumn(name = "product_has_items_type_measure_id")}, inverseJoinColumns = {
             @JoinColumn(name = "domain_id")})
@@ -44,5 +55,23 @@ public @Data class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
     @OneToMany(mappedBy = "productHasItemsTypeMeasure", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<OrderHasItemProductEntity> orderHasItemProduct;
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        ProductHasItemsTypeMeasureEntity that = (ProductHasItemsTypeMeasureEntity) o;
+        return Objects.equals(quantity, that.quantity) && Objects.equals(unitValue, that.unitValue) && Objects.equals(itemsTypeMeasure, that.itemsTypeMeasure) && Objects.equals(
+                product, that.product);
+    }
 
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(super.hashCode(), quantity, unitValue, itemsTypeMeasure, product);
+    }
 }

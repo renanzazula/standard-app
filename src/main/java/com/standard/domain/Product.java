@@ -10,6 +10,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public   class Product implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
@@ -36,4 +37,20 @@ public class AuthorityEntity implements Serializable {
     @ManyToMany(mappedBy = "authorities")
     private Set<RoleEntity> roles;
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        AuthorityEntity that = (AuthorityEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(permission, that.permission) && Objects.equals(roles, that.roles);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, permission, roles);
+    }
 }

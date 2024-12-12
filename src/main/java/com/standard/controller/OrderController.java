@@ -5,6 +5,7 @@ import com.standard.service.order.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(OrderController.BASE_URL)
 public class OrderController {
 
-    public static final String BASE_URL = "/private/v1/order";
+    public static final String BASE_URL = "/private/api/v1/order";
 
     private final OrderService orderService;
 

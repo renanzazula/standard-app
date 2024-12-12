@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,11 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(PaymentMethodController.BASE_URL)
 public class PaymentMethodController {
 
-    public static final String BASE_URL = "/private/v1/paymentMethod";
+    public static final String BASE_URL = "/private/api/v1/paymentMethod";
 
     private final PaymentMethodService paymentMethodService;
 

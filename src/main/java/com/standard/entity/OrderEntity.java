@@ -1,8 +1,13 @@
 package com.standard.entity;
 
 import com.standard.enums.OrderStatusEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,13 +18,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "orderHasItemProduct", callSuper = false)
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+// @EqualsAndHashCode(exclude = "orderHasItemProduct", callSuper = false)
 @Entity(name = "order")
-public @Data class OrderEntity extends BaseAuditEntity {
+public   class OrderEntity extends BaseAuditEntity {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	@Column(name = "totalAmount")
@@ -73,4 +86,26 @@ public @Data class OrderEntity extends BaseAuditEntity {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private Set<OrderHasItemProductEntity> orderHasItemProduct = new HashSet<>();
 
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
+		OrderEntity that = (OrderEntity) o;
+		return Objects.equals(totalAmount, that.totalAmount) && Objects.equals(subTotal, that.subTotal) && Objects.equals(pendingAmount, that.pendingAmount) && Objects.equals(
+				paidAmount, that.paidAmount) && Objects.equals(discount, that.discount) && Objects.equals(totalAmountToPaid, that.totalAmountToPaid) && Objects.equals(changing,
+				that.changing) && Objects.equals(payment, that.payment) && Objects.equals(quantity, that.quantity) && status == that.status && Objects.equals(pos,
+				that.pos) && Objects.equals(customer, that.customer) && Objects.equals(paymentMethod, that.paymentMethod);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(super.hashCode(), totalAmount, subTotal, pendingAmount, paidAmount, discount, totalAmountToPaid, changing, payment, quantity, status, pos, customer,
+				paymentMethod);
+	}
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 public class OrderFilter implements Serializable {
 
 
+    @Serial
     private static final long serialVersionUID = -6566111624858515644L;
 
     private Long id;

@@ -1,7 +1,12 @@
 package com.standard.entity;
 
 import com.standard.enums.StatusPOSEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
@@ -12,9 +17,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "pos")
-public @Data class PosEntity extends BaseAuditEntity  {
+public class PosEntity extends BaseAuditEntity  {
 
 	private static final long serialVersionUID = -6612762288260227887L;
 
@@ -61,5 +72,25 @@ public @Data class PosEntity extends BaseAuditEntity  {
 	@Column(name = "status")
 	private StatusPOSEnum status;
 
- 
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
+		PosEntity posEntity = (PosEntity) o;
+		return Objects.equals(openDate, posEntity.openDate) && Objects.equals(openTime, posEntity.openTime) && Objects.equals(closeDate, posEntity.closeDate) && Objects.equals(
+				closeTime, posEntity.closeTime) && Objects.equals(openAmount, posEntity.openAmount) && Objects.equals(closeAmount, posEntity.closeAmount) && Objects.equals(
+				totalOrders, posEntity.totalOrders) && Objects.equals(total, posEntity.total) && Objects.equals(totalDiscount,
+				posEntity.totalDiscount) && status == posEntity.status;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(super.hashCode(), openDate, openTime, closeDate, closeTime, openAmount, closeAmount, totalOrders, total, totalDiscount, status);
+	}
 }

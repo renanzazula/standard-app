@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 public class Order implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api("Categoria Controller")
+@Api("Category Controller")
 @RestController
-@RequestMapping(CategoryController.BASE_URL)
 @AllArgsConstructor
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
+@RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
-    public static final String  BASE_URL = "/private/v1/category";
+    public static final String  BASE_URL = "/private/api/v1/category";
 
     private final CategoryService categoryService;
 

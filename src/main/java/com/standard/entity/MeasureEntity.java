@@ -1,8 +1,13 @@
 package com.standard.entity;
 
 import com.standard.enums.StatusEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,12 +19,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "itemsTypeMeasure", callSuper = false)
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+// @EqualsAndHashCode(exclude = "itemsTypeMeasure", callSuper = false)
 @Entity(name = "measure")
-public @Data
-class MeasureEntity extends BaseAuditEntity {
+public class MeasureEntity extends BaseAuditEntity {
 
     private static final long serialVersionUID = -6612762288260227887L;
 
@@ -39,4 +49,23 @@ class MeasureEntity extends BaseAuditEntity {
     @JoinColumn(name = "measure_id")
     @OrderBy("id")
     private Set<ItemsTypeMeasureEntity> itemsTypeMeasure;
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        MeasureEntity that = (MeasureEntity) o;
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && status == that.status;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(super.hashCode(), name, description, status);
+    }
 }

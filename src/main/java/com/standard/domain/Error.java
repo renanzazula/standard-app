@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Error implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -7754886921722274018L;
 
     private String target = null;

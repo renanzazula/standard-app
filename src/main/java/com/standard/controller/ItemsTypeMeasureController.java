@@ -9,6 +9,7 @@ import com.standard.service.product.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +20,11 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(DomainController.BASE_URL)
 public class ItemsTypeMeasureController {
 
-    public static final String BASE_URL = "/private/v1/itensMedida";
+    public static final String BASE_URL = "/private/api/v1/itensMedida";
 
     private final MeasureService measureService;
     private final ProductService productService;

@@ -1,6 +1,11 @@
 package com.standard.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +17,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import java.io.Serial;
+import java.util.Objects;
 
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "order_has_item_product")
-public @Data class OrderHasItemProductEntity extends BaseAuditEntity{
+public class OrderHasItemProductEntity extends BaseAuditEntity{
 
+	@Serial
 	private static final long serialVersionUID = -2516119080969832005L;
 
 	@Id
@@ -39,5 +52,24 @@ public @Data class OrderHasItemProductEntity extends BaseAuditEntity{
 	@Column(name = "quantity")
 	private Integer quantity;
 
-	 
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
+		OrderHasItemProductEntity that = (OrderHasItemProductEntity) o;
+		return Objects.equals(id, that.id) && Objects.equals(order, that.order) && Objects.equals(productHasItemsTypeMeasure, that.productHasItemsTypeMeasure) && Objects.equals(
+				unitValue, that.unitValue) && Objects.equals(quantity, that.quantity);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(super.hashCode(), id, order, productHasItemsTypeMeasure, unitValue, quantity);
+	}
+
 }

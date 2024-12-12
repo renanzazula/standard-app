@@ -19,7 +19,6 @@ public class PosServiceImpl implements PosService
 {
 
 	private final PosRepository repository;
-	private final PosService posService;
 
 	@Override
 	@Transactional
@@ -64,7 +63,7 @@ public class PosServiceImpl implements PosService
 			return JpaFunctions.posToPosEntity.apply(posEntity);
 		} else {
 			Pos pos = new Pos();
-			pos.setId(posService.getLastPosId());
+			pos.setId(getLastPosId());
 			pos.setOpenDate(new Date());
 			pos.setOpenTime(new Date());
 			pos.setOpenAmount((double) 0);
@@ -89,7 +88,6 @@ public class PosServiceImpl implements PosService
 	public Pos updateAmountPos(PosEntity pos, Order order)
 	{
 		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new EntityNotFoundException("POS não encontrado!"));
-
 		posEntity.setTotalDiscount(posEntity.getTotalDiscount() + order.getDiscount());
 		Double totalOrder = posEntity.getTotalOrders() + order.getPaidAmount();
 		posEntity.setTotalOrders(totalOrder);
@@ -104,7 +102,6 @@ public class PosServiceImpl implements PosService
 	}
 
 	@Override
-	@Transactional
 	public Long getLastPosId()
 	{
 		Long id = repository.getLastPosId();

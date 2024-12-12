@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ItemsTypeMeasure implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;
