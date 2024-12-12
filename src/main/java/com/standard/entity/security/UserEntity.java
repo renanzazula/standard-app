@@ -113,24 +113,4 @@ public class UserEntity implements UserDetails, CredentialsContainer, Serializab
         // Spring security will use this on the context, so this method we don't need to implement.
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        UserEntity that = (UserEntity) o;
-        return accountNonExpired == that.accountNonExpired && accountNonLocked == that.accountNonLocked && credentialNonExpired == that.credentialNonExpired && enable == that.enable && Objects.equals(
-                id, that.id) && Objects.equals(username, that.username) && Objects.equals(userPassword, that.userPassword) && Objects.equals(roles, that.roles) && Objects.equals(
-                customer, that.customer);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(id, username, userPassword, roles, customer, accountNonExpired, accountNonLocked, credentialNonExpired, enable);
-    }
-
-
 }

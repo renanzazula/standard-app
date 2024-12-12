@@ -49,20 +49,5 @@ public class RoleEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private Set<AuthorityEntity> authorities;
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        RoleEntity that = (RoleEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(users, that.users) && Objects.equals(authorities, that.authorities);
-    }
 
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(id, name, users, authorities);
-    }
 }
