@@ -303,7 +303,6 @@ create table product
     version            bigint,
     bar_code           varchar(255) not null,
     cost_price         double       not null,
-    creation_date_time timestamp,
     description        varchar(45)  not null,
     discount           double       not null,
     discount_percent   integer      not null check (discount_percent <= 100 AND discount_percent >= 0),

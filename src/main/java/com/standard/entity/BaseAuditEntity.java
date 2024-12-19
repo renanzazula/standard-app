@@ -18,7 +18,6 @@ import java.util.Objects;
 @Setter
 @Getter
 @MappedSuperclass
-//@EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
 public class BaseAuditEntity extends AuditEntity implements Serializable
 {

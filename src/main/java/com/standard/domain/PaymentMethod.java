@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Data
@@ -26,8 +27,8 @@ public class PaymentMethod implements Serializable {
 	private Integer discountPercent;
 
     @JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private Date creationDate;
+	private OffsetDateTime creationDate;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date creationTime;
+	private OffsetDateTime creationTime;
 }

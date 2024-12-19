@@ -10,7 +10,7 @@ public interface OrderService {
 	Order update(Order order);
 
 	Order updateStatusOrder(Order order);
-	Order alterarStatusVendaParaNaoRealizada(Order order);
+	Order updateStatusOrderToPending(Order order);
 
 	void cancel(Order order);
 

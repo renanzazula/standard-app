@@ -24,7 +24,6 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode(exclude = "category")
 @Entity(name = "subcategory")
 public class SubcategoryEntity extends BaseAuditEntity {
 

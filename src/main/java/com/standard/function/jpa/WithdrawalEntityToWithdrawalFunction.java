@@ -4,6 +4,8 @@ import com.standard.domain.Withdrawal;
 import com.standard.entity.WithdrawalEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.Optional;
+
 public class WithdrawalEntityToWithdrawalFunction implements java.util.function.Function<WithdrawalEntity, Withdrawal> {
 
     @Override
@@ -15,9 +17,8 @@ public class WithdrawalEntityToWithdrawalFunction implements java.util.function.
             output.setAmount(input.getAmount());
             output.setCreationDate(input.getCreationDate());
             output.setCreationTime(input.getCreationTime());
-            if(input.getPos() != null){
-                output.setPos(JpaFunctions.posToPosEntity.apply(input.getPos()));
-            }
+            Optional.ofNullable(input.getPos())
+                    .ifPresent(pos -> output.setPos(JpaFunctions.posToPosEntity.apply(pos)));
         }
         return output;
     }

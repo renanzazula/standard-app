@@ -90,9 +90,9 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setTotalAmountToPaid(order.getTotalAmountToPaid());
         orderEntity.setChanging(order.getChange());
         orderEntity.setPayment(order.getPayment());
-        orderEntity.setTotalAmount(subTotal); // posso considerar valor total é sub total venda... TODO: validar
-        orderEntity.setPaymentMethod(paymentMethodRepository.getById(order.getFormaDePagamento().getId()));
-        orderEntity.setCustomer(customerRepository.getById(Long.valueOf(1))); //venda.getCliente().getCodigo()
+        orderEntity.setTotalAmount(subTotal);
+        orderEntity.setPaymentMethod(paymentMethodRepository.getById(order.getPaymentMethod().getId()));
+        orderEntity.setCustomer(customerRepository.getById(1L));
     }
 
     /**
@@ -152,8 +152,7 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setPos(posEntity);
 
         Order vResult = null;
-        if (posEntity != null) {
-            if (posEntity.getStatus().name().equals("A")) {
+        if (posEntity != null && posEntity.getStatus().name().equals("A")) {
                 // if caixa satus F error
                 orderEntity.setStatus(OrderStatusEnum.DONE);
                 vResult = JpaFunctions.orderToOrderEntity.apply(orderRepository.saveAndFlush(orderEntity));
@@ -164,11 +163,11 @@ public class OrderServiceImpl implements OrderService {
                 // Efetuar baixa no estoque...
                 removeProductFromStock(order);
             }
-        }
+
         return vResult;
     }
 
-    public Order alterarStatusVendaParaNaoRealizada(Order order) {
+    public Order updateStatusOrderToPending(Order order) {
         OrderEntity orderEntity = orderRepository.getById(order.getId());
         PosEntity posEntity = posRepository.getLastPos();
         orderEntity.setPos(posEntity);
@@ -212,8 +211,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (order.getCreationDate() != null) {
-            //FIXME:
-            //orderEntity.setCreationDate(order.getCreationDate());
+              orderEntity.setCreationDate(order.getCreationDate());
         }
 
         if (order.getStatus() != null) {
@@ -222,9 +220,9 @@ public class OrderServiceImpl implements OrderService {
         // TODO:
 		// vendaEntity.setCustomer(venda.getCustomer());
 
-        if (order.getFormaDePagamento() != null && order.getFormaDePagamento().getId() != null) {
+        if (order.getPaymentMethod() != null && order.getPaymentMethod().getId() != null) {
             PaymentMethodEntity paymentMethodEntity = new PaymentMethodEntity();
-            paymentMethodEntity.setId(order.getFormaDePagamento().getId());
+            paymentMethodEntity.setId(order.getPaymentMethod().getId());
             orderEntity.setPaymentMethod(paymentMethodEntity);
         }
         return orderRepository.filter(orderEntity).stream().map(JpaFunctions.orderToOrderEntity).toList();

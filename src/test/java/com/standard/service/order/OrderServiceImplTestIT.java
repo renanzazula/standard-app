@@ -157,7 +157,7 @@ class OrderServiceImplTestIT extends BaseTest {
         order.setStatus(OrderStatusEnum.DONE);
         order.setPos(new Pos());
         order.setPos(pos);
-        order.setFormaDePagamento(paymentMethod);
+        order.setPaymentMethod(paymentMethod);
         order.setCustomer(customer);
         OrderHasItemProduct orderHasItemProduct = new OrderHasItemProduct();
 

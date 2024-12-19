@@ -4,6 +4,8 @@ import com.standard.domain.Category;
 import com.standard.entity.CategoryEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.Optional;
+
 public class CategoryToCategoryEntityFunction implements java.util.function.Function<CategoryEntity, Category> {
 
     @Override
@@ -14,9 +16,13 @@ public class CategoryToCategoryEntityFunction implements java.util.function.Func
             output.setName(input.getName());
             output.setDescription(input.getDescription());
             output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
-            if (input.getSubcategories() != null) {
-                output.setSubcategories(input.getSubcategories().stream().map(JpaFunctions.subcategoryToSubCategoryEntity).toList());
-            }
+            Optional.ofNullable(input.getSubcategories())
+                    .ifPresent(subcategories -> output.setSubcategories(
+                            subcategories.stream()
+                                    .map(JpaFunctions.subcategoryToSubCategoryEntity)
+                                    .toList()
+                    ));
+
         }
         return output;
     }

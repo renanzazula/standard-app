@@ -28,7 +28,6 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// @EqualsAndHashCode(exclude = "orderHasItemProduct", callSuper = false)
 @Entity(name = "order")
 public   class OrderEntity extends BaseAuditEntity {
 

@@ -26,6 +26,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -37,7 +38,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "product")
-//@EqualsAndHashCode(exclude = "productHasItemsTypeMeasure", callSuper = false)
 public class ProductEntity extends BaseAuditEntity
 {
 
@@ -64,7 +64,7 @@ public class ProductEntity extends BaseAuditEntity
 	@Column(name = "description", length = 45)
 	private String description;
 
-	//    @NotNull TODO: list de prices base on configuration
+  	@NotNull
 	@Column(name = "price")
 	private Double price;
 
@@ -103,12 +103,6 @@ public class ProductEntity extends BaseAuditEntity
 	@Lob
 	@Column(name = "photo", columnDefinition = "BLOB")
 	private byte[] photo;
-
-	// fixme: data hora separar
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creationDateTime")
-	private Date creationDateTime;
 
 	@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -152,7 +146,7 @@ public class ProductEntity extends BaseAuditEntity
 		return Objects.equals(barCode, that.barCode) && Objects.equals(name, that.name) && status == that.status && Objects.equals(description, that.description) && Objects.equals(
 				price, that.price) && Objects.equals(salePrice, that.salePrice) && Objects.equals(costPrice, that.costPrice) && Objects.equals(discountPrice,
 				that.discountPrice) && Objects.equals(discount, that.discount) && Objects.equals(weight, that.weight) && Objects.equals(percent, that.percent) && Objects.equals(
-				discountPercent, that.discountPercent) && Objects.deepEquals(photo, that.photo) && Objects.equals(creationDateTime, that.creationDateTime) && Objects.equals(brand,
+				discountPercent, that.discountPercent) && Objects.deepEquals(photo, that.photo)  && Objects.equals(brand,
 				that.brand) && Objects.equals(provider, that.provider) && Objects.equals(category, that.category) && Objects.equals(measure, that.measure) && Objects.equals(
 				subcategory, that.subcategory);
 	}
@@ -161,7 +155,7 @@ public class ProductEntity extends BaseAuditEntity
 	public int hashCode()
 	{
 		return Objects.hash(super.hashCode(), barCode, name, status, description, price, salePrice, costPrice, discountPrice, discount, weight, percent, discountPercent,
-				Arrays.hashCode(photo), creationDateTime, brand, provider, category, measure, subcategory);
+				Arrays.hashCode(photo), brand, provider, category, measure, subcategory);
 	}
 
 }

@@ -24,7 +24,6 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// @EqualsAndHashCode(exclude = {"domains", "orderHasItemProduct" }, callSuper = false)
 @Entity(name = "product_has_items_type_measure")
 public class ProductHasItemsTypeMeasureEntity extends BaseAuditEntity {
 

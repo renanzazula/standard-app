@@ -8,6 +8,7 @@ import com.standard.entity.ProductHasItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction
@@ -24,25 +25,21 @@ public class ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunctio
 						.sorted(Comparator.comparing(DomainEntity::getId))
 						.map(JpaFunctions.domainToDomainEntity).toList());
 			}
-			if (input.getItemsTypeMeasure() != null) {
-				output.setItemsTypeMeasure(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity.apply(input.getItemsTypeMeasure()));
-			}
+			Optional.ofNullable(input.getItemsTypeMeasure())
+					.ifPresent(itemsTypeMeasure -> output.setItemsTypeMeasure(
+							JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity.apply(itemsTypeMeasure)
+					));
 
-			if (input.getProduct() != null) {
-				output.setProduct(productEntityToProduct(input.getProduct()));
-			}
+			Optional.ofNullable(input.getProduct())
+					.ifPresent(product -> output.setProduct(productEntityToProduct(product)));
+
 
 			output.setQuantity(input.getQuantity());
 			output.setUnitValue(input.getUnitValue());
 		}
 		return output;
 	}
-	
-	/**
-	 * 
-	 * @param input
-	 * @return
-	 */
+
 	private Product productEntityToProduct(ProductEntity input){
 		Product output = new Product();
 		output.setId(input.getId());
@@ -58,27 +55,22 @@ public class ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunctio
 		output.setWeight(input.getWeight());
 		output.setPercent(input.getPercent());
 		output.setDiscountPercent(input.getDiscountPercent());
-		output.setCreationDateTime(input.getCreationDateTime());
-		
-		if(input.getProvider() != null) {
-			output.setProvider(JpaFunctions.providerToProviderEntity.apply(input.getProvider()));
-		}
 
-		if(input.getCategory() !=  null) {
-			output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
-		}
-		
-		if(input.getSubcategory() != null) {
-			output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategory()));
-		}
-		
-		if(input.getMeasure() != null) {
-			output.setMeasure(JpaFunctions.measureToMeasureEntity.apply(input.getMeasure()));
-		}
-		
-		if (input.getBrand() != null) {
-			output.setBrand(JpaFunctions.brandToBrandEntity.apply(input.getBrand()));
-		}
+		Optional.ofNullable(input.getProvider())
+				.ifPresent(provider -> output.setProvider(JpaFunctions.providerToProviderEntity.apply(provider)));
+
+		Optional.ofNullable(input.getCategory())
+				.ifPresent(category -> output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(category)));
+
+		Optional.ofNullable(input.getSubcategory())
+				.ifPresent(subcategory -> output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategory)));
+
+		Optional.ofNullable(input.getMeasure())
+				.ifPresent(measure -> output.setMeasure(JpaFunctions.measureToMeasureEntity.apply(measure)));
+
+		Optional.ofNullable(input.getBrand())
+				.ifPresent(brand -> output.setBrand(JpaFunctions.brandToBrandEntity.apply(brand)));
+
 		return output;
 	} 
 

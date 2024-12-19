@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,10 +28,10 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// @EqualsAndHashCode(exclude = "itemsTypeMeasure", callSuper = false)
 @Entity(name = "measure")
 public class MeasureEntity extends BaseAuditEntity {
 
+    @Serial
     private static final long serialVersionUID = -6612762288260227887L;
 
     @NotNull

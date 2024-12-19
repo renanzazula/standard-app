@@ -1,5 +1,8 @@
 package com.standard.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum ApplicationType {
 
 
@@ -28,7 +31,5 @@ public enum ApplicationType {
         return null;
     }
 
-    public String getId() {
-        return this.id;
-    }
-    }
+
+}

@@ -4,6 +4,7 @@ import com.standard.domain.Measure;
 import com.standard.entity.MeasureEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, Measure> {
@@ -16,9 +17,12 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 			output.setNome(input.getName());
 			output.setDescription(input.getDescription());
 			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
-			if (input.getItemsTypeMeasure() != null) {
-				output.setItemsTypeMeasure(input.getItemsTypeMeasure().stream().map(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity).toList());
-			}
+			Optional.ofNullable(input.getItemsTypeMeasure())
+					.ifPresent(itemsTypeMeasure -> output.setItemsTypeMeasure(
+							itemsTypeMeasure.stream()
+									.map(JpaFunctions.itemsTypeMeasureToItemsTypeMeasureEntity)
+									.toList()
+					));
 		}
 		return output;
 	}

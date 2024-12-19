@@ -310,7 +310,6 @@ CREATE TABLE product
     version            BIGINT,
     bar_code           VARCHAR(255) NOT NULL,
     cost_price         DOUBLE       NOT NULL,
-    creation_date_time DATETIME,
     description        VARCHAR(45)  NOT NULL,
     discount           DOUBLE       NOT NULL,
     discount_percent   INT          NOT NULL CHECK (discount_percent <= 100 AND discount_percent >= 0),

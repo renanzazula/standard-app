@@ -16,6 +16,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ import java.util.Objects;
 @Entity(name = "pos")
 public class PosEntity extends BaseAuditEntity  {
 
+	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	@NotNull

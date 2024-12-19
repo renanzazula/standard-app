@@ -9,7 +9,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -20,11 +20,11 @@ public class Order implements Serializable {
 
 	private Long id;
 
-	//@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private LocalDateTime creationDate;
+	@JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
+	private OffsetDateTime creationDate;
 
-	// @JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private LocalDateTime creationTime;
+	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
+	private OffsetDateTime creationTime;
 
 	@JsonFormat(pattern=Constants.PATTERN_NUMBER_FORMAT)
 	private Double totalAmount;
@@ -58,8 +58,8 @@ public class Order implements Serializable {
 	private Customer customer;
 
 	private List<Product> products;
-	private PaymentMethod formaDePagamento;
-	private List<PaymentMethod> paymentMethod;
+	private PaymentMethod paymentMethod;
+	private List<PaymentMethod> paymentMethodList;
 	private List<OrderHasItemProduct> orderHasItemProduct;
 	
 	public Order(Long id) {

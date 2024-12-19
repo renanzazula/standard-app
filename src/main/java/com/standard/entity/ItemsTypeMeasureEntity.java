@@ -24,7 +24,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "items_type_measure")
-//@EqualsAndHashCode(exclude="productHasItemsTypeMeasure", callSuper = false)
 public class ItemsTypeMeasureEntity extends BaseAuditEntity {
 
 

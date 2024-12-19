@@ -28,7 +28,7 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
             output.setPayment(input.getPayment());
 
             if (input.getPaymentMethod() != null) {
-                output.setFormaDePagamento(JpaFunctions.paymentMethodToPaymentMethodEntity.apply(input.getPaymentMethod()));
+                output.setPaymentMethod(JpaFunctions.paymentMethodToPaymentMethodEntity.apply(input.getPaymentMethod()));
             }
             if (input.getCustomer() != null) {
                 output.setCustomer(JpaFunctions.customerToCustomerEntity.apply(input.getCustomer()));

@@ -15,25 +15,25 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
-import java.util.Date;
+
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Getter
 @Setter
 @MappedSuperclass
-//@EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
 public class  AuditEntity implements Serializable {
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
     @Column(name = "creation_date", updatable = false)
-    private Date creationDate;
+    private OffsetDateTime creationDate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIME)
     @Column(name = "creation_time", updatable = false)
-    private Date creationTime;
+    private OffsetDateTime creationTime;
 
     @CreatedBy
     @Column(name = "created_by", insertable = true, updatable = false)
@@ -45,7 +45,7 @@ public class  AuditEntity implements Serializable {
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private Date lastModifiedDate;
+    private OffsetDateTime lastModifiedDate;
 
     @LastModifiedBy
     @Column(name = "last_modified_by")

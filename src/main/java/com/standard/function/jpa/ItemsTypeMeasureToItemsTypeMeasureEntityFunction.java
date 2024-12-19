@@ -4,6 +4,7 @@ import com.standard.domain.ItemsTypeMeasure;
 import com.standard.entity.ItemsTypeMeasureEntity;
 import com.standard.function.JpaFunctions;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class ItemsTypeMeasureToItemsTypeMeasureEntityFunction implements Function<ItemsTypeMeasureEntity, ItemsTypeMeasure> {
@@ -14,17 +15,12 @@ public class ItemsTypeMeasureToItemsTypeMeasureEntityFunction implements Functio
 		if(input != null) {
 			output.setId(input.getId());
 			output.setAmount(input.getAmount());
-
-			if (input.getCategory() != null) {
-				output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(input.getCategory()));
-			}
-			if (input.getSubcategory() != null) {
-				output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(input.getSubcategory()));
-			}
-			if (input.getBrand() != null) {
-				output.setBrand(JpaFunctions.brandToBrandEntity.apply(input.getBrand()));
-			}
-
+			Optional.ofNullable(input.getCategory())
+					.ifPresent(category -> output.setCategory(JpaFunctions.categoryToCategoryEntity.apply(category)));
+			Optional.ofNullable(input.getSubcategory())
+					.ifPresent(subcategory -> output.setSubcategory(JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategory)));
+			Optional.ofNullable(input.getBrand())
+					.ifPresent(brand -> output.setBrand(JpaFunctions.brandToBrandEntity.apply(brand)));
 		}
 		return output;
 	}
