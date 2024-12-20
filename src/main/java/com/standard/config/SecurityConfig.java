@@ -39,15 +39,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(logoutFilter, LogoutFilter.class);
 
         http.authorizeRequests(authorizes -> {
-                    authorizes.antMatchers("/h2-console/**",
+                    authorizes.antMatchers(
+                            "**/public/**",
+                            "/h2-console/**",
+                            "/webjars/**",
                             "/swagger-ui.html",
                             "/resources/**",
                             "/swagger-resources/**",
-                            "/public/**").permitAll();
+                            "/v2/**").permitAll();
                     authorizes.antMatchers("/private/**").authenticated();
                 })
                 .authorizeRequests().anyRequest().authenticated()
-                .and().csrf().ignoringAntMatchers("/h2-console/**", "/public/**")
+                .and().csrf()
+                .ignoringAntMatchers(
+                        "/public/**",
+                                    "/h2-console/**",
+                                    "/webjars/**",
+                                    "/swagger-ui.html",
+                                    "/resources/**",
+                                    "/swagger-resources/**",
+                                    "/v2/**")
                 .csrfTokenRepository(csrfTokenRepository)
                 .and().rememberMe()
                 .tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService)
@@ -57,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.headers().frameOptions().sameOrigin();
     }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

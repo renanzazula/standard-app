@@ -11,11 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
-
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -23,15 +20,13 @@ import java.util.Objects;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class  AuditEntity implements Serializable {
+public class AuditEntity implements Serializable {
 
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
     @Column(name = "creation_date", updatable = false)
     private OffsetDateTime creationDate;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIME)
     @Column(name = "creation_time", updatable = false)
     private OffsetDateTime creationTime;
 
@@ -52,8 +47,7 @@ public class  AuditEntity implements Serializable {
     private Long lastModifiedBy;
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -64,8 +58,7 @@ public class  AuditEntity implements Serializable {
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(creationDate, creationTime, createdBy, version, lastModifiedDate, lastModifiedBy);
     }
 }
