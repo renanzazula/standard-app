@@ -6,6 +6,7 @@ import com.standard.repository.security.LoginFailureRepository;
 import com.standard.repository.security.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -19,13 +20,13 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthenticationFailureListener {
+public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
     private final LoginFailureRepository loginFailureRepository;
     private final UserRepository userRepository;
 
-    @EventListener
-    public void failureListen(AuthenticationFailureBadCredentialsEvent event){
+    @Override
+    public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
         log.debug("Login failure ");
 
         if (event.getSource() instanceof UsernamePasswordAuthenticationToken token) {
@@ -33,18 +34,18 @@ public class AuthenticationFailureListener {
             LoginFailureEntity.LoginFailureEntityBuilder builder = LoginFailureEntity.builder();
 
             if (token.getPrincipal() instanceof String userName) {
-                log.debug("Attempted Username: " + token.getPrincipal());
+                log.debug("Attempted Username: {}", token.getPrincipal());
                 builder.username(userName);
                 userRepository.findByUsername((String) token.getPrincipal()).ifPresent(builder::user);
             }
 
             if (token.getDetails() instanceof WebAuthenticationDetails details) {
                 details = (WebAuthenticationDetails) token.getDetails();
-                log.debug("Source IP: " + details.getRemoteAddress());
+                log.debug("Source IP: {}", details.getRemoteAddress());
                 builder.sourceIp(details.getRemoteAddress());
             }
             LoginFailureEntity failure = loginFailureRepository.save(builder.build());
-            log.debug("Failure Event: " + failure.getId());
+            log.debug("Failure Event: {}", failure.getId());
 
             if (failure.getUser() != null) {
                 lockUserAccount(failure.getUser());
@@ -58,7 +59,7 @@ public class AuthenticationFailureListener {
                 Timestamp.valueOf(LocalDateTime.now().minusDays(1)));
 
         if(failures.size() > 3){
-            log.debug("locking user account...: " + user.getUsername());
+            log.debug("locking user account...: {}", user.getUsername());
             user.setAccountNonLocked(false);
             userRepository.save(user);
         }

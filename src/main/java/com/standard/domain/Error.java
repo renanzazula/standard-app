@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Error implements Serializable {
+public class    Error implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -7754886921722274018L;

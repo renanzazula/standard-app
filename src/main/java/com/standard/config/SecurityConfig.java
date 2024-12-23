@@ -1,83 +1,144 @@
 package com.standard.config;
 
-import com.standard.security.encoder.PasswordEncoderFactories;
+import com.standard.repository.security.UserSessionRepository;
+import com.standard.security.RegisterSessionAuthenticationStrategy;
+import com.standard.security.TimeoutAuthenticationStrategy;
 import com.standard.security.filter.ConcurrentSessionFilter;
+import com.standard.security.filter.RedirectSuccessFilter;
+import com.standard.security.handler.LogoutUnregisterHandler;
+import com.standard.service.configparam.ConfigParamService;
+import com.standard.service.security.UserSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    private final LogoutFilter logoutFilter;
-    private final UserDetailsService userDetailsService;
-    private final ConcurrentSessionFilter concurrencyFilter;
-    private final HttpSessionCsrfTokenRepository csrfTokenRepository;
-    private final PersistentTokenRepository persistentTokenRepository;
-    private final CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
+    private final UserSessionService userSessionService;
+    private final ConfigParamService configParamService;
+    private final UserSessionRepository userSessionRepository;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
 
-        http.addFilterBefore(concurrencyFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(logoutFilter, LogoutFilter.class);
-
-        http.authorizeRequests(authorizes -> {
-                    authorizes.antMatchers(
-                            "**/public/**",
-                            "/h2-console/**",
-                            "/webjars/**",
-                            "/swagger-ui.html",
-                            "/resources/**",
-                            "/swagger-resources/**",
-                            "/v2/**").permitAll();
-                    authorizes.antMatchers("/private/**").authenticated();
-                })
-                .authorizeRequests().anyRequest().authenticated()
-                .and().csrf()
-                .ignoringAntMatchers(
-                        "/public/**",
-                                    "/h2-console/**",
-                                    "/webjars/**",
-                                    "/swagger-ui.html",
-                                    "/resources/**",
-                                    "/swagger-resources/**",
-                                    "/v2/**")
-                .csrfTokenRepository(csrfTokenRepository)
-                .and().rememberMe()
-                .tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService)
-                .and().exceptionHandling()
-                .and().sessionManagement()
-                .sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy);
-
-        http.headers().frameOptions().sameOrigin();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/private/**").authenticated()
+                        .anyRequest().authenticated())
+                        .cors( cors -> corsConfigurationSource())
+                        .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/public/**")))
+                        .securityContext(securityContext -> securityContext.requireExplicitSave(false)) // Save SecurityContext automatically
+                        .sessionManagement(session -> session.sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy()));
+        return http.build();
     }
 
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManager();
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(authenticationProvider);
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(DataSource dataSource) {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
+
+    @Bean
+    public HttpSessionCsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository csrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        csrfTokenRepository.setHeaderName("X-CSRF-TOKEN"); // Custom header name
+        csrfTokenRepository.setParameterName("_csrf"); // Custom parameter name
+        return csrfTokenRepository;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-CSRF-TOKEN"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    public LogoutFilter logoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter(redirectSuccessFilter(), logoutUnregisterHandler(), securityContextLogoutHandler());
+        logoutFilter.setFilterProcessesUrl("/logout");
+        return logoutFilter;
+    }
+
+    @Bean
+    public RedirectSuccessFilter redirectSuccessFilter() {
+        return new RedirectSuccessFilter();
+    }
+
+    @Bean
+    public LogoutUnregisterHandler logoutUnregisterHandler() {
+        return new LogoutUnregisterHandler(userSessionService);
+    }
+
+    @Bean
+    public SecurityContextLogoutHandler securityContextLogoutHandler() {
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.setInvalidateHttpSession(true);
+        return logoutHandler;
+    }
+
+    @Bean
+    public ConcurrentSessionFilter concurrencyFilter() {
+        return new ConcurrentSessionFilter(userSessionRepository);
+    }
+
+    @Bean
+    public CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy() {
+        List<SessionAuthenticationStrategy> strategies = new ArrayList<>();
+        strategies.add(new SessionFixationProtectionStrategy());
+        strategies.add(new TimeoutAuthenticationStrategy(configParamService));
+        strategies.add(new CsrfAuthenticationStrategy(csrfTokenRepository()));
+        strategies.add(new RegisterSessionAuthenticationStrategy(userSessionRepository));
+        return new CompositeSessionAuthenticationStrategy(strategies);
     }
 
 }

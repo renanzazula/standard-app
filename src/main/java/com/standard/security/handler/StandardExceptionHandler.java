@@ -1,6 +1,6 @@
 package com.standard.security.handler;
 
-import com.google.common.base.Throwables;
+
 import com.standard.domain.Error;
 import com.standard.domain.ErrorDetails;
 import org.springframework.http.HttpStatus;
@@ -10,9 +10,9 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
 import java.util.Calendar;
 import java.util.UUID;
@@ -53,7 +53,7 @@ public class StandardExceptionHandler {
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget("rootCause");
         detailsItem.setCode(ex.getClass().getName());
-        detailsItem.setMessage(Throwables.getRootCause(ex).getMessage());
+        detailsItem.setMessage(ex.getMessage()); 
         error.getDetails().add(detailsItem);
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
@@ -70,7 +70,7 @@ public class StandardExceptionHandler {
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget("rootCause");
         detailsItem.setCode(ex.getClass().getName());
-        detailsItem.setMessage(Throwables.getRootCause(ex).getMessage());
+        detailsItem.setMessage(ex.getMessage());
         error.getDetails().add(detailsItem);
         
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
@@ -88,7 +88,7 @@ public class StandardExceptionHandler {
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget("rootCause");
         detailsItem.setCode(ex.getClass().getName());
-        detailsItem.setMessage(Throwables.getRootCause(ex).getMessage());
+        detailsItem.setMessage(ex.getMessage());
         error.getDetails().add(detailsItem);
 
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);

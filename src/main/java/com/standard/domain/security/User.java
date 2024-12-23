@@ -12,9 +12,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class User implements Serializable {
 
-    private String number;
+    private String id;
     private String username;
-    private String password;
+
     private String firstName;
     private String lastName;
     private Set<Authority> authorities;

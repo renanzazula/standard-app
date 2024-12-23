@@ -128,11 +128,29 @@ CREATE TABLE category
     PRIMARY KEY (id)
 );
 
+CREATE TABLE subcategory
+(
+    id                 BIGINT AUTO_INCREMENT,
+    created_by         BIGINT,
+    creation_date      DATE,
+    creation_time      TIME,
+    last_modified_by   BIGINT,
+    last_modified_date DATETIME,
+    version            BIGINT,
+    description        VARCHAR(45) NOT NULL,
+    name               VARCHAR(45) NOT NULL,
+    status             VARCHAR(255),
+    PRIMARY KEY (id)
+);
+
+
 CREATE TABLE category_has_subcategory
 (
     category_id    BIGINT NOT NULL,
     subcategory_id BIGINT NOT NULL,
-    PRIMARY KEY (category_id, subcategory_id)
+    PRIMARY KEY (category_id, subcategory_id),
+    FOREIGN KEY (category_id) REFERENCES category (id),
+    FOREIGN KEY (subcategory_id) REFERENCES subcategory (id)
 );
 
 CREATE TABLE config_param
@@ -367,18 +385,4 @@ CREATE TABLE provider
     PRIMARY KEY (id)
 );
 
-CREATE TABLE subcategory
-(
-    id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
-    creation_date      DATE,
-    creation_time      TIME,
-    last_modified_by   BIGINT,
-    last_modified_date DATETIME,
-    version            BIGINT,
-    description        VARCHAR(45) NOT NULL,
-    name               VARCHAR(45) NOT NULL,
-    status             VARCHAR(255),
-    PRIMARY KEY (id)
-);
 

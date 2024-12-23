@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.5</version>
+        <version>3.3.7</version>
     </parent>
 
     <developers>
@@ -39,9 +39,6 @@
         <java.version>17</java.version>
         <spring-boot-admin.version>2.1.0</spring-boot-admin.version>
 
-        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
-        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.0</maven-failsafe-plugin.version>
@@ -60,13 +57,12 @@
         <docker.image.prefix>renanzazula</docker.image.prefix>
         <docker.image.name>${project.artifactId}</docker.image.name>
 
-        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
-
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectKey>standard-app</sonar.projectKey>
         <sonar.organization>renanzazula-github</sonar.organization>
         <sonar.login>454127241003dd57a450435ac7290feccf5fc17f</sonar.login>
 
+        <spring-security.version>6.4.2</spring-security.version>
     </properties>
 
     <dependencies>
@@ -89,7 +85,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>3.2.3</version>
+
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -98,7 +94,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <version>6.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -118,19 +113,11 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>compile</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -140,25 +127,15 @@
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-swagger2.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger-ui.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
+            <artifactId>flyway-mysql</artifactId>
+            <version>10.20.1</version>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version> <!-- Use the latest version -->
+            <version>8.0.28</version>
         </dependency>
 
     </dependencies>

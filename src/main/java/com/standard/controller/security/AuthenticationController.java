@@ -1,7 +1,8 @@
 package com.standard.controller.security;
 
 import com.standard.domain.security.Login;
-import io.swagger.annotations.Api;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,16 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@Api(value = "Authentication", tags = "authentication")
 @Slf4j
 @RestController
 @RequestMapping(AuthenticationController.AUTHENTICATION)
@@ -35,7 +28,7 @@ public class AuthenticationController {
     private final SessionAuthenticationStrategy sessionAuthenticationStrategy;
 
     @PostMapping("/login")
-    public ResponseEntity<Login> login (@RequestBody Login authentication){
+    public ResponseEntity<Login> login(@RequestBody Login authentication) {
         Authentication authResp = authenticate(new UsernamePasswordAuthenticationToken(authentication.getUserId(), authentication.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authResp);
         authentication.setPassword(null);

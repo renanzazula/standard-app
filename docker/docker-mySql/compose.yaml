@@ -1,7 +1,7 @@
 services:
   standard-db-app:
     container_name: "standard-db-app"
-    image: mysql:latest
+    image: mysql:8.0.28
     env_file:
       - ../.env
     environment:

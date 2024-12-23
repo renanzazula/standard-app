@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 
 @Slf4j
@@ -86,7 +86,7 @@ public class RegisterSessionAuthenticationStrategy implements SessionAuthenticat
     }
 
     private String buildNewValue(HttpServletRequest request, int concurrentSessions, String oldValue) {
-        String value = String.valueOf(HashUtils.hashString(request.getSession(false).getId()));
+        String value = String.valueOf(HashUtils.hashString(request.getSession().getId()));
         if (oldValue == null) {
             oldValue = "";
         }

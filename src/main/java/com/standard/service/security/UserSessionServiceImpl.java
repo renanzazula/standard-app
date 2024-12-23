@@ -2,13 +2,13 @@ package com.standard.service.security;
 
 import com.standard.entity.security.UserSessionEntity;
 import com.standard.repository.security.UserSessionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserSessionServiceImpl implements UserSessionService {
 
-    private final UserSessionRepository userSessionRepository;
 
     @Override
     @Transactional
     public void unregisterUserSession(String uid, String idSessionHashed) {
-        UserSessionEntity userAttribute = userSessionRepository.findById(uid).orElseThrow(() -> new EntityNotFoundException("User não encontrado!"));
-        String value = buildNewValue(idSessionHashed, userAttribute.getActiveSessions());
-        if (!value.equals(userAttribute.getActiveSessions())) {
-            userAttribute.setActiveSessions(value);
-            userSessionRepository.saveAndFlush(userAttribute);
-            log.debug("unregisterUserSession - removed lastSessionId {} evidence", idSessionHashed);
-        }
+
     }
 
     /**

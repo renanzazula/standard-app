@@ -3,16 +3,14 @@ package com.standard.security;
 
 import com.standard.enums.ConfigParamsEnum;
 import com.standard.service.configparam.ConfigParamService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -25,23 +23,21 @@ public class TimeoutAuthenticationStrategy implements SessionAuthenticationStrat
     public void onAuthentication(Authentication authentication, HttpServletRequest request, HttpServletResponse response) throws SessionAuthenticationException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.setMaxInactiveInterval(retrieveSessionTimeOut());
+            session.setMaxInactiveInterval(retrieveSessionTimeout());
         }
     }
 
-    private Integer retrieveSessionTimeOut() {
-        Integer timeout = null;
+    private Integer retrieveSessionTimeout() {
         try {
-            Optional<Integer> timeoutValue = configParamService.getParameterValue(ConfigParamsEnum.SESSION_TIMEOUT, Integer.class);
-            timeout = timeoutValue.get();
+            return configParamService
+                    .getParameterValue(ConfigParamsEnum.SESSION_TIMEOUT, Integer.class)
+                    .filter(timeout -> timeout > 0)
+                    .orElse(DEFAULT_SESSION_TIMEOUT) * 60;
         } catch (Exception e) {
-            log.error("Error retrieving session timeout", e);
+            log.error("Error retrieving session timeout, using default value: {}", DEFAULT_SESSION_TIMEOUT, e);
+            return DEFAULT_SESSION_TIMEOUT * 60;
         }
-        if (null == timeout || timeout <= 0) {
-            timeout = DEFAULT_SESSION_TIMEOUT;
-        }
-        return timeout * 60;
-
     }
+
 
 }
