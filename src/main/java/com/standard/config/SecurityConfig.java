@@ -4,6 +4,7 @@ import com.standard.repository.security.UserSessionRepository;
 import com.standard.security.RegisterSessionAuthenticationStrategy;
 import com.standard.security.TimeoutAuthenticationStrategy;
 import com.standard.security.filter.ConcurrentSessionFilter;
+import com.standard.security.filter.CsrfTokenResponseFilter;
 import com.standard.security.filter.RedirectSuccessFilter;
 import com.standard.security.handler.LogoutUnregisterHandler;
 import com.standard.service.configparam.ConfigParamService;
@@ -28,6 +29,7 @@ import org.springframework.security.web.authentication.session.CompositeSessionA
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
 import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -58,7 +60,8 @@ public class SecurityConfig {
                         .cors( cors -> corsConfigurationSource())
                         .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/public/**")))
                         .securityContext(securityContext -> securityContext.requireExplicitSave(false)) // Save SecurityContext automatically
-                        .sessionManagement(session -> session.sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy()));
+                        .sessionManagement(session -> session.sessionAuthenticationStrategy(compositeSessionAuthenticationStrategy()))
+                        .addFilterAfter(new CsrfTokenResponseFilter(), CsrfFilter.class);
         return http.build();
     }
 
