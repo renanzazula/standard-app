@@ -29,7 +29,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<Login> login(@RequestBody Login authentication) {
-        Authentication authResp = authenticate(new UsernamePasswordAuthenticationToken(authentication.getUserId(), authentication.getPassword()));
+        Authentication authResp = authenticate(new UsernamePasswordAuthenticationToken(authentication.getUsername(), authentication.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authResp);
         authentication.setPassword(null);
         return new ResponseEntity<>(authentication, HttpStatus.OK);

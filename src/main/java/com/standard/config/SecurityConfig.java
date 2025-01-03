@@ -6,9 +6,7 @@ import com.standard.security.TimeoutAuthenticationStrategy;
 import com.standard.security.filter.ConcurrentSessionFilter;
 import com.standard.security.filter.CsrfTokenResponseFilter;
 import com.standard.security.filter.RedirectSuccessFilter;
-import com.standard.security.handler.LogoutUnregisterHandler;
 import com.standard.service.configparam.ConfigParamService;
-import com.standard.service.security.UserSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -46,7 +43,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserSessionService userSessionService;
     private final ConfigParamService configParamService;
     private final UserSessionRepository userSessionRepository;
 
@@ -65,7 +61,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
@@ -96,31 +92,22 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:4200");
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-CSRF-TOKEN"));
         configuration.setAllowCredentials(true);
-
+        configuration.setExposedHeaders(List.of("Set-Cookie", "X-CSRF-TOKEN"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-    @Bean
-    public LogoutFilter logoutFilter() {
-        LogoutFilter logoutFilter = new LogoutFilter(redirectSuccessFilter(), logoutUnregisterHandler(), securityContextLogoutHandler());
-        logoutFilter.setFilterProcessesUrl("/logout");
-        return logoutFilter;
-    }
 
     @Bean
     public RedirectSuccessFilter redirectSuccessFilter() {
         return new RedirectSuccessFilter();
     }
 
-    @Bean
-    public LogoutUnregisterHandler logoutUnregisterHandler() {
-        return new LogoutUnregisterHandler(userSessionService);
-    }
 
     @Bean
     public SecurityContextLogoutHandler securityContextLogoutHandler() {

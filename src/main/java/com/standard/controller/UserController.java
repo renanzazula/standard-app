@@ -3,12 +3,16 @@ package com.standard.controller;
 import com.standard.domain.security.User;
 import com.standard.entity.security.UserEntity;
 import com.standard.function.JpaFunctions;
+import com.standard.repository.security.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +24,15 @@ public class UserController {
 
     public static final String BASE_URL = "/private/api/v1/users";
 
-    @GetMapping({""})
-    public ResponseEntity<User> getUser() {
+    private final UserDetailsService userDetailsService;
+
+    @GetMapping({"/{user}"})
+    public ResponseEntity<User> getUser(@PathVariable("user") String user) {
         UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(JpaFunctions.userEntityToUserDtoAdapter.apply(userEntity), HttpStatus.OK);
+        if(userEntity.getUsername().equals(user)) {
+            return new ResponseEntity<>(JpaFunctions.userEntityToUserDtoAdapter.apply(userEntity), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

@@ -16,12 +16,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "config_param")
-public @Data class ConfigParamEntity implements Serializable {
+public class ConfigParamEntity implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false, length = 45)
     private String id;
-
 
     @Column(name = "value", nullable = false, length = 150)
     private String value;

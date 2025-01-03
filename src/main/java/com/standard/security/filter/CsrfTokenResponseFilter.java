@@ -20,6 +20,7 @@ public class CsrfTokenResponseFilter implements Filter {
         CsrfToken csrfToken = (CsrfToken) httpServletRequest.getAttribute(CsrfToken.class.getName());
         if (csrfToken != null) {
             httpServletResponse.setHeader("X-CSRF-TOKEN", csrfToken.getToken());
+            ((HttpServletResponse) response).setHeader("X-CSRF-TOKEN", csrfToken.getToken());
         }
         chain.doFilter(request, response);
     }
