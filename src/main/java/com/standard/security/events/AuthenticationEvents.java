@@ -1,4 +1,4 @@
-package com.standard.security.listener;
+package com.standard.security.events;
 
 import com.standard.entity.security.LoginFailureEntity;
 import com.standard.entity.security.LoginSuccessEntity;

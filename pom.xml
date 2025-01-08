@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.7</version>
+        <version>3.4.1</version>
     </parent>
 
     <developers>
@@ -61,8 +61,6 @@
         <sonar.projectKey>standard-app</sonar.projectKey>
         <sonar.organization>renanzazula-github</sonar.organization>
         <sonar.login>454127241003dd57a450435ac7290feccf5fc17f</sonar.login>
-
-        <spring-security.version>6.4.2</spring-security.version>
     </properties>
 
     <dependencies>
@@ -136,6 +134,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
     </dependencies>
