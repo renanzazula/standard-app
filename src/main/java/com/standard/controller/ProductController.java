@@ -24,13 +24,11 @@ public class ProductController {
 
     @GetMapping({""})
     @PreAuthorize("hasAuthority('PRODUCT_SEARCH')")
-
     public ResponseEntity<List<Product>> findAll() {
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-
     @PreAuthorize("hasAuthority('PRODUCT_SEARCH')")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
@@ -63,10 +61,10 @@ public class ProductController {
         return new ResponseEntity<>(productService.getByBarCode(barCode), HttpStatus.OK);
     }
 
-    @GetMapping("/calculate/discount/{percent}/{valor}/{totalOrder}")
-    public ResponseEntity<String> calculateDiscount(@PathVariable String percent, @PathVariable String valor, @PathVariable String totalOrder) {
+    @GetMapping("/calculate/discount/{percent}/{amount}/{totalOrder}")
+    public ResponseEntity<String> calculateDiscount(@PathVariable String percent, @PathVariable String amount, @PathVariable String totalOrder) {
         Double dPercent = Double.parseDouble(percent);
-        Double dAmount = Double.parseDouble(valor);
+        Double dAmount = Double.parseDouble(amount);
         double dDiscount = (dAmount * dPercent) / 100;
         double dAmountOrder = (Double.parseDouble(totalOrder) - dDiscount);
         return new ResponseEntity<>(String.valueOf(DoubleFormat.round(dAmountOrder, 2)), HttpStatus.OK);
