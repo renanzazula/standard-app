@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Secured({"ROLE_ADMIN", "ROLE_USER"})
+//@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(DomainController.BASE_URL)
 public class DomainController {
 
