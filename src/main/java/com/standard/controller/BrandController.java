@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,27 +22,30 @@ public class BrandController {
     private final BrandService brandService;
 
     @GetMapping({""})
-    public ResponseEntity<List<Brand>> findAll() {
-        return new ResponseEntity<>(brandService.findAll(), HttpStatus.OK);
-    }
+    @PreAuthorize("hasAuthority('BRAND_SEARCH')")
+    public ResponseEntity<List<Brand>> findAll() {return new ResponseEntity<>(brandService.findAll(), HttpStatus.OK);}
 
     @GetMapping({"/{id}"})
+    @PreAuthorize("hasAuthority('BRAND_SEARCH')")
     public ResponseEntity<Brand> findById(@PathVariable Long id) {
         return new ResponseEntity<>(brandService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('BRAND_ADD')")
     public ResponseEntity<Brand> save(@RequestBody Brand obj) {
         return new ResponseEntity<>(brandService.create(obj), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('BRAND_DELETE')")
     public void delete(@PathVariable Long id) {
         brandService.delete(id);
     }
 
     @PutMapping({"/{id}"})
+    @PreAuthorize("hasAuthority('BRAND_UPDATE')")
     public ResponseEntity<Brand> update(@PathVariable Long id, @RequestBody Brand obj) {
         return new ResponseEntity<>(brandService.update(id, obj), HttpStatus.OK);
     }

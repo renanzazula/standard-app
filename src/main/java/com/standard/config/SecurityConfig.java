@@ -6,8 +6,10 @@ import com.standard.service.configparam.ConfigParamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,22 +19,20 @@ import java.util.List;
 
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
+@EnableWebSecurity(debug = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-
-    private final ConfigParamService configParamService;
-    private final UserSessionRepository userSessionRepository;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/private/**").authenticated()
-                        .anyRequest().authenticated())
-                        .cors( cors -> corsConfigurationSource())
-                        .oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
+            .requestMatchers("/public/**").permitAll()
+            .requestMatchers("/private/**").authenticated()
+            .anyRequest().authenticated())
+            .cors( cors -> corsConfigurationSource())
+            .oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,34 +26,42 @@ public class SubcategoryController {
     private final CategoryService categoryService;
 
     @GetMapping({""})
+    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
     public ResponseEntity<List<Subcategory>> findAll() {
         return new ResponseEntity<>(subcategoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
+    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
     public ResponseEntity<Subcategory> findById(@PathVariable Long id) {
         return new ResponseEntity<>(subcategoryService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Subcategory> create(@RequestBody Subcategory subcategory) {
-        return new ResponseEntity<>(subcategoryService.create(subcategory), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping({"/{id}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        subcategoryService.delete(id);
-    }
-
-    @PutMapping({"/{id}"})
-    public ResponseEntity<Subcategory> update(@PathVariable Long id, @RequestBody Subcategory subcategory) {
-        return new ResponseEntity<>(subcategoryService.update(id, subcategory), HttpStatus.OK);
-    }
-
+    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
     @GetMapping(value = "/category/{id}")
     public ResponseEntity<List<Subcategory>> findSubCategoryByCategory(@PathVariable Long id) {
         Category subCategoryList = categoryService.findById(id);
         return new ResponseEntity<>(subCategoryList.getSubcategories(), HttpStatus.OK);
     }
+
+    @PostMapping
+    @PreAuthorize("hasAuthority('SUBCATEGORY_ADD')")
+    public ResponseEntity<Subcategory> create(@RequestBody Subcategory subcategory) {
+        return new ResponseEntity<>(subcategoryService.create(subcategory), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping({"/{id}"})
+    @PreAuthorize("hasAuthority('SUBCATEGORY_DELETE')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        subcategoryService.delete(id);
+    }
+
+    @PreAuthorize("hasAuthority('SUBCATEGORY_UPDATE')")
+    @PutMapping({"/{id}"})
+    public ResponseEntity<Subcategory> update(@PathVariable Long id, @RequestBody Subcategory subcategory) {
+        return new ResponseEntity<>(subcategoryService.update(id, subcategory), HttpStatus.OK);
+    }
+
+
 }

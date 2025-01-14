@@ -44,7 +44,6 @@ public class ProductController {
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('PRODUCT_DELETE')")
-
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
