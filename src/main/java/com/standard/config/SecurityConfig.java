@@ -3,6 +3,7 @@ package com.standard.config;
 import com.standard.repository.security.UserSessionRepository;
 import com.standard.security.RegisterSessionAuthenticationStrategy;
 import com.standard.security.TimeoutAuthenticationStrategy;
+import com.standard.security.encoder.PasswordEncoderFactories;
 import com.standard.security.filter.ConcurrentSessionFilter;
 import com.standard.security.filter.CsrfTokenResponseFilter;
 import com.standard.security.filter.RedirectSuccessFilter;
@@ -16,7 +17,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -71,7 +71,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
