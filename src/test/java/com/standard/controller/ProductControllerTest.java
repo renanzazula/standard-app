@@ -1,12 +1,12 @@
 package com.standard.controller;
 
 import com.standard.domain.Product;
+import com.standard.service.brand.BrandService;
 import com.standard.service.category.CategoryService;
 import com.standard.service.domain.DomainService;
-import com.standard.service.provider.ProviderService;
-import com.standard.service.brand.BrandService;
 import com.standard.service.measure.MeasureService;
 import com.standard.service.product.ProductService;
+import com.standard.service.provider.ProviderService;
 import com.standard.service.subcategory.SubcategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -40,27 +42,27 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private ProductService productService;
 
-    @MockBean
+    @MockitoBean
     private CategoryService categoryService;
 
-    @MockBean
+    @MockitoBean
     private MeasureService measureService;
 
-    @MockBean
+    @MockitoBean
     private BrandService brandService;
 
-    @MockBean
+    @MockitoBean
     private ProviderService providerService;
 
 
-    @MockBean
+    @MockitoBean
     private SubcategoryService subcategoryService;
 
 
-    @MockBean
+    @MockitoBean
     private DomainService domainService;
 
     @BeforeEach

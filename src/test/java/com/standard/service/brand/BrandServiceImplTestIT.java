@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @DataJpaTest
-@Sql("/scripts/dataset.sql")
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
 class BrandServiceImplTestIT extends BaseTest {
 

@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(SubcategoryController.BASE_URL)
 public class SubcategoryController {
 
@@ -26,18 +25,18 @@ public class SubcategoryController {
     private final CategoryService categoryService;
 
     @GetMapping({""})
-    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_SEARCH')")
     public ResponseEntity<List<Subcategory>> findAll() {
         return new ResponseEntity<>(subcategoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_SEARCH')")
     public ResponseEntity<Subcategory> findById(@PathVariable Long id) {
         return new ResponseEntity<>(subcategoryService.findById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('SUBCATEGORY_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_SEARCH')")
     @GetMapping(value = "/category/{id}")
     public ResponseEntity<List<Subcategory>> findSubCategoryByCategory(@PathVariable Long id) {
         Category subCategoryList = categoryService.findById(id);
@@ -45,19 +44,19 @@ public class SubcategoryController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('SUBCATEGORY_ADD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_ADD')")
     public ResponseEntity<Subcategory> create(@RequestBody Subcategory subcategory) {
         return new ResponseEntity<>(subcategoryService.create(subcategory), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('SUBCATEGORY_DELETE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         subcategoryService.delete(id);
     }
 
-    @PreAuthorize("hasAuthority('SUBCATEGORY_UPDATE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('SUBCATEGORY_UPDATE')")
     @PutMapping({"/{id}"})
     public ResponseEntity<Subcategory> update(@PathVariable Long id, @RequestBody Subcategory subcategory) {
         return new ResponseEntity<>(subcategoryService.update(id, subcategory), HttpStatus.OK);

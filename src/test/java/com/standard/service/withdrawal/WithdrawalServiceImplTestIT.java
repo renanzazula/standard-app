@@ -20,9 +20,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Sql("/scripts/dataset.sql")
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
-public class WithdrawalServiceImplTestIT extends BaseTest {
+class WithdrawalServiceImplTestIT extends BaseTest {
 
     @Autowired
     private WithdrawalRepository repository;
@@ -31,13 +30,11 @@ public class WithdrawalServiceImplTestIT extends BaseTest {
 
     private WithdrawalServiceImpl service;
 
-    private PosServiceImpl orderService;
-
-    private Withdrawal withdrawal;
+	private Withdrawal withdrawal;
 
     @BeforeEach
     void setUp() {
-        orderService =  new PosServiceImpl(posRepository);
+		PosServiceImpl orderService = new PosServiceImpl(posRepository);
 
         pos = new Pos();
         pos.setOpenAmount(5.0);

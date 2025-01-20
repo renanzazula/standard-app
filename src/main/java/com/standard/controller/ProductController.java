@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(ProductController.BASE_URL)
 public class ProductController {
 
@@ -23,33 +22,33 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping({""})
-    @PreAuthorize("hasAuthority('PRODUCT_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PRODUCT_SEARCH')")
     public ResponseEntity<List<Product>> findAll() {
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('PRODUCT_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PRODUCT_SEARCH')")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
 
-    @PreAuthorize("hasAuthority('PRODUCT_ADD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PRODUCT_ADD')")
     public ResponseEntity<Product> create(@RequestBody Product product) {
         return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('PRODUCT_DELETE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PRODUCT_DELETE')")
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
 
     @PutMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('PRODUCT_UPDATE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PRODUCT_UPDATE')")
 
     public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
         return new ResponseEntity<>(productService.update(id, product), HttpStatus.OK);

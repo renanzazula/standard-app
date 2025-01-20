@@ -14,6 +14,7 @@ import com.standard.repository.MeasureRepository;
 import com.standard.repository.ProductRepository;
 import com.standard.repository.ProviderRepository;
 import com.standard.repository.SubcategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,23 +56,23 @@ public class ProductServiceImpl implements ProductService {
 		productDB.setDiscountPercent(product.getDiscountPercent());
 
 		if (product.getMeasure() != null && product.getMeasure().getId() != null) {
-			productDB.setMeasure(measureRepository.getById(product.getMeasure().getId()));
+			productDB.setMeasure(measureRepository.findById(product.getMeasure().getId()).orElseThrow(() -> new EntityNotFoundException("Measure não encontrado!")));
 		}
 
 		if (product.getProvider() != null && product.getProvider().getId() != null) {
-			productDB.setProvider(providerRepository.getById(product.getProvider().getId()));
+			productDB.setProvider(providerRepository.findById(product.getProvider().getId()).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!")));
 		}
 
 		if (product.getCategory() != null && product.getCategory().getId() != null) {
-			productDB.setCategory(categoryRepository.getById(product.getCategory().getId()));
+			productDB.setCategory(categoryRepository.findById(product.getCategory().getId()).orElseThrow(() -> new EntityNotFoundException("Category não encontrado!")));
 		}
 
 		if (product.getSubcategory() != null && product.getSubcategory().getId() != null) {
-			productDB.setSubcategory(subcategoryRepository.getById(product.getSubcategory().getId()));
+			productDB.setSubcategory(subcategoryRepository.findById(product.getSubcategory().getId()).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!")));
 		}
 
 		if (product.getBrand() != null && product.getBrand().getId() != null) {
-			productDB.setBrand(brandRepository.getById(product.getBrand().getId()));
+			productDB.setBrand(brandRepository.findById(product.getBrand().getId()).orElseThrow(() -> new EntityNotFoundException("Brand não encontrado!")));
 		}
         getProductHasItemsTypeMeasure(product, productDB);
         return JpaFunctions.productToProductEntity.apply(productRepository.saveAndFlush(productDB));
@@ -88,12 +89,12 @@ public class ProductServiceImpl implements ProductService {
                 if(productHasItemsTypeMeasure.getDomains() != null) {
                     productHasItemsTypeMeasure.getDomains().forEach(domain -> {
                         if(domain.getId() != null) {
-                            domainsDB.add(domainRepository.getById(domain.getId()));
+                            domainsDB.add(domainRepository.findById(domain.getId()).orElseThrow(() -> new EntityNotFoundException("Domain não encontrado!")));
                         }
                     });
                 }
                 productHasItemsTypeMeasureEntity.setDomains(domainsDB);
-                productHasItemsTypeMeasureEntity.setItemsTypeMeasure(itemsTypeMeasureRepository.getById(productHasItemsTypeMeasure.getItemsTypeMeasure().getId()));
+                productHasItemsTypeMeasureEntity.setItemsTypeMeasure(itemsTypeMeasureRepository.findById(productHasItemsTypeMeasure.getItemsTypeMeasure().getId()).orElseThrow(() -> new EntityNotFoundException("Item Type Measure não encontrado!")));
                 set.add(productHasItemsTypeMeasureEntity);
             });
             productDB.setProductHasItemsTypeMeasure(new HashSet<>());
@@ -104,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
 	@Transactional
 	public Product update(Long id, Product product) {
-		ProductEntity productDB = productRepository.getById(id);
+		ProductEntity productDB = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product não encontrado!"));
 		productDB.setId(product.getId());
 		productDB.setBarCode(product.getBarCode());
 		productDB.setName(product.getName());
@@ -121,23 +122,23 @@ public class ProductServiceImpl implements ProductService {
 
 
 		if (product.getMeasure() != null && product.getMeasure().getId() != null) {
-			productDB.setMeasure(measureRepository.getById(product.getMeasure().getId()));
+			productDB.setMeasure(measureRepository.findById(product.getMeasure().getId()).orElseThrow(() -> new EntityNotFoundException("Product não encontrado!")));
 		}
 
 		if (product.getProvider() != null && product.getProvider().getId() != null) {
-			productDB.setProvider(providerRepository.getById(product.getProvider().getId()));
+			productDB.setProvider(providerRepository.findById(product.getProvider().getId()).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!")));
 		}
 
 		if (product.getCategory() != null && product.getCategory().getId() != null) {
-			productDB.setCategory(categoryRepository.getById(product.getCategory().getId()));
+			productDB.setCategory(categoryRepository.findById(product.getCategory().getId()).orElseThrow(() -> new EntityNotFoundException("Category não encontrado!")));
 		}
 
 		if (product.getSubcategory() != null && product.getSubcategory().getId() != null) {
-			productDB.setSubcategory(subcategoryRepository.getById(product.getSubcategory().getId()));
+			productDB.setSubcategory(subcategoryRepository.findById(product.getSubcategory().getId()).orElseThrow(() -> new EntityNotFoundException("SubCategory não encontrado!")));
 		}
 
 		if (product.getBrand() != null && product.getBrand().getId() != null) {
-			productDB.setBrand(brandRepository.getById(product.getBrand().getId()));
+			productDB.setBrand(brandRepository.findById(product.getBrand().getId()).orElseThrow(() -> new EntityNotFoundException("Brand não encontrado!")));
 		}
 
 		productDB.getProductHasItemsTypeMeasure().forEach(d -> d.getDomains().clear() );
@@ -149,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		ProductEntity productDB = productRepository.getById(id);
+		ProductEntity productDB = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product não encontrado!"));
 		productDB.setStatus(StatusEnum.DISABLE);
 		productRepository.saveAndFlush(productDB);
 	}
@@ -157,15 +158,15 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public Product getById(Long id) {
-		ProductEntity productDB = productRepository.getById(id);
+		ProductEntity productDB = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product não encontrado!"));
 		return JpaFunctions.productToProductEntity.apply(productDB);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Product getByBarCode(String barcode) {
-		Optional<ProductEntity> p = productRepository.findByBarCode(barcode.trim());
-        return p.map(JpaFunctions.productToProductEntity).orElse(null); // FIXME:
+		ProductEntity product = productRepository.findByBarCode(barcode.trim()).orElseThrow(() -> new EntityNotFoundException("Brand não encontrado!"));
+        return JpaFunctions.productToProductEntity.apply(product);
 	}
 
 	@Override

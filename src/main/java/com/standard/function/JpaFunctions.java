@@ -1,6 +1,5 @@
 package com.standard.function;
 
-import com.standard.function.jpa.AuthorityEntityToAuthorityAdapter;
 import com.standard.function.jpa.BrandToBrandEntityFunction;
 import com.standard.function.jpa.CategoryToCategoryEntityFunction;
 import com.standard.function.jpa.CustomerToCustomerEntityFunction;
@@ -16,12 +15,8 @@ import com.standard.function.jpa.ProductHasItemsTypeMeasureToProductHasItemsType
 import com.standard.function.jpa.ProductToProdctEntityFunction;
 import com.standard.function.jpa.ProviderToProviderEntityFunction;
 import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
-import com.standard.function.jpa.UserEntityToUserAdapter;
 import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 public class JpaFunctions {
@@ -42,7 +37,5 @@ public class JpaFunctions {
     public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProdutoToOrderHasItemProdutoEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
     public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction();
     public static final PayBackEntityToPayBackFunction payBackEntityToPayBack = new PayBackEntityToPayBackFunction();
-    public static final UserEntityToUserAdapter userEntityToUserDtoAdapter = new UserEntityToUserAdapter();
-    public static final AuthorityEntityToAuthorityAdapter authorityEntityToAuthorityDtoAdapter = new AuthorityEntityToAuthorityAdapter();
 
 }

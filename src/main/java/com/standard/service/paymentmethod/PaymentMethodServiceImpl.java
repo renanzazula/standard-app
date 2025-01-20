@@ -21,16 +21,16 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
 
     @Override
     @Transactional
-    public PaymentMethod create(PaymentMethod objct) {
+    public PaymentMethod create(PaymentMethod paymentMethod) {
         PaymentMethodEntity paymentMethodDB = new PaymentMethodEntity();
-        return getPaymentMethod(objct, paymentMethodDB);
+        return getPaymentMethod(paymentMethod, paymentMethodDB);
     }
 
     @Override
     @Transactional
-    public PaymentMethod update(Long id, PaymentMethod objct) {
+    public PaymentMethod update(Long id, PaymentMethod paymentMethod) {
         PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
-        return getPaymentMethod(objct, paymentMethodDB);
+        return getPaymentMethod(paymentMethod, paymentMethodDB);
     }
 
     private PaymentMethod getPaymentMethod(PaymentMethod object, PaymentMethodEntity paymentMethodDB) {

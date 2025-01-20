@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(DomainController.BASE_URL)
 public class DomainController {
 
@@ -22,32 +21,32 @@ public class DomainController {
     private final DomainService domainService;
 
     @GetMapping({""})
-    @PreAuthorize("hasAuthority('DOMAIN_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('DOMAIN_SEARCH')")
     public ResponseEntity<List<Domain>> findAll() {
         return new ResponseEntity<>(domainService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('DOMAIN_SEARCH')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('DOMAIN_SEARCH')")
     public ResponseEntity<Domain> findById(@PathVariable Long id) {
         return new ResponseEntity<>(domainService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('DOMAIN_ADD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('DOMAIN_ADD')")
     public ResponseEntity<Domain> create(@RequestBody Domain domain) {
         return new ResponseEntity<>(domainService.create(domain), HttpStatus.CREATED);
     }
 
     @DeleteMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('DOMAIN_DELETE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('DOMAIN_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         domainService.delete(id);
     }
 
     @PutMapping({"/{id}"})
-    @PreAuthorize("hasAuthority('DOMAIN_UPDATE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('DOMAIN_UPDATE')")
     public ResponseEntity<Domain> update(@PathVariable Long id, @RequestBody Domain domain) {
         return new ResponseEntity<>(domainService.update(id, domain), HttpStatus.OK);
     }

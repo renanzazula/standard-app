@@ -18,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @DataJpaTest
-@Sql("/scripts/dataset.sql")
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
- class SubcategoryServiceImplTestIT extends BaseTest {
+class SubcategoryServiceImplTestIT extends BaseTest {
 
     @Autowired
     private SubcategoryRepository repository;

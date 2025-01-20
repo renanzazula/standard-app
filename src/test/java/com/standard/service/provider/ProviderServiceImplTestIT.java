@@ -17,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
-@Sql("/scripts/dataset.sql")
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
-public class ProviderServiceImplTestIT extends BaseTest {
+class ProviderServiceImplTestIT extends BaseTest {
 
     @Autowired
     private ProviderRepository repository;
@@ -27,14 +26,14 @@ public class ProviderServiceImplTestIT extends BaseTest {
     private ProviderService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new ProviderServiceImpl(repository);
         setUpProvider();
         provider = service.create(provider);
     }
 
     @Test
-    public void create() {
+    void create() {
         Provider saved = service.create(provider);
         assertNotNull(saved);
 
@@ -45,7 +44,7 @@ public class ProviderServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         Provider update = service.findById(provider.getId());
         assertNotNull(update);
         update.setName(NAME_UPDATE);
@@ -58,20 +57,20 @@ public class ProviderServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         List<Provider> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void findById() {
+    void findById() {
         Provider found = service.findById(provider.getId());
         assertNotNull(found);
         assertEquals(found.getId(), provider.getId());
     }
 
     @Test
-    public void delete() {
+    void delete() {
         Provider delete = service.findById(provider.getId());
         assertNotNull(delete);
 

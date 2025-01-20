@@ -1,0 +1,59 @@
+{
+  "clientId": "standard-app",
+  "name": "standard-app",
+  "description": "standard-app",
+  "rootUrl": "http://localhost:4200",
+  "adminUrl": "http://localhost:4200",
+  "baseUrl": "",
+  "surrogateAuthRequired": false,
+  "enabled": true,
+  "alwaysDisplayInConsole": false,
+  "clientAuthenticatorType": "client-secret",
+  "redirectUris": [
+    "http://localhost:4200/*"
+  ],
+  "webOrigins": [
+    "*"
+  ],
+  "notBefore": 0,
+  "bearerOnly": false,
+  "consentRequired": true,
+  "standardFlowEnabled": true,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": true,
+  "serviceAccountsEnabled": false,
+  "publicClient": true,
+  "frontchannelLogout": true,
+  "protocol": "openid-connect",
+  "attributes": {
+    "oidc.ciba.grant.enabled": "false",
+    "client.secret.creation.time": "1736503261",
+    "backchannel.logout.session.required": "true",
+    "login_theme": "keycloak",
+    "post.logout.redirect.uris": "http://localhost:4200/*",
+    "oauth2.device.authorization.grant.enabled": "false",
+    "display.on.consent.screen": "false",
+    "backchannel.logout.revoke.offline.tokens": "false"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "fullScopeAllowed": true,
+  "nodeReRegistrationTimeout": -1,
+  "defaultClientScopes": [
+    "web-origins",
+    "acr",
+    "roles",
+    "profile",
+    "email"
+  ],
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt"
+  ],
+  "access": {
+    "view": true,
+    "configure": true,
+    "manage": true
+  }
+}

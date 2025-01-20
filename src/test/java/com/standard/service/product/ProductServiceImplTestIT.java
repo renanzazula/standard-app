@@ -31,9 +31,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Sql("/scripts/dataset.sql")
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
- class ProductServiceImplTestIT extends BaseTest {
+class ProductServiceImplTestIT extends BaseTest {
 
 
     @Autowired

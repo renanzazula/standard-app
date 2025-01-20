@@ -3,12 +3,13 @@ package com.standard.controller;
 import com.standard.domain.Category;
 import com.standard.service.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -19,27 +20,31 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Disabled
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = {CategoryController.class})
 class CategoryControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     WebApplicationContext wac;
 
-    @MockBean
+    @MockitoBean
     CategoryService service;
 
     MockMvc mockMvc;
-    
+
     @BeforeEach
-    public void setup() {
+    void setUp() {
         
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
@@ -51,15 +56,13 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
     @Test
     void testTryToAccessPrivateUnauthorizedGet() throws Exception{
-        mockMvc.perform(get(CategoryController.BASE_URL)
-                .with(httpBasic("admin", "spring")))
-                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get(CategoryController.BASE_URL)).andExpect(status().isUnauthorized());
     }
 
     @Test
     void testTryToAccessPrivateAuthorizedIsOkGet() throws Exception{
         mockMvc.perform(post(CategoryController.BASE_URL)
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isCreated()); 
@@ -68,7 +71,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     @Test
     void testTryToAccessPrivateAuthorizedIsOkPost() throws Exception{
         mockMvc.perform(post(CategoryController.BASE_URL)
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isCreated());
@@ -76,7 +79,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
     
     @Test
-    public void testFindAll() throws Exception {
+     void testFindAll() throws Exception {
         Category category2 = new Category();
         category2.setId(2L);
         category2.setName("bob");
@@ -86,7 +89,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
         when(service.findAll()).thenReturn(categories);
         
         mockMvc.perform(get(CategoryController.BASE_URL)
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -94,10 +97,10 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
 
     @Test
-    public void testCreate() throws Exception {
+     void testCreate() throws Exception {
         when(service.create(category)).thenReturn(category);
         mockMvc.perform(post(CategoryController.BASE_URL)
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isCreated())
@@ -106,18 +109,18 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+     void testDelete() throws Exception {
         mockMvc.perform(delete(CategoryController.BASE_URL + "/1")
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    public void testUpdate() throws Exception {
+     void testUpdate() throws Exception {
         when(service.update(1L, category)).thenReturn(category);
         mockMvc.perform(put(CategoryController.BASE_URL+"/1")
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
                 .andExpect(status().isOk())
