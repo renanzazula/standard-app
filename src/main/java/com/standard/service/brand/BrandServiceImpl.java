@@ -5,12 +5,13 @@ import com.standard.entity.BrandEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.BrandRepository;
+import com.standard.security.exceptions.BrandNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	@Transactional
 	public Brand update(Long id, Brand brand) {
-		BrandEntity brandDB = brandRepository.getById(id);
+		BrandEntity brandDB = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND));
 		brandDB.setDescription(brand.getDescription());
 		brandDB.setName(brand.getName());
 		return JpaFunctions.brandToBrandEntity.apply(brandRepository.saveAndFlush(brandDB));
@@ -40,7 +41,7 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		BrandEntity brandDB = brandRepository.getById(id);
+		BrandEntity brandDB = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND));
 		brandDB.setStatus(StatusEnum.DISABLE);
 		brandRepository.save(brandDB);
 	}
@@ -56,7 +57,7 @@ public class BrandServiceImpl implements BrandService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "brandCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Brand findById(Long id) {
-		return JpaFunctions.brandToBrandEntity.apply(brandRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+		return JpaFunctions.brandToBrandEntity.apply(brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND)));
 	}
 
 }

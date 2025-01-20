@@ -5,12 +5,13 @@ import com.standard.entity.DomainEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.DomainRepository;
+import com.standard.security.exceptions.DomainNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +33,7 @@ public class DomainServiceImpl implements DomainService {
 	@Override
 	@Transactional
 	public Domain update(Long id, Domain domain) {
-		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Domain não encontrado!"));
+		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new DomainNotFoundException(ConstantMessage.DOMAIN_NOT_FOUND));
 		Objects.requireNonNull(domainDB).setDescription(domain.getDescription());
 		domainDB.setName(domain.getName());
 		return JpaFunctions.domainToDomainEntity.apply(domainRepository.save(domainDB));
@@ -41,7 +42,7 @@ public class DomainServiceImpl implements DomainService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Domain não encontrado!"));
+		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new DomainNotFoundException(ConstantMessage.DOMAIN_NOT_FOUND));
 		domainDB.setStatus(StatusEnum.DISABLE);
 		domainRepository.saveAndFlush(domainDB);
 	}
@@ -57,7 +58,7 @@ public class DomainServiceImpl implements DomainService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "domainCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Domain findById(Long id) {
-		return JpaFunctions.domainToDomainEntity.apply(domainRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Domain não encontrado!")));
+		return JpaFunctions.domainToDomainEntity.apply(domainRepository.findById(id).orElseThrow(() -> new DomainNotFoundException(ConstantMessage.DOMAIN_NOT_FOUND)));
 	}
 
 }

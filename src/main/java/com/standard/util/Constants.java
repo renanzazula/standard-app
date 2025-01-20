@@ -6,4 +6,7 @@ public class Constants {
     public static final String PATTERN_TIME_FORMAT = "HH:mm:ss";
     public static final String PATTERN_NUMBER_FORMAT = "#,###,###,###.##";
 
+    private Constants(){
+    }
+
 }

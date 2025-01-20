@@ -6,6 +6,8 @@ import com.standard.entity.PosEntity;
 import com.standard.enums.StatusPOSEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.PosRepository;
+import com.standard.security.exceptions.PosNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,7 @@ public class PosServiceImpl implements PosService
 	@Transactional
 	public Pos loadPos(Pos pos)
 	{
-		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!")));
+		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class PosServiceImpl implements PosService
 	@Transactional
 	public Pos closePos(Pos pos)
 	{
-		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
+		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
 		posEntity.setStatus(StatusPOSEnum.CLOSE);
 		posEntity.setCloseDate(new Date());
 		posEntity.setCloseTime(new Date());
@@ -80,14 +82,14 @@ public class PosServiceImpl implements PosService
 	@Transactional
 	public Pos getPos(Pos pos)
 	{
-		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new EntityNotFoundException("POS não encontrado!")));
+		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
 	}
 
 	@Override
 	@Transactional
 	public Pos updateAmountPos(PosEntity pos, Order order)
 	{
-		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new EntityNotFoundException("POS não encontrado!"));
+		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
 		posEntity.setTotalDiscount(posEntity.getTotalDiscount() + order.getDiscount());
 		Double totalOrder = posEntity.getTotalOrders() + order.getPaidAmount();
 		posEntity.setTotalOrders(totalOrder);

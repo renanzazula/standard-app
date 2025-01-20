@@ -5,12 +5,13 @@ import com.standard.entity.PaymentMethodEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.PaymentMethodRepository;
+import com.standard.security.exceptions.PaymentMethodNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -29,7 +30,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Override
     @Transactional
     public PaymentMethod update(Long id, PaymentMethod paymentMethod) {
-        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
+        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new PaymentMethodNotFoundException(ConstantMessage.PAYMENT_METHOD_NOT_FOUND));
         return getPaymentMethod(paymentMethod, paymentMethodDB);
     }
 
@@ -44,7 +45,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Override
     @Transactional
     public void delete(Long id) {
-        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method não encontrado!"));
+        PaymentMethodEntity paymentMethodDB = paymentMethodRepository.findById(id).orElseThrow(() -> new PaymentMethodNotFoundException(ConstantMessage.PAYMENT_METHOD_NOT_FOUND));
         paymentMethodDB.setStatus(StatusEnum.DISABLE);
         paymentMethodRepository.save(paymentMethodDB);
     }
@@ -61,7 +62,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     @Cacheable(cacheNames = "paymentMethodCache", key = "#id", condition = "#showInventoryOnHand == false")
     public PaymentMethod findById(Long id) {
         return JpaFunctions.paymentMethodToPaymentMethodEntity
-                .apply(paymentMethodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payment Method  não encontrado!")));
+                .apply(paymentMethodRepository.findById(id).orElseThrow(() -> new PaymentMethodNotFoundException(ConstantMessage.PAYMENT_METHOD_NOT_FOUND)));
     }
 
 }

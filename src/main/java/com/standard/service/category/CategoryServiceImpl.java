@@ -7,12 +7,14 @@ import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.CategoryRepository;
 import com.standard.repository.SubcategoryRepository;
+import com.standard.security.exceptions.CategoryNotFoundException;
+import com.standard.security.exceptions.SubcategoryNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService
 		if (obj.getSubcategories() != null) {
 			Set<SubcategoryEntity> subcategories = new HashSet<>();
 			obj.getSubcategories()
-					.forEach(sub -> subcategories.add(subcategoryRepository.findById(sub.getId()).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrada"))));
+					.forEach(sub -> subcategories.add(subcategoryRepository.findById(sub.getId()).orElseThrow(() -> new SubcategoryNotFoundException(ConstantMessage.SUBCATEGORY_NOT_FOUND))));
 			categoryDB.setSubcategories(subcategories);
 		}
 		return JpaFunctions.categoryToCategoryEntity.apply(repository.saveAndFlush(categoryDB));
@@ -46,12 +48,12 @@ public class CategoryServiceImpl implements CategoryService
 	@Transactional
 	public Category update(Long id, Category obj)
 	{
-		CategoryEntity categoryDB = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
+		CategoryEntity categoryDB = repository.findById(id).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND));
 		Objects.requireNonNull(categoryDB).setDescription(obj.getDescription());
 		categoryDB.setName(obj.getName());
 		categoryDB.getSubcategories().clear();
 		Set<SubcategoryEntity> subcategoriaSet = new HashSet<>();
-		obj.getSubcategories().forEach(sub -> subcategoriaSet.add(subcategoryRepository.findById(sub.getId()).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrada!"))));
+		obj.getSubcategories().forEach(sub -> subcategoriaSet.add(subcategoryRepository.findById(sub.getId()).orElseThrow(() -> new SubcategoryNotFoundException(ConstantMessage.SUBCATEGORY_NOT_FOUND))));
 		categoryDB.getSubcategories().addAll(subcategoriaSet);
 
 		return JpaFunctions.categoryToCategoryEntity.apply(repository.saveAndFlush(categoryDB));
@@ -62,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService
 	@Cacheable(cacheNames = "categoryCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Category findById(Long id)
 	{
-		return JpaFunctions.categoryToCategoryEntity.apply(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+		return JpaFunctions.categoryToCategoryEntity.apply(repository.findById(id).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND)));
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService
 	@Transactional
 	public void delete(Long id)
 	{
-		CategoryEntity categoryDB = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
+		CategoryEntity categoryDB = repository.findById(id).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND));
 		categoryDB.setStatus(StatusEnum.DISABLE);
 		repository.saveAndFlush(categoryDB);
 	}

@@ -14,7 +14,10 @@ import com.standard.repository.OrderRepository;
 import com.standard.repository.PaymentMethodRepository;
 import com.standard.repository.PosRepository;
 import com.standard.repository.ProductHasItemsTypeMeasureRepository;
+import com.standard.security.exceptions.PayBackNotFoundException;
+import com.standard.security.exceptions.ProductHasItemsTypeMeasureNotFoundException;
 import com.standard.service.pos.PosService;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +53,8 @@ public class OrderServiceImpl implements OrderService {
                     orderHasItemProduct.getProductHasItemsTypeMeasure().getItemsTypeMeasure().getId(),
                     orderHasItemProduct.getProductHasItemsTypeMeasure().getProduct().getId());
 
-            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.getById(id);
+            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
+                   "Product Item Type Measure Not Found"));
             totalQuantityItemsOrder = (totalQuantityItemsOrder + orderHasItemProduct.getQuantidade());
             orderHasItemProductEntity.setQuantity(orderHasItemProduct.getQuantidade());
             orderHasItemProductEntity.setUnitValue(productHasItemsTypeMeasureEntity.getUnitValue());
@@ -105,7 +109,8 @@ public class OrderServiceImpl implements OrderService {
     private void removeProductFromStock(Order order) {
         order.getOrderHasItemProduct().forEach(orderItem -> {
             Long id = getByItemsTypeMeasureIdAndProductId(orderItem.getProductHasItemsTypeMeasure().getItemsTypeMeasure().getId(), orderItem.getProductHasItemsTypeMeasure().getProduct().getId());
-            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.getById(id);
+            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
+                    "Product Item Type Measure Not Found"));
             productHasItemsTypeMeasureEntity.setQuantity(productHasItemsTypeMeasureEntity.getQuantity() - orderItem.getQuantidade());
             productHasItemsTypeMeasureRepository.saveAndFlush(productHasItemsTypeMeasureEntity);
         });
@@ -124,7 +129,8 @@ public class OrderServiceImpl implements OrderService {
     private void addProductToStock(Order order) {
         order.getOrderHasItemProduct().forEach(orderItem -> {
             Long id = getByItemsTypeMeasureIdAndProductId(orderItem.getProductHasItemsTypeMeasure().getItemsTypeMeasure().getId(), orderItem.getProductHasItemsTypeMeasure().getProduct().getId());
-            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.getById(id);
+            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
+                    "Product Item Type Measure Not Found"));
             productHasItemsTypeMeasureEntity.setQuantity(productHasItemsTypeMeasureEntity.getQuantity() + orderItem.getProductHasItemsTypeMeasure().getQuantity());
             productHasItemsTypeMeasureRepository.saveAndFlush(productHasItemsTypeMeasureEntity);
         });

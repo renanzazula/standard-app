@@ -3,6 +3,14 @@ package com.standard.security.handler;
 
 import com.standard.domain.Error;
 import com.standard.domain.ErrorDetails;
+import com.standard.security.exceptions.BrandNotFoundException;
+import com.standard.security.exceptions.CategoryNotFoundException;
+import com.standard.security.exceptions.DomainNotFoundException;
+import com.standard.security.exceptions.MeasureNotFoundException;
+import com.standard.security.exceptions.PayBackNotFoundException;
+import com.standard.security.exceptions.PaymentMethodNotFoundException;
+import com.standard.security.exceptions.SubcategoryNotFoundException;
+import com.standard.security.exceptions.WithdrawalNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -10,10 +18,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.ProviderNotFoundException;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -94,10 +102,16 @@ public class StandardExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler({BrandNotFoundException.class, CategoryNotFoundException.class, DomainNotFoundException.class, MeasureNotFoundException.class, PayBackNotFoundException.class,
+            PaymentMethodNotFoundException.class, ProviderNotFoundException.class, SubcategoryNotFoundException.class, WithdrawalNotFoundException.class})
     public ResponseEntity<Void> handleEntityNotFoundException() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
+
+
 
 }
     

@@ -5,11 +5,12 @@ import com.standard.entity.SubcategoryEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.SubcategoryRepository;
+import com.standard.security.exceptions.SubcategoryNotFoundException;
+import com.standard.util.ConstantMessage;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	@Transactional
 	public Subcategory update(Long id, Subcategory entity) {
-		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(entity.getId()).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!"));
+		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(entity.getId()).orElseThrow(() -> new SubcategoryNotFoundException(ConstantMessage.SUBCATEGORY_NOT_FOUND));
 		Objects.requireNonNull(subcategoryDB).setDescription(entity.getDescription());
 		subcategoryDB.setName(entity.getName());
 		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.saveAndFlush(subcategoryDB));
@@ -43,7 +44,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!"));
+		SubcategoryEntity subcategoryDB = subcategoryRepository.findById(id).orElseThrow(() -> new SubcategoryNotFoundException(ConstantMessage.SUBCATEGORY_NOT_FOUND));
 		subcategoryDB.setStatus(StatusEnum.DISABLE);
 		subcategoryRepository.saveAndFlush(subcategoryDB);
 	}
@@ -59,7 +60,8 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "subcategoryCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Subcategory findById(Long id) {
-		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Subcategory não encontrado!")));
+		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.findById(id).orElseThrow(() -> new SubcategoryNotFoundException(
+				ConstantMessage.SUBCATEGORY_NOT_FOUND)));
 	}
 
 }

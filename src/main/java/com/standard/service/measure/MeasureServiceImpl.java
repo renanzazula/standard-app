@@ -13,12 +13,16 @@ import com.standard.repository.BrandRepository;
 import com.standard.repository.CategoryRepository;
 import com.standard.repository.MeasureRepository;
 import com.standard.repository.SubcategoryRepository;
+import com.standard.security.exceptions.BrandNotFoundException;
+import com.standard.security.exceptions.CategoryNotFoundException;
+import com.standard.security.exceptions.MeasureNotFoundException;
+import com.standard.security.exceptions.SubcategoryNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,10 +31,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class MeasureServiceImpl implements MeasureService {
 
+	private final BrandRepository brandRepository;
 	private final MeasureRepository measureRepository;
 	private final CategoryRepository categoryRepository;
 	private final SubcategoryRepository subcategoryRepository;
-	private final BrandRepository brandRepository;
 
     @Override
 	@Transactional
@@ -49,7 +53,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Override
 	@Transactional
 	public Measure update(Long id, Measure measure) {
-		MeasureEntity measureDB = measureRepository.getById(id);
+		MeasureEntity measureDB = measureRepository.findById(id).orElseThrow(() -> new MeasureNotFoundException(ConstantMessage.MEASURE_NOT_FOUND));
 		measureDB.setDescription(measure.getDescription());
 		measureDB.setName(measure.getNome());
 		measureDB.getItemsTypeMeasure().clear();
@@ -62,14 +66,14 @@ public class MeasureServiceImpl implements MeasureService {
 	}
 
 	private void itemsTypeMeasureBuild(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
-		measure.getItemsTypeMeasure().forEach(itensMedida -> {
+		measure.getItemsTypeMeasure().forEach(itemsTypeMeasure -> {
 			ItemsTypeMeasureEntity itemsTypeMeasureEntity = new ItemsTypeMeasureEntity();
-			itemsTypeMeasureEntity.setCategory(categoryRepository.getById(measure.getCategory().getId()));
-			itemsTypeMeasureEntity.setSubcategory(subcategoryRepository.getById(measure.getSubcategory().getId()));
+			itemsTypeMeasureEntity.setCategory(categoryRepository.findById(measure.getCategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND)));
+			itemsTypeMeasureEntity.setSubcategory(subcategoryRepository.findById(measure.getSubcategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.MEASURE_NOT_FOUND)));
 			if (measure.getBrand() != null) {
-				itemsTypeMeasureEntity.setBrand(brandRepository.getById(measure.getBrand().getId()));
+				itemsTypeMeasureEntity.setBrand(brandRepository.findById(measure.getBrand().getId()).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND)));
 			}
-			itemsTypeMeasureEntity.setAmount(itensMedida.getAmount());
+			itemsTypeMeasureEntity.setAmount(itemsTypeMeasure.getAmount());
 			itensSet.add(itemsTypeMeasureEntity);
 		});
 	}
@@ -77,7 +81,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		MeasureEntity measureDB = measureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!"));
+		MeasureEntity measureDB = measureRepository.findById(id).orElseThrow(() -> new MeasureNotFoundException(ConstantMessage.MEASURE_NOT_FOUND));
 		if (measureDB != null){
 			measureDB.setStatus(StatusEnum.DISABLE);
 		}
@@ -96,7 +100,7 @@ public class MeasureServiceImpl implements MeasureService {
 	@Transactional(readOnly = true)
 	@Cacheable(cacheNames = "measureCache", key = "#id", condition = "#showInventoryOnHand == false")
 	public Measure findById(Long id) {
-		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.findById(id).orElseThrow(() -> new MeasureNotFoundException(ConstantMessage.MEASURE_NOT_FOUND)));
 	}
 
 	@Override
@@ -107,15 +111,15 @@ public class MeasureServiceImpl implements MeasureService {
 		SubcategoryEntity subcategoryEntity = null;
 
 		if (product.getCategory().getSubcategories() != null && product.getSubcategory().getId() != null) {
-			subcategoryEntity = subcategoryRepository.getById(product.getSubcategory().getId());
+			subcategoryEntity = subcategoryRepository.findById(product.getSubcategory().getId()).orElseThrow(() -> new SubcategoryNotFoundException(ConstantMessage.SUBCATEGORY_NOT_FOUND));
 		}
 
 		if (product.getCategory() != null && product.getCategory().getId() != null) {
-			categoryEntity = categoryRepository.getById(product.getCategory().getId());
+			categoryEntity = categoryRepository.findById(product.getCategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND));
 		}
 
 		if (product.getBrand() != null && product.getBrand().getId() != null) {
-			brandEntity = brandRepository.getById(product.getBrand().getId());
+			brandEntity = brandRepository.findById(product.getBrand().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.BRAND_NOT_FOUND));
 		}
 
 		return measureRepository

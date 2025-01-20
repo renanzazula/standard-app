@@ -5,12 +5,13 @@ import com.standard.entity.ProviderEntity;
 import com.standard.enums.StatusEnum;
 import com.standard.function.JpaFunctions;
 import com.standard.repository.ProviderRepository;
+import com.standard.security.exceptions.ProviderNotFoundException;
+import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     @Transactional
     public Provider update(Long id, Provider entity) {
-        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!"));
+        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
         providerDB.setDescription(entity.getDescription());
         providerDB.setName(entity.getName());
         return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
@@ -40,7 +41,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     @Transactional
     public void delete(Long id) {
-        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Provider não encontrado!"));
+        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
         providerDB.setStatus(StatusEnum.DISABLE);
         providerRepository.save(providerDB);
     }
@@ -56,7 +57,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "providerCache", key = "#id", condition = "#showInventoryOnHand == false")
     public Provider findById(Long id) {
-        return JpaFunctions.providerToProviderEntity.apply(providerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Registro não encontrado!")));
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND)));
     }
 
 }
