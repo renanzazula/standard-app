@@ -1,33 +1,45 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  maven-executor:
     docker:
-      # specify the version you desire here openjdk:8-jdk
-      - image: cimg/openjdk:21.0
+      - image: cimg/openjdk:21.0  # Specify the desired JDK version here
     working_directory: ~/repo
     environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
+      MAVEN_OPTS: -Xmx3200m  # Customize the JVM maximum heap limit
+
+jobs:
+  build:
+    executor: maven-executor
     steps:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
 
-      - run: mvn clean install
-      - run: mvn dependency:go-offline
-      - run: mvn test
+      - run:
+          name: Maven Clean Install
+          command: mvn clean install
+
+      - run:
+          name: Maven Dependency Go Offline
+          command: mvn dependency:go-offline
+
+      - run:
+          name: Run Tests
+          command: mvn test
+
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
+
       - run:
-          name: Save test results
+          name: Save Test Results
           command: |
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
+
       - store_test_results:
           path: ~/test-results
