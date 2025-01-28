@@ -1,70 +1,35 @@
 version: 2.1
 executors:
-  combined-executor:
+  default-executor:
     docker:
-      - image: cimg/openjdk:21.0  # JDK 21 image for Maven/Java
-      - image: cimg/node:16.20  # Node.js 16 image for Yarn/Jest
+      - image: cimg/openjdk:21.0
     working_directory: ~/repo
     environment:
-      MAVEN_OPTS: -Xmx3200m  # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
 
 jobs:
   build:
-    executor: combined-executor
+    executor: default-executor
     steps:
       - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
+            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run:
-          name: Maven Clean Install
-          command: mvn clean install
-
-      - run:
-          name: Maven Dependency Go Offline
-          command: mvn dependency:go-offline
-
-      - run:
-          name: Run Tests
-          command: mvn test
-
+      - run: mvn clean install
+      - run: mvn dependency:go-offline
+      - run: mvn test
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-
       - run:
-          name: Install Yarn
-          command: npm install -g yarn
-
-      - run:
-          name: Debug PATH and Yarn
-          command: |
-            echo $PATH
-            which yarn
-
-      - run:
-          name: Install JUnit coverage reporter
-          command: yarn add --dev jest-junit
-
-      - run:
-          name: Run tests with JUnit as reporter
-          command: jest --ci --runInBand --reporters=default --reporters=jest-junit
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: ./reports/
-            JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
-
-      - store_test_results:
-          path: ./reports/
-
-      - run:
-          name: Save Test Results
+          name: Save test results
           command: |
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
-
       - store_test_results:
           path: ~/test-results
