@@ -57,9 +57,13 @@
         <docker.image.prefix>renanzazula</docker.image.prefix>
         <docker.image.name>${project.artifactId}</docker.image.name>
 
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.projectKey>${SONAR_PROJECT_KEY}</sonar.projectKey>
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.host.url>${SONAR_HOST_URL}</sonar.host.url>
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.login>${SONAR_TOKEN}</sonar.login>
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.organization>${SONAR_ORGANIZATION}</sonar.organization>
     </properties>
 
