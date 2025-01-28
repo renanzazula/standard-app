@@ -35,8 +35,17 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run:
+          name: Install Node.js using NVM
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+            . ~/.nvm/nvm.sh
+            nvm install 16  # Install Node.js (adjust version as needed)
+            nvm use 16
+            nvm alias default 16
+
+      - run:
           name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+          command: npm install -g yarn
 
       - run:
           name: Install JUnit coverage reporter
