@@ -35,6 +35,10 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run:
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+
+      - run:
           name: Install JUnit coverage reporter
           command: yarn add --dev jest-junit
 
