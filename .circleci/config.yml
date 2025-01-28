@@ -22,10 +22,7 @@ jobs:
       - run: mvn dependency:go-offline
       - run: mvn test
       - run: chmod +x ./mvnw
-      - run:
-          name: SonarQube Analysis
-          command: |
-            ./mvnw sonar:sonar \  
+      - run: mvn sonar:sonar \  
               -Dsonar.projectKey=$SONAR_PROJECT_KEY \  
               -Dsonar.host.url=$SONAR_HOST_URL \  
               -Dsonar.token=$SONAR_TOKEN \ 
