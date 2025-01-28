@@ -1,6 +1,5 @@
 package com.standard;
 
-import com.standard.controller.security.BaseIT;
 import com.standard.domain.Brand;
 import com.standard.domain.Category;
 import com.standard.domain.Domain;
@@ -179,7 +178,6 @@ public class BaseTest {
 
     protected void setUpProduct() {
         product = new Product();
-        //product.setId(1L);
         product.setBarCode(BAR_0_CODE);
         product.setName(NAME);
         product.setStatus(StatusEnum.ENABLE);

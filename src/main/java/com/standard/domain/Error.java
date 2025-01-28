@@ -13,15 +13,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class    Error implements Serializable {
+public class Error implements Serializable
+{
 
-    @Serial
-    private static final long serialVersionUID = -7754886921722274018L;
+	@Serial
+	private static final long serialVersionUID = -7754886921722274018L;
 
-    private String target = null;
-    private String message = null;
-    private String reference = null;
-    private Date timestamp = null;
-    private List<ErrorDetails> details = new ArrayList<>();
+	private String target = null;
+	private String message = null;
+	private String reference = null;
+	private Date timestamp = null;
+	private List<ErrorDetails> details = new ArrayList<>();
 
 }

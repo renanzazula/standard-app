@@ -14,7 +14,11 @@ import com.standard.repository.OrderRepository;
 import com.standard.repository.PaymentMethodRepository;
 import com.standard.repository.PosRepository;
 import com.standard.repository.ProductHasItemsTypeMeasureRepository;
+import com.standard.security.exceptions.CustomerNotFoundException;
+import com.standard.security.exceptions.OrderNotFoundException;
 import com.standard.security.exceptions.PayBackNotFoundException;
+import com.standard.security.exceptions.PaymentMethodNotFoundException;
+import com.standard.security.exceptions.PosNotFoundException;
 import com.standard.security.exceptions.ProductHasItemsTypeMeasureNotFoundException;
 import com.standard.service.pos.PosService;
 import com.standard.util.ConstantMessage;
@@ -54,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
                     orderHasItemProduct.getProductHasItemsTypeMeasure().getProduct().getId());
 
             ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
-                   "Product Item Type Measure Not Found"));
+                   ConstantMessage.PRODUCT_ITEM_TYPE_MEASURE_NOT_FOUND));
             totalQuantityItemsOrder = (totalQuantityItemsOrder + orderHasItemProduct.getQuantidade());
             orderHasItemProductEntity.setQuantity(orderHasItemProduct.getQuantidade());
             orderHasItemProductEntity.setUnitValue(productHasItemsTypeMeasureEntity.getUnitValue());
@@ -95,8 +99,8 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setChanging(order.getChange());
         orderEntity.setPayment(order.getPayment());
         orderEntity.setTotalAmount(subTotal);
-        orderEntity.setPaymentMethod(paymentMethodRepository.getById(order.getPaymentMethod().getId()));
-        orderEntity.setCustomer(customerRepository.getById(1L));
+        orderEntity.setPaymentMethod(paymentMethodRepository.findById(order.getPaymentMethod().getId()).orElseThrow(() -> new PaymentMethodNotFoundException(ConstantMessage.PAYMENT_METHOD_NOT_FOUND)));
+        orderEntity.setCustomer(customerRepository.findById(1L).orElseThrow(() -> new CustomerNotFoundException(ConstantMessage.CUSTOMER_NOT_FOUND)));
     }
 
     /**
@@ -109,8 +113,7 @@ public class OrderServiceImpl implements OrderService {
     private void removeProductFromStock(Order order) {
         order.getOrderHasItemProduct().forEach(orderItem -> {
             Long id = getByItemsTypeMeasureIdAndProductId(orderItem.getProductHasItemsTypeMeasure().getItemsTypeMeasure().getId(), orderItem.getProductHasItemsTypeMeasure().getProduct().getId());
-            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
-                    "Product Item Type Measure Not Found"));
+            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(ConstantMessage.PRODUCT_ITEM_TYPE_MEASURE_NOT_FOUND));
             productHasItemsTypeMeasureEntity.setQuantity(productHasItemsTypeMeasureEntity.getQuantity() - orderItem.getQuantidade());
             productHasItemsTypeMeasureRepository.saveAndFlush(productHasItemsTypeMeasureEntity);
         });
@@ -129,8 +132,7 @@ public class OrderServiceImpl implements OrderService {
     private void addProductToStock(Order order) {
         order.getOrderHasItemProduct().forEach(orderItem -> {
             Long id = getByItemsTypeMeasureIdAndProductId(orderItem.getProductHasItemsTypeMeasure().getItemsTypeMeasure().getId(), orderItem.getProductHasItemsTypeMeasure().getProduct().getId());
-            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(
-                    "Product Item Type Measure Not Found"));
+            ProductHasItemsTypeMeasureEntity productHasItemsTypeMeasureEntity = productHasItemsTypeMeasureRepository.findById(id).orElseThrow(() -> new ProductHasItemsTypeMeasureNotFoundException(ConstantMessage.PRODUCT_ITEM_TYPE_MEASURE_NOT_FOUND));
             productHasItemsTypeMeasureEntity.setQuantity(productHasItemsTypeMeasureEntity.getQuantity() + orderItem.getProductHasItemsTypeMeasure().getQuantity());
             productHasItemsTypeMeasureRepository.saveAndFlush(productHasItemsTypeMeasureEntity);
         });
@@ -144,16 +146,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order update(Order order) {
-        OrderEntity orderEntity = orderRepository.getById(order.getId());
+        OrderEntity orderEntity = orderRepository.findById(order.getId()).orElseThrow(() -> new OrderNotFoundException(ConstantMessage.ORDER_NOT_FOUND));
         orderEntity.setQuantity(order.getQuantity());
         orderToOrderEntity(order, orderEntity, order.getTotalAmount());
-        orderEntity.setPos(posRepository.getById(order.getPos().getId()));
+        orderEntity.setPos(posRepository.findById(order.getPos().getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
         return JpaFunctions.orderToOrderEntity.apply(orderRepository.saveAndFlush(orderEntity));
     }
 
     @Override
     public Order updateStatusOrder(Order order) {
-        OrderEntity orderEntity = orderRepository.getById(order.getId());
+        OrderEntity orderEntity = orderRepository.findById(order.getId()).orElseThrow(() -> new OrderNotFoundException(ConstantMessage.ORDER_NOT_FOUND));
         PosEntity posEntity = posRepository.getLastPos();
         orderEntity.setPos(posEntity);
 
@@ -174,15 +176,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Order updateStatusOrderToPending(Order order) {
-        OrderEntity orderEntity = orderRepository.getById(order.getId());
+        OrderEntity orderEntity = orderRepository.findById(order.getId()).orElseThrow(() -> new OrderNotFoundException(ConstantMessage.ORDER_NOT_FOUND));
         PosEntity posEntity = posRepository.getLastPos();
         orderEntity.setPos(posEntity);
         Order vResult = null;
-        if (posEntity != null) {
-            if (posEntity.getStatus().name().equals("A")) {
-                orderEntity.setStatus(OrderStatusEnum.PENDING);
-                vResult = JpaFunctions.orderToOrderEntity.apply(orderRepository.saveAndFlush(orderEntity));
-            }
+        if (posEntity != null && posEntity.getStatus().name().equals("A")) {
+            orderEntity.setStatus(OrderStatusEnum.PENDING);
+            vResult = JpaFunctions.orderToOrderEntity.apply(orderRepository.saveAndFlush(orderEntity));
         }
         return vResult;
     }
@@ -190,7 +190,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void cancel(Order order) {
-        OrderEntity orderEntity = orderRepository.getById(order.getId());
+        OrderEntity orderEntity = orderRepository.findById(order.getId()).orElseThrow(() -> new OrderNotFoundException(ConstantMessage.ORDER_NOT_FOUND));
         orderEntity.setStatus(OrderStatusEnum.CANCEL);
         orderRepository.saveAndFlush(orderEntity);
     }
@@ -198,7 +198,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Order findById(Order order) {
-        return JpaFunctions.orderToOrderEntity.apply(orderRepository.getById(order.getId()));
+        return JpaFunctions.orderToOrderEntity.apply(orderRepository.findById(order.getId()).orElseThrow(() -> new OrderNotFoundException(ConstantMessage.ORDER_NOT_FOUND)));
     }
 
     @Override

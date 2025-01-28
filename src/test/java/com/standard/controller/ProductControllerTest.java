@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Disabled
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {ProductController.class})
-public class ProductControllerTest extends AbstractRestControllerTest {
+class ProductControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -134,7 +134,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testFindById() throws Exception {
+    void testFindById() throws Exception {
         when(productService.getById(product.getId())).thenReturn(product);
         mockMvc.perform(get(ProductController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
@@ -145,7 +145,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
 //        when(produtoService.incluir(produto)).thenReturn(produto);
 //
 //        mockMvc.perform(post(ProdutoController.BASE_URL)
@@ -157,7 +157,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    void testDelete() throws Exception {
         mockMvc.perform(delete(ProductController.BASE_URL + "/1")
                 .with(httpBasic("admin", "spring"))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -165,7 +165,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
 //        when(produtoService.alterar(1,medida)).thenReturn(medida);
 //        mockMvc.perform(put(ProdutoController.BASE_URL + "/1")
 //                .contentType(MediaType.APPLICATION_JSON)
@@ -177,26 +177,26 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
     //
     @Test
-    public void consultaSubCategoriaByCategoria() {
+    void consultaSubCategoriaByCategoria() {
     }
 
     @Test
-    public void addProduct() {
+    void addProduct() {
     }
 
     @Test
-    public void ajaxFindAllItensMedidaByCategoria() {
+    void ajaxFindAllItensMedidaByCategoria() {
     }
 
     @Test
-    public void ajaxFindAllItensMedidaByProdutoCodigo() {
+    void ajaxFindAllItensMedidaByProdutoCodigo() {
     }
 
     @Test
-    public void ajaxFindAllItensMedidaByMedidaCodigo() {
+    void ajaxFindAllItensMedidaByMedidaCodigo() {
     }
 
     @Test
-    public void ajaxObterDominios() {
+    void ajaxObterDominios() {
     }
 }

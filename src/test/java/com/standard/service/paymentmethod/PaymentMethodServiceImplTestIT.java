@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
-public class PaymentMethodServiceImplTestIT extends BaseTest {
+class PaymentMethodServiceImplTestIT extends BaseTest {
 
     @Autowired
     private PaymentMethodRepository repository;
@@ -33,7 +33,7 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void create() {
+    void create() {
         PaymentMethod saved = service.create(paymentMethod);
         assertNotNull(saved);
         PaymentMethod found = service.findById(saved.getId());
@@ -44,7 +44,7 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         PaymentMethod update = service.findById(paymentMethod.getId());
         assertNotNull(update);
         update.setName(NAME_UPDATE);
@@ -59,20 +59,20 @@ public class PaymentMethodServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         List<PaymentMethod> found = service.findAll();
         assertNotNull(found);
     }
 
     @Test
-    public void findById() {
+    void findById() {
         PaymentMethod found = service.findById(paymentMethod.getId());
         assertNotNull(found);
         assertEquals(found.getId(), paymentMethod.getId());
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         PaymentMethod delete = service.findById(paymentMethod.getId());
         assertNotNull(delete);

@@ -19,6 +19,7 @@ import com.standard.security.exceptions.MeasureNotFoundException;
 import com.standard.security.exceptions.SubcategoryNotFoundException;
 import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Builder
 @AllArgsConstructor
 public class MeasureServiceImpl implements MeasureService {
 

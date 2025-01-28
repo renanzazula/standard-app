@@ -13,9 +13,8 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
         Order output = new Order();
         if (input != null) {
             output.setId(input.getId());
-// fixme:
-//            output.setCreationDate(input.getCreationDate());
-//            output.setCreationTime(input.getCreationTime());
+            output.setCreationDate(input.getCreationDate());
+            output.setCreationTime(input.getCreationTime());
             output.setTotalAmount(input.getTotalAmount());
             output.setStatus(input.getStatus());
             output.setQuantity(input.getQuantity());
@@ -39,7 +38,7 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
             }
 
             if (input.getOrderHasItemProduct() != null) {
-                output.setOrderHasItemProduct(input.getOrderHasItemProduct().stream().map(JpaFunctions.orderHasItemProdutoToOrderHasItemProdutoEntity).toList());
+                output.setOrderHasItemProduct(input.getOrderHasItemProduct().stream().map(JpaFunctions.orderHasItemProductToOrderHasItemProductEntity).toList());
             }
 
         }

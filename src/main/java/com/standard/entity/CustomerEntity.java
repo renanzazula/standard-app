@@ -32,10 +32,6 @@ public class CustomerEntity extends BaseAuditEntity {
     @OneToMany(mappedBy = "customer")
     private Set<OrderEntity> orderRequests;
 
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private Set<UserEntity> users;
-
-    // recebimento
     @OneToMany(mappedBy = "customer")
     private Set<OrderEntity> order;
 

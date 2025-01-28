@@ -5,19 +5,20 @@ import com.standard.domain.Pos;
 import com.standard.domain.Withdrawal;
 import com.standard.repository.PosRepository;
 import com.standard.repository.WithdrawalRepository;
+import com.standard.security.exceptions.WithdrawalNotFoundException;
 import com.standard.service.pos.PosServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -28,7 +29,7 @@ class WithdrawalServiceImplTestIT extends BaseTest {
     @Autowired
     private PosRepository posRepository;
 
-    private WithdrawalServiceImpl service;
+    private WithdrawalServiceImpl withdrawalService;
 
 	private Withdrawal withdrawal;
 
@@ -40,20 +41,20 @@ class WithdrawalServiceImplTestIT extends BaseTest {
         pos.setOpenAmount(5.0);
         pos = orderService.openPos(pos);
 
-        service = new WithdrawalServiceImpl(repository, posRepository);
+        withdrawalService = new WithdrawalServiceImpl(repository, posRepository);
         withdrawal = new Withdrawal();
         withdrawal.setDescription(DESCRIPTION);
         withdrawal.setAmount(10.0);
         withdrawal.setPos(pos);
-        withdrawal = service.create(withdrawal);
+        withdrawal = withdrawalService.create(withdrawal);
     }
 
     @Test
     void create() {
-        Withdrawal saved = service.create(withdrawal);
+        Withdrawal saved = withdrawalService.create(withdrawal);
         assertNotNull(saved);
 
-        Withdrawal found = service.findById(saved.getId());
+        Withdrawal found = withdrawalService.findById(saved.getId());
         assertEquals(found.getId(), saved.getId());
         assertEquals(found.getDescription(), saved.getDescription());
         assertEquals(found.getAmount(), saved.getAmount());
@@ -62,12 +63,12 @@ class WithdrawalServiceImplTestIT extends BaseTest {
 
     @Test
     void update() {
-        Withdrawal update = service.findById(withdrawal.getId());
+        Withdrawal update = withdrawalService.findById(withdrawal.getId());
         update.setAmount(20.0);
         update.setDescription(DESCRIPTION_UPDATE);
         update.setPos(pos);
 
-        Withdrawal updated = service.update(withdrawal.getId(), update);
+        Withdrawal updated = withdrawalService.update(withdrawal.getId(), update);
         assertEquals(updated.getDescription(), update.getDescription());
         assertEquals(updated.getAmount(), update.getAmount());
 
@@ -75,23 +76,23 @@ class WithdrawalServiceImplTestIT extends BaseTest {
 
     @Test
     void findById() {
-        Withdrawal found = service.findById(withdrawal.getId());
+        Withdrawal found = withdrawalService.findById(withdrawal.getId());
         assertNotNull(found);
         assertEquals(found.getId(), withdrawal.getId());
     }
 
     @Test
     void findAll() {
-        List<Withdrawal> found = service.findAll();
+        List<Withdrawal> found = withdrawalService.findAll();
         assertNotNull(found);
     }
 
 
     @Test
     void delete() {
-        Withdrawal delete = service.findById(withdrawal.getId());
+        Withdrawal delete = withdrawalService.findById(withdrawal.getId());
         assertNotNull(delete);
-        service.delete(delete.getId());
-        Assertions.assertThrows(EntityNotFoundException.class, () -> { service.findById(withdrawal.getId()); });
+        withdrawalService.delete(delete.getId());
+        Assertions.assertThrows(WithdrawalNotFoundException.class, () -> { withdrawalService.findById(withdrawal.getId()); });
     }
 }

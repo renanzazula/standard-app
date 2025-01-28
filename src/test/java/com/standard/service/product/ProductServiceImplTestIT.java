@@ -5,7 +5,14 @@ import com.standard.domain.Brand;
 import com.standard.domain.Product;
 import com.standard.domain.Provider;
 import com.standard.enums.StatusEnum;
-import com.standard.repository.*;
+import com.standard.repository.BrandRepository;
+import com.standard.repository.CategoryRepository;
+import com.standard.repository.DomainRepository;
+import com.standard.repository.ItemsTypeMeasureRepository;
+import com.standard.repository.MeasureRepository;
+import com.standard.repository.ProductRepository;
+import com.standard.repository.ProviderRepository;
+import com.standard.repository.SubcategoryRepository;
 import com.standard.service.brand.BrandService;
 import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.category.CategoryService;
@@ -23,12 +30,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -72,13 +80,12 @@ class ProductServiceImplTestIT extends BaseTest {
         SubcategoryService subCategoryService = new SubcategoryServiceImpl(subcategoryRepository);
 		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 		DomainService domainService = new DomainServiceImpl(domainRepository);
-		MeasureService measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository, brandRepository);
+        MeasureService measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
         productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository,
                 providerRepository, categoryRepository, subcategoryRepository,
                 itemsTypeMeasureRepository);
 
-        // requeridos
         setUpBrand();
         brand = brandService.create(brand);
 
@@ -104,10 +111,8 @@ class ProductServiceImplTestIT extends BaseTest {
         measure.setItemsTypeMeasure(itemsTypeMeasure);
         measure = measureService.create(measure);
 
-        //quantadade, dominio e item Medida
         setUpProductHasItemsTypeMeasure();
 
-        // campos comuns
         setUpProduct();
 
         product.setBrand(brand);
@@ -116,8 +121,6 @@ class ProductServiceImplTestIT extends BaseTest {
         product.setMeasure(measure);
         product.setSubcategory(subcategory);
         product.setProductHasItemsTypeMeasure(productHasItemsTypeMeasure);
-
-
     }
 
     @Test
@@ -256,7 +259,7 @@ class ProductServiceImplTestIT extends BaseTest {
         productService.delete(toDelete.getId());
 
         Product found = productService.getById(product.getId());
-        assertEquals(found.getStatus(), StatusEnum.DISABLE);
+        assertEquals(StatusEnum.DISABLE, found.getStatus());
     }
 
 

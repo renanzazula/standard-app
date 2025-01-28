@@ -28,8 +28,8 @@ import java.util.UUID;
 @ControllerAdvice
 public class StandardExceptionHandler {
 
-    
-    
+    public static final String ROOT_CAUSE = "rootCause";
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Error> validationsErrorHandler(ConstraintViolationException ex, HttpServletRequest request) {
         
@@ -59,7 +59,7 @@ public class StandardExceptionHandler {
         error.setTimestamp(Calendar.getInstance().getTime());
 
         ErrorDetails detailsItem = new ErrorDetails();
-        detailsItem.setTarget("rootCause");
+        detailsItem.setTarget(ROOT_CAUSE);
         detailsItem.setCode(ex.getClass().getName());
         detailsItem.setMessage(ex.getMessage()); 
         error.getDetails().add(detailsItem);
@@ -76,7 +76,7 @@ public class StandardExceptionHandler {
         error.setTimestamp(Calendar.getInstance().getTime());
 
         ErrorDetails detailsItem = new ErrorDetails();
-        detailsItem.setTarget("rootCause");
+        detailsItem.setTarget(ROOT_CAUSE);
         detailsItem.setCode(ex.getClass().getName());
         detailsItem.setMessage(ex.getMessage());
         error.getDetails().add(detailsItem);
@@ -94,7 +94,7 @@ public class StandardExceptionHandler {
         error.setTimestamp(Calendar.getInstance().getTime());
 
         ErrorDetails detailsItem = new ErrorDetails();
-        detailsItem.setTarget("rootCause");
+        detailsItem.setTarget(ROOT_CAUSE);
         detailsItem.setCode(ex.getClass().getName());
         detailsItem.setMessage(ex.getMessage());
         error.getDetails().add(detailsItem);

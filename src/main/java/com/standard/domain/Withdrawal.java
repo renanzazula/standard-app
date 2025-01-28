@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

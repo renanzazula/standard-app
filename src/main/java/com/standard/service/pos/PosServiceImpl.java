@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.Date;
 
 @Service
@@ -20,13 +19,13 @@ import java.util.Date;
 public class PosServiceImpl implements PosService
 {
 
-	private final PosRepository repository;
+	private final PosRepository posRepository;
 
 	@Override
 	@Transactional
 	public Pos loadPos(Pos pos)
 	{
-		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
+		return JpaFunctions.posToPosEntity.apply(posRepository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
 	}
 
 	@Override
@@ -42,25 +41,25 @@ public class PosServiceImpl implements PosService
 		posEntity.setStatus(StatusPOSEnum.OPEN);
 		posEntity.setOpenDate(new Date());
 		posEntity.setOpenTime(new Date());
-		return JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
+		return JpaFunctions.posToPosEntity.apply(posRepository.saveAndFlush(posEntity));
 	}
 
 	@Override
 	@Transactional
 	public Pos closePos(Pos pos)
 	{
-		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
+		PosEntity posEntity = posRepository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
 		posEntity.setStatus(StatusPOSEnum.CLOSE);
 		posEntity.setCloseDate(new Date());
 		posEntity.setCloseTime(new Date());
-		return JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
+		return JpaFunctions.posToPosEntity.apply(posRepository.saveAndFlush(posEntity));
 	}
 
 	@Override
 	@Transactional
 	public Pos getLastPos()
 	{
-		PosEntity posEntity = repository.getLastPos();
+		PosEntity posEntity = posRepository.getLastPos();
 		if (posEntity != null) {
 			return JpaFunctions.posToPosEntity.apply(posEntity);
 		} else {
@@ -82,14 +81,14 @@ public class PosServiceImpl implements PosService
 	@Transactional
 	public Pos getPos(Pos pos)
 	{
-		return JpaFunctions.posToPosEntity.apply(repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
+		return JpaFunctions.posToPosEntity.apply(posRepository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND)));
 	}
 
 	@Override
 	@Transactional
 	public Pos updateAmountPos(PosEntity pos, Order order)
 	{
-		PosEntity posEntity = repository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
+		PosEntity posEntity = posRepository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
 		posEntity.setTotalDiscount(posEntity.getTotalDiscount() + order.getDiscount());
 		Double totalOrder = posEntity.getTotalOrders() + order.getPaidAmount();
 		posEntity.setTotalOrders(totalOrder);
@@ -100,13 +99,13 @@ public class PosServiceImpl implements PosService
 			posEntity.setTotal(totalOrder + pos.getOpenAmount());
 		}
 
-		return JpaFunctions.posToPosEntity.apply(repository.saveAndFlush(posEntity));
+		return JpaFunctions.posToPosEntity.apply(posRepository.saveAndFlush(posEntity));
 	}
 
 	@Override
 	public Long getLastPosId()
 	{
-		Long id = repository.getLastPosId();
+		Long id = posRepository.getLastPosId();
 		if (id != null) {
 			id = id + 1;
 		} else {

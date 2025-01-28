@@ -16,6 +16,7 @@ import com.standard.function.jpa.ProductToProdctEntityFunction;
 import com.standard.function.jpa.ProviderToProviderEntityFunction;
 import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
 import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -34,7 +35,7 @@ public class JpaFunctions {
     public static final OrderToOrderEntityFunction orderToOrderEntity = new OrderToOrderEntityFunction();
     public static final CustomerToCustomerEntityFunction customerToCustomerEntity = new CustomerToCustomerEntityFunction();
     public static final PosToPosEntityFunction posToPosEntity = new PosToPosEntityFunction();
-    public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProdutoToOrderHasItemProdutoEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
+    public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProductToOrderHasItemProductEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
     public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction();
     public static final PayBackEntityToPayBackFunction payBackEntityToPayBack = new PayBackEntityToPayBackFunction();
 

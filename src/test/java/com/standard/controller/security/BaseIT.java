@@ -27,8 +27,8 @@ public abstract class BaseIT {
     @MockitoBean
     private JwtDecoder jwtDecoder;
 
-    private String ROLE_ADMIN = "ROLE_ADMIN";
-    private String ROLE_USER = "ROLE_USER";
+    private final String ROLE_ADMIN = "ROLE_ADMIN";
+    private final String ROLE_USER = "ROLE_USER";
 
 
     @BeforeEach

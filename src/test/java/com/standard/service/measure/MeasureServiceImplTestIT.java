@@ -21,12 +21,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -51,8 +52,8 @@ class MeasureServiceImplTestIT extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        measureService = new MeasureServiceImpl(measureRepository, categoryRepository,
-                subcategoryRepository, brandRepository);
+        measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository,
+                subcategoryRepository);
 
         brandService = new BrandServiceImpl(brandRepository);
         subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);

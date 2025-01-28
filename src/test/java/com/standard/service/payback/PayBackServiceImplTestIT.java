@@ -1,14 +1,13 @@
 package com.standard.service.payback;
 
 import com.standard.BaseTest;
-import com.standard.domain.Pos;
 import com.standard.domain.Customer;
 import com.standard.domain.PayBack;
-
+import com.standard.domain.Pos;
 import com.standard.entity.CustomerEntity;
-import com.standard.repository.PosRepository;
 import com.standard.repository.CustomerRepository;
 import com.standard.repository.PayBackRepository;
+import com.standard.repository.PosRepository;
 import com.standard.service.pos.PosService;
 import com.standard.service.pos.PosServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 

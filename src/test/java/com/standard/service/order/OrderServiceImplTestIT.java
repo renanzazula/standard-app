@@ -1,10 +1,26 @@
 package com.standard.service.order;
 
 import com.standard.BaseTest;
-import com.standard.domain.*;
+import com.standard.domain.Customer;
+import com.standard.domain.Order;
+import com.standard.domain.OrderHasItemProduct;
+import com.standard.domain.Pos;
+import com.standard.domain.ProductHasItemsTypeMeasure;
 import com.standard.entity.CustomerEntity;
 import com.standard.enums.OrderStatusEnum;
-import com.standard.repository.*;
+import com.standard.repository.BrandRepository;
+import com.standard.repository.CategoryRepository;
+import com.standard.repository.CustomerRepository;
+import com.standard.repository.DomainRepository;
+import com.standard.repository.ItemsTypeMeasureRepository;
+import com.standard.repository.MeasureRepository;
+import com.standard.repository.OrderRepository;
+import com.standard.repository.PaymentMethodRepository;
+import com.standard.repository.PosRepository;
+import com.standard.repository.ProductHasItemsTypeMeasureRepository;
+import com.standard.repository.ProductRepository;
+import com.standard.repository.ProviderRepository;
+import com.standard.repository.SubcategoryRepository;
 import com.standard.service.brand.BrandService;
 import com.standard.service.brand.BrandServiceImpl;
 import com.standard.service.category.CategoryService;
@@ -24,12 +40,9 @@ import com.standard.service.provider.ProviderServiceImpl;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +93,7 @@ class OrderServiceImplTestIT extends BaseTest {
 		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 		ProviderService providerService = new ProviderServiceImpl(providerRepository);
 		DomainService domainService = new DomainServiceImpl(domainRepository);
-		MeasureService measureService = new MeasureServiceImpl(measureRepository, categoryRepository, subcategoryRepository, brandRepository);
+		MeasureService measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
 		ProductService productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository, providerRepository, categoryRepository,
 				subcategoryRepository, itemsTypeMeasureRepository);

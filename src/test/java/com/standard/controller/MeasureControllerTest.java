@@ -76,8 +76,6 @@ class MeasureControllerTest extends AbstractRestControllerTest {
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-                //.andExpect(jsonPath("$.name", equalTo(NOME)))
-                //.andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
     }
 
     @Test
@@ -88,8 +86,6 @@ class MeasureControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))
                 .andExpect(status().isCreated());
-//                .andExpect(jsonPath("$.name", equalTo(NAME)))
-//                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 
     @Test
@@ -108,7 +104,5 @@ class MeasureControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))
                 .andExpect(status().isOk());
-//                .andExpect(jsonPath("$.name", equalTo(NAME)))
-//                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
     }
 }
