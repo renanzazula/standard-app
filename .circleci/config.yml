@@ -21,6 +21,7 @@ jobs:
       - run: mvn clean install
       - run: mvn dependency:go-offline
       - run: mvn test
+      - run: chmod +x ./mvnw
       - run:
           name: SonarQube Analysis
           command: |
