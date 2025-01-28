@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim AS builder
+FROM openjdk:21-jdk-slim AS builder
 LABEL org.opencontainers.image.authors="Renan zazula"
 
 WORKDIR application
@@ -17,4 +17,4 @@ COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker","-Djava.security.egd=file:/dev/./urandom", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=mysql","-Djava.security.egd=file:/dev/./urandom", "org.springframework.boot.loader.JarLauncher"]
