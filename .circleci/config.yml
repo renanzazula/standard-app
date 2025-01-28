@@ -26,10 +26,10 @@ jobs:
           name: SonarQube Analysis
           command: |
             ./mvnw sonar:sonar \  
-              -Dsonar.projectKey=standard-app \  
-              -Dsonar.host.url=https://sonarcloud.io \  
-              -Dsonar.login=a230f39851c38e6eadf8f29a38bab0157f8ba843 \ 
-              -Dsonar.organization=standard-app
+              -Dsonar.projectKey=$SONAR_PROJECT_KEY \  
+              -Dsonar.host.url=$SONAR_HOST_URL \  
+              -Dsonar.token=$SONAR_TOKEN \ 
+              -Dsonar.organization=$SONAR_ORGANIZATION
       - save_cache:
           paths:
             - ~/.m2
