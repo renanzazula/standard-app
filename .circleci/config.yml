@@ -1,15 +1,16 @@
 version: 2.1
 executors:
-  maven-executor:
+  combined-executor:
     docker:
-      - image: cimg/openjdk:21.0  # Specify the desired JDK version here
+      - image: cimg/openjdk:21.0  # JDK 21 image for Maven/Java
+      - image: cimg/node:16.20  # Node.js 16 image for Yarn/Jest
     working_directory: ~/repo
     environment:
       MAVEN_OPTS: -Xmx3200m  # Customize the JVM maximum heap limit
 
 jobs:
   build:
-    executor: maven-executor
+    executor: combined-executor
     steps:
       - checkout
       - restore_cache:
@@ -33,19 +34,6 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-
-      - run:
-          name: Install Node.js using NVM
-          command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-            . ~/.nvm/nvm.sh
-            nvm install 16  # Install Node.js (adjust version as needed)
-            nvm use 16
-            nvm alias default 16
-
-      - run:
-          name: Install Yarn
-          command: npm install -g yarn
 
       - run:
           name: Install JUnit coverage reporter
