@@ -22,11 +22,9 @@ jobs:
       - run: mvn dependency:go-offline
       - run: mvn test
       - run: chmod +x ./mvnw
-      - run: mvn sonar:sonar \  
-              -Dsonar.projectKey=$SONAR_PROJECT_KEY \  
-              -Dsonar.host.url=$SONAR_HOST_URL \  
-              -Dsonar.token=$SONAR_TOKEN \ 
-              -Dsonar.organization=$SONAR_ORGANIZATION
+      - run:
+          name: SonarQube Analysis
+          command: ./mvnw sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN -Dsonar.organization=$SONAR_ORGANIZATION
       - save_cache:
           paths:
             - ~/.m2
