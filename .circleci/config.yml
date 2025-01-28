@@ -36,6 +36,16 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run:
+          name: Install Yarn
+          command: npm install -g yarn
+
+      - run:
+          name: Debug PATH and Yarn
+          command: |
+            echo $PATH
+            which yarn
+
+      - run:
           name: Install JUnit coverage reporter
           command: yarn add --dev jest-junit
 
