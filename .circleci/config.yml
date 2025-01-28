@@ -21,6 +21,13 @@ jobs:
       - run: mvn clean install
       - run: mvn dependency:go-offline
       - run: mvn test
+      - run:
+          name: SonarQube Analysis
+          command: |
+            ./mvnw sonar:sonar \  
+              -Dsonar.projectKey=$SONAR_PROJECT_KEY \  
+              -Dsonar.host.url=$SONAR_HOST_URL \  
+              -Dsonar.login=$SONAR_TOKEN
       - save_cache:
           paths:
             - ~/.m2
