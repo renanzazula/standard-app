@@ -67,17 +67,17 @@ public   class Product implements Serializable {
 	private List<Brand> brands;
 	private List<Measure> measures;
 	private List<ProductHasItemsTypeMeasure> productHasItemsTypeMeasure;
- 	private Integer totalStockQuantity;
+	private Integer totalStockQuantity;
 			
 	public Integer getTotalStockQuantity() {
-		int totalStockQuantity = 0;
+		int totalStockQuantityAux = 0;
 		if(this.productHasItemsTypeMeasure != null) {
 			for (ProductHasItemsTypeMeasure correnteProductHasItemsTypeMeasure : this.productHasItemsTypeMeasure) {
 				if(correnteProductHasItemsTypeMeasure.getQuantity() != null) {
-					totalStockQuantity = totalStockQuantity + correnteProductHasItemsTypeMeasure.getQuantity();
+					totalStockQuantityAux = totalStockQuantityAux + correnteProductHasItemsTypeMeasure.getQuantity();
 				}
 			}
 		}
-		return totalStockQuantity;
+		return totalStockQuantityAux;
 	}
 }

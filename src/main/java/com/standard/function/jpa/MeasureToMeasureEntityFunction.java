@@ -17,6 +17,7 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 			output.setNome(input.getName());
 			output.setDescription(input.getDescription());
 			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
+
 			Optional.ofNullable(input.getItemsTypeMeasure())
 					.ifPresent(itemsTypeMeasure -> output.setItemsTypeMeasure(
 							itemsTypeMeasure.stream()

@@ -95,11 +95,9 @@ class OrderServiceImplTestIT extends BaseTest {
 		DomainService domainService = new DomainServiceImpl(domainRepository);
 		MeasureService measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
-		ProductService productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository, providerRepository, categoryRepository,
-				subcategoryRepository, itemsTypeMeasureRepository);
+		ProductService productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository, providerRepository, categoryRepository, subcategoryRepository, itemsTypeMeasureRepository);
 
-        orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository,
-                customerRepository, productHasItemsTypeMeasureRepository, posService);
+        orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository, customerRepository, productHasItemsTypeMeasureRepository, posService);
 
         customerEntity = new CustomerEntity();
         customerRepository.save(customerEntity);

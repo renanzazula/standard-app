@@ -20,14 +20,13 @@ import java.util.List;
 @RequestMapping(DomainController.BASE_URL)
 public class ItemsTypeMeasureController {
 
-    public static final String BASE_URL = "/private/api/v1/itensMedida";
+    public static final String BASE_URL = "/private/api/v1/itemsMeasure";
 
     private final MeasureService measureService;
     private final ProductService productService;
 
-    // fixme: separar end point...
-    @RequestMapping(value = "/ajaxConsultarItensMedidaByCategoria")
-    public ResponseEntity<List<Measure>> ajaxConsultarItensMedidaByCategoria(@RequestBody Product product) {
+    @RequestMapping(value = "/ajaxSearchItemsMeasureByCategory")
+    public ResponseEntity<List<Measure>> findByCategorySubcategoryBrand(@RequestBody Product product) {
         return new ResponseEntity<>(measureService.findByCategorySubcategoryBrand(product), HttpStatus.OK);
     }
 

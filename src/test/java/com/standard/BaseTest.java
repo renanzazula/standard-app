@@ -158,7 +158,6 @@ public class BaseTest {
         product.setWeight(10d);
         product.setPercent(1);
         product.setDiscountPercent(1);
-        // fixme: medida.setfoto
     }
 
     protected void assertBrandSubCategoryCategoryAmount(Measure measure) {
@@ -300,4 +299,9 @@ public class BaseTest {
                 new SimpleGrantedAuthority("SUBCATEGORY_UPDATE"), new SimpleGrantedAuthority("SUBCATEGORY_DELETE"));
     }
 
+    protected Collection<GrantedAuthority> createJwtProductRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("PRODUCT_SEARCH"), new SimpleGrantedAuthority("PRODUCT_ADD"),
+                new SimpleGrantedAuthority("PRODUCT_UPDATE"), new SimpleGrantedAuthority("PRODUCT_DELETE"));
+    }
 }

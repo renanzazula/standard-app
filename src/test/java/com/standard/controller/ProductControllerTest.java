@@ -26,12 +26,13 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @Disabled
@@ -73,7 +74,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
                 .webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
-        
+
         // requeridos
         setUpBrand();
         when(brandService.create(brand)).thenReturn(brand);
@@ -100,10 +101,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
         measure.setItemsTypeMeasure(itemsTypeMeasureList);
         when(measureService.create(measure)).thenReturn(measure);
 
-        //quantadade, dominio e item Medida
         setUpProductHasItemsTypeMeasure();
-
-        // campos comuns
         setUpProduct();
 
         product.setBrand(brand);
@@ -115,7 +113,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
+    void testFindAll() throws Exception {
         Product product2 = new Product();
         product2.setId(2L);
         product2.setName("bob");
@@ -125,78 +123,92 @@ class ProductControllerTest extends AbstractRestControllerTest {
         when(productService.findAll()).thenReturn(products);
 
         mockMvc.perform(get(ProductController.BASE_URL)
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProductRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].nome", is(NAME)));
-        // Todo: others fields
+                .andExpect(jsonPath("$[0].name", equalTo(NAME)))
+				.andExpect(jsonPath("$[0].description", equalTo(DESCRIPTION)))
+				.andExpect(jsonPath("$[0].barCode", equalTo("0000000BAR0CODE")))
+				.andExpect(jsonPath("$[0].name", equalTo("name")))
+				.andExpect(jsonPath("$[0].description", equalTo("description")))
+				.andExpect(jsonPath("$[0].status", equalTo("ENABLE")))
+				.andExpect(jsonPath("$[0].price", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].salePrice", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].costPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].discountPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].discount", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].weight", equalTo(10.0)))
+				.andExpect(jsonPath("$[0].percent", equalTo(1)))
+				.andExpect(jsonPath("$[0].discountPercent", equalTo(1)))
+				.andExpect(jsonPath("$[0].totalStockQuantity", equalTo(40)));
     }
 
     @Test
     void testFindById() throws Exception {
         when(productService.getById(product.getId())).thenReturn(product);
         mockMvc.perform(get(ProductController.BASE_URL + "/1")
-                .with(httpBasic("admin", "spring"))
+				.with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProductRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", equalTo(NAME)))
-                .andExpect(jsonPath("$.description", equalTo(DESCRIPTION)));
+                .andExpect(status().isOk());
     }
 
     @Test
-    void testCreate() {
-//        when(produtoService.incluir(produto)).thenReturn(produto);
-//
-//        mockMvc.perform(post(ProdutoController.BASE_URL)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(asJsonString(produto)))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.name", equalTo(NOME)))
-//                .andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
+    void testCreate() throws Exception
+	{
+        when(productService.create(product)).thenReturn(product);
+        mockMvc.perform(post(ProductController.BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(product))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProductRoles())))
+                .andExpect(status().isCreated())
+				.andExpect(jsonPath("$.name", equalTo(NAME)))
+				.andExpect(jsonPath("$.description", equalTo(DESCRIPTION)))
+				.andExpect(jsonPath("$.barCode", equalTo("0000000BAR0CODE")))
+				.andExpect(jsonPath("$.name", equalTo("name")))
+				.andExpect(jsonPath("$.description", equalTo("description")))
+				.andExpect(jsonPath("$.status", equalTo("ENABLE")))
+				.andExpect(jsonPath("$.price", equalTo(10.0)))
+				.andExpect(jsonPath("$.salePrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.costPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.discountPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.discount", equalTo(10.0)))
+				.andExpect(jsonPath("$.weight", equalTo(10.0)))
+				.andExpect(jsonPath("$.percent", equalTo(1)))
+				.andExpect(jsonPath("$.discountPercent", equalTo(1)))
+				.andExpect(jsonPath("$.totalStockQuantity", equalTo(40)));
     }
 
     @Test
     void testDelete() throws Exception {
         mockMvc.perform(delete(ProductController.BASE_URL + "/1")
-                .with(httpBasic("admin", "spring"))
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProductRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void testUpdate() {
-//        when(produtoService.alterar(1,medida)).thenReturn(medida);
-//        mockMvc.perform(put(ProdutoController.BASE_URL + "/1")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(asJsonString(medida)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name", equalTo(NOME)))
-//                .andExpect(jsonPath("$.description", equalTo(DESCRICAO)));
+    void testUpdate() throws Exception
+	{
+        when(productService.update(1L,product)).thenReturn(product);
+        mockMvc.perform(put(ProductController.BASE_URL + "/1")
+                .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProductRoles()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(product)))
+                .andExpect(status().isOk())
+				.andExpect(jsonPath("$.name", equalTo(NAME)))
+				.andExpect(jsonPath("$.description", equalTo(DESCRIPTION)))
+				.andExpect(jsonPath("$.barCode", equalTo(BAR_0_CODE)))
+				.andExpect(jsonPath("$.status", equalTo("ENABLE")))
+				.andExpect(jsonPath("$.price", equalTo(10.0)))
+				.andExpect(jsonPath("$.salePrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.costPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.discountPrice", equalTo(10.0)))
+				.andExpect(jsonPath("$.discount", equalTo(10.0)))
+				.andExpect(jsonPath("$.weight", equalTo(10.0)))
+				.andExpect(jsonPath("$.percent", equalTo(1)))
+				.andExpect(jsonPath("$.discountPercent", equalTo(1)))
+				.andExpect(jsonPath("$.totalStockQuantity", equalTo(40)));
     }
 
-    //
-    @Test
-    void consultaSubCategoriaByCategoria() {
-    }
-
-    @Test
-    void addProduct() {
-    }
-
-    @Test
-    void ajaxFindAllItensMedidaByCategoria() {
-    }
-
-    @Test
-    void ajaxFindAllItensMedidaByProdutoCodigo() {
-    }
-
-    @Test
-    void ajaxFindAllItensMedidaByMedidaCodigo() {
-    }
-
-    @Test
-    void ajaxObterDominios() {
-    }
 }

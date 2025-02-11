@@ -2,8 +2,10 @@ package com.standard.service.product;
 
 import com.standard.BaseTest;
 import com.standard.domain.Brand;
+import com.standard.domain.Category;
 import com.standard.domain.Product;
 import com.standard.domain.Provider;
+import com.standard.domain.Subcategory;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.BrandRepository;
 import com.standard.repository.CategoryRepository;
@@ -70,15 +72,17 @@ class ProductServiceImplTestIT extends BaseTest {
     private BrandService brandService;
     private ProviderService providerService;
     private ProductService productService;
+	private CategoryService categoryService;
+    private SubcategoryService subcategoryService;
 
-	@BeforeEach
+    @BeforeEach
     void setUp() {
 
         brandService = new BrandServiceImpl(brandRepository);
         providerService = new ProviderServiceImpl(providerRepository);
+        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+		categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 
-        SubcategoryService subCategoryService = new SubcategoryServiceImpl(subcategoryRepository);
-		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 		DomainService domainService = new DomainServiceImpl(domainRepository);
         MeasureService measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
@@ -93,7 +97,7 @@ class ProductServiceImplTestIT extends BaseTest {
         provider = providerService.create(provider);
 
         setUpSubcategory();
-        subcategory = subCategoryService.create(subcategory);
+        subcategory = subcategoryService.create(subcategory);
 
         setUpCategory();
         category.setSubcategories(new ArrayList<>());
@@ -220,12 +224,45 @@ class ProductServiceImplTestIT extends BaseTest {
 
     @Test
      void updateProductCategory() {
-        // TODO:
+
+        Category categoryToUpdate = new Category();
+        categoryToUpdate.setName(NAME + "_update");
+        categoryToUpdate.setDescription(DESCRIPTION + "_update");
+        categoryToUpdate = categoryService.create(categoryToUpdate);
+
+        product = productService.create(product);
+
+        Product found = productService.getById(product.getId());
+        found.setCategory(categoryToUpdate);
+
+        Product updated = productService.update(product.getId(), found);
+
+        assertCategory(updated.getCategory(), categoryToUpdate);
+
+        assertNotEquals(updated.getCategory().getId(), category.getId());
+        assertNotEquals(updated.getCategory().getName(), category.getName());
+        assertNotEquals(updated.getCategory().getDescription(), category.getDescription());
     }
 
     @Test
      void updateProductSubCategory() {
-        // TODO:
+        Subcategory subCategoryToUpdate = new Subcategory();
+        subCategoryToUpdate.setName(NAME + "_update");
+        subCategoryToUpdate.setDescription(DESCRIPTION + "_update");
+        subCategoryToUpdate = subcategoryService.create(subCategoryToUpdate);
+
+        product = productService.create(product);
+
+        Product found = productService.getById(product.getId());
+        found.setSubcategory(subCategoryToUpdate);
+
+        Product updated = productService.update(product.getId(), found);
+
+        assertSubcategory(updated.getSubcategory(), subCategoryToUpdate);
+
+        assertNotEquals(updated.getSubcategory().getId(), subcategory.getId());
+        assertNotEquals(updated.getSubcategory().getName(), subcategory.getName());
+        assertNotEquals(updated.getSubcategory().getDescription(), subcategory.getDescription());
     }
 
     @Test

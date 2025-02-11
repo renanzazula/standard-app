@@ -4,6 +4,7 @@ import com.standard.BaseTest;
 import com.standard.domain.Brand;
 import com.standard.domain.Category;
 import com.standard.domain.Measure;
+import com.standard.domain.Product;
 import com.standard.domain.Subcategory;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.BrandRepository;
@@ -52,8 +53,7 @@ class MeasureServiceImplTestIT extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository,
-                subcategoryRepository);
+        measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
         brandService = new BrandServiceImpl(brandRepository);
         subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
@@ -91,8 +91,18 @@ class MeasureServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    void alterar() {
-        // todo:
+    void update() {
+        measure.setSubcategory(subcategory);
+        measure.setCategory(category);
+        measure.setBrand(brand);
+        measure.setItemsTypeMeasure(itemsTypeMeasureList);
+        measure = measureService.create(measure);
+
+        Measure toUpdate = measureService.findById(measure.getId());
+        toUpdate.setDescription(measure.getDescription() + "_updated");
+
+        Measure updated = measureService.update(measure.getId(), toUpdate);
+        assertEquals(updated.getDescription(), toUpdate.getDescription());
     }
 
     @Test
@@ -207,6 +217,16 @@ class MeasureServiceImplTestIT extends BaseTest {
 
     @Test
     void findByCategorySubcategoryAndBrand() {
-        // TODO
+        measure = measureService.create(measure);
+
+        product = new Product();
+        product.setBrand(brand);
+        product.setCategory(category);
+        product.setSubcategory(subcategory);
+        product.setMeasure(measure);
+
+        List<Measure> listOfMeasures = measureService.findByCategorySubcategoryBrand(product);
+        assertNotNull(listOfMeasures);
+
     }
 }

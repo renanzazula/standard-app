@@ -46,7 +46,7 @@ public class MeasureServiceImpl implements MeasureService {
 		measureDB.setName(measure.getNome());
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
-			itemsTypeMeasureBuild(measure, itensSet);
+			itemsTypeMeasureBuildCreate(measure, itensSet);
 			measureDB.setItemsTypeMeasure(itensSet);
 		}
 		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.saveAndFlush(measureDB));
@@ -61,19 +61,32 @@ public class MeasureServiceImpl implements MeasureService {
 		measureDB.getItemsTypeMeasure().clear();
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
-			itemsTypeMeasureBuild(measure, itensSet);
+			itemsTypeMeasureBuildUpdate(measure, itensSet);
 			measureDB.getItemsTypeMeasure().addAll(itensSet);
 		}
 		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.saveAndFlush(measureDB));
 	}
 
-	private void itemsTypeMeasureBuild(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
+	private void itemsTypeMeasureBuildCreate(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
 		measure.getItemsTypeMeasure().forEach(itemsTypeMeasure -> {
 			ItemsTypeMeasureEntity itemsTypeMeasureEntity = new ItemsTypeMeasureEntity();
 			itemsTypeMeasureEntity.setCategory(categoryRepository.findById(measure.getCategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND)));
 			itemsTypeMeasureEntity.setSubcategory(subcategoryRepository.findById(measure.getSubcategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.MEASURE_NOT_FOUND)));
 			if (measure.getBrand() != null) {
 				itemsTypeMeasureEntity.setBrand(brandRepository.findById(measure.getBrand().getId()).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND)));
+			}
+			itemsTypeMeasureEntity.setAmount(itemsTypeMeasure.getAmount());
+			itensSet.add(itemsTypeMeasureEntity);
+		});
+	}
+
+	private void itemsTypeMeasureBuildUpdate(Measure measure, Set<ItemsTypeMeasureEntity> itensSet) {
+		measure.getItemsTypeMeasure().forEach(itemsTypeMeasure -> {
+			ItemsTypeMeasureEntity itemsTypeMeasureEntity = new ItemsTypeMeasureEntity();
+			itemsTypeMeasureEntity.setCategory(categoryRepository.findById(itemsTypeMeasure.getCategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND)));
+			itemsTypeMeasureEntity.setSubcategory(subcategoryRepository.findById(itemsTypeMeasure.getSubcategory().getId()).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.MEASURE_NOT_FOUND)));
+			if (itemsTypeMeasure.getBrand() != null) {
+				itemsTypeMeasureEntity.setBrand(brandRepository.findById(itemsTypeMeasure.getBrand().getId()).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND)));
 			}
 			itemsTypeMeasureEntity.setAmount(itemsTypeMeasure.getAmount());
 			itensSet.add(itemsTypeMeasureEntity);
