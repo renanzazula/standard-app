@@ -16,7 +16,6 @@ import com.standard.repository.PosRepository;
 import com.standard.repository.ProductHasItemsTypeMeasureRepository;
 import com.standard.security.exceptions.CustomerNotFoundException;
 import com.standard.security.exceptions.OrderNotFoundException;
-import com.standard.security.exceptions.PayBackNotFoundException;
 import com.standard.security.exceptions.PaymentMethodNotFoundException;
 import com.standard.security.exceptions.PosNotFoundException;
 import com.standard.security.exceptions.ProductHasItemsTypeMeasureNotFoundException;

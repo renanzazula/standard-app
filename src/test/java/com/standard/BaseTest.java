@@ -25,41 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BaseTest {
 
-
-    private final String BRAND_SEARCH = "BRAND_SEARCH";
-    private final String BRAND_ADD = "BRAND_ADD";
-    private final String BRAND_UPDATE = "BRAND_UPDATE";
-    private final String BRAND_DELETE = "BRAND_DELETE";
-    private final String CATEGORY_SEARCH = "CATEGORY_SEARCH";
-    private final String CATEGORY_ADD = "CATEGORY_ADD";
-    private final String CATEGORY_UPDATE = "CATEGORY_UPDATE";
-    private final String CATEGORY_DELETE = "CATEGORY_DELETE";
-    private final String DOMAIN_SEARCH = "DOMAIN_SEARCH";
-    private final String DOMAIN_ADD = "DOMAIN_ADD";
-    private final String DOMAIN_UPDATE = "DOMAIN_UPDATE";
-    private final String DOMAIN_DELETE = "DOMAIN_DELETE";
-    private final String MEASURE_SEARCH = "MEASURE_SEARCH";
-    private final String MEASURE_ADD = "MEASURE_ADD";
-    private final String MEASURE_UPDATE = "MEASURE_UPDATE";
-    private final String MEASURE_DELETE = "MEASURE_DELETE";
-    private final String PAYMENT_METHOD_SEARCH = "PAYMENT_METHOD_SEARCH";
-    private final String PAYMENT_METHOD_ADD = "PAYMENT_METHOD_ADD";
-    private final String PAYMENT_METHOD_UPDATE = "PAYMENT_METHOD_UPDATE";
-    private final String PAYMENT_METHOD_DELETE = "PAYMENT_METHOD_DELETE";
-    private final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
-    private final String PRODUCT_ADD = "PRODUCT_ADD";
-    private final String PRODUCT_UPDATE = "PRODUCT_UPDATE";
-    private final String PRODUCT_DELETE = "PRODUCT_DELETE";
-    private final String PROVIDER_SEARCH = "PROVIDER_SEARCH";
-    private final String PROVIDER_ADD = "PROVIDER_ADD";
-    private final String PROVIDER_UPDATE = "PROVIDER_UPDATE";
-    private final String PROVIDER_DELETE = "PROVIDER_DELETE";
-    private final String SUBCATEGORY_SEARCH = "SUBCATEGORY_SEARCH";
-    private final String SUBCATEGORY_ADD = "SUBCATEGORY_ADD";
-    private final String SUBCATEGORY_UPDATE = "SUBCATEGORY_UPDATE";
-    private final String SUBCATEGORY_DELETE = "SUBCATEGORY_DELETE";
-
-
     protected static final long ID = 1L;
     protected static final String NAME = "name";
     protected static final String DESCRIPTION = "description";
@@ -86,11 +51,11 @@ public class BaseTest {
     protected Category category = null;
     protected Provider provider = null;
     protected Measure measure = null;
-    protected List<ItemsTypeMeasure> itemsTypeMeasure = null;
+    protected List<ItemsTypeMeasure> itemsTypeMeasureList = null;
     protected Domain domain = null;
     protected Product product = null;
     protected List<ProductHasItemsTypeMeasure> productHasItemsTypeMeasure = null;
-    protected ItemsTypeMeasure ItemsTypeMeasure = null;
+    protected ItemsTypeMeasure itemsTypeMeasure = null;
     protected ProductHasItemsTypeMeasure productHasItemTypeMeasure = null;
 
     protected void setUpBrand() {
@@ -133,24 +98,26 @@ public class BaseTest {
     }
 
     protected void setUpItemsTypeMeasure() {
-        itemsTypeMeasure = new ArrayList<>();
+        itemsTypeMeasureList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            ItemsTypeMeasure = new ItemsTypeMeasure();
+            itemsTypeMeasure = new ItemsTypeMeasure();
             switch (i) {
                 case 1:
-                    ItemsTypeMeasure.setAmount(AMOUNT_P);
+                    itemsTypeMeasure.setAmount(AMOUNT_P);
                     break;
                 case 2:
-                    ItemsTypeMeasure.setAmount(AMOUNT_L);
+                    itemsTypeMeasure.setAmount(AMOUNT_L);
                     break;
                 case 3:
-                    ItemsTypeMeasure.setAmount(AMOUNT_X);
+                    itemsTypeMeasure.setAmount(AMOUNT_X);
                     break;
                 case 4:
-                    ItemsTypeMeasure.setAmount(AMOUNT_XL);
+                    itemsTypeMeasure.setAmount(AMOUNT_XL);
+                    break;
+                default:
                     break;
             }
-            itemsTypeMeasure.add(ItemsTypeMeasure);
+            itemsTypeMeasureList.add(itemsTypeMeasure);
         }
     }
 
@@ -293,45 +260,44 @@ public class BaseTest {
 
     protected Collection<GrantedAuthority> createJwtBrandRoles()
     {
-        return List.of(new SimpleGrantedAuthority(BRAND_SEARCH), new SimpleGrantedAuthority(BRAND_ADD),
-                new SimpleGrantedAuthority(BRAND_UPDATE),new SimpleGrantedAuthority(BRAND_DELETE));
+        return List.of(new SimpleGrantedAuthority("BRAND_SEARCH"), new SimpleGrantedAuthority("BRAND_ADD"),
+                new SimpleGrantedAuthority("BRAND_UPDATE"),new SimpleGrantedAuthority("BRAND_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtCategoryRoles()
     {
-        return List.of(new SimpleGrantedAuthority(CATEGORY_SEARCH), new SimpleGrantedAuthority(CATEGORY_ADD),
-                new SimpleGrantedAuthority(CATEGORY_UPDATE), new SimpleGrantedAuthority(CATEGORY_DELETE));
+        return List.of(new SimpleGrantedAuthority("CATEGORY_SEARCH"), new SimpleGrantedAuthority("CATEGORY_ADD"),
+                new SimpleGrantedAuthority("CATEGORY_UPDATE"), new SimpleGrantedAuthority("CATEGORY_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtDomainRoles()
     {
-        return List.of(new SimpleGrantedAuthority(DOMAIN_SEARCH), new SimpleGrantedAuthority(DOMAIN_ADD),
-                new SimpleGrantedAuthority(DOMAIN_UPDATE), new SimpleGrantedAuthority(DOMAIN_DELETE));
+        return List.of(new SimpleGrantedAuthority("DOMAIN_SEARCH"), new SimpleGrantedAuthority("DOMAIN_ADD"),
+                new SimpleGrantedAuthority("DOMAIN_UPDATE"), new SimpleGrantedAuthority("DOMAIN_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtMeasureRoles()
     {
-        return List.of(new SimpleGrantedAuthority(MEASURE_SEARCH), new SimpleGrantedAuthority(MEASURE_ADD),
-                new SimpleGrantedAuthority(MEASURE_UPDATE), new SimpleGrantedAuthority(MEASURE_DELETE));
+        return List.of(new SimpleGrantedAuthority("MEASURE_SEARCH"), new SimpleGrantedAuthority("MEASURE_ADD"),
+                new SimpleGrantedAuthority("MEASURE_UPDATE"), new SimpleGrantedAuthority("MEASURE_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtPaymentMethodRoles()
     {
-        return List.of(new SimpleGrantedAuthority(PAYMENT_METHOD_SEARCH), new SimpleGrantedAuthority(PAYMENT_METHOD_ADD),
-                new SimpleGrantedAuthority(PAYMENT_METHOD_UPDATE), new SimpleGrantedAuthority(PAYMENT_METHOD_DELETE));
+        return List.of(new SimpleGrantedAuthority("PAYMENT_METHOD_SEARCH"), new SimpleGrantedAuthority("PAYMENT_METHOD_ADD"),
+                new SimpleGrantedAuthority("PAYMENT_METHOD_UPDATE"), new SimpleGrantedAuthority("PAYMENT_METHOD_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtProviderRoles()
     {
-        return List.of(new SimpleGrantedAuthority(PROVIDER_SEARCH), new SimpleGrantedAuthority(PROVIDER_ADD),
-                new SimpleGrantedAuthority(PROVIDER_UPDATE), new SimpleGrantedAuthority(PROVIDER_DELETE));
+        return List.of(new SimpleGrantedAuthority("PROVIDER_SEARCH"), new SimpleGrantedAuthority("PROVIDER_ADD"),
+                new SimpleGrantedAuthority("PROVIDER_UPDATE"), new SimpleGrantedAuthority("PROVIDER_DELETE"));
     }
 
     protected Collection<GrantedAuthority> createJwtSubcategoryRoles()
     {
-        return List.of(new SimpleGrantedAuthority(SUBCATEGORY_SEARCH), new SimpleGrantedAuthority(SUBCATEGORY_ADD),
-                new SimpleGrantedAuthority(SUBCATEGORY_UPDATE), new SimpleGrantedAuthority(SUBCATEGORY_DELETE));
+        return List.of(new SimpleGrantedAuthority("SUBCATEGORY_SEARCH"), new SimpleGrantedAuthority("SUBCATEGORY_ADD"),
+                new SimpleGrantedAuthority("SUBCATEGORY_UPDATE"), new SimpleGrantedAuthority("SUBCATEGORY_DELETE"));
     }
-    
 
 }

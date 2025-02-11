@@ -7,7 +7,6 @@ import com.standard.repository.PosRepository;
 import com.standard.repository.WithdrawalRepository;
 import com.standard.security.exceptions.WithdrawalNotFoundException;
 import com.standard.service.pos.PosServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

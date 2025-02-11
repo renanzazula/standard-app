@@ -97,7 +97,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
-        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        measure.setItemsTypeMeasure(itemsTypeMeasureList);
         when(measureService.create(measure)).thenReturn(measure);
 
         //quantadade, dominio e item Medida

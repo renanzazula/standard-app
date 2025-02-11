@@ -16,7 +16,6 @@ import com.standard.function.jpa.ProductToProdctEntityFunction;
 import com.standard.function.jpa.ProviderToProviderEntityFunction;
 import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
 import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

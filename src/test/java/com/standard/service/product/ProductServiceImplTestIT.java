@@ -108,7 +108,7 @@ class ProductServiceImplTestIT extends BaseTest {
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
-        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        measure.setItemsTypeMeasure(itemsTypeMeasureList);
         measure = measureService.create(measure);
 
         setUpProductHasItemsTypeMeasure();

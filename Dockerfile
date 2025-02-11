@@ -1,5 +1,5 @@
 FROM openjdk:17
-MAINTAINER Renan Zazula
+LABEL Renan Zazula
 
 RUN mkdir -p /standard-app/
 RUN mkdir -p /var/www/app

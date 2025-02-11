@@ -17,59 +17,55 @@ import java.util.stream.Stream;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-public abstract class BaseIT {
+public abstract class BaseIT
+{
+	protected MockMvc mockMvc;
 
-    protected MockMvc mockMvc;
+	@Autowired
+	WebApplicationContext wac;
 
-    @Autowired
-    WebApplicationContext wac;
+	@MockitoBean
+	private JwtDecoder jwtDecoder;
 
-    @MockitoBean
-    private JwtDecoder jwtDecoder;
+	public static Stream<Arguments> getStreamAllUsers()
+	{
+		return Stream.of(Arguments.of("admin", "spring"), Arguments.of("user", "spring"), Arguments.of("customer", "spring"));
+	}
 
-    private final String ROLE_ADMIN = "ROLE_ADMIN";
-    private final String ROLE_USER = "ROLE_USER";
+	public static Stream<Arguments> getStreamUser()
+	{
+		return Stream.of(Arguments.of("user", "spring"));
+	}
 
+	public static Stream<Arguments> getStreamCustomer()
+	{
+		return Stream.of(Arguments.of("customer", "spring"));
+	}
 
-    @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(wac)
-                .apply(springSecurity())
-                .build();
-    }
+	public static Stream<Arguments> getStreamAdmin()
+	{
+		return Stream.of(Arguments.of("admin", "spring"));
+	}
 
-    public static Stream<Arguments> getStreamAllUsers() {
-        return Stream.of(
-                Arguments.of("admin", "spring"),
-                Arguments.of("user", "spring"),
-                Arguments.of("customer", "spring")
-        );
-    }
+	@BeforeEach
+	public void setup()
+	{
+		mockMvc = MockMvcBuilders.webAppContextSetup(wac).apply(springSecurity()).build();
+	}
 
-    public static Stream<Arguments> getStreamUser() {
-        return Stream.of(Arguments.of("user", "spring"));
-    }
+	protected Collection<GrantedAuthority> createJwtAdminRoles()
+	{
+		return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	}
 
-    public static Stream<Arguments> getStreamCustomer() {
-        return Stream.of(Arguments.of("customer", "spring"));
-    }
+	protected Collection<GrantedAuthority> createJwtUserRoles()
+	{
+		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
 
-    public static Stream<Arguments> getStreamAdmin() {return Stream.of(Arguments.of("admin", "spring"));}
-
-    protected Collection<GrantedAuthority> createJwtAdminRoles(){
-        return List.of(new SimpleGrantedAuthority(ROLE_ADMIN));
-    }
-
-    protected Collection<GrantedAuthority> createJwtUserRoles(){
-        return List.of(new SimpleGrantedAuthority(ROLE_USER));
-    }
-
-    protected Collection<GrantedAuthority> createJwtCustomerRoles()
-    {
-        return List.of(new SimpleGrantedAuthority(ROLE_ADMIN));
-    }
-
-
+	protected Collection<GrantedAuthority> createJwtCustomerRoles()
+	{
+		return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+	}
 
 }

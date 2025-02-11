@@ -4,7 +4,6 @@ import com.standard.domain.Subcategory;
 import com.standard.service.category.CategoryService;
 import com.standard.service.subcategory.SubcategoryService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -76,7 +76,7 @@ class MeasureServiceImplTestIT extends BaseTest {
         measure.setSubcategory(subcategory);
         measure.setCategory(category);
         measure.setBrand(brand);
-        measure.setItemsTypeMeasure(itemsTypeMeasure);
+        measure.setItemsTypeMeasure(itemsTypeMeasureList);
 
     }
 
