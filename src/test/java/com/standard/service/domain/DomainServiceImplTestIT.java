@@ -11,8 +11,8 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -71,6 +71,6 @@ class DomainServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         Domain found = service.findById(domain.getId());
-        assertNull(found);
+        assertEquals("DISABLE", found.getStatus());
     }
 }

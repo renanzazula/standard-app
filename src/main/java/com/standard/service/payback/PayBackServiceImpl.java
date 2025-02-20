@@ -66,7 +66,7 @@ public class PayBackServiceImpl implements PayBackService {
     }
 
     @Override
-    public PayBack getById(Long id) {
+    public PayBack findById(Long id) {
         return JpaFunctions.payBackEntityToPayBack.apply(payBackRepository.findById(id).orElseThrow(() -> new PayBackNotFoundException(ConstantMessage.PAY_BACK_NOT_FOUND)));
     }
 }

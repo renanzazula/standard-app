@@ -14,5 +14,5 @@ public interface PayBackService {
 
     List<PayBack> findAll();
 
-    PayBack getById(Long id);
+    PayBack findById(Long id);
 }

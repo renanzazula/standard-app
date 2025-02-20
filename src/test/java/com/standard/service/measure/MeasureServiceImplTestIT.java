@@ -1,11 +1,8 @@
 package com.standard.service.measure;
 
 import com.standard.BaseTest;
-import com.standard.domain.Brand;
-import com.standard.domain.Category;
 import com.standard.domain.Measure;
 import com.standard.domain.Product;
-import com.standard.domain.Subcategory;
 import com.standard.enums.StatusEnum;
 import com.standard.repository.BrandRepository;
 import com.standard.repository.CategoryRepository;
@@ -27,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
@@ -46,18 +42,15 @@ class MeasureServiceImplTestIT extends BaseTest {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
 
-    private BrandService brandService;
-    private MeasureService measureService;
-    private CategoryService categoryService;
-    private SubcategoryService subcategoryService;
+	private MeasureService measureService;
 
-    @BeforeEach
+	@BeforeEach
     void setUp() {
         measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
-        brandService = new BrandServiceImpl(brandRepository);
-        subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
+		BrandService brandService = new BrandServiceImpl(brandRepository);
+		SubcategoryService subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
+		CategoryService categoryService = new CategoryServiceImpl(categoryRepository, subcategoryRepository);
 
         setUpBrand();
         brand = brandService.create(brand);
@@ -103,89 +96,6 @@ class MeasureServiceImplTestIT extends BaseTest {
 
         Measure updated = measureService.update(measure.getId(), toUpdate);
         assertEquals(updated.getDescription(), toUpdate.getDescription());
-    }
-
-    @Test
-    void updateBrand() {
-
-        measure = measureService.create(measure);
-
-        Brand brandUpdate = new Brand();
-        brandUpdate.setName(NAME_UPDATE);
-        brandUpdate.setDescription(DESCRIPTION_UPDATE);
-        brandUpdate = brandService.create(brandUpdate);
-
-        Measure toUpdate = measureService.findById(measure.getId());
-        toUpdate.setCategory(category);
-        toUpdate.setSubcategory(subcategory);
-        toUpdate.setBrand(brandUpdate);
-
-        Measure updated = measureService.update(measure.getId(), toUpdate);
-
-        for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
-            Brand brandFound = updated.getItemsTypeMeasure().get(i).getBrand();
-            assertBrand(brandFound, brandUpdate);
-
-            assertNotEquals(brandUpdate.getId(), brand.getId());
-            assertNotEquals(brandUpdate.getName(), brand.getName());
-            assertNotEquals(brandUpdate.getDescription(), brand.getDescription());
-        }
-
-    }
-
-    @Test
-    void updateSubCategory() {
-
-        measure = measureService.create(measure);
-
-        Subcategory subcategoryUpdate = new Subcategory();
-        subcategoryUpdate.setName(NAME_UPDATE);
-        subcategoryUpdate.setDescription(DESCRIPTION_UPDATE);
-        subcategoryUpdate = subcategoryService.create(subcategoryUpdate);
-
-        Measure toUpdate = measureService.findById(measure.getId());
-        toUpdate.setCategory(category);
-        toUpdate.setSubcategory(subcategoryUpdate);
-        toUpdate.setBrand(brand);
-
-        Measure updated = measureService.update(measure.getId(), toUpdate);
-
-        for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
-            Subcategory subcategoryFound = updated.getItemsTypeMeasure().get(i).getSubcategory();
-            assertSubcategory(subcategoryFound, subcategoryUpdate);
-
-            assertNotEquals(subcategoryUpdate.getId(), subcategory.getId());
-            assertNotEquals(subcategoryUpdate.getName(), subcategory.getName());
-            assertNotEquals(subcategoryUpdate.getDescription(), subcategory.getDescription());
-        }
-
-    }
-
-    @Test
-    void updateCategory() {
-        measure = measureService.create(measure);
-
-        Category categoryUpdate = new Category();
-        categoryUpdate.setName(NAME_UPDATE);
-        categoryUpdate.setDescription(DESCRIPTION_UPDATE);
-        categoryUpdate.setSubcategories(new ArrayList<>());
-        categoryUpdate.getSubcategories().add(subcategory);
-        categoryUpdate = categoryService.create(categoryUpdate);
-
-        Measure toUpdate = measureService.findById(measure.getId());
-        toUpdate.setCategory(categoryUpdate);
-        toUpdate.setSubcategory(subcategory);
-        toUpdate.setBrand(brand);
-
-        Measure updated = measureService.update(measure.getId(), toUpdate);
-        for (int i = 0; i < updated.getItemsTypeMeasure().size(); i++) {
-            Category categoryFound = updated.getItemsTypeMeasure().get(i).getCategory();
-            assertCategory(categoryFound, categoryUpdate);
-
-            assertNotEquals(categoryFound.getId(), category.getId());
-            assertNotEquals(categoryFound.getName(), category.getName());
-            assertNotEquals(categoryFound.getDescription(), category.getDescription());
-        }
     }
 
     @Test

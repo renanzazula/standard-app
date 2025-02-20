@@ -8,8 +8,10 @@ import com.standard.entity.CustomerEntity;
 import com.standard.repository.CustomerRepository;
 import com.standard.repository.PayBackRepository;
 import com.standard.repository.PosRepository;
+import com.standard.security.exceptions.PayBackNotFoundException;
 import com.standard.service.pos.PosService;
 import com.standard.service.pos.PosServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -82,7 +83,7 @@ class PayBackServiceImplTestIT extends BaseTest {
     @Test
     void update() {
         payBack = payBackService.create(payBack);
-        PayBack toUpdate = payBackService.getById(payBack.getId());
+        PayBack toUpdate = payBackService.findById(payBack.getId());
         toUpdate.setName(NAME_UPDATE);
         toUpdate.setDescription(DESCRIPTION_UPDATE);
         toUpdate.setValor(15.0);
@@ -96,8 +97,10 @@ class PayBackServiceImplTestIT extends BaseTest {
     @Test
     void delete() {
         payBack = payBackService.create(payBack);
-        payBackService.delete(payBack.getId());
-        assertNull(payBackService.getById(payBack.getId()));
+        Long payBackId = payBack.getId();
+
+        payBackService.delete(payBackId);
+        Assertions.assertThrows(PayBackNotFoundException.class, () -> payBackService.findById(payBackId),"PayBack not found!!");
     }
 
     @Test
@@ -107,9 +110,9 @@ class PayBackServiceImplTestIT extends BaseTest {
     }
 
     @Test
-    void getById() {
+    void findById() {
         payBack = payBackService.create(payBack);
-        PayBack found = payBackService.getById(payBack.getId());
+        PayBack found = payBackService.findById(payBack.getId());
         assertEquals(found.getName(), payBack.getName());
         assertEquals(found.getDescription(), payBack.getDescription());
         assertEquals(found.getValor(), payBack.getValor());

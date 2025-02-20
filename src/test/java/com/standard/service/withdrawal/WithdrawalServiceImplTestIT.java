@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
@@ -95,8 +94,6 @@ class WithdrawalServiceImplTestIT extends BaseTest {
         assertNotNull(delete);
 
         withdrawalService.delete(delete.getId());
-
-        assertNull(withdrawalId);
         Assertions.assertThrows(WithdrawalNotFoundException.class, () -> withdrawalService.findById(withdrawalId),"Withdrawal not found!!");
     }
 }
