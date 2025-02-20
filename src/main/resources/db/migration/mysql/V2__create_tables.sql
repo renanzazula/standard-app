@@ -68,13 +68,6 @@ CREATE TABLE category_has_subcategory
     FOREIGN KEY (subcategory_id) REFERENCES subcategory (id)
 );
 
-CREATE TABLE config_param
-(
-    id    VARCHAR(45)  NOT NULL,
-    value VARCHAR(150) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE customer
 (
     id                 BIGINT AUTO_INCREMENT,
