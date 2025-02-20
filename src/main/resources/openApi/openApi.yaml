@@ -22,7 +22,180 @@ tags:
   - name: ItemsTypeMeasure
   - name: Error
   - name: ErrorDetails
-paths: {}
+paths:
+  /private/api/v1/brand:
+    post:
+      summary: Save a new brand
+      description: save and returns a new brand if successful.
+      tags:
+        - BrandController
+      operationId: save
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Brand'
+      responses:
+        '200':
+          description: Successful save a new brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all brands
+      description: return all the brands
+      operationId: findAll
+      tags:
+        - BrandController
+      responses:
+        '200':
+          description: Successful save a new brand
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/brand/{id}:
+    get:
+      summary: find by id
+      description: return brand if is exist
+      operationId: findById
+      tags:
+        - BrandController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Brand
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete brand by id
+      description: return status 200
+      operationId: delete
+      tags:
+        - BrandController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Brand
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return brand updated brand
+      description: return brand updated brand
+      operationId: update
+      tags:
+        - BrandController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Brand
+      requestBody:
+        description: Brand to be update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Brand'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Domain:
