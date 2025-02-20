@@ -2,6 +2,7 @@ package com.standard.service.domain;
 
 import com.standard.BaseTest;
 import com.standard.domain.Domain;
+import com.standard.enums.StatusEnum;
 import com.standard.repository.DomainRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,6 @@ class DomainServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         Domain found = service.findById(domain.getId());
-        assertEquals("DISABLE", found.getStatus());
+        assertEquals(StatusEnum.DISABLE.name(), found.getStatus());
     }
 }

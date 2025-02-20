@@ -1,4 +1,4 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;

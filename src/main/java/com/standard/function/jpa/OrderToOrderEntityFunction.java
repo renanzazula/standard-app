@@ -16,7 +16,7 @@ public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> 
             output.setCreationDate(input.getCreationDate());
             output.setCreationTime(input.getCreationTime());
             output.setTotalAmount(input.getTotalAmount());
-            output.setStatus(input.getStatus());
+            output.setStatus(input.getStatus().name());
             output.setQuantity(input.getQuantity());
             output.setSubTotal(input.getSubTotal());
             output.setPendingAmount(input.getPendingAmount());

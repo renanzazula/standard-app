@@ -1,4 +1,4 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.util.Constants;
@@ -8,25 +8,25 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.time.OffsetDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category implements Serializable {
+public class Withdrawal implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;
-	private String name;
 	private String description;
-	private String status;
-	private List<Subcategory> subcategories;
 
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
-	private Date date;
+	private OffsetDateTime creationDate;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date time;
+	private OffsetDateTime creationTime;
+
+	private Double amount;
+	private Pos pos;
+ 
 }

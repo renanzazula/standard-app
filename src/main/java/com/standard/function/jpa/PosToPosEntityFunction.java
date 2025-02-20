@@ -11,10 +11,10 @@ public class PosToPosEntityFunction implements Function<PosEntity, Pos> {
 	public Pos apply(PosEntity input) {
 		Pos output = new Pos();
 		output.setId(input.getId());
-		output.setOpenDate(input.getOpenDate());
-		output.setOpenTime(input.getOpenTime());
-		output.setCloseDate(input.getCloseDate());
-		output.setCloseTime(input.getCloseTime());
+//		output.setOpenDate(input.getOpenDate());
+//		output.setOpenTime(input.getOpenTime());
+//		output.setCloseDate(input.getCloseDate());
+//		output.setCloseTime(input.getCloseTime());
 		output.setOpenAmount(input.getOpenAmount());
 		output.setCloseAmount(input.getCloseAmount());
 		output.setTotal(input.getTotal());

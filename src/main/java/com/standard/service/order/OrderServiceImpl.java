@@ -150,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (order.getStatus() != null) {
-            orderEntity.setStatus(order.getStatus());
+            orderEntity.setStatus(OrderStatusEnum.valueOf(order.getStatus()));
         }
 
         order.setCustomer(order.getCustomer());

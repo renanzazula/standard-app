@@ -43,7 +43,7 @@ public class MeasureServiceImpl implements MeasureService {
 	public Measure create(Measure measure) {
 		MeasureEntity measureDB = new MeasureEntity();
 		measureDB.setDescription(measure.getDescription());
-		measureDB.setName(measure.getNome());
+		measureDB.setName(measure.getName());
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();
 			itemsTypeMeasureBuildCreate(measure, itensSet);
@@ -57,7 +57,7 @@ public class MeasureServiceImpl implements MeasureService {
 	public Measure update(Long id, Measure measure) {
 		MeasureEntity measureDB = measureRepository.findById(id).orElseThrow(() -> new MeasureNotFoundException(ConstantMessage.MEASURE_NOT_FOUND));
 		measureDB.setDescription(measure.getDescription());
-		measureDB.setName(measure.getNome());
+		measureDB.setName(measure.getName());
 		measureDB.getItemsTypeMeasure().clear();
 		if (measure.getItemsTypeMeasure() != null) {
 			Set<ItemsTypeMeasureEntity> itensSet = new HashSet<>();

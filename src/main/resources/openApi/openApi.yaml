@@ -1,0 +1,469 @@
+openapi: 3.0.3
+info:
+  title: Standard API
+  version: 1.0.0
+tags:
+  - name: Domain
+  - name: Pos
+  - name: PayBack
+  - name: Withdrawal
+  - name: Customer
+  - name: OrderHasProduct
+  - name: Product
+  - name: Provider
+  - name: Order
+  - name: Measure
+  - name: Category
+  - name: Subcategory
+  - name: Brand
+  - name: PaymentMethod
+  - name: OrderHasItemProduct
+  - name: ProductHasItemsTypeMeasure
+  - name: ItemsTypeMeasure
+  - name: Error
+  - name: ErrorDetails
+paths: {}
+components:
+  schemas:
+    Domain:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        checked:
+          type: boolean
+        data:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: date-time
+        status:
+          type: string
+    Pos:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        openDate:
+          type: string
+          format: date
+        openTime:
+          type: string
+          format: date-time
+        closeDate:
+          type: string
+          format: date
+        closeTime:
+          type: string
+          format: date-time
+        openAmount:
+          type: number
+          format: double
+        closeAmount:
+          type: number
+          format: double
+        total:
+          type: number
+          format: double
+        totalOrders:
+          type: number
+          format: double
+        totalDiscount:
+          type: number
+          format: double
+        status:
+          type: string
+    PayBack:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        data:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: date-time
+        valor:
+          type: number
+          format: double
+        pos:
+          $ref: '#/components/schemas/Pos'
+        customer:
+          $ref: '#/components/schemas/Customer'
+    Withdrawal:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        creationTime:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        pos:
+          $ref: '#/components/schemas/Pos'
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+    OrderHasProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        order:
+          $ref: '#/components/schemas/Order'
+        product:
+          $ref: '#/components/schemas/Product'
+        unitValue:
+          type: number
+        quantity:
+          type: integer
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        barCode:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        price:
+          type: number
+          format: double
+        salePrice:
+          type: number
+          format: double
+        costPrice:
+          type: number
+          format: double
+        discountPrice:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+        weight:
+          type: number
+          format: double
+        percent:
+          type: integer
+        discountPercent:
+          type: integer
+        totalStockQuantity:
+          type: integer
+        creationDateTime:
+          type: string
+          format: date-time
+        provider:
+          $ref: '#/components/schemas/Provider'
+        measure:
+          $ref: '#/components/schemas/Measure'
+        category:
+          $ref: '#/components/schemas/Category'
+        subcategory:
+          $ref: '#/components/schemas/Subcategory'
+        brand:
+          $ref: '#/components/schemas/Brand'
+        productHasItemsTypeMeasure:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductHasItemsTypeMeasure'
+        domains:
+          type: array
+          items:
+            type: string
+    Provider:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        data:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: date-time
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        creationDate:
+          type: string
+          format: date-time
+        creationTime:
+          type: string
+          format: date-time
+        totalAmount:
+          type: number
+          format: double
+        quantity:
+          type: integer
+        subTotal:
+          type: number
+          format: double
+        pendingAmount:
+          type: number
+          format: double
+        paidAmount:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+        totalAmountToPaid:
+          type: number
+          format: double
+        change:
+          type: number
+          format: double
+        payment:
+          type: number
+          format: double
+        status:
+          type: string
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        pos:
+          $ref: '#/components/schemas/Pos'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        measure:
+          $ref: '#/components/schemas/Measure'
+        category:
+          $ref: '#/components/schemas/Category'
+        subcategory:
+          $ref: '#/components/schemas/Subcategory'
+        brand:
+          $ref: '#/components/schemas/Brand'
+        orderHasItemProduct:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderHasItemProduct'
+    Measure:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        date:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: time
+        category:
+          $ref: "#/components/schemas/Category"
+        subcategory:
+          $ref: "#/components/schemas/Subcategory"
+        brand:
+          $ref: "#/components/schemas/Brand"
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+        subcategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subcategory"
+        brands:
+          type: array
+          items:
+            $ref: "#/components/schemas/Brand"
+        itemsTypeMeasure:
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemsTypeMeasure"
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        subcategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subcategory"
+        date:
+          type: string
+          format: date
+        time:
+          type: string
+          format: time
+    Subcategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+            type: string
+        status:
+            type: string
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        status:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: integer
+        creationDate:
+          type: string
+          format: date-time
+        creationTime:
+          type: string
+          format: date-time
+    OrderHasItemProduct:
+      type: object
+      properties:
+        valorUnitario:
+          type: number
+          format: double
+        quantidade:
+          type: integer
+          format: integer
+        productHasItemsTypeMeasure:
+          $ref: '#/components/schemas/ProductHasItemsTypeMeasure'
+    ProductHasItemsTypeMeasure:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+        unitValue:
+          type: number
+          format: double
+        Product:
+          $ref: '#/components/schemas/Product'
+        data:
+          type: string
+          format: date-time
+        hora:
+          type: string
+          format: date-time
+        productHasItemsTypeMeasure:
+          $ref: '#/components/schemas/ProductHasItemsTypeMeasure'
+        itemsTypeMeasure:
+          $ref: '#/components/schemas/ItemsTypeMeasure'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+    ItemsTypeMeasure:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        amount:
+          type: string
+        measure:
+          $ref: '#/components/schemas/Measure'
+        brand:
+          $ref: '#/components/schemas/Brand'
+        category:
+          $ref: '#/components/schemas/Category'
+        subcategory:
+          $ref: '#/components/schemas/Subcategory'
+    Error:
+      type: object
+      properties:
+        target:
+          type: string
+        message:
+          type: string
+        reference:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        details:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorDetails"
+    ErrorDetails:
+      type: object
+      properties:
+        target:
+          type: string
+        code:
+          type: string
+        message:
+          type: string

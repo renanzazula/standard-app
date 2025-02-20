@@ -119,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
 		productDB.setId(product.getId());
 		productDB.setBarCode(product.getBarCode());
 		productDB.setName(product.getName());
-		productDB.setStatus(product.getStatus());
+		productDB.setStatus(StatusEnum.valueOf(product.getStatus()));
 		productDB.setDescription(product.getDescription());
 		productDB.setPrice(product.getPrice());
 		productDB.setSalePrice(product.getSalePrice());

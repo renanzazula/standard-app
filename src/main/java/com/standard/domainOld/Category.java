@@ -1,4 +1,4 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.util.Constants;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Provider implements Serializable {
+public class Category implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
@@ -22,9 +22,11 @@ public class Provider implements Serializable {
 	private String name;
 	private String description;
 	private String status;
+	private List<Subcategory> subcategories;
+
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
-	private Date data;
+	private Date date;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private Date hora;
+	private Date time;
 }

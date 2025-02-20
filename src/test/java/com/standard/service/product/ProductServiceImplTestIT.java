@@ -141,7 +141,7 @@ class ProductServiceImplTestIT extends BaseTest {
         Product found = productService.getById(product.getId());
         found.setBarCode(BAR_0_CODE + "_update");
         found.setName(NAME + "_update");
-        found.setStatus(StatusEnum.DISABLE);
+        found.setStatus(StatusEnum.DISABLE.name());
         found.setDescription(DESCRIPTION + "_update");
         found.setPrice(15d);
         found.setSalePrice(15d);
@@ -205,6 +205,7 @@ class ProductServiceImplTestIT extends BaseTest {
         Brand brandToUpdate = new Brand();
         brandToUpdate.setName(NAME + "_update");
         brandToUpdate.setDescription(DESCRIPTION + "_update");
+        brandToUpdate.setStatus(StatusEnum.DISABLE.name());
         brandToUpdate = brandService.create(brandToUpdate);
 
         product = productService.create(product);
@@ -296,7 +297,7 @@ class ProductServiceImplTestIT extends BaseTest {
         productService.delete(toDelete.getId());
 
         Product found = productService.getById(product.getId());
-        assertEquals(StatusEnum.DISABLE, found.getStatus());
+        assertEquals(StatusEnum.DISABLE.name(), found.getStatus());
     }
 
 

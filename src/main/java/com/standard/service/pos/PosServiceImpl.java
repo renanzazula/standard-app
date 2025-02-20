@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Service
@@ -65,8 +67,8 @@ public class PosServiceImpl implements PosService
 		} else {
 			Pos pos = new Pos();
 			pos.setId(getLastPosId());
-			pos.setOpenDate(new Date());
-			pos.setOpenTime(new Date());
+			pos.setOpenDate(LocalDate.now());
+			pos.setOpenTime(OffsetDateTime.now());
 			pos.setOpenAmount((double) 0);
 			pos.setCloseAmount((double) 0);
 			pos.setTotalOrders((double) 0);

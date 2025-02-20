@@ -52,7 +52,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
     void testFindAll() throws Exception {
         Measure measure2 = new Measure();
         measure2.setId(2L);
-        measure2.setNome("bob");
+        measure2.setName("bob");
 
         List<Measure> measures = Arrays.asList(measure, measure2);
         when(service.findAll()).thenReturn(measures);

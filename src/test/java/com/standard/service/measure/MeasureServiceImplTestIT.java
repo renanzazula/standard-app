@@ -120,7 +120,7 @@ class MeasureServiceImplTestIT extends BaseTest {
         measure = measureService.create(measure);
         Measure measureFound = measureService.findById(measure.getId());
         assertEquals(measureFound.getId(), measure.getId());
-        assertEquals(measureFound.getNome(), measure.getNome());
+        assertEquals(measureFound.getName(), measure.getName());
         assertEquals(measureFound.getDescription(), measure.getDescription());
         assertBrandSubCategoryCategoryAmount(measureFound);
     }

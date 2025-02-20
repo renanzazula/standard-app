@@ -1,7 +1,6 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Brand implements Serializable {
+public   class Subcategory implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
@@ -22,13 +21,10 @@ public class Brand implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
-	private StatusEnum status;
+	private String status;
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
 	private Date data;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
 	private Date hora;
-
-
-
 }

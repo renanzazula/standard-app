@@ -1,4 +1,4 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.util.Constants;
@@ -8,25 +8,27 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Withdrawal implements Serializable {
+public class PayBack implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;
+	private String name;
 	private String description;
-
 	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
-	private OffsetDateTime creationDate;
+	private Date data;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private OffsetDateTime creationTime;
+	private Date hora;
 
-	private Double amount;
+	private Double valor;
 	private Pos pos;
- 
+	private Customer customer;
+
 }

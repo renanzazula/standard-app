@@ -36,6 +36,7 @@ public class DomainServiceImpl implements DomainService {
 		DomainEntity domainDB = domainRepository.findById(id).orElseThrow(() -> new DomainNotFoundException(ConstantMessage.DOMAIN_NOT_FOUND));
 		Objects.requireNonNull(domainDB).setDescription(domain.getDescription());
 		domainDB.setName(domain.getName());
+
 		return JpaFunctions.domainToDomainEntity.apply(domainRepository.save(domainDB));
 	}
 

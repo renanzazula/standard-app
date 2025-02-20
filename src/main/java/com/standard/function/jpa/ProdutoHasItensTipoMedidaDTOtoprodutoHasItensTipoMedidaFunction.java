@@ -40,7 +40,7 @@ class ProdutoHasItensTipoMedidaDTOtoprodutoHasItensTipoMedidaFunction
         output.setId(input.getId());
         output.setBarCode(input.getBarCode());
         output.setName(input.getName());
-        output.setStatus(input.getStatus());
+        output.setStatus(input.getStatus().name());
         output.setDescription(input.getDescription());
         output.setPrice(input.getPrice());
         output.setSalePrice(input.getSalePrice());

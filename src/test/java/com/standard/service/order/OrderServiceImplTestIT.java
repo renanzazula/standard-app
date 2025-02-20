@@ -165,7 +165,7 @@ class OrderServiceImplTestIT extends BaseTest {
         order.setTotalAmountToPaid(10.0);
         order.setChange(10.0);
         order.setPayment(10.0);
-        order.setStatus(OrderStatusEnum.DONE);
+        order.setStatus(OrderStatusEnum.DONE.name());
         order.setPos(new Pos());
         order.setPos(pos);
         order.setPaymentMethod(paymentMethod);

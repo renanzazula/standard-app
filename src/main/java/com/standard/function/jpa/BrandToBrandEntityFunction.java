@@ -14,8 +14,7 @@ public class BrandToBrandEntityFunction implements Function<BrandEntity, Brand> 
 			output.setId(input.getId());
 			output.setName(input.getName());
 			output.setDescription(input.getDescription());
-			output.setStatus(input.getStatus());
-			output.setStatus(input.getStatus());
+			output.setStatus(input.getStatus().name());
 		}
 		return output;
 	}

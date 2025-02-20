@@ -28,7 +28,9 @@ public class OrderController {
     // 2 - get order by id
     @GetMapping("/{id}/confirm")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(orderService.findById(new Order(id)), HttpStatus.OK);
+        Order order = new Order();
+        order.setId(id);
+        return new ResponseEntity<>(orderService.findById(order), HttpStatus.OK);
     }
 
     // 3 - confirm

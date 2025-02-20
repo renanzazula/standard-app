@@ -22,20 +22,22 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
 	@Transactional
-	public Brand create(Brand entity) {
-		BrandEntity brandDB = new BrandEntity();
-		brandDB.setDescription(entity.getDescription());
-		brandDB.setName(entity.getName());
-		return JpaFunctions.brandToBrandEntity.apply(brandRepository.save(brandDB));
+	public Brand create(Brand brand) {
+		BrandEntity brandEntity = new BrandEntity();
+		brandEntity.setDescription(brand.getDescription());
+		brandEntity.setName(brand.getName());
+		brandEntity.setStatus(StatusEnum.valueOf(brand.getStatus()));
+		return JpaFunctions.brandToBrandEntity.apply(brandRepository.save(brandEntity));
 	}
 
 	@Override
 	@Transactional
 	public Brand update(Long id, Brand brand) {
-		BrandEntity brandDB = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND));
-		brandDB.setDescription(brand.getDescription());
-		brandDB.setName(brand.getName());
-		return JpaFunctions.brandToBrandEntity.apply(brandRepository.saveAndFlush(brandDB));
+		BrandEntity brandEntity = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND));
+		brandEntity.setDescription(brand.getDescription());
+		brandEntity.setName(brand.getName());
+		brandEntity.setStatus(StatusEnum.valueOf(brand.getStatus()));
+		return JpaFunctions.brandToBrandEntity.apply(brandRepository.saveAndFlush(brandEntity));
 	}
 
 	@Override

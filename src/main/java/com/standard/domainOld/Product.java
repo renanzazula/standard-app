@@ -1,4 +1,4 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.enums.StatusEnum;

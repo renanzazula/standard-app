@@ -1,6 +1,7 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.standard.enums.StatusEnum;
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,26 +9,26 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentMethod implements Serializable {
-
+public class Brand implements Serializable {
 
 	@Serial
-	private static final long serialVersionUID = 8567703800947910628L;
+	private static final long serialVersionUID = -6612762288260227887L;
 
 	private Long id;
 	private String name;
-	private String status;
 	private String description;
-	private Integer discountPercent;
-
-    @JsonFormat(pattern=Constants.PATTERN_DATE_FORMAT)
-	private OffsetDateTime creationDate;
+	private StatusEnum status;
+	@JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
+	private Date data;
 
 	@JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
-	private OffsetDateTime creationTime;
+	private Date hora;
+
+
+
 }

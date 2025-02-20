@@ -62,6 +62,7 @@ public class BaseTest {
         brand = new Brand();
         brand.setName(NAME);
         brand.setDescription(DESCRIPTION);
+        brand.setStatus(StatusEnum.ENABLE.name());
     }
 
     protected void setUpSubcategory() {
@@ -93,8 +94,9 @@ public class BaseTest {
 
     protected void setUpMeasure() {
         measure = new Measure();
-        measure.setNome(NAME);
+        measure.setName(NAME);
         measure.setDescription(DESCRIPTION);
+        measure.setStatus(StatusEnum.ENABLE.name());
     }
 
     protected void setUpItemsTypeMeasure() {
@@ -147,7 +149,7 @@ public class BaseTest {
         product = new Product();
         product.setBarCode(BAR_0_CODE);
         product.setName(NAME);
-        product.setStatus(StatusEnum.ENABLE);
+        product.setStatus(StatusEnum.ENABLE.name());
         product.setDescription(DESCRIPTION);
         product.setPrice(10d);
         product.setSalePrice(10d);
@@ -158,6 +160,7 @@ public class BaseTest {
         product.setWeight(10d);
         product.setPercent(1);
         product.setDiscountPercent(1);
+        product.setTotalStockQuantity(40);
     }
 
     protected void assertBrandSubCategoryCategoryAmount(Measure measure) {
@@ -204,7 +207,7 @@ public class BaseTest {
         assertEquals(expected.getId(), found.getId());
         assertEquals(expected.getName(), found.getName());
         assertEquals(expected.getDescription(), found.getDescription());
-        assertEquals(expected.isChecked(), found.isChecked());
+        assertEquals(expected.getChecked(), found.getChecked());
     }
 
     private void assertProductHasItemsTypeMeasure(List<ProductHasItemsTypeMeasure> product, List<ProductHasItemsTypeMeasure> found) {

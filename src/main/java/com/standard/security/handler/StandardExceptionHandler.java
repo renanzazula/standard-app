@@ -1,8 +1,8 @@
 package com.standard.security.handler;
 
 
-import com.standard.domain.Error;
-import com.standard.domain.ErrorDetails;
+import com.standard.domainOld.Error;
+import com.standard.domainOld.ErrorDetails;
 import com.standard.security.exceptions.BrandNotFoundException;
 import com.standard.security.exceptions.CategoryNotFoundException;
 import com.standard.security.exceptions.DomainNotFoundException;

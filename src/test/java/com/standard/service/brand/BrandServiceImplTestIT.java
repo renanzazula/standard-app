@@ -78,6 +78,6 @@ class BrandServiceImplTestIT extends BaseTest {
         service.delete(delete.getId());
 
         Brand found = service.findById(brand.getId());
-        assertEquals(StatusEnum.DISABLE, found.getStatus());
+        assertEquals(StatusEnum.DISABLE.name(), found.getStatus());
     }
 }

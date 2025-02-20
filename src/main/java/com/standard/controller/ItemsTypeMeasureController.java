@@ -32,8 +32,8 @@ public class ItemsTypeMeasureController {
 
     @GetMapping(value = "/byProduct/{id}")
     public ResponseEntity<List<ProductHasItemsTypeMeasure>> ajaxFindItemsTypeMeasureByMeasureByProductId(@PathVariable String id) {
-        Product productDB = productService.getById(Long.valueOf(id));
-        return new ResponseEntity<>(productDB.getProductHasItemsTypeMeasure(), HttpStatus.OK);
+        Product product = productService.getById(Long.valueOf(id));
+        return new ResponseEntity<>(product.getProductHasItemsTypeMeasure(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byMeasure/{id}")

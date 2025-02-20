@@ -14,7 +14,7 @@ public class MeasureToMeasureEntityFunction implements Function<MeasureEntity, M
 		Measure output = new Measure();
 		if (input != null) {
 			output.setId(input.getId());
-			output.setNome(input.getName());
+			output.setName(input.getName());
 			output.setDescription(input.getDescription());
 			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
 

@@ -15,6 +15,7 @@ public class DomainToDomainEntityFunction implements Function<DomainEntity, Doma
 			output.setName(input.getName());
 			output.setDescription(input.getDescription());
 			output.setStatus(input.getStatus() != null ? input.getStatus().name() : "");
+			output.setChecked(false);
 		}
 		return output;
 	}

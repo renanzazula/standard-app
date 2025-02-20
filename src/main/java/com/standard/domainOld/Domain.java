@@ -1,36 +1,38 @@
-package com.standard.domain;
+package com.standard.domainOld;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.standard.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Data
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductHasItemsTypeMeasure implements Serializable {
+public class Domain implements Serializable {
+
 
     @Serial
-    private static final long serialVersionUID = -6612762288260227887L;
+    private static final long serialVersionUID = -4933949406995695753L;
+
 
     private Long id;
-    private List<Domain> domains;
-    private Integer quantity;
-    private Double unitValue;
-    private ItemsTypeMeasure itemsTypeMeasure;
-    private Product product;
+
+      private String name;
+
+    private String description;
+
+    private boolean checked;
+
     @JsonFormat(pattern= Constants.PATTERN_DATE_FORMAT)
     private Date data;
 
     @JsonFormat(pattern=Constants.PATTERN_TIME_FORMAT)
     private Date hora;
 
+    private String status;
 }
