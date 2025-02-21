@@ -39,7 +39,7 @@ public class PosServiceImpl implements PosService
 		posEntity.setCloseAmount((double) 0);
 		posEntity.setTotal((double) 0);
 		posEntity.setTotalDiscount((double) 0);
-		posEntity.setTotalOrders((double) 0);
+		posEntity.setTotalOrder((double) 0);
 		posEntity.setStatus(StatusPOSEnum.OPEN);
 		posEntity.setOpenDate(new Date());
 		posEntity.setOpenTime(new Date());
@@ -92,8 +92,8 @@ public class PosServiceImpl implements PosService
 	{
 		PosEntity posEntity = posRepository.findById(pos.getId()).orElseThrow(() -> new PosNotFoundException(ConstantMessage.POS_NOT_FOUND));
 		posEntity.setTotalDiscount(posEntity.getTotalDiscount() + order.getDiscount());
-		Double totalOrder = posEntity.getTotalOrders() + order.getPaidAmount();
-		posEntity.setTotalOrders(totalOrder);
+		Double totalOrder = posEntity.getTotalOrder() + order.getPaidAmount();
+		posEntity.setTotalOrder(totalOrder);
 
 		if (pos.getOpenAmount() == null) {
 			posEntity.setTotal(totalOrder + 0);

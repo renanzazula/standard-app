@@ -49,8 +49,8 @@ public class PosEntity extends BaseAuditEntity  {
 	private Double closeAmount;
 
 	@ColumnDefault(value = "0")
-	@Column(name = "totalVendas")
-	private Double totalOrders;
+	@Column(name = "totalOrder")
+	private Double totalOrder;
 
 	@ColumnDefault(value = "0")
 	@Column(name = "total")
@@ -76,13 +76,13 @@ public class PosEntity extends BaseAuditEntity  {
 		PosEntity posEntity = (PosEntity) o;
 		return Objects.equals(openDate, posEntity.openDate) && Objects.equals(openTime, posEntity.openTime) && Objects.equals(closeDate, posEntity.closeDate) && Objects.equals(
 				closeTime, posEntity.closeTime) && Objects.equals(openAmount, posEntity.openAmount) && Objects.equals(closeAmount, posEntity.closeAmount) && Objects.equals(
-				totalOrders, posEntity.totalOrders) && Objects.equals(total, posEntity.total) && Objects.equals(totalDiscount,
+				totalOrder, posEntity.totalOrder) && Objects.equals(total, posEntity.total) && Objects.equals(totalDiscount,
 				posEntity.totalDiscount) && status == posEntity.status;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(super.hashCode(), openDate, openTime, closeDate, closeTime, openAmount, closeAmount, totalOrders, total, totalDiscount, status);
+		return Objects.hash(super.hashCode(), openDate, openTime, closeDate, closeTime, openAmount, closeAmount, totalOrder, total, totalDiscount, status);
 	}
 }

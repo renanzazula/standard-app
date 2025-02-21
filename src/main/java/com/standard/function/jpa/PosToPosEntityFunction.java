@@ -18,7 +18,7 @@ public class PosToPosEntityFunction implements Function<PosEntity, Pos> {
 		output.setOpenAmount(input.getOpenAmount());
 		output.setCloseAmount(input.getCloseAmount());
 		output.setTotal(input.getTotal());
-		output.setTotalOrders(input.getTotalOrders());
+		output.setTotalOrders(input.getTotalOrder());
 		output.setTotalDiscount(input.getTotalDiscount());
 		output.setStatus(input.getStatus().name());		
 		return output;
