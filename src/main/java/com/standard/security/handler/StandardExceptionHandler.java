@@ -1,16 +1,11 @@
 package com.standard.security.handler;
 
 
-import com.standard.domainOld.Error;
-import com.standard.domainOld.ErrorDetails;
-import com.standard.security.exceptions.BrandNotFoundException;
-import com.standard.security.exceptions.CategoryNotFoundException;
-import com.standard.security.exceptions.DomainNotFoundException;
-import com.standard.security.exceptions.MeasureNotFoundException;
-import com.standard.security.exceptions.PayBackNotFoundException;
-import com.standard.security.exceptions.PaymentMethodNotFoundException;
-import com.standard.security.exceptions.SubcategoryNotFoundException;
-import com.standard.security.exceptions.WithdrawalNotFoundException;
+import com.standard.domain.Error;
+import com.standard.domain.ErrorDetails;
+import com.standard.security.exceptions.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -18,11 +13,9 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.ProviderNotFoundException;
-import java.util.Calendar;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @ControllerAdvice
@@ -36,7 +29,7 @@ public class StandardExceptionHandler {
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
         error.setTarget(request.getRequestURI());
-        error.setTimestamp(Calendar.getInstance().getTime());
+        error.setTimestamp(OffsetDateTime.now());
         error.setMessage(ex.getMessage());
         
         ex.getConstraintViolations().forEach(constraintViolation -> {
@@ -56,7 +49,7 @@ public class StandardExceptionHandler {
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
         error.setTarget(request.getRequestURI());
-        error.setTimestamp(Calendar.getInstance().getTime());
+        error.setTimestamp(OffsetDateTime.now());
 
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget(ROOT_CAUSE);
@@ -73,7 +66,7 @@ public class StandardExceptionHandler {
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
         error.setTarget(request.getRequestURI());
-        error.setTimestamp(Calendar.getInstance().getTime());
+        error.setTimestamp(OffsetDateTime.now());
 
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget(ROOT_CAUSE);
@@ -91,7 +84,7 @@ public class StandardExceptionHandler {
         Error error = new Error();
         error.setReference(UUID.randomUUID().toString());
         error.setTarget(request.getRequestURI());
-        error.setTimestamp(Calendar.getInstance().getTime());
+        error.setTimestamp(OffsetDateTime.now());
 
         ErrorDetails detailsItem = new ErrorDetails();
         detailsItem.setTarget(ROOT_CAUSE);
