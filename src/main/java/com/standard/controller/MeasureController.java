@@ -6,55 +6,46 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(MeasureController.BASE_URL)
-public class MeasureController {
-
-    public static final String BASE_URL = "/private/api/v1/measure";
+public class MeasureController implements MeasureControllerApi{
 
     private final MeasureService measureService;
 
-    @GetMapping({""})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('MEASURE_SEARCH')")
-    public ResponseEntity<List<Measure>> findAll() {
+    public ResponseEntity<List<Measure>> findAllMeasures() {
         return new ResponseEntity<>(measureService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('MEASURE_SEARCH')")
-    public ResponseEntity<Measure> findById(@PathVariable Long id) {
+    public ResponseEntity<Measure> findMeasureById(@PathVariable Long id) {
         return new ResponseEntity<>(measureService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('MEASURE_ADD')")
-    public ResponseEntity<Measure> create(@RequestBody Measure measure) {
+    public ResponseEntity<Measure> saveMeasure(@RequestBody Measure measure) {
         return new ResponseEntity<>(measureService.create(measure), HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('MEASURE_DELETE')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMeasureById(@PathVariable Long id) {
         measureService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('MEASURE_UPDATE')")
-    public ResponseEntity<Measure> update(@PathVariable Long id, @RequestBody Measure measure) {
+    public ResponseEntity<Measure> updateMeasure(@PathVariable Long id, @RequestBody Measure measure) {
         return new ResponseEntity<>(measureService.update(id, measure), HttpStatus.OK);
     }
 

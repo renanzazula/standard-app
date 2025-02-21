@@ -2,6 +2,8 @@ openapi: 3.0.3
 info:
   title: Standard API
   version: 1.0.0
+servers:
+  - url: https://localhost:8080/private/api/v1
 tags:
   - name: Domain
   - name: Pos
@@ -12,7 +14,7 @@ tags:
   - name: Product
   - name: Provider
   - name: Order
-  - name: Measure
+  - name: Measure`
   - name: Category
   - name: Subcategory
   - name: Brand
@@ -22,6 +24,7 @@ tags:
   - name: ItemsTypeMeasure
   - name: Error
   - name: ErrorDetails
+
 paths:
   /private/api/v1/brand:
     post:
@@ -29,7 +32,7 @@ paths:
       description: save and returns a new brand if successful.
       tags:
         - BrandController
-      operationId: save
+      operationId: saveBrand
       requestBody:
         required: true
         content:
@@ -58,12 +61,12 @@ paths:
     get:
       summary: find all brands
       description: return all the brands
-      operationId: findAll
+      operationId: findAllBrands
       tags:
         - BrandController
       responses:
         '200':
-          description: Successful save a new brand
+          description: return all the brands
           content:
             application/json:
               schema:
@@ -88,7 +91,7 @@ paths:
     get:
       summary: find by id
       description: return brand if is exist
-      operationId: findById
+      operationId: findBrandById
       tags:
         - BrandController
       parameters:
@@ -124,7 +127,7 @@ paths:
     delete:
       summary: delete brand by id
       description: return status 200
-      operationId: delete
+      operationId: deleteBrandById
       tags:
         - BrandController
       parameters:
@@ -156,7 +159,7 @@ paths:
     patch:
       summary: return brand updated brand
       description: return brand updated brand
-      operationId: update
+      operationId: updateBrand
       tags:
         - BrandController
       parameters:
@@ -196,6 +199,1086 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /private/api/v1/category:
+    post:
+      summary: Save a new category
+      description: save and returns a new category if successful.
+      tags:
+        - CategoryController
+      operationId: saveCategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: Successful save a new Category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all categories
+      description: return all the categories
+      operationId: findAllCategories
+      tags:
+        - CategoryController
+      responses:
+        '200':
+          description: return all the categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/category/{id}:
+    get:
+      summary: find by id
+      description: return category if is exist
+      operationId: findCategoryById
+      tags:
+        - CategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID category
+      responses:
+        '200':
+          description: return a categories if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete brand by id
+      description: return status 200
+      operationId: deleteCategoryById
+      tags:
+        - CategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Category
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated Category
+      description: return updated Category
+      operationId: updateCategory
+      tags:
+        - CategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Category
+      requestBody:
+        description: Category to be update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/domain:
+    post:
+      summary: Save a new domain
+      description: save and returns a new domain if successful.
+      tags:
+        - DomainController
+      operationId: saveDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Domain'
+      responses:
+        '200':
+          description: Successful save a new domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all brands
+      description: return all the brands
+      operationId: findAllDomains
+      tags:
+        - DomainController
+      responses:
+        '200':
+          description: return all the brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/domain/{id}:
+    get:
+      summary: find by id
+      description: return domain if is exist
+      operationId: findDomainById
+      tags:
+        - DomainController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Domain
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete domain by id
+      description: return status 200
+      operationId: deleteDomainById
+      tags:
+        - DomainController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Domain
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated domain
+      description: return updated domain
+      operationId: updateDomain
+      tags:
+        - DomainController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Domain
+      requestBody:
+        description: Domain to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Domain'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/measure:
+    post:
+      summary: Save a new measure
+      description: save and returns a new measure if successful.
+      tags:
+        - MeasureController
+      operationId: saveMeasure
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Measure'
+      responses:
+        '200':
+          description: Successful save a new measure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Measure'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all brands
+      description: return all the brands
+      operationId: findAllMeasures
+      tags:
+        - MeasureController
+      responses:
+        '200':
+          description: return all the brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measure'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/measure/{id}:
+    get:
+      summary: find by id
+      description: return measure if is exist
+      operationId: findMeasureById
+      tags:
+        - MeasureController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Measure
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Measure'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete measure by id
+      description: return status 200
+      operationId: deleteMeasureById
+      tags:
+        - MeasureController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Measure
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated measure
+      description: return updated measure
+      operationId: updateMeasure
+      tags:
+        - MeasureController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Measure
+      requestBody:
+        description: Measure to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Measure'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Measure'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /private/api/v1/paymentMethod:
+    post:
+      summary: Save a new paymentMethod
+      description: save and returns a new paymentMethod if successful.
+      tags:
+        - PaymentMethodController
+      operationId: savePaymentMethod
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethod'
+      responses:
+        '200':
+          description: Successful save a new paymentMethod
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all brands
+      description: return all the brands
+      operationId: findAllPaymentMethods
+      tags:
+        - PaymentMethodController
+      responses:
+        '200':
+          description: return all the brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/paymentMethod/{id}:
+    get:
+      summary: find by id
+      description: return paymentMethod if is exist
+      operationId: findPaymentMethodById
+      tags:
+        - PaymentMethodController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID PaymentMethod
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete paymentMethod by id
+      description: return status 200
+      operationId: deletePaymentMethodById
+      tags:
+        - PaymentMethodController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID PaymentMethod
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated paymentMethod
+      description: return updated paymentMethod
+      operationId: updatePaymentMethod
+      tags:
+        - PaymentMethodController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID PaymentMethod
+      requestBody:
+        description: PaymentMethod to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethod'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /private/api/v1/provider:
+    post:
+      summary: Save a new provider
+      description: save and returns a new provider if successful.
+      tags:
+        - ProviderController
+      operationId: saveProvider
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '200':
+          description: Successful save a new provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all brands
+      description: return all the brands
+      operationId: findAllProviders
+      tags:
+        - ProviderController
+      responses:
+        '200':
+          description: return all the brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Provider'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/provider/{id}:
+    get:
+      summary: find by id
+      description: return provider if is exist
+      operationId: findProviderById
+      tags:
+        - ProviderController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Provider
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete provider by id
+      description: return status 200
+      operationId: deleteProviderById
+      tags:
+        - ProviderController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Provider
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated provider
+      description: return updated provider
+      operationId: updateProvider
+      tags:
+        - ProviderController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Provider
+      requestBody:
+        description: Provider to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/subcategory:
+    post:
+      summary: Save a new subcategory
+      description: save and returns a new subcategory if successful.
+      tags:
+        - SubcategoryController
+      operationId: saveSubcategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subcategory'
+      responses:
+        '200':
+          description: Successful save a new subcategory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subcategory'
+        '400':
+          description: Bad request (e.g., missing or invalid fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: find all Subcategories
+      description: return all the Subcategories
+      operationId: findAllSubcategories
+      tags:
+        - SubcategoryController
+      responses:
+        '200':
+          description: return all the Subcategories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subcategory'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/subcategory/{id}:
+    get:
+      summary: find by id
+      description: return subcategory if is exist
+      operationId: findSubcategoryById
+      tags:
+        - SubcategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Subcategory
+      responses:
+        '200':
+          description: return a brands if exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subcategory'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /private/api/v1/subcategory/category/{id}":
+    get:
+      summary: find Subcategories by category
+      description: return all the subcategory bt category
+      operationId: findSubCategoryByCategory
+      tags:
+        - SubcategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Provider
+      responses:
+        '200':
+          description: return all the subcategory bt category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subcategory'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: delete subcategory by id
+      description: return status 200
+      operationId: deleteSubcategoryById
+      tags:
+        - SubcategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Subcategory
+      responses:
+        '200':
+          description: delete has been successfully executed
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: return updated subcategory
+      description: return updated subcategory
+      operationId: updateSubcategory
+      tags:
+        - SubcategoryController
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: abc123
+          description: The ID Subcategory
+      requestBody:
+        description: Subcategory to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subcategory'
+      responses:
+        '200':
+          description: update has been successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subcategory'
+        '400':
+          description: Bad request (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized (e.g., invalid role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Domain:

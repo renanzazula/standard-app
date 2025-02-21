@@ -19,6 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
 class AuthorizationRestControllerIT extends BaseIT {
 
+    private final String BASE_URL = "/private/api/v1/category";
+    
     @DisplayName("Authorization Test For Order Controller")
     @Nested
     class AuthorizationTestForOrderController {
@@ -27,7 +29,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllOrdersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)).authorities(createJwtAdminRoles()))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -37,7 +39,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamCustomer")
          void testGetAllOrdersAccessForbiddenForCustomer(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)).authorities(createJwtUserRoles()))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -47,7 +49,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllOrdersAccessForbiddenForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)).authorities(createJwtUserRoles()))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -56,7 +58,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllOrdersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }
@@ -70,7 +72,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllCustomersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)).authorities(createJwtAdminRoles()))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -80,7 +82,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllCustomersForbiddenForForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -89,7 +91,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllCustomersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }
@@ -103,7 +105,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamAdmin")
          void testGetAllCustomersAccessSuccessForAdmin(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)).authorities(createJwtAdminRoles()))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful());
@@ -113,7 +115,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamCustomer")
          void testGetAllCustomersAccessSuccessForCustomer(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -123,7 +125,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("com.standard.controller.security.BaseIT#getStreamUser")
          void testGetAllCustomersForbiddenForForUser(String user, String pwd) throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .with(jwt().jwt(jwt -> jwt.claim(user, pwd)))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
@@ -132,7 +134,7 @@ class AuthorizationRestControllerIT extends BaseIT {
         @DisplayName("All Users should have access (Unauthorized)")
         @Test
          void testGetAllCustomersHttpBasicNotAuth() throws Exception {
-            mockMvc.perform(get(CategoryController.BASE_URL)
+            mockMvc.perform(get(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isUnauthorized());
         }

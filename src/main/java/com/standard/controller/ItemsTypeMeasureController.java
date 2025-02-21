@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Secured({"ROLE_ADMIN", "ROLE_USER"})
-@RequestMapping(DomainController.BASE_URL)
+@RequestMapping(ItemsTypeMeasureController.BASE_URL)
 public class ItemsTypeMeasureController {
 
     public static final String BASE_URL = "/private/api/v1/itemsMeasure";

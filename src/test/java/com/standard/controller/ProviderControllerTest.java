@@ -33,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {ProviderController.class})
 class ProviderControllerTest extends AbstractRestControllerTest {
 
+    private static final String BASE_URL = "/private/api/v1/provider";
+    
     @MockitoBean
     ProviderService service;
 
@@ -58,7 +60,7 @@ class ProviderControllerTest extends AbstractRestControllerTest {
 
         List<Provider> providers = Arrays.asList(provider, provider2);
         when(service.findAll()).thenReturn(providers);
-        mockMvc.perform(get(ProviderController.BASE_URL)
+        mockMvc.perform(get(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProviderRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -68,7 +70,7 @@ class ProviderControllerTest extends AbstractRestControllerTest {
     @Test
     void testFindById() throws Exception {
         when(service.findById(provider.getId())).thenReturn(provider);
-        mockMvc.perform(get(ProviderController.BASE_URL + "/1")
+        mockMvc.perform(get(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProviderRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -79,7 +81,7 @@ class ProviderControllerTest extends AbstractRestControllerTest {
     @Test
     void testCreate() throws Exception {
         when(service.create(provider)).thenReturn(provider);
-        mockMvc.perform(post(ProviderController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProviderRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(provider)))
@@ -90,7 +92,7 @@ class ProviderControllerTest extends AbstractRestControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(ProviderController.BASE_URL + "/1")
+        mockMvc.perform(delete(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProviderRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -99,7 +101,7 @@ class ProviderControllerTest extends AbstractRestControllerTest {
     @Test
     void testUpdate() throws Exception {
         when(service.update(1L, provider)).thenReturn(provider);
-        mockMvc.perform(put(ProviderController.BASE_URL+"/1")
+        mockMvc.perform(put(BASE_URL+"/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtProviderRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(provider)))

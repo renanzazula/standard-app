@@ -14,42 +14,42 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @AllArgsConstructor
-@RestController("${openapi.openApi.base-path:/v1}")
+@RestController()
 public class BrandController implements BrandControllerApi {
 
     private final BrandService brandService;
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('BRAND_SEARCH')")
-    public ResponseEntity<List<Brand>> findAll()
+    public ResponseEntity<List<Brand>> findAllBrands()
     {
         return new ResponseEntity<>(brandService.findAll(), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('BRAND_SEARCH')")
-    public ResponseEntity<Brand> findById(@PathVariable Long id) {
+    public ResponseEntity<Brand> findBrandById(@PathVariable Long id) {
         return new ResponseEntity<>(brandService.findById(id), HttpStatus.OK);
     }
 
     @Override
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('BRAND_ADD')")
-    public ResponseEntity<Brand> save(@RequestBody Brand obj)
+    public ResponseEntity<Brand> saveBrand(@RequestBody Brand obj)
     {
         return new ResponseEntity<>(brandService.create(obj), HttpStatus.CREATED);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('BRAND_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBrandById(@PathVariable Long id) {
         brandService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('BRAND_UPDATE')")
-    public ResponseEntity<Brand> update(@PathVariable Long id, @RequestBody Brand brand) {
+    public ResponseEntity<Brand> updateBrand(@PathVariable Long id, @RequestBody Brand brand) {
         return new ResponseEntity<>(brandService.update(id, brand), HttpStatus.OK);
     }
 

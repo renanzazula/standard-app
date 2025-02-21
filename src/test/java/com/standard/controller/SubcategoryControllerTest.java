@@ -34,6 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {SubcategoryController.class})
 class SubcategoryControllerTest extends AbstractRestControllerTest {
 
+    private static final String BASE_URL = "/private/api/v1/subcategory";
+
     @MockitoBean
     CategoryService categoryService;
 
@@ -67,7 +69,7 @@ class SubcategoryControllerTest extends AbstractRestControllerTest {
 
         List<Subcategory> subcategories = Arrays.asList(obj, subcategory2);
         when(service.findAll()).thenReturn(subcategories);
-        mockMvc.perform(get(SubcategoryController.BASE_URL)
+        mockMvc.perform(get(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtSubcategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -77,7 +79,7 @@ class SubcategoryControllerTest extends AbstractRestControllerTest {
     @Test
     void testFindById() throws Exception {
         when(service.findById(obj.getId())).thenReturn(obj);
-        mockMvc.perform(get(SubcategoryController.BASE_URL + "/1")
+        mockMvc.perform(get(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtSubcategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -88,7 +90,7 @@ class SubcategoryControllerTest extends AbstractRestControllerTest {
     @Test
     void testCreate() throws Exception {
         when(service.create(obj)).thenReturn(obj);
-        mockMvc.perform(post(SubcategoryController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtSubcategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
@@ -99,7 +101,7 @@ class SubcategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(SubcategoryController.BASE_URL + "/1")
+        mockMvc.perform(delete(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtSubcategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -108,7 +110,7 @@ class SubcategoryControllerTest extends AbstractRestControllerTest {
     @Test
     void testUpdate() throws Exception {
         when(service.update(1L,obj)).thenReturn(obj);
-        mockMvc.perform(put(SubcategoryController.BASE_URL+"/1")
+        mockMvc.perform(put(BASE_URL+"/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtSubcategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))

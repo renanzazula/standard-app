@@ -6,55 +6,47 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(PaymentMethodController.BASE_URL)
-public class PaymentMethodController {
-
-    public static final String BASE_URL = "/private/api/v1/paymentMethod";
+public class PaymentMethodController implements PaymentMethodControllerApi {
 
     private final PaymentMethodService paymentMethodService;
 
-    @GetMapping({""})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PAYMENT_METHOD_SEARCH')")
-    public ResponseEntity<List<PaymentMethod>> findAll() {
+    public ResponseEntity<List<PaymentMethod>> findAllPaymentMethods()
+    {
         return new ResponseEntity<>(paymentMethodService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PAYMENT_METHOD_SEARCH')")
-    public ResponseEntity<PaymentMethod> findById(@PathVariable Long id) {
+    public ResponseEntity<PaymentMethod> findPaymentMethodById(@PathVariable Long id) {
         return new ResponseEntity<>(paymentMethodService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PAYMENT_METHOD_ADD')")
-    public ResponseEntity<PaymentMethod> create(@RequestBody PaymentMethod obj) {
+    public ResponseEntity<PaymentMethod> savePaymentMethod(@RequestBody PaymentMethod obj) {
         return new ResponseEntity<>(paymentMethodService.create(obj), HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PAYMENT_METHOD_DELETE')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePaymentMethodById(@PathVariable Long id) {
         paymentMethodService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('PAYMENT_METHOD_UPDATE')")
-    public ResponseEntity<PaymentMethod> update(@PathVariable Long id, @RequestBody PaymentMethod obj) {
+    public ResponseEntity<PaymentMethod> updatePaymentMethod(@PathVariable Long id, @RequestBody PaymentMethod obj) {
         return new ResponseEntity<>(paymentMethodService.update(id, obj), HttpStatus.OK);
     }
 }

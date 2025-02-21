@@ -35,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {CategoryController.class})
 class CategoryControllerTest extends AbstractRestControllerTest {
 
+    private final String BASE_URL = "/private/api/v1/category";
+
     @Autowired
     WebApplicationContext wac;
 
@@ -56,12 +58,12 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     
     @Test
     void testTryToAccessPrivateUnauthorizedGet() throws Exception{
-        mockMvc.perform(get(CategoryController.BASE_URL)).andExpect(status().isUnauthorized());
+        mockMvc.perform(get(BASE_URL)).andExpect(status().isUnauthorized());
     }
 
     @Test
     void testTryToAccessPrivateAuthorizedIsOkGet() throws Exception{
-        mockMvc.perform(post(CategoryController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
@@ -70,7 +72,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
     void testTryToAccessPrivateAuthorizedIsOkPost() throws Exception{
-        mockMvc.perform(post(CategoryController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
@@ -88,7 +90,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
         
         when(service.findAll()).thenReturn(categories);
         
-        mockMvc.perform(get(CategoryController.BASE_URL)
+        mockMvc.perform(get(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -99,7 +101,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     @Test
      void testCreate() throws Exception {
         when(service.create(category)).thenReturn(category);
-        mockMvc.perform(post(CategoryController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))
@@ -110,7 +112,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
 
     @Test
      void testDelete() throws Exception {
-        mockMvc.perform(delete(CategoryController.BASE_URL + "/1")
+        mockMvc.perform(delete(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -119,7 +121,7 @@ class CategoryControllerTest extends AbstractRestControllerTest {
     @Test
      void testUpdate() throws Exception {
         when(service.update(1L, category)).thenReturn(category);
-        mockMvc.perform(put(CategoryController.BASE_URL+"/1")
+        mockMvc.perform(put(BASE_URL+"/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtCategoryRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(category)))

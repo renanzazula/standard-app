@@ -32,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {MeasureController.class})
 class MeasureControllerTest extends AbstractRestControllerTest {
 
+    private static final String BASE_URL = "/private/api/v1/measure";
+    
     @MockitoBean
     MeasureService service;
 
@@ -56,7 +58,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
 
         List<Measure> measures = Arrays.asList(measure, measure2);
         when(service.findAll()).thenReturn(measures);
-        mockMvc.perform(get(MeasureController.BASE_URL)
+        mockMvc.perform(get(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -67,7 +69,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
     void testFindById() throws Exception {
         setUpMeasure();
         when(service.findById(measure.getId())).thenReturn(measure);
-        mockMvc.perform(get(MeasureController.BASE_URL + "/1")
+        mockMvc.perform(get(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -76,7 +78,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
     @Test
     void testCreate() throws Exception {
         when(service.create(measure)).thenReturn(measure);
-        mockMvc.perform(post(MeasureController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))
@@ -85,7 +87,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(MeasureController.BASE_URL + "/1")
+        mockMvc.perform(delete(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -94,7 +96,7 @@ class MeasureControllerTest extends AbstractRestControllerTest {
     @Test
     void testUpdate() throws Exception {
         when(service.update(1L, measure)).thenReturn(measure);
-        mockMvc.perform(put(MeasureController.BASE_URL+"/1")
+        mockMvc.perform(put(BASE_URL+"/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtMeasureRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(measure)))

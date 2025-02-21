@@ -6,57 +6,48 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(CategoryController.BASE_URL)
-public class CategoryController {
-
-    public static final String BASE_URL = "/private/api/v1/category";
+@RequestMapping("${openapi.openApi.base-path:/v1}")
+public class CategoryController  implements CategoryControllerApi {
 
     private final CategoryService categoryService;
 
-    @GetMapping({""})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('CATEGORY_SEARCH')")
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<Category>> findAllCategories() {
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping({"/{id}"})
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('CATEGORY_SEARCH')")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
+    public ResponseEntity<Category> findCategoryById(@PathVariable Long id) {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('CATEGORY_ADD')")
-    public ResponseEntity<Category> create(@RequestBody Category category) {
+    public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
         return new ResponseEntity<>(categoryService.create(category), HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"/{id}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('CATEGORY_DELETE')")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
         categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping({"/{id}"})
-    @ResponseStatus(HttpStatus.OK)
+    @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('CATEGORY_UPDATE')")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         return new ResponseEntity<>(categoryService.update(id, category), HttpStatus.OK);
     }
 }

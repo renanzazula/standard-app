@@ -33,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {DomainController.class})
 class DomainControllerTest extends AbstractRestControllerTest {
 
+    public static final String BASE_URL = "/private/api/v1/domain";
+    
     @MockitoBean
     DomainService service;
 
@@ -65,7 +67,7 @@ class DomainControllerTest extends AbstractRestControllerTest {
 
         List<Domain> domains = Arrays.asList(obj, domain2);
         when(service.findAll()).thenReturn(domains);
-        mockMvc.perform(get(DomainController.BASE_URL)
+        mockMvc.perform(get(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtDomainRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -75,7 +77,7 @@ class DomainControllerTest extends AbstractRestControllerTest {
     @Test
     void testFindById() throws Exception {
         when(service.findById(obj.getId())).thenReturn(obj);
-        mockMvc.perform(get(DomainController.BASE_URL + "/1")
+        mockMvc.perform(get(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtDomainRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -86,7 +88,7 @@ class DomainControllerTest extends AbstractRestControllerTest {
     @Test
     void testCreate() throws Exception {
         when(service.create(obj)).thenReturn(obj);
-        mockMvc.perform(post(DomainController.BASE_URL)
+        mockMvc.perform(post(BASE_URL)
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtDomainRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
@@ -97,7 +99,7 @@ class DomainControllerTest extends AbstractRestControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(DomainController.BASE_URL + "/1")
+        mockMvc.perform(delete(BASE_URL + "/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtDomainRoles()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -106,7 +108,7 @@ class DomainControllerTest extends AbstractRestControllerTest {
     @Test
     void testUpdate() throws Exception {
         when(service.update(1L,obj)).thenReturn(obj);
-        mockMvc.perform(put(DomainController.BASE_URL+"/1")
+        mockMvc.perform(put(BASE_URL+"/1")
                 .with(jwt().jwt(jwt -> jwt.claim("user", "spring")).authorities(createJwtDomainRoles()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(obj)))
