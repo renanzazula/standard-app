@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("${openapi.openApi.base-path:/v1}")
+@RequestMapping()
 public class CategoryController  implements CategoryControllerApi {
 
     private final CategoryService categoryService;
