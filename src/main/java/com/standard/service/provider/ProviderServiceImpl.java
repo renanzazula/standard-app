@@ -48,14 +48,14 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "providerListCache", condition = "#showInventoryOnHand == false")
+    @Cacheable(cacheNames = "providerListCache")
     public List<Provider> findAll() {
         return providerRepository.findAll().stream().map(JpaFunctions.providerToProviderEntity).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "providerCache", key = "#id", condition = "#showInventoryOnHand == false")
+    @Cacheable(cacheNames = "providerCache", key = "#id")
     public Provider findById(Long id) {
         return JpaFunctions.providerToProviderEntity.apply(providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND)));
     }

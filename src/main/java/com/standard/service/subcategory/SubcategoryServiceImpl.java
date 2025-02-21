@@ -51,14 +51,14 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "subcategoryListCache", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "subcategoryListCache")
 	public List<Subcategory> findAll() {
 		return subcategoryRepository.findAll().stream().map(JpaFunctions.subcategoryToSubCategoryEntity).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "subcategoryCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "subcategoryCache", key = "#id")
 	public Subcategory findById(Long id) {
 		return JpaFunctions.subcategoryToSubCategoryEntity.apply(subcategoryRepository.findById(id).orElseThrow(() -> new SubcategoryNotFoundException(
 				ConstantMessage.SUBCATEGORY_NOT_FOUND)));

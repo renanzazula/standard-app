@@ -50,14 +50,14 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "brandListCache", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "brandListCache")
 	public List<Brand> findAll() {
 		return brandRepository.findAll().stream().map(JpaFunctions.brandToBrandEntity).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "brandCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "brandCache", key = "#id")
 	public Brand findById(Long id) {
 		return JpaFunctions.brandToBrandEntity.apply(brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException(ConstantMessage.BRAND_NOT_FOUND)));
 	}

@@ -1,6 +1,8 @@
-<config
-        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
-        xmlns='http://www.ehcache.org/v3'>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
+
     <service>
         <jsr107:defaults enable-management="true" enable-statistics="true"/>
     </service>
@@ -31,8 +33,7 @@
             <ttl unit="minutes">5</ttl>
         </expiry>
         <resources>
-            <heap>1</heap>
-            <offheap unit="MB">1</offheap>
+            <offheap unit="MB">10</offheap>  <!-- Increased offheap memory -->
         </resources>
     </cache-template>
 </config>

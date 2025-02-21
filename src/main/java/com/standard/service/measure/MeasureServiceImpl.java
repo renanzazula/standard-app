@@ -106,14 +106,14 @@ public class MeasureServiceImpl implements MeasureService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "measureListCache", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "measureListCache")
 	public List<Measure> findAll() {
 		return measureRepository.findAll().stream().map(JpaFunctions.measureToMeasureEntity).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "measureCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "measureCache", key = "#id")
 	public Measure findById(Long id) {
 		return JpaFunctions.measureToMeasureEntity.apply(measureRepository.findById(id).orElseThrow(() -> new MeasureNotFoundException(ConstantMessage.MEASURE_NOT_FOUND)));
 	}

@@ -52,14 +52,14 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "paymentMethodListCache", condition = "#showInventoryOnHand == false")
+    @Cacheable(cacheNames = "paymentMethodListCache")
     public List<PaymentMethod> findAll() {
         return paymentMethodRepository.findAll().stream().map(JpaFunctions.paymentMethodToPaymentMethodEntity).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "paymentMethodCache", key = "#id", condition = "#showInventoryOnHand == false")
+    @Cacheable(cacheNames = "paymentMethodCache", key = "#id")
     public PaymentMethod findById(Long id) {
         return JpaFunctions.paymentMethodToPaymentMethodEntity
                 .apply(paymentMethodRepository.findById(id).orElseThrow(() -> new PaymentMethodNotFoundException(ConstantMessage.PAYMENT_METHOD_NOT_FOUND)));

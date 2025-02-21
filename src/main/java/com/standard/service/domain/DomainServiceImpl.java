@@ -50,14 +50,14 @@ public class DomainServiceImpl implements DomainService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "domainListCache", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "domainListCache")
 	public List<Domain> findAll() {
 		return domainRepository.findAll().stream().map(JpaFunctions.domainToDomainEntity).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "domainCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "domainCache", key = "#id")
 	public Domain findById(Long id) {
 		return JpaFunctions.domainToDomainEntity.apply(domainRepository.findById(id).orElseThrow(() -> new DomainNotFoundException(ConstantMessage.DOMAIN_NOT_FOUND)));
 	}

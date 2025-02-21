@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "categoryCache", key = "#id", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "categoryCache", key = "#id")
 	public Category findById(Long id)
 	{
 		return JpaFunctions.categoryToCategoryEntity.apply(repository.findById(id).orElseThrow(() -> new CategoryNotFoundException(ConstantMessage.CATEGORY_NOT_FOUND)));
@@ -69,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(cacheNames = "categoryListCache", condition = "#showInventoryOnHand == false")
+	@Cacheable(cacheNames = "categoryListCache")
 	public List<Category> findAll()
 	{
 		return repository.findAll().stream().map(JpaFunctions.categoryToCategoryEntity).toList();
