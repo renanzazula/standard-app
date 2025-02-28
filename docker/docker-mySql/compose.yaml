@@ -1,0 +1,22 @@
+services:
+  standard-db-app:
+    container_name: "standard-db-app"
+    image: mysql:8.0.28
+    env_file:
+      - ../.env
+    environment:
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_DATA=$MYSQL_DATA
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    ports:
+      - '${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}'
+    networks:
+      - mysql-network
+
+networks:
+  mysql-network:
+    driver: bridge

@@ -1,22 +1,41 @@
 package com.standard.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
-
-@Data
+@Setter
+@Getter
 @MappedSuperclass
-@EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class BaseAuditEntity extends AuditEntity implements Serializable {
+public class BaseAuditEntity extends AuditEntity implements Serializable
+{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "codigo")
-    private Long codigo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        BaseAuditEntity that = (BaseAuditEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(super.hashCode(), id);
+    }
 }

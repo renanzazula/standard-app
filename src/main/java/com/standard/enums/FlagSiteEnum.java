@@ -1,5 +1,5 @@
 package com.standard.enums;
 
 public enum FlagSiteEnum {
-	WEB, FISICO
+	WEB, ON_SITE
 }

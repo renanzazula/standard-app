@@ -1,12 +1,16 @@
 package com.standard;
 
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest
-public class StandardAppApplicationTests {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.TestPropertySource;
 
-//	@Test
-//	public void contextLoads() {
-//		System.out.println("okey have to create this test");
-//	}
+
+@SpringBootTest
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false"})
+class StandardAppApplicationTests {
+
+	@Autowired
+	private ApplicationContext applicationContext;
 
 }

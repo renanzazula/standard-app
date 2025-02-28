@@ -1,268 +1,310 @@
 package com.standard;
 
-import com.standard.domain.*;
+import com.standard.domain.Brand;
+import com.standard.domain.Category;
+import com.standard.domain.Domain;
+import com.standard.domain.ItemsTypeMeasure;
+import com.standard.domain.Measure;
+import com.standard.domain.Order;
+import com.standard.domain.PaymentMethod;
+import com.standard.domain.Pos;
+import com.standard.domain.Product;
+import com.standard.domain.ProductHasItemsTypeMeasure;
+import com.standard.domain.Provider;
+import com.standard.domain.Subcategory;
 import com.standard.enums.StatusEnum;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class BaseTest {
 
-    @Autowired
-    protected WebApplicationContext wac;
-    
-    protected static final String API_KEY = "Api-Key";
-    protected static final String API_SECRET = "Api-Secret";
-    protected static final String API_KEY_VALUE = "standard";
-    protected static final String API_SECRET_VALUE = "standard";
-
-
-    protected static final String NOME = "nome";
-    protected static final String DESCRICAO = "Descriçao";
-    protected static final String NOME_UPDATE = "nomeUpdate";
-    protected static final String DESCRICAO_UPDATE = "descricaoUpdate";
+    protected static final long ID = 1L;
+    protected static final String NAME = "name";
+    protected static final String DESCRIPTION = "description";
+    protected static final String NAME_UPDATE = "nameUpdate";
+    protected static final String DESCRIPTION_UPDATE = "descriptionUpdate";
     protected static final String BAR_0_CODE = "0000000BAR0CODE";
-    protected static final int PORCENTAGEM_DESCONTO = 15;
-    protected static final int PORCENTAGEM_DESCONTO_UPDATE = 15;
-    protected static final int QUANTIDADE_PRODUTOS_VENDA = 1;
-    protected static final Double VALOR_UNITARIO = 10.0;
+    protected static final String AMOUNT_P = "P";
+    protected static final String AMOUNT_X = "X";
+    protected static final String AMOUNT_L = "L";
+    protected static final String AMOUNT_XL = "XL";
 
-    private static final String VALOR_P = "P";
-    private static final String VALOR_X = "X";
-    private static final String VALOR_L = "L";
-    private static final String VALOR_XL = "XL";
-    private static final int QUANTIDADE = 10;
-    private static final long CODIGO = 1L;
-    
+    protected static final int DISCOUNT_PERCENT = 15;
+    protected static final int QUANTITY_OF_PRODUCTS = 1;
+    protected static final int QUANTITY = 10;
+
+    protected static final Double UNIT_VALUE = 10.0;
+
     // obj commons
-    protected FormasDePagamento formasDePagamento = null;
-    protected Venda venda = null;
-    protected Caixa caixa = null;
-    protected Marca marca = null;
-    protected Subcategoria subcategoria = null;
-    protected Categoria categoria = null;
-    protected Fornecedor fornecedor = null;
-    protected Medida medida = null;
-    protected List<ItensTipoMedida> itensTipoMedida = null;
-    protected Dominio dominio = null;
-    protected Produto produto = null;
-    protected List<ProdutoHasItensTipoMedida> produtoHasItensTipoMedida = null;
-    protected ItensTipoMedida itenTipoMedida = null;
-    protected ProdutoHasItensTipoMedida produtoHasItenTipoMedida = null;
+    protected PaymentMethod paymentMethod = null;
+    protected Order order = null;
+    protected Pos pos = null;
+    protected Brand brand = null;
+    protected Subcategory subcategory = null;
+    protected Category category = null;
+    protected Provider provider = null;
+    protected Measure measure = null;
+    protected List<ItemsTypeMeasure> itemsTypeMeasureList = null;
+    protected Domain domain = null;
+    protected Product product = null;
+    protected List<ProductHasItemsTypeMeasure> productHasItemsTypeMeasure = null;
+    protected ItemsTypeMeasure itemsTypeMeasure = null;
+    protected ProductHasItemsTypeMeasure productHasItemTypeMeasure = null;
 
-    protected void setUpMarca() {
-        marca = new Marca();
-        marca.setNome(NOME);
-        marca.setDescricao(DESCRICAO);
+    protected void setUpBrand() {
+        brand = new Brand();
+        brand.setName(NAME);
+        brand.setDescription(DESCRIPTION);
+        brand.setStatus(StatusEnum.ENABLE.name());
     }
 
-    protected void setUpSubCategoria() {
-        subcategoria = new Subcategoria();
-        subcategoria.setNome(NOME);
-        subcategoria.setDescricao(DESCRICAO);
+    protected void setUpSubcategory() {
+        subcategory = new Subcategory();
+        subcategory.setName(NAME);
+        subcategory.setDescription(DESCRIPTION);
     }
 
-    protected void setUpCategoria() {
-        categoria = new Categoria();
-        categoria.setCodigo(1L);
-        categoria.setNome(NOME);
-        categoria.setDescricao(DESCRICAO);
+    protected void setUpCategory() {
+        category = new Category();
+        category.setId(1L);
+        category.setName(NAME);
+        category.setDescription(DESCRIPTION);
     }
 
-    protected void setUpFormasDePagamento(){
-        formasDePagamento = new FormasDePagamento();
-        formasDePagamento.setNome(NOME);
-        formasDePagamento.setDescricao(DESCRICAO);
-        formasDePagamento.setPorcentagemDesconto(PORCENTAGEM_DESCONTO);
+    protected void setUpPaymentMethod(){
+        paymentMethod = new PaymentMethod();
+        paymentMethod.setName(NAME);
+        paymentMethod.setDescription(DESCRIPTION);
+        paymentMethod.setDiscountPercent(DISCOUNT_PERCENT);
     }
 
-    protected void setUpFornecedor() {
-        fornecedor = new Fornecedor();
-        fornecedor.setCodigo(1L);
-        fornecedor.setNome(NOME);
-        fornecedor.setDescricao(DESCRICAO);
+    protected void setUpProvider() {
+        provider = new Provider();
+        provider.setId(1L);
+        provider.setName(NAME);
+        provider.setDescription(DESCRIPTION);
     }
 
-    protected void setUpMedida() {
-        medida = new Medida();
-        // medida.setCodigo(1l);
-        medida.setNome(NOME);
-        medida.setDescricao(DESCRICAO);
+    protected void setUpMeasure() {
+        measure = new Measure();
+        measure.setName(NAME);
+        measure.setDescription(DESCRIPTION);
+        measure.setStatus(StatusEnum.ENABLE.name());
     }
 
-    protected void setUpItensTipoMedida() {
-        itensTipoMedida = new ArrayList<>();
+    protected void setUpItemsTypeMeasure() {
+        itemsTypeMeasureList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            itenTipoMedida = new ItensTipoMedida();
+            itemsTypeMeasure = new ItemsTypeMeasure();
             switch (i) {
                 case 1:
-                    itenTipoMedida.setValor(VALOR_P);
+                    itemsTypeMeasure.setAmount(AMOUNT_P);
                     break;
                 case 2:
-                    itenTipoMedida.setValor(VALOR_L);
+                    itemsTypeMeasure.setAmount(AMOUNT_L);
                     break;
                 case 3:
-                    itenTipoMedida.setValor(VALOR_X);
+                    itemsTypeMeasure.setAmount(AMOUNT_X);
                     break;
                 case 4:
-                    itenTipoMedida.setValor(VALOR_XL);
+                    itemsTypeMeasure.setAmount(AMOUNT_XL);
+                    break;
+                default:
                     break;
             }
-            itensTipoMedida.add(itenTipoMedida);
+            itemsTypeMeasureList.add(itemsTypeMeasure);
         }
     }
 
-    protected void setUpDominio() {
-        dominio = new Dominio();
-        dominio.setCodigo(CODIGO);
-        dominio.setNome(NOME);
-        dominio.setDescricao(DESCRICAO);
-        dominio.setChecked(true);
+    protected void setUpDomain() {
+        domain = new Domain();
+        domain.setId(ID);
+        domain.setName(NAME);
+        domain.setDescription(DESCRIPTION);
+        domain.setChecked(true);
     }
 
-    protected void setUpProdutoHasItensTipoMedida() {
-        produtoHasItensTipoMedida = new ArrayList<>();
+    protected void setUpProductHasItemsTypeMeasure() {
+        productHasItemsTypeMeasure = new ArrayList<>();
         int j = 0;
         for (int i = 1; i < 5; i++) {
-            produtoHasItenTipoMedida = new ProdutoHasItensTipoMedida();
-            produtoHasItenTipoMedida.setQuantidade(QUANTIDADE);
-            produtoHasItenTipoMedida.setDominios(new ArrayList<>());
-            produtoHasItenTipoMedida.getDominios().add(dominio);
-            produtoHasItenTipoMedida.setItensTipoMedida(medida.getItensTipoMedida().get(j));
-            produtoHasItensTipoMedida.add(produtoHasItenTipoMedida);
+            productHasItemTypeMeasure = new ProductHasItemsTypeMeasure();
+            productHasItemTypeMeasure.setQuantity(QUANTITY);
+            productHasItemTypeMeasure.setDomains(new ArrayList<>());
+            productHasItemTypeMeasure.getDomains().add(domain);
+            productHasItemTypeMeasure.setItemsTypeMeasure(measure.getItemsTypeMeasure().get(j));
+            productHasItemsTypeMeasure.add(productHasItemTypeMeasure);
             j++;
         }
     }
 
-    protected void setUpProduto() {
-        produto = new Produto();
-        produto.setCodigo(1L);
-        produto.setBarCode(BAR_0_CODE);
-        produto.setNome(NOME);
-        produto.setStatus(StatusEnum.ATIVO);
-        produto.setDescricao(DESCRICAO);
-        produto.setPreco(10d);
-        produto.setPrecoVenda(10d);
-        produto.setPreco(10d);
-        produto.setPrecoCusto(10d);
-        produto.setPrecoOferta(10d);
-        produto.setDesconto(10d);
-        produto.setPeso(10d);
-        produto.setPorcentagem(1);
-        produto.setPorcentagemDesconto(1);
-        // fixme: medida.setfoto
+    protected void setUpProduct() {
+        product = new Product();
+        product.setBarCode(BAR_0_CODE);
+        product.setName(NAME);
+        product.setStatus(StatusEnum.ENABLE.name());
+        product.setDescription(DESCRIPTION);
+        product.setPrice(10d);
+        product.setSalePrice(10d);
+        product.setPrice(10d);
+        product.setCostPrice(10d);
+        product.setDiscountPrice(10d);
+        product.setDiscount(10d);
+        product.setWeight(10d);
+        product.setPercent(1);
+        product.setDiscountPercent(1);
+        product.setTotalStockQuantity(40);
     }
 
-    protected void assertMarcaSubCategoriaCategoriaValor(Medida medida) {
-        for (int j = 0; j < medida.getItensTipoMedida().size(); j++) {
+    protected void assertBrandSubCategoryCategoryAmount(Measure measure) {
+        for (int j = 0; j < measure.getItemsTypeMeasure().size(); j++) {
 
-            Marca marcaFound = medida.getItensTipoMedida().get(j).getMarca();
-            assertMarca(marcaFound, marca);
+            Brand brandFound = measure.getItemsTypeMeasure().get(j).getBrand();
+            assertBrand(brandFound, brand);
 
-            Subcategoria subcategoriaFound = medida.getItensTipoMedida().get(j).getSubcategoria();
-            assertSubCategoria(subcategoriaFound, subcategoria);
+            Subcategory subcategoryFound = measure.getItemsTypeMeasure().get(j).getSubcategory();
+            assertSubcategory(subcategoryFound, subcategory);
 
-            Categoria categoriaFound = medida.getItensTipoMedida().get(j).getCategoria();
-            assertCategoria(categoriaFound, categoria);
+            Category categoryFound = measure.getItemsTypeMeasure().get(j).getCategory();
+            assertCategory(categoryFound, category);
 
-            assertEquals(medida.getItensTipoMedida().get(j).getValor(), medida.getItensTipoMedida().get(j).getValor());
+            assertEquals(measure.getItemsTypeMeasure().get(j).getAmount(), measure.getItemsTypeMeasure().get(j).getAmount());
         }
     }
 
-    protected void assertMarca(Marca expected, Marca found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+    protected void assertBrand(Brand expected, Brand found) {
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
-    protected void assertCategoria(Categoria expected, Categoria found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+    protected void assertCategory(Category expected, Category found) {
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
-    protected void assertSubCategoria(Subcategoria expected, Subcategoria found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+    protected void assertSubcategory(Subcategory expected, Subcategory found) {
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
-    protected void assertFornecedor(Fornecedor expected, Fornecedor found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
+    protected void assertProvider(Provider expected, Provider found) {
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
     }
 
-    protected void assertDominios(Dominio expected, Dominio found) {
-        assertEquals(expected.getCodigo(), found.getCodigo());
-        assertEquals(expected.getNome(), found.getNome());
-        assertEquals(expected.getDescricao(), found.getDescricao());
-        assertEquals(expected.isChecked(), found.isChecked());
+    protected void assertDomain(Domain expected, Domain found) {
+        assertEquals(expected.getId(), found.getId());
+        assertEquals(expected.getName(), found.getName());
+        assertEquals(expected.getDescription(), found.getDescription());
+        assertEquals(expected.getChecked(), found.getChecked());
     }
 
-    private void assertProdutoHasItensTipoMedida(List<ProdutoHasItensTipoMedida> produto, List<ProdutoHasItensTipoMedida> found) {
+    private void assertProductHasItemsTypeMeasure(List<ProductHasItemsTypeMeasure> product, List<ProductHasItemsTypeMeasure> found) {
         for (int i = 0; i < found.size(); i++) {
-            assertEquals(found.get(i).getCodigo(), produto.get(i).getCodigo());
-            assertEquals(found.get(i).getDominios().size(),
-                    produto.get(i).getDominios().size());
+            assertEquals(found.get(i).getId(), product.get(i).getId());
+            assertEquals(found.get(i).getDomains().size(),
+                    product.get(i).getDomains().size());
 
-            for (int j = 0; j < found.get(i).getDominios().size(); j++) {
-                assertDominios(found.get(i).getDominios().get(j),
-                        produto.get(i).getDominios().get(j));
+            for (int j = 0; j < found.get(i).getDomains().size(); j++) {
+                assertDomain(found.get(i).getDomains().get(j),
+                        product.get(i).getDomains().get(j));
             }
-            assertEquals(found.get(i).getQuantidade(), produto.get(i).getQuantidade());
-            assertEquals(found.get(i).getValorUnitario(), produto.get(i).getValorUnitario());
-            assertEquals(found.get(i).getItensTipoMedida().getValor(), produto.get(i).getItensTipoMedida().getValor());
+            assertEquals(found.get(i).getQuantity(), product.get(i).getQuantity());
+            assertEquals(found.get(i).getUnitValue(), product.get(i).getUnitValue());
+            assertEquals(found.get(i).getItemsTypeMeasure().getAmount(), product.get(i).getItemsTypeMeasure().getAmount());
 
         }
     }
 
-    protected void assertProduto(Produto found, Produto expected) {
-        assertEquals(found.getCodigo(), expected.getCodigo());
+    protected void assertProduct(Product found, Product expected) {
+        assertEquals(found.getId(), expected.getId());
         assertEquals(found.getBarCode(), expected.getBarCode());
-        assertEquals(found.getNome(), expected.getNome());
+        assertEquals(found.getName(), expected.getName());
         assertEquals(found.getStatus(), expected.getStatus());
-        assertEquals(found.getDescricao(), expected.getDescricao());
-        assertEquals(found.getPreco(), expected.getPreco());
-        assertEquals(found.getPrecoVenda(), expected.getPrecoVenda());
-        assertEquals(found.getPreco(), expected.getPreco());
-        assertEquals(found.getPrecoCusto(), expected.getPrecoCusto());
-        assertEquals(found.getPrecoOferta(), expected.getPrecoOferta());
-        assertEquals(found.getDesconto(), expected.getDesconto());
-        assertEquals(found.getPeso(), expected.getPeso());
-        assertEquals(found.getPorcentagem(), expected.getPorcentagem());
-        assertEquals(found.getPorcentagemDesconto(), expected.getPorcentagemDesconto());
-        assertMarca(found.getMarca(), expected.getMarca());
-        assertCategoria(found.getCategoria(), expected.getCategoria());
-        assertSubCategoria(found.getSubcategoria(), expected.getSubcategoria());
-        assertFornecedor(found.getFornecedor(), expected.getFornecedor());
-        assertMarcaSubCategoriaCategoriaValor(found.getMedida());
-        assertEquals(found.getProdutoHasItensTipoMedida().size(), expected.getProdutoHasItensTipoMedida().size());
-        assertProdutoHasItensTipoMedida(found.getProdutoHasItensTipoMedida(), expected.getProdutoHasItensTipoMedida());
+        assertEquals(found.getDescription(), expected.getDescription());
+        assertEquals(found.getPrice(), expected.getPrice());
+        assertEquals(found.getSalePrice(), expected.getSalePrice());
+        assertEquals(found.getPrice(), expected.getPrice());
+        assertEquals(found.getCostPrice(), expected.getCostPrice());
+        assertEquals(found.getDiscountPrice(), expected.getDiscountPrice());
+        assertEquals(found.getDiscount(), expected.getDiscount());
+        assertEquals(found.getWeight(), expected.getWeight());
+        assertEquals(found.getPercent(), expected.getPercent());
+        assertEquals(found.getDiscountPercent(), expected.getDiscountPercent());
+        assertBrand(found.getBrand(), expected.getBrand());
+        assertCategory(found.getCategory(), expected.getCategory());
+        assertSubcategory(found.getSubcategory(), expected.getSubcategory());
+        assertProvider(found.getProvider(), expected.getProvider());
+        assertBrandSubCategoryCategoryAmount(found.getMeasure());
+        assertEquals(found.getProductHasItemsTypeMeasure().size(), expected.getProductHasItemsTypeMeasure().size());
+        assertProductHasItemsTypeMeasure(found.getProductHasItemsTypeMeasure(), expected.getProductHasItemsTypeMeasure());
     }
 
-    protected void asserItensTipoMedida(ItensTipoMedida found, ItensTipoMedida expected) {
-        assertEquals(found.getCodigo(), expected.getCodigo());
-        assertEquals(found.getValor(), expected.getValor());
-        assertEquals(found.getMedida(), expected.getMedida());
-        assertEquals(found.getMarca(), expected.getMarca());
-        assertEquals(found.getCategoria(), expected.getCategoria());
-        assertEquals(found.getSubcategoria(), expected.getSubcategoria());
+    protected void asserItemsTypeMeasure(ItemsTypeMeasure found, ItemsTypeMeasure expected) {
+        assertEquals(found.getId(), expected.getId());
+        assertEquals(found.getAmount(), expected.getAmount());
+        assertEquals(found.getMeasure(), expected.getMeasure());
+        assertEquals(found.getBrand(), expected.getBrand());
+        assertEquals(found.getCategory(), expected.getCategory());
+        assertEquals(found.getSubcategory(), expected.getSubcategory());
     }
-    
-    
 
+    protected Collection<GrantedAuthority> createJwtBrandRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("BRAND_SEARCH"), new SimpleGrantedAuthority("BRAND_ADD"),
+                new SimpleGrantedAuthority("BRAND_UPDATE"),new SimpleGrantedAuthority("BRAND_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtCategoryRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("CATEGORY_SEARCH"), new SimpleGrantedAuthority("CATEGORY_ADD"),
+                new SimpleGrantedAuthority("CATEGORY_UPDATE"), new SimpleGrantedAuthority("CATEGORY_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtDomainRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("DOMAIN_SEARCH"), new SimpleGrantedAuthority("DOMAIN_ADD"),
+                new SimpleGrantedAuthority("DOMAIN_UPDATE"), new SimpleGrantedAuthority("DOMAIN_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtMeasureRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("MEASURE_SEARCH"), new SimpleGrantedAuthority("MEASURE_ADD"),
+                new SimpleGrantedAuthority("MEASURE_UPDATE"), new SimpleGrantedAuthority("MEASURE_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtPaymentMethodRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("PAYMENT_METHOD_SEARCH"), new SimpleGrantedAuthority("PAYMENT_METHOD_ADD"),
+                new SimpleGrantedAuthority("PAYMENT_METHOD_UPDATE"), new SimpleGrantedAuthority("PAYMENT_METHOD_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtProviderRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("PROVIDER_SEARCH"), new SimpleGrantedAuthority("PROVIDER_ADD"),
+                new SimpleGrantedAuthority("PROVIDER_UPDATE"), new SimpleGrantedAuthority("PROVIDER_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtSubcategoryRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("SUBCATEGORY_SEARCH"), new SimpleGrantedAuthority("SUBCATEGORY_ADD"),
+                new SimpleGrantedAuthority("SUBCATEGORY_UPDATE"), new SimpleGrantedAuthority("SUBCATEGORY_DELETE"));
+    }
+
+    protected Collection<GrantedAuthority> createJwtProductRoles()
+    {
+        return List.of(new SimpleGrantedAuthority("PRODUCT_SEARCH"), new SimpleGrantedAuthority("PRODUCT_ADD"),
+                new SimpleGrantedAuthority("PRODUCT_UPDATE"), new SimpleGrantedAuthority("PRODUCT_DELETE"));
+    }
 }

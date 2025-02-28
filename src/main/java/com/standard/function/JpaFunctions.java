@@ -1,27 +1,43 @@
 package com.standard.function;
 
-import com.standard.function.jpa.*;
+import com.standard.function.jpa.BrandToBrandEntityFunction;
+import com.standard.function.jpa.CategoryToCategoryEntityFunction;
+import com.standard.function.jpa.CustomerToCustomerEntityFunction;
+import com.standard.function.jpa.DomainToDomainEntityFunction;
+import com.standard.function.jpa.ItemsTypeMeasureToItemsTypeMeasureEntityFunction;
+import com.standard.function.jpa.MeasureToMeasureEntityFunction;
+import com.standard.function.jpa.OrderHasItemProductToOrderHasItemProductEntityFunction;
+import com.standard.function.jpa.OrderToOrderEntityFunction;
+import com.standard.function.jpa.PayBackEntityToPayBackFunction;
+import com.standard.function.jpa.PaymentMethodToPaymentMethodEntityFunction;
+import com.standard.function.jpa.PosToPosEntityFunction;
+import com.standard.function.jpa.ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction;
+import com.standard.function.jpa.ProductToProdctEntityFunction;
+import com.standard.function.jpa.ProviderToProviderEntityFunction;
+import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
+import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
+import com.standard.util.DateTimeConverter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class JpaFunctions {
 
-    public JpaFunctions() {
-    }
-
-    public static final CategoriaToCategoriaEntityFunction categoriaToCategoriaEntity = new CategoriaToCategoriaEntityFunction();
-    public static final SubCategoriaToSubCategoriaEntityFunction subcategoriaToSubCategoriaEntity = new SubCategoriaToSubCategoriaEntityFunction();
-    public static final FornecedorToFornecedorEntityFunction fornecedortoFornecedorEntity = new FornecedorToFornecedorEntityFunction();
-    public static final MarcaToMarcaEntityFunction marcaToMarcaEntity = new MarcaToMarcaEntityFunction();
-    public static final MedidaToMedidaEntityFunction medidaToMedidaEntity = new MedidaToMedidaEntityFunction();
-    public static final ItensTipoMedidaToItensTipoMedidaEntityFunction itensTipoMedidaToItensTipoMedidaEntity = new ItensTipoMedidaToItensTipoMedidaEntityFunction();
-    public static final ProdutoToProdutoEntityFunction produtoToProdutoEntity = new ProdutoToProdutoEntityFunction();
-    public static final FormaDePagamentoToFormaDePagamentoEntityFunction formasDePagamentoToFormaDePagamentoEntity = new FormaDePagamentoToFormaDePagamentoEntityFunction();
-    public static final ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction produtoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntity = new ProdutoHasItensTipoMedidaToProdutoHasItensTipoMedidaEntityFunction();
-    public static final DominioToDominioEntityFunction dominioToDominioEntity = new DominioToDominioEntityFunction();
-    public static final VendaToVendaEntityFunction vendaToVendaEntity = new VendaToVendaEntityFunction();
-    public static final ClienteToClienteEntityFunction clienteToClienteEntity = new ClienteToClienteEntityFunction();
-    public static final CaixaToCaixaEntityFunction caixaToCaixaEntity = new CaixaToCaixaEntityFunction();
-    public static final VendaHasItemProdutoToVendaHasItemProdutoEntityFunction vendaHasItemProdutoToVendaHasItemEntity = new VendaHasItemProdutoToVendaHasItemProdutoEntityFunction();
-    public static final RetiradaEntityToRetiradaFunction retiradaEntityToRetirada = new RetiradaEntityToRetiradaFunction();
-    public static final RecebimentoEntityToRecebimentoFunction recebimentoEntityToRecebimento = new RecebimentoEntityToRecebimentoFunction();
+    public static final DateTimeConverter dateTimeConverter = new DateTimeConverter();
+    public static final CategoryToCategoryEntityFunction categoryToCategoryEntity = new CategoryToCategoryEntityFunction();
+    public static final SubCategoryToSubCategoryEntityFunction subcategoryToSubCategoryEntity = new SubCategoryToSubCategoryEntityFunction();
+    public static final ProviderToProviderEntityFunction providerToProviderEntity = new ProviderToProviderEntityFunction();
+    public static final BrandToBrandEntityFunction brandToBrandEntity = new BrandToBrandEntityFunction();
+    public static final MeasureToMeasureEntityFunction measureToMeasureEntity = new MeasureToMeasureEntityFunction();
+    public static final ItemsTypeMeasureToItemsTypeMeasureEntityFunction itemsTypeMeasureToItemsTypeMeasureEntity = new ItemsTypeMeasureToItemsTypeMeasureEntityFunction();
+    public static final ProductToProdctEntityFunction productToProductEntity = new ProductToProdctEntityFunction();
+    public static final PaymentMethodToPaymentMethodEntityFunction paymentMethodToPaymentMethodEntity = new PaymentMethodToPaymentMethodEntityFunction(dateTimeConverter);
+    public static final ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction productHasItemsTypeMeasureToProductHasItemsTypeMeasureEntity = new ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction();
+    public static final DomainToDomainEntityFunction domainToDomainEntity = new DomainToDomainEntityFunction();
+    public static final OrderToOrderEntityFunction orderToOrderEntity = new OrderToOrderEntityFunction(dateTimeConverter);
+    public static final CustomerToCustomerEntityFunction customerToCustomerEntity = new CustomerToCustomerEntityFunction();
+    public static final PosToPosEntityFunction posToPosEntity = new PosToPosEntityFunction();
+    public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProductToOrderHasItemProductEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
+    public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction(dateTimeConverter);
+    public static final PayBackEntityToPayBackFunction payBackEntityToPayBack = new PayBackEntityToPayBackFunction();
 
 }

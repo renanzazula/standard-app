@@ -1,51 +1,39 @@
-# Java Maven CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  default-executor:
     docker:
-      # specify the version you desire here openjdk:8-jdk
-      - image: circleci/openjdk:11-browsers-legacy
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
+      - image: cimg/openjdk:21.0
     working_directory: ~/repo
-
     environment:
-      # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
 
+jobs:
+  build:
+    executor: default-executor
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run: mvn clean install -DskipTests
-
+      - run: mvn clean install
       - run: mvn dependency:go-offline
-
+      - run: mvn test
+      - run: chmod +x ./mvnw
+      - run:
+          name: SonarQube Analysis
+          command: ./mvnw sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN -Dsonar.organization=$SONAR_ORGANIZATION
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-
-      # run tests! and gen code coverage
-#      - run: mvn integration-test cobertura:cobertura
-
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
       - store_test_results:
-          path: target/surefire-reports
-
-#      - run:
-#          name: Send to CodeCov
-#          command: bash <(curl -s https://codecov.io/bash) -t 966743ab-ff4a-4bc8-ac70-9bf4deb251b4
-#      - run: mvn sonar:sonar -Dsonar.projectKey=standard-app -Dsonar.organization=renanzazula-gitHub -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f57ed22f9c49184261597246cd37e1a32a80d301
+          path: ~/test-results

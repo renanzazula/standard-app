@@ -1,38 +1,39 @@
-<config
-        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
-        xmlns='http://www.ehcache.org/v3'>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
+
     <service>
         <jsr107:defaults enable-management="true" enable-statistics="true"/>
     </service>
 
-    <cache alias="categoriaCache" uses-template="config-cache"/>
-    <cache alias="categoriaListCache" uses-template="config-cache"/>
+    <cache alias="categoryCache" uses-template="config-cache"/>
+    <cache alias="categoryListCache" uses-template="config-cache"/>
 
-    <cache alias="dominioCache" uses-template="config-cache"/>
-    <cache alias="dominioListCache" uses-template="config-cache"/>
+    <cache alias="domainCache" uses-template="config-cache"/>
+    <cache alias="domainListCache" uses-template="config-cache"/>
 
-    <cache alias="formasDePagamentoCache" uses-template="config-cache"/>
-    <cache alias="formasDePagamentoListCache" uses-template="config-cache"/>
+    <cache alias="paymentMethodCache" uses-template="config-cache"/>
+    <cache alias="paymentMethodListCache" uses-template="config-cache"/>
 
-    <cache alias="fornecedorCache" uses-template="config-cache"/>
-    <cache alias="fornecedorListCache" uses-template="config-cache"/>
+    <cache alias="providerCache" uses-template="config-cache"/>
+    <cache alias="providerListCache" uses-template="config-cache"/>
 
-    <cache alias="marcaCache" uses-template="config-cache"/>
-    <cache alias="marcaListCache" uses-template="config-cache"/>
+    <cache alias="brandCache" uses-template="config-cache"/>
+    <cache alias="brandListCache" uses-template="config-cache"/>
 
-    <cache alias="medidaCache" uses-template="config-cache"/>
-    <cache alias="medidaListCache" uses-template="config-cache"/>
+    <cache alias="measureCache" uses-template="config-cache"/>
+    <cache alias="measureListCache" uses-template="config-cache"/>
 
-    <cache alias="subcategoriaCache" uses-template="config-cache"/>
-    <cache alias="subcategoriaListCache" uses-template="config-cache"/>
+    <cache alias="subcategoryCache" uses-template="config-cache"/>
+    <cache alias="subcategoryListCache" uses-template="config-cache"/>
 
     <cache-template name="config-cache">
         <expiry>
             <ttl unit="minutes">5</ttl>
         </expiry>
         <resources>
-            <heap>1</heap>
-            <offheap unit="MB">1</offheap>
+            <offheap unit="MB">10</offheap>  <!-- Increased offheap memory -->
         </resources>
     </cache-template>
 </config>
