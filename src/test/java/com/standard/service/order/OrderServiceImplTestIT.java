@@ -39,6 +39,7 @@ import com.standard.service.provider.ProviderService;
 import com.standard.service.provider.ProviderServiceImpl;
 import com.standard.service.subcategory.SubcategoryService;
 import com.standard.service.subcategory.SubcategoryServiceImpl;
+import com.standard.util.DateTimeConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -80,6 +81,8 @@ class OrderServiceImplTestIT extends BaseTest {
     private ItemsTypeMeasureRepository itemsTypeMeasureRepository;
     @Autowired
     private ProductHasItemsTypeMeasureRepository productHasItemsTypeMeasureRepository;
+    @Autowired
+    private DateTimeConverter dateTimeConverter;
 
 	private OrderService orderService;
 
@@ -96,9 +99,7 @@ class OrderServiceImplTestIT extends BaseTest {
 		MeasureService measureService = new MeasureServiceImpl(brandRepository, measureRepository, categoryRepository, subcategoryRepository);
 
 		ProductService productService = new ProductServiceImpl(brandRepository, domainRepository, productRepository, measureRepository, providerRepository, categoryRepository, subcategoryRepository, itemsTypeMeasureRepository);
-
-        orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository, customerRepository, productHasItemsTypeMeasureRepository, posService);
-
+        orderService = new OrderServiceImpl(orderRepository, paymentMethodRepository, posRepository, customerRepository, productHasItemsTypeMeasureRepository, posService, dateTimeConverter);
         customerEntity = new CustomerEntity();
         customerRepository.save(customerEntity);
 

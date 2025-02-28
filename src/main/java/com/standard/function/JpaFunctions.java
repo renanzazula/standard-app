@@ -16,11 +16,13 @@ import com.standard.function.jpa.ProductToProdctEntityFunction;
 import com.standard.function.jpa.ProviderToProviderEntityFunction;
 import com.standard.function.jpa.SubCategoryToSubCategoryEntityFunction;
 import com.standard.function.jpa.WithdrawalEntityToWithdrawalFunction;
+import com.standard.util.DateTimeConverter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class JpaFunctions {
 
+    public static final DateTimeConverter dateTimeConverter = new DateTimeConverter();
     public static final CategoryToCategoryEntityFunction categoryToCategoryEntity = new CategoryToCategoryEntityFunction();
     public static final SubCategoryToSubCategoryEntityFunction subcategoryToSubCategoryEntity = new SubCategoryToSubCategoryEntityFunction();
     public static final ProviderToProviderEntityFunction providerToProviderEntity = new ProviderToProviderEntityFunction();
@@ -28,14 +30,14 @@ public class JpaFunctions {
     public static final MeasureToMeasureEntityFunction measureToMeasureEntity = new MeasureToMeasureEntityFunction();
     public static final ItemsTypeMeasureToItemsTypeMeasureEntityFunction itemsTypeMeasureToItemsTypeMeasureEntity = new ItemsTypeMeasureToItemsTypeMeasureEntityFunction();
     public static final ProductToProdctEntityFunction productToProductEntity = new ProductToProdctEntityFunction();
-    public static final PaymentMethodToPaymentMethodEntityFunction paymentMethodToPaymentMethodEntity = new PaymentMethodToPaymentMethodEntityFunction();
+    public static final PaymentMethodToPaymentMethodEntityFunction paymentMethodToPaymentMethodEntity = new PaymentMethodToPaymentMethodEntityFunction(dateTimeConverter);
     public static final ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction productHasItemsTypeMeasureToProductHasItemsTypeMeasureEntity = new ProductHasItemsTypeMeasureToProductHasItemsTypeMeasureEntityFunction();
     public static final DomainToDomainEntityFunction domainToDomainEntity = new DomainToDomainEntityFunction();
-    public static final OrderToOrderEntityFunction orderToOrderEntity = new OrderToOrderEntityFunction();
+    public static final OrderToOrderEntityFunction orderToOrderEntity = new OrderToOrderEntityFunction(dateTimeConverter);
     public static final CustomerToCustomerEntityFunction customerToCustomerEntity = new CustomerToCustomerEntityFunction();
     public static final PosToPosEntityFunction posToPosEntity = new PosToPosEntityFunction();
     public static final OrderHasItemProductToOrderHasItemProductEntityFunction orderHasItemProductToOrderHasItemProductEntity = new OrderHasItemProductToOrderHasItemProductEntityFunction();
-    public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction();
+    public static final WithdrawalEntityToWithdrawalFunction withdrawalEntityToWithdrawal = new WithdrawalEntityToWithdrawalFunction(dateTimeConverter);
     public static final PayBackEntityToPayBackFunction payBackEntityToPayBack = new PayBackEntityToPayBackFunction();
 
 }

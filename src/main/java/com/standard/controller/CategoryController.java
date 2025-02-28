@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping()
 public class CategoryController  implements CategoryControllerApi {
 
     private final CategoryService categoryService;

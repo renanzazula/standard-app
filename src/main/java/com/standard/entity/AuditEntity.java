@@ -13,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -24,27 +25,27 @@ public class AuditEntity implements Serializable {
 
     @CreationTimestamp
     @Column(name = "creation_date", updatable = false)
-    private OffsetDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @CreationTimestamp
     @Column(name = "creation_time", updatable = false)
-    private OffsetDateTime creationTime;
+    private LocalDateTime creationTime;
 
     @CreatedBy
-    @Column(name = "created_by", insertable = true, updatable = false)
-    private Long createdBy;
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
 
     @Version
     @Column(name = "version")
     private Long version;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date")
-    private OffsetDateTime lastModifiedDate;
+    @Column(name = "last_modified_date", updatable = false)
+    private LocalDateTime lastModifiedDate;
 
     @LastModifiedBy
-    @Column(name = "last_modified_by")
-    private Long lastModifiedBy;
+    @Column(name = "last_modified_by", updatable = false)
+    private String lastModifiedBy;
 
     @Override
     public boolean equals(Object o) {

@@ -8,6 +8,8 @@ import com.standard.repository.ProviderRepository;
 import com.standard.security.exceptions.ProviderNotFoundException;
 import com.standard.util.ConstantMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,28 +24,31 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     @Transactional
-    public Provider create(Provider entity) {
-        ProviderEntity providerDB = new ProviderEntity();
-        providerDB.setDescription(entity.getDescription());
-        providerDB.setName(entity.getName());
-        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
+    @CacheEvict(cacheNames = "providerListCache", allEntries = true)
+    public Provider create(Provider provider) {
+        ProviderEntity providerEntity = new ProviderEntity();
+        providerEntity.setDescription(provider.getDescription());
+        providerEntity.setName(provider.getName());
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerEntity));
     }
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "providerListCache", allEntries = true)
     public Provider update(Long id, Provider entity) {
-        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
-        providerDB.setDescription(entity.getDescription());
-        providerDB.setName(entity.getName());
-        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerDB));
+        ProviderEntity providerEntity = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
+        providerEntity.setDescription(entity.getDescription());
+        providerEntity.setName(entity.getName());
+        return JpaFunctions.providerToProviderEntity.apply(providerRepository.saveAndFlush(providerEntity));
     }
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "providerListCache", allEntries = true)
     public void delete(Long id) {
-        ProviderEntity providerDB = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
-        providerDB.setStatus(StatusEnum.DISABLE);
-        providerRepository.save(providerDB);
+        ProviderEntity providerEntity = providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND));
+        providerEntity.setStatus(StatusEnum.DISABLE);
+        providerRepository.save(providerEntity);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "providerCache", key = "#id")
+    @Cacheable(cacheNames = "providerListCache", key = "#id")
     public Provider findById(Long id) {
         return JpaFunctions.providerToProviderEntity.apply(providerRepository.findById(id).orElseThrow(() -> new ProviderNotFoundException(ConstantMessage.PROVIDER_NOT_FOUND)));
     }

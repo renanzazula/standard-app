@@ -1,10 +1,10 @@
 CREATE TABLE withdrawal
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     amount             DOUBLE       NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE withdrawal
 CREATE TABLE brand
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,
@@ -31,10 +31,10 @@ CREATE TABLE brand
 CREATE TABLE category
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45),
@@ -46,10 +46,10 @@ CREATE TABLE category
 CREATE TABLE subcategory
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,
@@ -71,10 +71,10 @@ CREATE TABLE category_has_subcategory
 CREATE TABLE customer
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     api_key            VARCHAR(255),
@@ -85,10 +85,10 @@ CREATE TABLE customer
 CREATE TABLE domain
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,
@@ -100,10 +100,10 @@ CREATE TABLE domain
 CREATE TABLE items_type_measure
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     amount             VARCHAR(255),
@@ -117,10 +117,10 @@ CREATE TABLE items_type_measure
 CREATE TABLE measure
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,
@@ -132,10 +132,10 @@ CREATE TABLE measure
 CREATE TABLE `order`
 (
     id                   BIGINT AUTO_INCREMENT,
-    created_by           BIGINT,
+    created_by           VARCHAR(45),
     creation_date        DATE,
     creation_time        TIME,
-    last_modified_by     BIGINT,
+    last_modified_by     VARCHAR(45),
     last_modified_date   DATETIME,
     version              BIGINT,
     changing             DOUBLE,
@@ -157,10 +157,10 @@ CREATE TABLE `order`
 CREATE TABLE order_has_item_product
 (
     id                                      BIGINT AUTO_INCREMENT,
-    created_by                              BIGINT,
+    created_by                              VARCHAR(45),
     creation_date                           DATE,
     creation_time                           TIME,
-    last_modified_by                        BIGINT,
+    last_modified_by                        VARCHAR(45),
     last_modified_date                      DATETIME,
     version                                 BIGINT,
     quantity                                INT,
@@ -173,10 +173,10 @@ CREATE TABLE order_has_item_product
 CREATE TABLE payback
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     amount             DOUBLE,
@@ -190,10 +190,10 @@ CREATE TABLE payback
 CREATE TABLE payment_method
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,
@@ -206,10 +206,10 @@ CREATE TABLE payment_method
 CREATE TABLE pos
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     close_amount       DOUBLE DEFAULT 0,
@@ -228,10 +228,10 @@ CREATE TABLE pos
 CREATE TABLE product
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     bar_code           VARCHAR(255) NOT NULL,
@@ -258,10 +258,10 @@ CREATE TABLE product
 CREATE TABLE product_has_items_type_measure
 (
     id                    BIGINT AUTO_INCREMENT,
-    created_by            BIGINT,
+    created_by            VARCHAR(45),
     creation_date         DATE,
     creation_time         TIME,
-    last_modified_by      BIGINT,
+    last_modified_by      VARCHAR(45),
     last_modified_date    DATETIME,
     version               BIGINT,
     quantity              INT,
@@ -281,10 +281,10 @@ CREATE TABLE product_has_items_type_measure_has_domain
 CREATE TABLE provider
 (
     id                 BIGINT AUTO_INCREMENT,
-    created_by         BIGINT,
+    created_by         VARCHAR(45),
     creation_date      DATE,
     creation_time      TIME,
-    last_modified_by   BIGINT,
+    last_modified_by   VARCHAR(45),
     last_modified_date DATETIME,
     version            BIGINT,
     description        VARCHAR(45) NOT NULL,

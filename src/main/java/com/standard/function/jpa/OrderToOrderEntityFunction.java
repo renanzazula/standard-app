@@ -3,18 +3,23 @@ package com.standard.function.jpa;
 import com.standard.domain.Order;
 import com.standard.entity.OrderEntity;
 import com.standard.function.JpaFunctions;
+import com.standard.util.DateTimeConverter;
+import lombok.AllArgsConstructor;
 
 import java.util.function.Function;
 
+@AllArgsConstructor
 public class OrderToOrderEntityFunction implements Function<OrderEntity, Order> {
+
+    private final DateTimeConverter dateTimeConverter;
 
     @Override
     public Order apply(OrderEntity input) {
         Order output = new Order();
         if (input != null) {
             output.setId(input.getId());
-            output.setCreationDate(input.getCreationDate());
-            output.setCreationTime(input.getCreationTime());
+            output.setCreationDate(dateTimeConverter.convert(input.getCreationDate()));
+            output.setCreationTime(dateTimeConverter.convert(input.getCreationTime()));
             output.setTotalAmount(input.getTotalAmount());
             output.setStatus(input.getStatus().name());
             output.setQuantity(input.getQuantity());

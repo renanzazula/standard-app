@@ -22,6 +22,7 @@ import com.standard.security.exceptions.PosNotFoundException;
 import com.standard.security.exceptions.ProductHasItemsTypeMeasureNotFoundException;
 import com.standard.service.pos.PosService;
 import com.standard.util.ConstantMessage;
+import com.standard.util.DateTimeConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final ProductHasItemsTypeMeasureRepository productHasItemsTypeMeasureRepository;
     private final PosService posService;
+    private final DateTimeConverter dateTimeConverter;
 
     @Override
     @Transactional
@@ -146,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (order.getCreationDate() != null) {
-              orderEntity.setCreationDate(order.getCreationDate());
+              orderEntity.setCreationDate(order.getCreationDate().toLocalDateTime());
         }
 
         if (order.getStatus() != null) {
